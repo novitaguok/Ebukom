@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">ebukom</string>
+    <string name="hint_forgot_password">Masukkan nomor telepon Anda, kami akan mengirimkan kode untuk mengatur ulang kata sandi Anda</string>
 </resources>
