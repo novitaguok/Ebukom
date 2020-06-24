@@ -6,8 +6,25 @@
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
+
     <style name="AppTheme.NoActionBar">
         <item name="windowActionBar">false</item>
         <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="LoginTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <item name="boxStrokeColor">@color/colorBlack</item>
+        <item name="boxStrokeWidth">@dimen/size_2</item>
+        <item name="android:textColorHint">@color/colorBlack</item>
+    </style>
+
+    <style name="LoginTextInputLayoutLabel" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <!-- Hint color and label color in FALSE state -->
+        <item name="android:textColorHint">@color/colorGray</item>
+        <item name="android:textSize">@dimen/text_14</item>
+        <!-- Label color in TRUE state and bar color FALSE and TRUE State -->
+        <item name="colorAccent">@color/colorBlack</item>
+        <item name="colorControlNormal">@color/colorBlack</item>
+        <item name="colorControlActivated">@color/colorBlack</item>
     </style>
 </resources>

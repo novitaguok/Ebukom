@@ -77,4 +77,7 @@ dependencies {
     // For developers using the Android Support Library
     implementation 'pub.devrel:easypermissions:3.0.0'
 
+    implementation 'androidx.appcompat:appcompat:1.0.0'
+    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 }
