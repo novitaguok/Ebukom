@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/colorRed"
     android:orientation="vertical"
-    tools:context=".SplashActivity">
+    tools:context=".arch.ui.splash.SplashActivity">
 
     <ImageView
         android:id="@+id/iv_splash_logo_ebukom"

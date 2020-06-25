@@ -1,9 +1,10 @@
-package com.ebukom
+package com.ebukom.arch.ui.splash
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import com.ebukom.R
 import com.ebukom.arch.ui.main.MainActivity
 
 class SplashActivity : AppCompatActivity() {

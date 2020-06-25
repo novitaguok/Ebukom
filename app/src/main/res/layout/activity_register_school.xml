@@ -1,0 +1,232 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".arch.ui.register.school.RegisterSchoolActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:elevation="@dimen/size_10"
+        app:elevation="@dimen/size_10">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:minHeight="?attr/actionBarSize">
+
+            <TextView
+                android:id="@+id/tvToolbarTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Daftar"
+                android:textColor="@color/colorSuperDarkBlue"
+                android:textSize="@dimen/text_16"
+                android:textStyle="bold" />
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/size_20">
+
+            <TextView
+                android:id="@+id/tvRegisterSchoolTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                android:gravity="center_horizontal"
+                android:background="@color/colorSuperDarkBlue"
+                android:padding="@dimen/size_10"
+                android:text="Sebagai pihak sekolah"
+                android:textSize="@dimen/text_14"
+                android:textColor="@color/colorWhite"
+                android:textStyle="bold"/>
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/ivRegisterSchoolProfilePicture"
+                app:layout_constraintTop_toBottomOf="@+id/tvRegisterSchoolTitle"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginTop="@dimen/size_32"
+                android:layout_width="@dimen/size_100"
+                android:layout_height="@dimen/size_100"
+                android:src="@drawable/solid_gray"
+                app:civ_border_color="#FF000000"/>
+
+            <TextView
+                android:id="@+id/tvRegisterSchoolAddPhoto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_14"
+                android:layout_marginBottom="@dimen/size_16"
+                android:text="Tambah foto profil"
+                android:textColor="#3F3B5C"
+                android:textFontWeight="500"
+                android:textSize="@dimen/text_14"
+                app:layout_constraintTop_toBottomOf="@id/ivRegisterSchoolProfilePicture"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilRegisterSchoolName"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:theme="@style/LoginTextInputLayoutLabel"
+                app:boxCornerRadiusBottomEnd="@dimen/size_8"
+                app:boxCornerRadiusBottomStart="@dimen/size_8"
+                app:boxCornerRadiusTopEnd="@dimen/size_8"
+                app:boxCornerRadiusTopStart="@dimen/size_8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/size_32"
+                android:hint="Nama lengkap"
+                app:boxStrokeColor="@color/colorBlack"
+                app:boxStrokeWidth="@dimen/size_1"
+                app:layout_constraintTop_toBottomOf="@id/tvRegisterSchoolAddPhoto">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etRegisterParentName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/size_16"
+                    android:background="@drawable/edit_text_rectangle_selector"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Spinner
+                android:id="@+id/spRegisterSchoolJabatan"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                app:layout_constraintTop_toBottomOf="@+id/tilRegisterSchoolName"
+                android:layout_marginTop="@dimen/size_24"
+                android:minHeight="@dimen/size_52"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"/>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilRegisterSchoolPhone"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:theme="@style/LoginTextInputLayoutLabel"
+                app:boxCornerRadiusBottomEnd="@dimen/size_8"
+                app:boxCornerRadiusBottomStart="@dimen/size_8"
+                app:boxCornerRadiusTopEnd="@dimen/size_8"
+                app:boxCornerRadiusTopStart="@dimen/size_8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/size_24"
+                android:hint="Nomor telepon"
+                app:boxStrokeColor="@color/colorBlack"
+                app:boxStrokeWidth="@dimen/size_1"
+                app:layout_constraintTop_toBottomOf="@+id/spRegisterSchoolJabatan">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etRegisterParentPhone"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/size_16"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilRegisterSchoolPassword"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:theme="@style/LoginTextInputLayoutLabel"
+                app:boxCornerRadiusBottomEnd="@dimen/size_8"
+                app:boxCornerRadiusBottomStart="@dimen/size_8"
+                app:boxCornerRadiusTopEnd="@dimen/size_8"
+                app:boxCornerRadiusTopStart="@dimen/size_8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/size_24"
+                android:hint="Kata Sandi"
+                app:boxStrokeColor="@color/colorBlack"
+                app:boxStrokeWidth="@dimen/size_1"
+                app:layout_constraintTop_toBottomOf="@id/tilRegisterSchoolPhone">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etRegisterParentPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/size_16" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilRegisterSchoolConfirmPassword"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:theme="@style/LoginTextInputLayoutLabel"
+                app:boxCornerRadiusBottomEnd="@dimen/size_8"
+                app:boxCornerRadiusBottomStart="@dimen/size_8"
+                app:boxCornerRadiusTopEnd="@dimen/size_8"
+                app:boxCornerRadiusTopStart="@dimen/size_8"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/size_24"
+                android:hint="Konfirmasi kata sandi"
+                app:boxStrokeColor="@color/colorBlack"
+                app:boxStrokeWidth="@dimen/size_1"
+                app:layout_constraintTop_toBottomOf="@id/tilRegisterSchoolPassword">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etLoginPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/size_16" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/btnRegisterSchoolRegister"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/size_24"
+                android:layout_marginBottom="@dimen/size_20"
+                android:background="@drawable/btn_darkblue_rectangle"
+                android:padding="@dimen/size_16"
+                android:text="DAFTAR"
+                android:textColor="@color/colorWhite"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@id/tilRegisterSchoolConfirmPassword" />
+
+            <TextView
+                android:id="@+id/tvRegisterSchoolHaveAccount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_136"
+                android:layout_marginBottom="@dimen/size_16"
+                android:text="Sudah punya akun?"
+                android:textColor="@color/colorBlack"
+                android:textFontWeight="500"
+                android:textSize="@dimen/text_16"
+                app:layout_constraintTop_toBottomOf="@id/btnRegisterSchoolRegister"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent" />
+
+            <Button
+                android:id="@+id/btnRegisterSchoolLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/size_16"
+                android:layout_marginBottom="@dimen/size_20"
+                android:background="@drawable/btn_darkblue_rectangle"
+                android:padding="@dimen/size_16"
+                android:text="LOGIN"
+                android:textColor="@color/colorWhite"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@id/tvRegisterSchoolHaveAccount" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

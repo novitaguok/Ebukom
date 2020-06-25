@@ -1,11 +1,9 @@
 package com.ebukom.arch.ui.login
 
-import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import com.ebukom.R
-import com.ebukom.RegisterActivity
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.login_bottom_sheet.view.*
