@@ -8,6 +8,8 @@
     <color name="colorWhite">#FFFFFF</color>
     <color name="colorGray">#B5B5B5</color>
     <color name="colorBlack">#000000</color>
+    <color name="colorGreen">#02C27A</color>
+    <color name="colorBlue">#009BCA</color>
 
     <color name="mtrl_textinput_default_box_stroke_color" tools:override="true">#B5B5B5</color>
     <color name="colorLightGray">#C4C4C4</color>

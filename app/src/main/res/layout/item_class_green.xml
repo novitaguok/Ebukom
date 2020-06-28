@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+    android:layout_marginTop="@dimen/size_14"
+    android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+    app:cardCornerRadius="@dimen/size_8">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/ivItemClassOne"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/img_class_green"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/ibItemClassOne"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_more_vertical"
+            android:background="@android:color/transparent"
+            android:layout_marginTop="@dimen/size_12"
+            android:layout_marginRight="@dimen/size_18"
+            app:layout_constraintTop_toTopOf="@+id/ivItemClassOne"
+            app:layout_constraintRight_toRightOf="@+id/ivItemClassOne"/>
+
+        <TextView
+            android:id="@+id/tvItemClassKelas1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_24"
+            android:lineHeight="@dimen/size_20"
+            android:text="Kelas 1"
+            android:textColor="#005C39"
+            android:textFontWeight="500"
+            android:textSize="@dimen/text_16"
+            app:layout_constraintBottom_toTopOf="@+id/tvItemClassName1"
+            app:layout_constraintLeft_toLeftOf="@+id/tvItemClassName1" />
+
+        <TextView
+            android:id="@+id/tvItemClassName1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/size_20"
+            android:text="Aurora"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_28"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/ivItemClassOne"
+            app:layout_constraintLeft_toLeftOf="@+id/ivItemClassOne"
+            app:layout_constraintTop_toTopOf="@id/ivItemClassOne" />
+
+        <TextView
+            android:id="@+id/tvItemClassTeacher1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_4"
+            android:layout_marginBottom="@dimen/size_24"
+            android:lineHeight="@dimen/size_16"
+            android:text="Ratna Hendrawati"
+            android:textColor="#005C39"
+            android:textFontWeight="500"
+            android:textSize="@dimen/text_14"
+            app:layout_constraintLeft_toLeftOf="@+id/tvItemClassName1"
+            app:layout_constraintTop_toBottomOf="@+id/tvItemClassName1" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

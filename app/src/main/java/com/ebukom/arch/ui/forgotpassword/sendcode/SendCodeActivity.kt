@@ -1,12 +1,13 @@
-package com.ebukom.arch.ui.chooseclass
+package com.ebukom.arch.ui.forgotpassword.sendcode
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.ebukom.R
 
-class ChooseClassEmptyActivity : AppCompatActivity() {
+class SendCodeActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_choose_class_empty)
+        setContentView(R.layout.activity_send_code)
     }
 }

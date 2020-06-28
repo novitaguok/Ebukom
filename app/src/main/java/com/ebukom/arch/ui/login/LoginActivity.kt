@@ -31,7 +31,5 @@ class LoginActivity : AppCompatActivity() {
         view.regisParent.setOnClickListener {
             Toast.makeText(this, "Register by Parents", Toast.LENGTH_LONG).show()
         }
-
-
     }
 }
