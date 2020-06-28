@@ -11,6 +11,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.res.ColorStateListInflaterCompat.inflate
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ebukom.R
+import com.ebukom.R.layout.activity_join_class
 import com.ebukom.arch.dao.ChooseClassDao
 import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -49,6 +50,7 @@ class ChooseClassActivity : AppCompatActivity() {
             clChooseClass.visibility = View.INVISIBLE
             rvChooseClassClasses.visibility = View.VISIBLE
         }
+
     }
 
     fun popupMenu() {

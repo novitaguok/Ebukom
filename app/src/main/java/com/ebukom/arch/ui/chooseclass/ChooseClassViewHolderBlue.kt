@@ -26,8 +26,13 @@ class ChooseClassViewHolderBlue(var view: View, var context: Context) :
         view.tvItemClassName2.text = item.className
         view.tvItemClassTeacher2.text = item.teacher
 
-        view.ibItemClassTwo.setOnClickListener {
-            (context as ChooseClassActivity).popupMenu()
+
+        if (context is ChooseClassActivity) {
+            view.ibItemClassTwo.setOnClickListener {
+                (context as ChooseClassActivity).popupMenu()
+            }
+        } else {
+            view.ibItemClassTwo.visibility = View.INVISIBLE
         }
     }
 }
