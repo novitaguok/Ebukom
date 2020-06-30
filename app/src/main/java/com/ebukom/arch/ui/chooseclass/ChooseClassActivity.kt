@@ -44,10 +44,12 @@ class ChooseClassActivity : AppCompatActivity() {
 
         // Class list
         if (mList.isEmpty()) {
-            clChooseClass.visibility = View.VISIBLE
+            tvChooseClassMainEmpty.visibility = View.VISIBLE
+            ivChooseClassMainEmpty.visibility = View.VISIBLE
             rvChooseClassClasses.visibility = View.INVISIBLE
         } else {
-            clChooseClass.visibility = View.INVISIBLE
+            tvChooseClassMainEmpty.visibility = View.INVISIBLE
+            ivChooseClassMainEmpty.visibility = View.INVISIBLE
             rvChooseClassClasses.visibility = View.VISIBLE
         }
 

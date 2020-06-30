@@ -39,7 +39,5 @@ class JoinClassActivity : AppCompatActivity() {
         mList.add(ChooseClassDao("", "", "", 1))
 
         mAdapter.addAll(mList)
-
-
     }
 }
