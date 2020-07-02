@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".arch.ui.classdetail.school.SchoolFragment">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="School Info Fragment" />
+
+    </RelativeLayout>
+
+
+<!--    <com.google.android.material.appbar.AppBarLayout-->
+<!--        android:id="@+id/abClassDetail"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content">-->
+<!--        -->
+<!--        <com.google.android.material.tabs.TabLayout-->
+<!--            android:id="@+id/tlClassDetail"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content">-->
+
+<!--        </com.google.android.material.tabs.TabLayout>-->
+<!--        -->
+<!--    </com.google.android.material.appbar.AppBarLayout>-->
+    
+<!--    <androidx.viewpager.widget.ViewPager-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="match_parent"/>-->
+
+</FrameLayout>

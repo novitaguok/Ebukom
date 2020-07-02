@@ -71,18 +71,32 @@
             android:textStyle="bold"
             app:pinCharacterSpacing="@dimen/size_8"/>
 
+        <TextView
+            android:id="@+id/tvSendCodeErrorMessage"
+            app:layout_constraintTop_toBottomOf="@+id/txt_pin_entry"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_12"
+            android:layout_marginLeft="@dimen/size_32"
+            android:textSize="@dimen/text_12"
+            android:text="Kode yang Anda masukkan salah"
+            android:textColor="@color/colorRed"
+            android:visibility="invisible" />
+
         <Button
             android:id="@+id/btnVerificationReset"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="@dimen/size_24"
+            android:layout_marginTop="@dimen/size_12"
             android:background="@drawable/btn_darkblue_rectangle"
             android:padding="@dimen/size_16"
             android:text="ATUR ULANG KATA SANDI"
             android:textColor="@color/colorWhite"
             android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@+id/txt_pin_entry" />
+            app:layout_constraintTop_toBottomOf="@+id/tvSendCodeErrorMessage" />
 
         <TextView
             android:id="@+id/tvVerificationResendCode"
@@ -110,6 +124,20 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvVerificationResendCode" />
+
+        <TextView
+            android:id="@+id/tvVerificationCodeReceived"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_16"
+            android:text="Kode sudah dikirim ulang"
+            android:textColor="#BDBDBD"
+            android:textFontWeight="500"
+            android:textSize="@dimen/text_16"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvVerificationNotReceiveCode"
+            android:visibility="invisible"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

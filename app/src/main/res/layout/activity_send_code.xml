@@ -47,7 +47,8 @@
             android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
             android:text="@string/send_code_text"
             android:textSize="@dimen/text_14"
-            android:lineHeight="@dimen/size_24"/>
+            android:lineHeight="@dimen/size_24"
+            android:textColor="#222222"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilSendCodePhone"
@@ -74,6 +75,19 @@
                 android:background="@drawable/edit_text_rectangle_selector" />
         </com.google.android.material.textfield.TextInputLayout>
 
+        <TextView
+            android:id="@+id/tvSendCodeErrorMessage"
+            app:layout_constraintTop_toBottomOf="@+id/tilSendCodePhone"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_4"
+            android:layout_marginLeft="@dimen/size_32"
+            android:text="Nomor telepon Anda tidak terdaftar"
+            android:textColor="@color/colorRed"
+            android:visibility="invisible"
+            android:textSize="@dimen/text_12"/>
+
         <Button
             android:id="@+id/btnSendCodeReset"
             android:layout_width="match_parent"
@@ -85,7 +99,7 @@
             android:text="ATUR ULANG KATA SANDI"
             android:textColor="@color/colorWhite"
             android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@+id/tilSendCodePhone" />
+            app:layout_constraintTop_toBottomOf="@+id/tvSendCodeErrorMessage" />
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
