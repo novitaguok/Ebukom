@@ -13,7 +13,7 @@ import com.ebukom.base.BaseViewHolder
 import com.ebukom.utils.load
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.*
-import kotlinx.android.synthetic.main.choose_class_bottom_sheet.view.*
+import kotlinx.android.synthetic.main.bottom_sheet_choose_class.view.*
 import kotlinx.android.synthetic.main.item_class_blue.*
 import kotlinx.android.synthetic.main.item_class_blue.view.*
 import kotlinx.android.synthetic.main.item_class_green.*

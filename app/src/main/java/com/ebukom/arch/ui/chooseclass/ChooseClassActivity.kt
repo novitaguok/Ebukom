@@ -1,23 +1,17 @@
 package com.ebukom.arch.ui.chooseclass
 
 import android.os.Bundle
-import android.text.Layout
-import android.view.LayoutInflater
 import android.view.View
-import android.view.View.inflate
-import android.widget.PopupMenu
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.res.ColorStateListInflaterCompat.inflate
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ebukom.R
-import com.ebukom.R.layout.activity_join_class
 import com.ebukom.arch.dao.ChooseClassDao
-import com.google.android.material.bottomsheet.BottomSheetBehavior
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.activity_choose_class.*
-import kotlinx.android.synthetic.main.choose_class_bottom_sheet.view.*
-import kotlinx.android.synthetic.main.item_class_blue.*
+import kotlinx.android.synthetic.main.activity_verification.*
+import kotlinx.android.synthetic.main.bottom_sheet_choose_class.view.*
 
 
 class ChooseClassActivity : AppCompatActivity() {
@@ -53,19 +47,51 @@ class ChooseClassActivity : AppCompatActivity() {
             rvChooseClassClasses.visibility = View.VISIBLE
         }
 
+        // Logout Button
+        btnChooseClassLogout.setOnClickListener {
+            val builder = AlertDialog.Builder(this@ChooseClassActivity)
+
+            builder.setMessage("Apakah Anda yakin ingin melakukan logout?")
+            builder.setPositiveButton("LOGOUT") { dialog, which ->
+                Toast.makeText(applicationContext, "Next?", Toast.LENGTH_SHORT).show()
+            }
+
+            builder.setNegativeButton("BATALKAN") { dialog, which ->
+                Toast.makeText(applicationContext,"Next?", Toast.LENGTH_SHORT).show()
+            }
+
+            val dialog: AlertDialog = builder.create()
+            dialog.show()
+        }
+
     }
 
     fun popupMenu() {
         // Card menu
         val bottomSheetDialog = BottomSheetDialog(this)
-        val view = layoutInflater.inflate(R.layout.choose_class_bottom_sheet, null)
+        val view = layoutInflater.inflate(R.layout.bottom_sheet_choose_class, null)
         bottomSheetDialog.setContentView(view)
 
 
         view.deleteClass.setOnClickListener {
-            Toast.makeText(this, "Class deleted", Toast.LENGTH_LONG).show()
+            val builder = AlertDialog.Builder(this@ChooseClassActivity)
+
+            bottomSheetDialog.dismiss()
+
+            builder.setMessage("Apakah Anda yakin ingin menghapus kelas ini?")
+
+            builder.setNegativeButton("BATALKAN") { dialog, which ->
+                Toast.makeText(applicationContext,"Next?", Toast.LENGTH_SHORT).show()
+            }
+            builder.setPositiveButton("HAPUS") { dialog, which ->
+                Toast.makeText(applicationContext, "Next?", Toast.LENGTH_SHORT).show()
+            }
+
+            val dialog: AlertDialog = builder.create()
+            dialog.show()
         }
         view.cancelClass.setOnClickListener {
+            bottomSheetDialog.dismiss()
             Toast.makeText(this, "Class cancelled", Toast.LENGTH_LONG).show()
         }
 

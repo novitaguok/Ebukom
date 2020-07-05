@@ -38,6 +38,11 @@
         android:layout_height="match_parent"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
+        <include
+            android:id="@+id/scrProgressBar"
+            android:visibility="gone"
+            layout="@layout/progress_bar"/>
+
         <TextView
             android:id="@+id/tvSendCodeText"
             android:layout_width="match_parent"

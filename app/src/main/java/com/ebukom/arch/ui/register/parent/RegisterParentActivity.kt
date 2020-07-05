@@ -8,6 +8,13 @@ import android.widget.ArrayAdapter
 import android.widget.Spinner
 import android.widget.Toast
 import com.ebukom.R
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import kotlinx.android.synthetic.main.activity_login.*
+import kotlinx.android.synthetic.main.activity_register_parent.*
+import kotlinx.android.synthetic.main.bottom_sheet_choose_class.view.*
+import kotlinx.android.synthetic.main.bottom_sheet_login.view.*
+import kotlinx.android.synthetic.main.bottom_sheet_register_parent.*
+import kotlinx.android.synthetic.main.bottom_sheet_register_parent.view.*
 
 class RegisterParentActivity : AppCompatActivity() {
 
@@ -15,34 +22,31 @@ class RegisterParentActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register_parent)
 
-        val spinner = findViewById<Spinner>(R.id.spRegisterParentEskul) as Spinner
-
-        val eskul = arrayOf("Eskul 1", "Eskul 2", "Eskul 3")
-
-        val adapter = ArrayAdapter(
-            this@RegisterParentActivity,
-            android.R.layout.simple_spinner_dropdown_item,
-            eskul
-        )
-        spinner.adapter = adapter
-
-        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                Toast.makeText(
-                    this@RegisterParentActivity,
-                    eskul[position] + " selected",
-                    Toast.LENGTH_LONG
-                )
-            }
-        }
+        // Pop Up
+//        val bottomSheetDialog = BottomSheetDialog(this)
+//        val view = layoutInflater.inflate(R.layout.bottom_sheet_register_parent, null)
+//        bottomSheetDialog.setContentView(view)
+//
+//        btnRegisterParentEskul.setOnClickListener {
+//            bottomSheetDialog.show()
+//        }
+//
+//        view.btnRegisterParentBottomSheetDone.setOnClickListener {
+//
+//            val pramuka = view.cbRegisterParentBottomSheetPramuka.isChecked
+//            val futsal = view.cbRegisterParentBottomSheetFutsal.isChecked
+//            val basket = view.cbRegisterParentBottomSheetBasket.isChecked
+//            val pmr = view.cbRegisterParentBottomSheetPMR.isChecked
+//
+//            if(pramuka) {
+//                Toast.makeText(this, "Hello", Toast.LENGTH_LONG).show()
+//            } else if(futsal) {
+//                Toast.makeText(this, "Hello", Toast.LENGTH_LONG).show()
+//            } else if(basket) {
+//                Toast.makeText(this, "Hello", Toast.LENGTH_LONG).show()
+//            } else {
+//                Toast.makeText(this, "Hello", Toast.LENGTH_LONG).show()
+//            }
+//        }
     }
 }

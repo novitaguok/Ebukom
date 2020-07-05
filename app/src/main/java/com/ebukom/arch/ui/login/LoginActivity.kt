@@ -6,7 +6,7 @@ import android.widget.Toast
 import com.ebukom.R
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.android.synthetic.main.login_bottom_sheet.view.*
+import kotlinx.android.synthetic.main.bottom_sheet_login.view.*
 
 class LoginActivity : AppCompatActivity() {
 
@@ -16,7 +16,7 @@ class LoginActivity : AppCompatActivity() {
 
         val bottomSheetDialog = BottomSheetDialog(this)
 
-        val view = layoutInflater.inflate(R.layout.login_bottom_sheet, null)
+        val view = layoutInflater.inflate(R.layout.bottom_sheet_login, null)
 
         bottomSheetDialog.setContentView(view)
 
