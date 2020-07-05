@@ -25,10 +25,12 @@ class LoginActivity : AppCompatActivity() {
         }
 
         view.regisSchool.setOnClickListener {
+            bottomSheetDialog.dismiss()
             Toast.makeText(this, "Register by School", Toast.LENGTH_LONG).show()
         }
 
         view.regisParent.setOnClickListener {
+            bottomSheetDialog.dismiss()
             Toast.makeText(this, "Register by Parents", Toast.LENGTH_LONG).show()
         }
     }
