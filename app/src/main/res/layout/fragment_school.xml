@@ -3,37 +3,27 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     tools:context=".arch.ui.classdetail.school.SchoolFragment">
 
-    <RelativeLayout
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
+        <com.google.android.material.tabs.TabLayout
+            android:id="@+id/mainClassTabLayout"
+            app:layout_constraintTop_toTopOf="parent"
+            app:tabMode="fixed"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:text="School Info Fragment" />
+            android:layout_height="wrap_content" />
 
-    </RelativeLayout>
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/mainClassViewPager"
+            app:layout_constraintTop_toBottomOf="@+id/mainClassTabLayout"
+            android:layout_width="match_parent"
+            android:layout_height="0dp" />
 
-
-<!--    <com.google.android.material.appbar.AppBarLayout-->
-<!--        android:id="@+id/abClassDetail"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content">-->
-<!--        -->
-<!--        <com.google.android.material.tabs.TabLayout-->
-<!--            android:id="@+id/tlClassDetail"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content">-->
-
-<!--        </com.google.android.material.tabs.TabLayout>-->
-<!--        -->
-<!--    </com.google.android.material.appbar.AppBarLayout>-->
-    
-<!--    <androidx.viewpager.widget.ViewPager-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"/>-->
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </FrameLayout>
