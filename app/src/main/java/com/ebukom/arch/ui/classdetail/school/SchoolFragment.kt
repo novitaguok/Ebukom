@@ -25,7 +25,8 @@ class SchoolFragment : Fragment() {
         tabLayout = view.findViewById(R.id.mainClassTabLayout) as TabLayout
         viewPager = view.findViewById(R.id.mainClassViewPager) as ViewPager
         viewPager!!.setAdapter(fragmentManager?.let { SchoolPageAdapter(it) })
-        tabLayout!!.post(Runnable { tabLayout!!.setupWithViewPager(viewPager) })
+        tabLayout!!.setupWithViewPager(viewPager)
+//        tabLayout!!.post(Runnable {  })
         return view
     }
 }

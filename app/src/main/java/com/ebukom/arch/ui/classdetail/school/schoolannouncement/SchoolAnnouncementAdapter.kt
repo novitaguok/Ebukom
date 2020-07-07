@@ -1,7 +1,10 @@
 package com.ebukom.arch.ui.classdetail.school.schoolannouncement
 
 import android.content.Context
+import android.text.Layout
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ebukom.R
 import com.ebukom.arch.dao.ChooseClassDao
@@ -9,26 +12,31 @@ import com.ebukom.arch.dao.ClassDetailAnnouncementDao
 import com.ebukom.arch.ui.chooseclass.ChooseClassViewHolderBlue
 import com.ebukom.arch.ui.chooseclass.ChooseClassViewHolderGreen
 import com.ebukom.base.BaseAdapter
+import kotlinx.android.extensions.LayoutContainer
+import kotlinx.android.synthetic.main.item_announcement.view.*
 
-class SchoolAnnouncementAdapter : BaseAdapter<ClassDetailAnnouncementDao>() {
-    companion object{
-        const val TYPE_GREEN = 0
-        const val TYPE_BLUE = 1
+class SchoolAnnouncementAdapter(var announcements: List<ClassDetailAnnouncementDao>) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_announcement, parent, false)
+        return ViewHolder(view)
     }
 
-    override fun setView(viewType: Int): Int = when (viewType) {
-        TYPE_GREEN -> R.layout.item_class_green
-        else -> R.layout.item_class_blue
+    override fun getItemCount(): Int {
+        return announcements.size
     }
 
-    override fun itemViewHolder(
-        context: Context,
-        view: View,
-        viewType: Int
-    ): RecyclerView.ViewHolder = when (viewType) {
-        TYPE_GREEN -> ChooseClassViewHolderGreen(view, context)
-        else -> ChooseClassViewHolderBlue(view, context)
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        (holder as ViewHolder).bind(announcements[position])
     }
 
-    override fun getItemViewType(position: Int): Int = data[position].viewType
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        fun bind(announcement: ClassDetailAnnouncementDao) {
+            itemView.tvAnnouncementTitle.text = announcement!!.announcementTitle
+            itemView.tvAnnouncementContent.text = announcement!!.announcementContent
+            itemView.tvAnnouncementComment.text = announcement!!.comment
+            itemView.tvAnnouncementTime.text = announcement!!.time
+        }
+    }
 }

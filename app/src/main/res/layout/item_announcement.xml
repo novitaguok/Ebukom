@@ -73,7 +73,6 @@
             android:layout_marginTop="@dimen/size_36"
             android:layout_marginLeft="@dimen/size_10"
             android:text="9 KOMENTAR"
-            android:letterSpacing="1.25"
             android:textSize="@dimen/text_12"
             android:lineHeight="@dimen/text_16"
             android:textFontWeight="500"
@@ -88,7 +87,6 @@
             android:layout_marginRight="@dimen/size_10"
             android:layout_marginLeft="@dimen/size_10"
             android:text="12.00 - Senin, 12 Maret 2020"
-            android:letterSpacing="1.25"
             android:textSize="@dimen/text_10"
             android:lineHeight="@dimen/text_20"
             android:textColor="#7A7A7A"/>
