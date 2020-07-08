@@ -24,19 +24,9 @@ class SchoolFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_school, container, false)
         tabLayout = view.findViewById(R.id.mainClassTabLayout) as TabLayout
         viewPager = view.findViewById(R.id.mainClassViewPager) as ViewPager
-        viewPager!!.setAdapter(fragmentManager?.let { SchoolPageAdapter(it) })
-        tabLayout!!.setupWithViewPager(viewPager)
-//        tabLayout!!.post(Runnable {  })
+        viewPager?.adapter = SchoolPageAdapter(childFragmentManager)
+        tabLayout?.setupWithViewPager(viewPager)
+        viewPager?.currentItem = 0
         return view
     }
 }
-
-//////////////////////////////////////////
-//override fun onCreate(savedInstanceState: Bundle?) {
-//    super.onCreate(savedInstanceState)
-//    setContentView(R.layout.SchoolFragment)
-//
-//    viewPager.adapter = PagerAdapter(supportFragmentManager)
-//    mainClassTabLayout.setupWithViewPager(viewPager)
-//}
-////////////////////////////////////////////////

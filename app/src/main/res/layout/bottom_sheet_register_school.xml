@@ -10,131 +10,104 @@
     app:layout_behavior="@string/bottom_sheet_behavior">
 
     <TextView
-        android:id="@+id/tvRegisterParentBottomSheetTitle"
+        android:id="@+id/tvRegisterSchoolBottomSheetTitle"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_marginLeft="@dimen/size_32"
         android:gravity="center_vertical"
         android:lineHeight="@dimen/size_28"
-        android:text="Pilih Eskul yang diikuti anak Anda"
+        android:text="Pilih Peran Anda di SD Cendekia Muda"
         android:textColor="#3F3B5C"
         android:textSize="@dimen/text_16"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/tvRegisterParentBottomSheetPramuka"
+        android:id="@+id/tvRegisterSchoolBottomSheetParent"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_marginLeft="@dimen/size_32"
         android:lineHeight="@dimen/size_28"
-        android:paddingVertical="@dimen/size_10"
-        android:text="Pramuka"
-        android:textColor="#212121"
-        android:textSize="@dimen/text_16"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/cbRegisterParentBottomSheetPramuka"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvRegisterParentBottomSheetTitle" />
-
-    <CheckBox
-        android:id="@+id/cbRegisterParentBottomSheetPramuka"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginRight="@dimen/size_18"
-        android:buttonTint="#BDBDBD"
-        app:layout_constraintBottom_toBottomOf="@id/tvRegisterParentBottomSheetPramuka"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/tvRegisterParentBottomSheetPramuka"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tvRegisterParentBottomSheetPramuka" />
-
-    <TextView
-        android:id="@+id/tvRegisterParentBottomSheetFutsal"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="@dimen/size_32"
-        android:lineHeight="@dimen/size_28"
-        android:text="Futsal"
+        android:text="Wali Murid"
         android:textColor="#212121"
         android:paddingVertical="@dimen/size_10"
         android:textSize="@dimen/text_16"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/cbRegisterParentBottomSheetFutsal"
+        app:layout_constraintRight_toLeftOf="@+id/cbRegisterSchoolBottomSheetParent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvRegisterParentBottomSheetPramuka" />
+        app:layout_constraintTop_toBottomOf="@id/tvRegisterSchoolBottomSheetTitle" />
 
     <CheckBox
-        android:id="@+id/cbRegisterParentBottomSheetFutsal"
+        android:id="@+id/cbRegisterSchoolBottomSheetParent"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="@dimen/size_18"
         android:buttonTint="#BDBDBD"
-        app:layout_constraintBottom_toBottomOf="@id/tvRegisterParentBottomSheetFutsal"
+        app:layout_constraintBottom_toBottomOf="@id/tvRegisterSchoolBottomSheetParent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/tvRegisterParentBottomSheetFutsal"
+        app:layout_constraintLeft_toRightOf="@id/tvRegisterSchoolBottomSheetParent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tvRegisterParentBottomSheetFutsal" />
+        app:layout_constraintTop_toTopOf="@id/tvRegisterSchoolBottomSheetParent" />
 
 
     <TextView
-        android:id="@+id/tvRegisterParentBottomSheetBasket"
+        android:id="@+id/tvRegisterSchoolBottomSheetTeacher"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_marginLeft="@dimen/size_32"
         android:lineHeight="@dimen/size_28"
-        android:text="Basket"
+        android:text="Guru"
         android:paddingVertical="@dimen/size_10"
         android:textColor="#212121"
         android:textSize="@dimen/text_16"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/cbRegisterParentBottomSheetBasket"
+        app:layout_constraintRight_toLeftOf="@+id/cbRegisterSchoolBottomSheetTeacher"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvRegisterParentBottomSheetFutsal" />
+        app:layout_constraintTop_toBottomOf="@id/tvRegisterSchoolBottomSheetParent" />
 
     <CheckBox
-        android:id="@+id/cbRegisterParentBottomSheetBasket"
+        android:id="@+id/cbRegisterSchoolBottomSheetTeacher"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="@dimen/size_18"
         android:buttonTint="#BDBDBD"
-        app:layout_constraintBottom_toBottomOf="@id/tvRegisterParentBottomSheetBasket"
+        app:layout_constraintBottom_toBottomOf="@id/tvRegisterSchoolBottomSheetTeacher"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/tvRegisterParentBottomSheetBasket"
+        app:layout_constraintLeft_toRightOf="@id/tvRegisterSchoolBottomSheetTeacher"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tvRegisterParentBottomSheetBasket" />
+        app:layout_constraintTop_toTopOf="@id/tvRegisterSchoolBottomSheetTeacher" />
 
     <TextView
-        android:id="@+id/tvRegisterParentBottomSheetPMR"
+        android:id="@+id/tvRegisterSchoolBottomSheetAdmin"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
         android:layout_marginLeft="@dimen/size_32"
         android:lineHeight="@dimen/size_28"
         android:paddingVertical="@dimen/size_10"
-        android:text="PMR"
+        android:text="Admin Keuangan"
         android:textColor="#212121"
         android:textSize="@dimen/text_16"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toLeftOf="@+id/cbRegisterParentBottomSheetPMR"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvRegisterParentBottomSheetBasket" />
+        app:layout_constraintTop_toBottomOf="@id/tvRegisterSchoolBottomSheetTeacher" />
 
     <CheckBox
-        android:id="@+id/cbRegisterParentBottomSheetPMR"
+        android:id="@+id/cbRegisterSchoolBottomSheetAdmin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="@dimen/size_18"
         android:buttonTint="#BDBDBD"
-        app:layout_constraintBottom_toBottomOf="@id/tvRegisterParentBottomSheetPMR"
+        app:layout_constraintBottom_toBottomOf="@id/tvRegisterSchoolBottomSheetAdmin"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintLeft_toRightOf="@id/tvRegisterParentBottomSheetPMR"
+        app:layout_constraintLeft_toRightOf="@id/tvRegisterSchoolBottomSheetAdmin"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tvRegisterParentBottomSheetPMR" />
+        app:layout_constraintTop_toTopOf="@id/tvRegisterSchoolBottomSheetAdmin" />
+
     <Button
-        android:id="@+id/btnRegisterParentBottomSheetDone"
+        android:id="@+id/btnRegisterSchoolBottomSheetDone"
         android:layout_width="match_parent"
         android:layout_height="44dp"
         android:background="@color/colorSuperDarkBlue"
@@ -143,5 +116,5 @@
         android:layout_marginTop="@dimen/size_10"
         android:textColor="@color/colorWhite"
         android:textSize="@dimen/text_14"
-        app:layout_constraintTop_toBottomOf="@id/tvRegisterParentBottomSheetPMR"/>
+        app:layout_constraintTop_toBottomOf="@id/tvRegisterSchoolBottomSheetAdmin"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

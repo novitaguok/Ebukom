@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="210dp"
     android:layout_marginHorizontal="@dimen/size_8"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_marginTop="@dimen/size_12"
+    android:layout_marginBottom="12dp"
     app:cardCornerRadius="@dimen/size_4"
     android:background="@color/colorWhite">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
         <TextView
             android:id="@+id/tvAnnouncementTitle"
@@ -34,6 +34,7 @@
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginTop="@dimen/size_20"
             android:layout_marginRight="@dimen/size_20"
+            android:clickable="true"
             android:src="@drawable/ic_more_vertical" />
 
         <TextView
@@ -54,11 +55,11 @@
             android:id="@+id/tvAnnouncementMore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/tvAnnouncementContent"
+            app:layout_constraintBottom_toTopOf="@+id/tvAnnouncementComment"
             app:layout_constraintLeft_toLeftOf="parent"
             android:paddingLeft="@dimen/size_10"
             android:paddingRight="@dimen/size_10"
-            android:layout_marginTop="@dimen/size_12"
+            android:layout_marginBottom="@dimen/size_36"
             android:text="Baca lebih lanjut"
             android:textSize="@dimen/text_14"
             android:lineHeight="@dimen/size_20"
@@ -68,10 +69,11 @@
             android:id="@+id/tvAnnouncementComment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/tvAnnouncementMore"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
             android:layout_marginTop="@dimen/size_36"
             android:layout_marginLeft="@dimen/size_10"
+            android:layout_marginBottom="@dimen/size_20"
             android:text="9 KOMENTAR"
             android:textSize="@dimen/text_12"
             android:lineHeight="@dimen/text_16"

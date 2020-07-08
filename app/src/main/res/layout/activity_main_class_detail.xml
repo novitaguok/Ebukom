@@ -57,7 +57,6 @@
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/size_12"
             android:src="@drawable/ic_notifications_dark_blue"
-            android:translationZ="-100dp"
             app:layout_constraintBottom_toBottomOf="@+id/ivClassHeaderProfilePicture"
             app:layout_constraintRight_toLeftOf="@+id/ivClassHeaderProfilePicture"
             app:layout_constraintTop_toTopOf="@+id/ivClassHeaderProfilePicture" />
@@ -66,9 +65,10 @@
             android:id="@+id/ivClassHeaderNotificationBadge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:paddingRight="-4dp"
             android:src="@drawable/ic_dots_red"
+            android:translationZ="@dimen/size_8"
             app:layout_constraintRight_toLeftOf="@id/ivClassHeaderNotificationBell"
+            app:layout_constraintLeft_toLeftOf="@id/ivClassHeaderNotificationBell"
             app:layout_constraintTop_toTopOf="@id/ivClassHeaderNotificationBell" />
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -97,8 +97,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@color/colorWhite"
-        android:paddingTop="@dimen/size_10"
-        android:paddingBottom="@dimen/size_8"
+
         app:itemIconSize="@dimen/size_18"
         app:itemIconTint="@drawable/selector_bottom"
         app:itemTextColor="@drawable/selector_bottom"

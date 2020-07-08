@@ -1,29 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
     tools:context=".arch.ui.classdetail.school.SchoolFragment">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <com.google.android.material.tabs.TabLayout
+        android:id="@+id/mainClassTabLayout"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toTopOf="parent"
+        app:tabTextColor="@color/tab_text_color"
+        app:tabMode="fixed" />
 
-        <com.google.android.material.tabs.TabLayout
-            android:id="@+id/mainClassTabLayout"
-            app:layout_constraintTop_toTopOf="parent"
-            app:tabMode="fixed"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+    <androidx.viewpager.widget.ViewPager
+        android:id="@+id/mainClassViewPager"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mainClassTabLayout" />
 
-        <androidx.viewpager.widget.ViewPager
-            android:id="@+id/mainClassViewPager"
-            app:layout_constraintTop_toBottomOf="@+id/mainClassTabLayout"
-            android:layout_width="match_parent"
-            android:layout_height="0dp" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-</FrameLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

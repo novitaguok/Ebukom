@@ -14,19 +14,14 @@
             android:layout_height="wrap_content"
             android:paddingBottom="@dimen/size_56">
 
-            <RelativeLayout
-                android:id="@+id/rlChooseClassHeader"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent">
-
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cvChooseClassHeader"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:elevation="@dimen/size_2"
                     app:cardCornerRadius="@dimen/size_8"
-                    app:cardElevation="@dimen/size_2">
+                    app:cardElevation="@dimen/size_2"
+                    app:layout_constraintTop_toTopOf="parent">
 
                     <ImageView
                         android:id="@+id/ivChooseClassHeader"
@@ -36,7 +31,6 @@
                         android:src="@drawable/bg_books" />
 
                 </androidx.cardview.widget.CardView>
-            </RelativeLayout>
 
             <TextView
                 android:id="@+id/tvChooseClassWelcome"
@@ -44,6 +38,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/size_16"
                 android:layout_marginTop="@dimen/size_52"
+                android:translationZ="10dp"
                 android:shadowColor="@android:color/transparent"
                 android:text="Selamat datang di \nEbukom Cendekia Muda"
                 android:textColor="@color/colorRed"
@@ -58,6 +53,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/size_16"
                 android:layout_marginTop="@dimen/size_12"
+                android:translationZ="10dp"
                 android:shadowColor="@android:color/transparent"
                 android:text="Silakan memilih kelas yang tersedia"
                 android:textColor="@color/colorSuperDarkBlue"

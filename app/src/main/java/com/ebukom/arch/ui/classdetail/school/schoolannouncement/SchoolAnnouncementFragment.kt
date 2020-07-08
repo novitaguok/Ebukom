@@ -1,10 +1,12 @@
 package com.ebukom.arch.ui.classdetail.school.schoolannouncement
 
+import android.app.Fragment
+import android.os.Build
 import android.os.Bundle
-import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.util.Log
+import android.view.*
+import android.widget.Toast
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.ListAdapter
 import com.ebukom.R
@@ -12,9 +14,12 @@ import com.ebukom.arch.dao.ChooseClassDao
 import com.ebukom.arch.dao.ClassDetailAnnouncementDao
 import com.ebukom.arch.ui.chooseclass.ChooseClassAdapter
 import com.ebukom.arch.ui.classdetail.school.SchoolPageAdapter
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import kotlinx.android.synthetic.main.bottom_sheet_school_announcement.view.*
 import kotlinx.android.synthetic.main.fragment_school_announcement.*
+import kotlinx.android.synthetic.main.item_announcement.*
 
-class SchoolAnnouncementFragment : Fragment() {
+class SchoolAnnouncementFragment : androidx.fragment.app.Fragment() {
 
     var objectList = ArrayList<ClassDetailAnnouncementDao>()
     val schoolAnnouncementAdapter = SchoolAnnouncementAdapter(objectList)
