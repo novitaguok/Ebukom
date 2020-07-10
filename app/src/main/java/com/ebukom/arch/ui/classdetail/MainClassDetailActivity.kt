@@ -40,6 +40,11 @@ class MainClassDetailActivity : AppCompatActivity() {
             true
         }
 
+        // Header
+        clClassHeaderClassName.setOnClickListener {
+            popupMenu()
+        }
+
         // Class Header Dropdown
         val bottomSheetDialog = BottomSheetDialog(this)
 
@@ -71,28 +76,17 @@ class MainClassDetailActivity : AppCompatActivity() {
     fun popupMenu() {
         val bottomSheetDialog = BottomSheetDialog(this)
 
-        val view = layoutInflater.inflate(R.layout.bottom_sheet_login, null)
+        val view = layoutInflater.inflate(R.layout.bottom_sheet_class_detail_header, null)
 
         bottomSheetDialog.setContentView(view)
-
-        ivAnnouncementMoreButton.setOnClickListener {
+//
+//        ivAnnouncementMoreButton.setOnClickListener {
             bottomSheetDialog.show()
-        }
-
-        view.editInfo.setOnClickListener {
-            bottomSheetDialog.dismiss()
-            Toast.makeText(this, "Edit Info", Toast.LENGTH_LONG).show()
-        }
-
-        view.deleteInfo.setOnClickListener {
-            bottomSheetDialog.dismiss()
-            Toast.makeText(this, "Delete Info", Toast.LENGTH_LONG).show()
-        }
-
-        view.cancelInfo.setOnClickListener {
-            bottomSheetDialog.dismiss()
-            Toast.makeText(this, "Cancel", Toast.LENGTH_LONG).show()
-        }
+//        }
+//
+//        view.editInfo.setOnClickListener {
+//            bottomSheetDialog.dismiss()
+//            Toast.makeText(this, "Edit Info", Toast.LENGTH_LONG).show()
+//        }
     }
-
 }

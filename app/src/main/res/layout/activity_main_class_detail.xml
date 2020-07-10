@@ -27,29 +27,36 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <TextView
-            android:id="@+id/tvClassHeaderClassName"
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clClassHeaderClassName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/size_16"
-            android:layout_marginTop="@dimen/size_4"
-            android:lineHeight="@dimen/size_28"
-            android:text="Aurora"
-            android:textColor="@color/colorRed"
-            android:textSize="@dimen/text_24"
-            android:textStyle="bold"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tvClassHeaderClassNumber" />
+            app:layout_constraintTop_toBottomOf="@+id/tvClassHeaderClassNumber"
+            app:layout_constraintLeft_toLeftOf="@+id/tvClassHeaderClassNumber">
 
-        <ImageView
-            android:id="@+id/ivClassHeaderDropdown"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/size_8"
-            android:layout_marginTop="78dp"
-            android:src="@drawable/ic_dropdown"
-            app:layout_constraintLeft_toRightOf="@+id/tvClassHeaderClassName"
-            app:layout_constraintTop_toTopOf="parent" />
+            <TextView
+                android:id="@+id/tvClassHeaderClassName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:lineHeight="@dimen/size_28"
+                android:text="Aurora"
+                android:textColor="@color/colorRed"
+                android:textSize="@dimen/text_24"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <ImageView
+                android:id="@+id/ivClassHeaderDropdown"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_8"
+                android:src="@drawable/ic_dropdown"
+                app:layout_constraintLeft_toRightOf="@+id/tvClassHeaderClassName"
+                app:layout_constraintTop_toTopOf="@id/tvClassHeaderClassName"
+                app:layout_constraintBottom_toBottomOf="@+id/tvClassHeaderClassName"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ImageView
             android:id="@+id/ivClassHeaderNotificationBell"

@@ -2,8 +2,15 @@
     <string name="app_name">ebukom</string>
     <string name="send_code_text">Masukkan nomor telepon Anda, kami akan mengirimkan kode untuk mengatur ulang kata sandi Anda</string>
     <string name="verification_text">Kami sudah mengirimkan kode ke nomor telepon Ana melalui SMS. Silakan memasukkan 4 digit kode tersebut.</string>
+    <string name="announcement_content">Besok akan dilaksanakan kegiatan pentas seni. Orang tua dimohon untuk mempersiapkan peralatan di bawah ini. Tolong diperhatikan ya Ibu.</string>
+    <string name="announcement_title">Kegiatan Pentas Seni</string>
+    <string name="announcement_content_complete">Besok akan dilaksanakan kegiatan pentas seni. Orang tua dimohon untuk mempersiapkan peralatan di bawah ini. Tolong diperhatikan ya Ibu. Ada beberapa barang yang harus dibawa, jangan sampai ada yang ketinggalan.
+        \n\nBerikut barang-barang yang harus dibawa.\n1. Baju ganti\n2.Bekal ekstra\n3. Uang sebesar 1 Milyar\n4. Tas\n5. Laptop
+        \n\nKegiatan akan dilaksanakan tanggal 12 Oktober 2090, memang masih lama tapi persiapkan saja ya...
+    </string>
+    <string name="insert_comment">Masukkan komentar</string>
+    <string name="comment_content">Aku pusing banyak euy yang dibawa, udahlah mending skip cuy</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="announcement_content">Besok akan dilaksanakan kegiatan pentas seni. Orang tua dimohon untuk mempersiapkan peralatan di bawah ini. Tolong diperhatikan ya Ibu.</string>
 </resources>

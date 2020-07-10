@@ -48,6 +48,8 @@ class SchoolAnnouncementAdapter(var announcements: List<ClassDetailAnnouncementD
             itemView.ivAnnouncementMoreButton.setOnClickListener {
 
             }
+
+
         }
     }
 }
