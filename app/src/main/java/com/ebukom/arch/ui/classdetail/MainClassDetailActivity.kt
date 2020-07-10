@@ -2,7 +2,6 @@ package com.ebukom.arch.ui.classdetail
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.ebukom.R
@@ -12,13 +11,9 @@ import com.ebukom.arch.ui.classdetail.personal.PersonalFragment
 import com.ebukom.arch.ui.classdetail.school.SchoolFragment
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.activity_main_class_detail.*
-import kotlinx.android.synthetic.main.bottom_sheet_class_detail_header.*
 import kotlinx.android.synthetic.main.bottom_sheet_class_detail_header.view.*
-import kotlinx.android.synthetic.main.bottom_sheet_school_announcement.view.*
-import kotlinx.android.synthetic.main.item_announcement.*
-import kotlinx.android.synthetic.main.item_class_green.view.*
 
-class MainClassDetailActivity : AppCompatActivity() {
+class MainClassDetailActivity : AppCompatActivity(), OnMoreCallback {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,7 +71,7 @@ class MainClassDetailActivity : AppCompatActivity() {
     fun popupMenu() {
         val bottomSheetDialog = BottomSheetDialog(this)
 
-        val view = layoutInflater.inflate(R.layout.bottom_sheet_class_detail_header, null)
+        val view = layoutInflater.inflate(R.layout.bottom_sheet_school_announcement, null)
 
         bottomSheetDialog.setContentView(view)
 //
@@ -88,5 +83,15 @@ class MainClassDetailActivity : AppCompatActivity() {
 //            bottomSheetDialog.dismiss()
 //            Toast.makeText(this, "Edit Info", Toast.LENGTH_LONG).show()
 //        }
+    }
+
+    public fun showSheet(id: String) {
+        // show bottom sheet
+        Toast.makeText(this,"show bottom Sheet",Toast.LENGTH_SHORT).show()
+    }
+
+    override fun onMoreClicked(id: String) {
+        popupMenu()
+//        Toast.makeText(this,"show bottom Sheet",Toast.LENGTH_SHORT).show()
     }
 }

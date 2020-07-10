@@ -1,9 +1,307 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".SchoolAnnouncementEditActivity">
+    tools:context=".arch.ui.classdetail.school.schoolannouncement.schoolannouncementedit.SchoolAnnouncementEditActivity">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:elevation="@dimen/size_2"
+        app:elevation="@dimen/size_2">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:minHeight="?attr/actionBarSize"
+            android:elevation="@dimen/size_2"
+            app:elevation="@dimen/size_2">
+
+            <TextView
+                android:id="@+id/tv_login_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Edit Pengumuman"
+                android:textColor="@color/colorSuperDarkBlue"
+                android:textSize="@dimen/text_16"
+                android:textStyle="bold" />
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilSchoolAnnouncementEditTitle"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/size_24"
+                app:boxCornerRadiusBottomEnd="@dimen/size_8"
+                app:boxCornerRadiusBottomStart="@dimen/size_8"
+                app:boxCornerRadiusTopEnd="@dimen/size_8"
+                app:boxCornerRadiusTopStart="@dimen/size_8"
+                android:hint="Judul Pengumuman"
+                android:theme="@style/LoginTextInputLayoutLabel"
+                app:boxStrokeColor="@color/colorBlack"
+                app:boxStrokeWidth="@dimen/size_1"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etSchoolAnnouncementEditTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/size_16"
+                    android:background="@drawable/edit_text_rectangle_selector" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/etSchoolAnnouncementEditContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="24dp"
+                android:lineHeight="@dimen/text_20"
+                android:text="@string/announcement_content"
+                android:textSize="@dimen/text_14"
+                android:textColor="#222222"
+                app:layout_constraintTop_toBottomOf="@+id/tilSchoolAnnouncementEditTitle"
+                tools:layout_editor_absoluteX="16dp" />
+
+            <View
+                android:id="@+id/vSchoolAnnouncementEditDividerLine"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#F6F6F6"
+                app:layout_constraintTop_toBottomOf="@+id/etSchoolAnnouncementEditContent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginTop="42dp"/>
+
+            <LinearLayout
+                android:id="@+id/llSchoolAnnouncementEditAttachment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintTop_toBottomOf="@+id/vSchoolAnnouncementEditDividerLine"
+                android:layout_marginHorizontal="@dimen/size_16"
+                android:layout_marginTop="@dimen/size_20">
+
+                <TextView
+                    android:id="@+id/tvSchoolAnnouncementDetailAttachmentTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Lampiran"
+                    android:textSize="@dimen/text_12"
+                    android:lineHeight="@dimen/text_20"
+                    android:textColor="#222222"/>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clSchoolAnnouncementEditAttachmentLink"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_8"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/ivAnnouncementEditAttachmentLink"
+                        android:layout_width="@dimen/size_24"
+                        android:layout_height="@dimen/size_24"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:src="@drawable/ic_link_red"/>
+
+                    <TextView
+                        android:id="@+id/tvAnnouncementEditAttachmentLink"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="@+id/ivAnnouncementEditAttachmentLink"
+                        app:layout_constraintBottom_toBottomOf="@+id/ivAnnouncementEditAttachmentLink"
+                        app:layout_constraintLeft_toRightOf="@+id/ivAnnouncementEditAttachmentLink"
+                        android:layout_marginLeft="@dimen/size_12"
+                        android:text="drive.google.com"
+                        android:textColor="#212121"
+                        android:textSize="@dimen/text_14"/>
+
+                    <ImageView
+                        android:id="@+id/ivAnnouncementEditAttachmentLinkDelete"
+                        android:layout_width="@dimen/size_14"
+                        android:layout_height="@dimen/size_14"
+                        android:src="@drawable/ic_close"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvAnnouncementEditAttachmentLink"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/tvAnnouncementEditAttachmentLink" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clSchoolAnnouncementEditAttachmentPhoto"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_8"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/ivAnnouncementEditAttachmentPhoto"
+                        android:layout_width="@dimen/size_24"
+                        android:layout_height="@dimen/size_24"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:src="@drawable/ic_photo_red"/>
+
+                    <TextView
+                        android:id="@+id/tvAnnouncementEditAttachmentPhoto"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="@+id/ivAnnouncementEditAttachmentPhoto"
+                        app:layout_constraintBottom_toBottomOf="@+id/ivAnnouncementEditAttachmentPhoto"
+                        app:layout_constraintLeft_toRightOf="@+id/ivAnnouncementEditAttachmentPhoto"
+                        android:layout_marginLeft="@dimen/size_12"
+                        android:text="FieldTrip2020.jpg"
+                        android:textColor="#212121"
+                        android:textSize="@dimen/text_14"/>
+
+                    <ImageView
+                        android:id="@+id/ivAnnouncementEditAttachmentPhotoDelete"
+                        android:layout_width="@dimen/size_14"
+                        android:layout_height="@dimen/size_14"
+                        android:src="@drawable/ic_close"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvAnnouncementEditAttachmentPhoto"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/tvAnnouncementEditAttachmentPhoto" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clSchoolAnnouncementEditAttachmentFile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_8"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/ivAnnouncementEditAttachmentFile"
+                        android:layout_width="@dimen/size_24"
+                        android:layout_height="@dimen/size_24"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:src="@drawable/ic_file_red"/>
+
+                    <TextView
+                        android:id="@+id/tvAnnouncementEditAttachmentFile"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="@+id/ivAnnouncementEditAttachmentFile"
+                        app:layout_constraintBottom_toBottomOf="@+id/ivAnnouncementEditAttachmentFile"
+                        app:layout_constraintLeft_toRightOf="@+id/ivAnnouncementEditAttachmentFile"
+                        android:layout_marginLeft="@dimen/size_12"
+                        android:text="aturan-aturan FieldTrip.pdf"
+                        android:textColor="#212121"
+                        android:textSize="@dimen/text_14"/>
+
+                    <ImageView
+                        android:id="@+id/ivAnnouncementEditAttachmentFileDelete"
+                        android:layout_width="@dimen/size_14"
+                        android:layout_height="@dimen/size_14"
+                        android:src="@drawable/ic_close"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvAnnouncementEditAttachmentFile"
+                        app:layout_constraintEnd_toEndOf="parent"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/tvAnnouncementEditAttachmentFile" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </LinearLayout>
+
+            <View
+                android:id="@+id/vSchoolAnnouncementEditDividerLine2"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="#F6F6F6"
+                app:layout_constraintTop_toBottomOf="@+id/llSchoolAnnouncementEditAttachment"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginTop="@dimen/size_24"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_152"
+        android:layout_gravity="bottom"
+        android:background="@color/colorWhite"
+        android:elevation="@dimen/size_2">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clSchoolAnnouncementEditTemplate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin">
+
+            <TextView
+                android:id="@+id/tvSchoolAnnouncementEditTemplateTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginTop="@dimen/size_16"
+                android:text="Template Pengumuman"
+                android:textSize="@dimen/text_12"
+                android:lineHeight="@dimen/text_20"
+                android:textColor="#222222"/>
+
+            <TextView
+                android:id="@+id/tvSchoolAnnouncementEditTemplateAdd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_16"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:text="Tambah template"
+                android:textSize="@dimen/text_12"
+                android:lineHeight="@dimen/text_20"
+                android:textColor="@color/colorRed"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvSchoolAnnouncementEditTemplate"
+            android:layout_marginTop="@dimen/size_16"
+            android:layout_marginBottom="@dimen/size_24"
+            android:paddingHorizontal="@dimen/size_14"
+            android:layout_below="@+id/clSchoolAnnouncementEditTemplate"
+            android:layout_above="@+id/btnSchoolAnnouncementEditSave"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+
+        <Button
+            android:id="@+id/btnSchoolAnnouncementEditSave"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorSuperDarkBlue"
+            android:text="SIMPAN PERUBAHAN"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_14"
+            android:lineHeight="@dimen/text_16"
+            android:textFontWeight="500"/>
+
+    </RelativeLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

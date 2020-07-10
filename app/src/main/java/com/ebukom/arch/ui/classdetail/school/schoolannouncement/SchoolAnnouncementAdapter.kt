@@ -12,6 +12,7 @@ import com.ebukom.arch.dao.ChooseClassDao
 import com.ebukom.arch.dao.ClassDetailAnnouncementDao
 import com.ebukom.arch.ui.chooseclass.ChooseClassViewHolderBlue
 import com.ebukom.arch.ui.chooseclass.ChooseClassViewHolderGreen
+import com.ebukom.arch.ui.classdetail.OnMoreCallback
 import com.ebukom.base.BaseAdapter
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.extensions.LayoutContainer
@@ -19,14 +20,16 @@ import kotlinx.android.synthetic.main.bottom_sheet_school_announcement.view.*
 import kotlinx.android.synthetic.main.fragment_school_announcement.view.*
 import kotlinx.android.synthetic.main.item_announcement.view.*
 
-class SchoolAnnouncementAdapter(var announcements: List<ClassDetailAnnouncementDao>) :
+class SchoolAnnouncementAdapter(
+    var announcements: List<ClassDetailAnnouncementDao>,
+    var callback: OnMoreCallback) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view =
             LayoutInflater.from(parent.context)
                 .inflate(R.layout.item_announcement, parent, false)
-        return ViewHolder(view)
+        return ViewHolder(view, callback)
 
     }
 
@@ -38,7 +41,7 @@ class SchoolAnnouncementAdapter(var announcements: List<ClassDetailAnnouncementD
         (holder as ViewHolder).bind(announcements[position])
     }
 
-    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+    class ViewHolder(itemView: View, val callback : OnMoreCallback) : RecyclerView.ViewHolder(itemView) {
         fun bind(announcement: ClassDetailAnnouncementDao) {
             itemView.tvAnnouncementTitle.text = announcement?.announcementTitle
             itemView.tvAnnouncementContent.text = announcement?.announcementContent
@@ -46,7 +49,7 @@ class SchoolAnnouncementAdapter(var announcements: List<ClassDetailAnnouncementD
             itemView.tvAnnouncementTime.text = announcement?.time
 
             itemView.ivAnnouncementMoreButton.setOnClickListener {
-
+                callback.onMoreClicked("")
             }
 
 
