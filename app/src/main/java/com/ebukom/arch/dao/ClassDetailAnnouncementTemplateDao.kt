@@ -1,5 +1,5 @@
 package com.ebukom.arch.dao
 
-data class ClassDetailAnnouncementEditDao (
+data class ClassDetailAnnouncementTemplateDao (
     var title: String
 )

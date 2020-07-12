@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".arch.ui.classdetail.school.schoolannouncement.schoolannouncementedit.SchoolAnnouncementEditActivity">
+    tools:context=".arch.ui.classdetail.school.schoolannouncement.schoolannouncementnew.SchoolAnnouncementNewActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -18,8 +18,8 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorWhite"
-            android:minHeight="?attr/actionBarSize"
             android:elevation="@dimen/size_2"
+            android:minHeight="?attr/actionBarSize"
             app:elevation="@dimen/size_2">
 
             <RelativeLayout
@@ -27,22 +27,22 @@
                 android:layout_height="wrap_content">
 
                 <TextView
-                    android:id="@+id/tvSchoolAnnouncementEditTitle"
+                    android:id="@+id/tvSchoolAnnouncementNewTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
-                    android:text="Edit Pengumuman"
+                    android:text="Bagikan Pengumuman"
                     android:textColor="@color/colorSuperDarkBlue"
                     android:textSize="@dimen/text_16"
                     android:textStyle="bold" />
 
                 <ImageView
-                    android:id="@+id/ivSchoolAnnouncementEditTitle"
+                    android:id="@+id/ivSchoolAnnouncementNewAttach"
                     android:layout_width="@dimen/size_24"
                     android:layout_height="@dimen/size_24"
-                    android:src="@drawable/ic_attachment_red"
                     android:layout_alignParentRight="true"
-                    android:layout_marginRight="@dimen/size_20"/>
+                    android:layout_marginRight="@dimen/size_20"
+                    android:src="@drawable/ic_attachment_red" />
 
             </RelativeLayout>
 
@@ -60,7 +60,7 @@
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tilSchoolAnnouncementEditTitle"
+                android:id="@+id/tilSchoolAnnouncementNewTitle"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -77,7 +77,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etSchoolAnnouncementEditTitle"
+                    android:id="@+id/etSchoolAnnouncementNewTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/edit_text_rectangle_selector"
@@ -85,7 +85,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <EditText
-                android:id="@+id/etSchoolAnnouncementEditContent"
+                android:id="@+id/etSchoolAnnouncementNewContent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
@@ -96,13 +96,12 @@
                 android:lineHeight="@dimen/text_16"
                 android:minLines="10"
                 android:textColorHint="#9E9E9E"
-                android:text="@string/announcement_content"
                 android:textSize="@dimen/text_14"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tilSchoolAnnouncementEditTitle" />
+                app:layout_constraintTop_toBottomOf="@+id/tilSchoolAnnouncementNewTitle" />
 
             <TextView
-                android:id="@+id/tvSchoolAnnouncementEditAttachmentTitle"
+                android:id="@+id/tvSchoolAnnouncementNewAttachmentTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:lineHeight="@dimen/text_20"
@@ -110,20 +109,20 @@
                 android:text="Lampiran"
                 android:textColor="#222222"
                 android:textSize="@dimen/text_12"
-                app:layout_constraintTop_toBottomOf="@id/etSchoolAnnouncementEditContent" />
+                app:layout_constraintTop_toBottomOf="@id/etSchoolAnnouncementNewContent" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvSchoolAnnouncementAttachment"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@id/tvSchoolAnnouncementEditAttachmentTitle" />
+                app:layout_constraintTop_toBottomOf="@id/tvSchoolAnnouncementNewAttachmentTitle" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/clSchoolAnnouncementEditTemplate"
+        android:id="@+id/clSchoolAnnouncementNewTemplate"
         android:layout_gravity="bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -131,7 +130,7 @@
 
         <TextView
             android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:id="@+id/tvSchoolAnnouncementEditTemplateTitle"
+            android:id="@+id/tvSchoolAnnouncementNewTemplateTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_16"
@@ -143,7 +142,7 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <TextView
-            android:id="@+id/tvSchoolAnnouncementEditTemplateAdd"
+            android:id="@+id/tvSchoolAnnouncementNewTemplateAdd"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_16"
@@ -156,28 +155,28 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvSchoolAnnouncementEditTemplate"
+            android:id="@+id/rvSchoolAnnouncementNewTemplate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/clSchoolAnnouncementNewTemplate"
             android:layout_marginTop="@dimen/size_16"
             android:paddingBottom="@dimen/size_24"
             android:paddingHorizontal="@dimen/size_14"
-            app:layout_constraintTop_toBottomOf="@id/tvSchoolAnnouncementEditTemplateAdd"
-            app:layout_constraintBottom_toTopOf="@+id/btnSchoolAnnouncementEditSave"/>
+            app:layout_constraintTop_toBottomOf="@id/tvSchoolAnnouncementNewTemplateAdd"
+            app:layout_constraintBottom_toTopOf="@+id/btnSchoolAnnouncementNewNext"/>
 
         <Button
-            android:id="@+id/btnSchoolAnnouncementEditSave"
+            android:id="@+id/btnSchoolAnnouncementNewNext"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:background="@color/colorSuperDarkBlue"
             android:lineHeight="@dimen/text_16"
-            android:text="SIMPAN PERUBAHAN"
+            android:text="SELANJUTNYA"
             android:textColor="@color/colorWhite"
             android:textFontWeight="500"
             android:textSize="@dimen/text_14"
-            app:layout_constraintTop_toBottomOf="@id/rvSchoolAnnouncementEditTemplate"/>
+            app:layout_constraintTop_toBottomOf="@id/rvSchoolAnnouncementNewTemplate"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="@dimen/size_16"
+    android:layout_marginVertical="@dimen/size_12">
+    
+    <ImageView
+        android:id="@+id/ivItemAnnouncementAttachment"
+        android:layout_width="@dimen/size_24"
+        android:layout_height="@dimen/size_24"
+        android:src="@drawable/ic_link_red"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+    <TextView
+        android:id="@+id/tvItemAnnouncementAttachment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/size_12"
+        android:text="aturan-aturan FieldTrip.pdf"
+        android:textColor="#212121"
+        android:textSize="@dimen/text_14"
+        app:layout_constraintTop_toTopOf="@id/ivItemAnnouncementAttachment"
+        app:layout_constraintBottom_toBottomOf="@+id/ivItemAnnouncementAttachment"
+        app:layout_constraintLeft_toRightOf="@id/ivItemAnnouncementAttachment"/>
+
+    <ImageView
+        android:id="@+id/ivItemAnnouncementAttachmentDelete"
+        android:layout_width="@dimen/size_14"
+        android:layout_height="@dimen/size_14"
+        android:src="@drawable/ic_close"
+        app:layout_constraintBottom_toBottomOf="@+id/tvItemAnnouncementAttachment"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tvItemAnnouncementAttachment" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

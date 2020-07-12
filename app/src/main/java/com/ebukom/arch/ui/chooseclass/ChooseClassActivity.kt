@@ -10,7 +10,6 @@ import com.ebukom.R
 import com.ebukom.arch.dao.ChooseClassDao
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.activity_choose_class.*
-import kotlinx.android.synthetic.main.activity_verification.*
 import kotlinx.android.synthetic.main.bottom_sheet_choose_class.view.*
 
 
@@ -73,7 +72,7 @@ class ChooseClassActivity : AppCompatActivity() {
         bottomSheetDialog.setContentView(view)
 
 
-        view.deleteClass.setOnClickListener {
+        view.tvDeleteClass.setOnClickListener {
             val builder = AlertDialog.Builder(this@ChooseClassActivity)
 
             bottomSheetDialog.dismiss()
@@ -90,7 +89,7 @@ class ChooseClassActivity : AppCompatActivity() {
             val dialog: AlertDialog = builder.create()
             dialog.show()
         }
-        view.cancelClass.setOnClickListener {
+        view.tvCancelClass.setOnClickListener {
             bottomSheetDialog.dismiss()
             Toast.makeText(this, "Class cancelled", Toast.LENGTH_LONG).show()
         }

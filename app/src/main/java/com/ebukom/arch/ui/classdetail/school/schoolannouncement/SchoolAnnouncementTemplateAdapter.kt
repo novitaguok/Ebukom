@@ -1,20 +1,18 @@
-package com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementedit
+package com.ebukom.arch.ui.classdetail.school.schoolannouncement
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import androidx.appcompat.view.menu.ActionMenuItemView
-import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.recyclerview.widget.RecyclerView
 import com.ebukom.R
-import com.ebukom.arch.dao.ClassDetailAnnouncementEditDao
+import com.ebukom.arch.dao.ClassDetailAnnouncementTemplateDao
 import kotlinx.android.synthetic.main.item_announcement_edit_template.view.*
 
-class SchoolAnnouncementEditAdapter(private val data: List<ClassDetailAnnouncementEditDao>) :
-    RecyclerView.Adapter<SchoolAnnouncementEditAdapter.ViewHolder>() {
+class SchoolAnnouncementTemplateAdapter(private val data: List<ClassDetailAnnouncementTemplateDao>) :
+    RecyclerView.Adapter<SchoolAnnouncementTemplateAdapter.ViewHolder>() {
 
-    private val items: MutableList<ClassDetailAnnouncementEditDao>
+    private val items: MutableList<ClassDetailAnnouncementTemplateDao>
 
     init {
         this.items = ArrayList()

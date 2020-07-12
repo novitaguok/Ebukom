@@ -27,36 +27,21 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/clClassHeaderClassName"
+        <TextView
+            android:id="@+id/tvClassHeaderClassName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/tvClassHeaderClassNumber"
-            app:layout_constraintLeft_toLeftOf="@+id/tvClassHeaderClassNumber">
+            android:layout_marginLeft="@dimen/size_16"
+            android:drawableRight="@drawable/ic_dropdown"
+            android:drawablePadding="@dimen/size_8"
+            android:lineHeight="@dimen/size_28"
+            android:text="Aurora"
+            android:textColor="@color/colorRed"
+            android:textSize="@dimen/text_24"
+            android:textStyle="bold"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvClassHeaderClassNumber"/>
 
-            <TextView
-                android:id="@+id/tvClassHeaderClassName"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:lineHeight="@dimen/size_28"
-                android:text="Aurora"
-                android:textColor="@color/colorRed"
-                android:textSize="@dimen/text_24"
-                android:textStyle="bold"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
-
-            <ImageView
-                android:id="@+id/ivClassHeaderDropdown"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/size_8"
-                android:src="@drawable/ic_dropdown"
-                app:layout_constraintLeft_toRightOf="@+id/tvClassHeaderClassName"
-                app:layout_constraintTop_toTopOf="@id/tvClassHeaderClassName"
-                app:layout_constraintBottom_toBottomOf="@+id/tvClassHeaderClassName"/>
-
-        </androidx.constraintlayout.widget.ConstraintLayout>
 
         <ImageView
             android:id="@+id/ivClassHeaderNotificationBell"
@@ -74,8 +59,8 @@
             android:layout_height="wrap_content"
             android:src="@drawable/ic_dots_red"
             android:translationZ="@dimen/size_8"
-            app:layout_constraintRight_toLeftOf="@id/ivClassHeaderNotificationBell"
             app:layout_constraintLeft_toLeftOf="@id/ivClassHeaderNotificationBell"
+            app:layout_constraintRight_toLeftOf="@id/ivClassHeaderNotificationBell"
             app:layout_constraintTop_toTopOf="@id/ivClassHeaderNotificationBell" />
 
         <de.hdodenhof.circleimageview.CircleImageView
@@ -96,7 +81,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/bnClassDetail"
-        android:layout_below="@+id/clClassHeader"/>
+        android:layout_below="@+id/clClassHeader" />
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bnClassDetail"

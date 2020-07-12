@@ -2,84 +2,50 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="156dp"
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="@dimen/size_16"
+    android:paddingVertical="@dimen/size_18"
     android:background="@color/colorWhite"
     android:orientation="vertical"
     app:behavior_hideable="false"
     app:behavior_peekHeight="0dp"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
-    <LinearLayout
-        android:id="@+id/editComment"
-        android:layout_width="match_parent"
-        android:layout_height="52dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:orientation="horizontal">
+    <TextView
+        android:id="@+id/tvEditComment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:drawableLeft="@drawable/ic_edit_red"
+        android:drawablePadding="@dimen/size_24"
+        android:text="Edit Komentar"
+        android:textColor="#666666"
+        android:textSize="@dimen/text_16" />
 
-        <ImageView
-            android:id="@+id/ivEditComment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="@dimen/size_16"
-            android:layout_marginRight="@dimen/size_24"
-            android:src="@drawable/ic_edit_red" />
-
-        <TextView
-            android:id="@+id/tvEditComment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:text="Edit Komentar"
-            android:textSize="@dimen/text_16"
-            android:textColor="#666666"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/deleteComment"
-        android:layout_width="match_parent"
-        android:layout_height="52dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:id="@+id/ivDeleteComment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="@dimen/size_16"
-            android:layout_marginRight="@dimen/size_24"
-            android:src="@drawable/ic_delete_red" />
 
         <TextView
             android:id="@+id/tvDeleteComment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
+            android:layout_marginTop="@dimen/size_20"
+            android:drawableLeft="@drawable/ic_delete_red"
+            android:drawablePadding="@dimen/size_24"
             android:text="Hapus Komentar"
-            android:textSize="@dimen/text_16"
-            android:textColor="#666666"/>
-    </LinearLayout>
+            android:textColor="#666666"
+            android:textSize="@dimen/text_16" />
 
-    <LinearLayout
-        android:id="@+id/cancelComment"
-        android:layout_width="match_parent"
-        android:layout_height="52dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:orientation="horizontal">
+
 
         <TextView
             android:id="@+id/tvCancelComment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="@dimen/size_64"
+            android:layout_marginLeft="@dimen/size_48"
+            android:layout_marginTop="@dimen/size_20"
             android:text="Batalkan"
-            android:textSize="@dimen/text_16"
-            android:textColor="@color/colorRed"/>
-    </LinearLayout>
+            android:textColor="@color/colorRed"
+            android:textSize="@dimen/text_16" />
 
 </LinearLayout>

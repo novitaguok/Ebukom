@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/llSchoolAnnouncementEditAttachment"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="@dimen/size_20"
+    android:paddingVertical="@dimen/size_18"
+    android:orientation="vertical">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clBottomSheetAnnouncementAttachmentPhoto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tvAnnouncementAttachmentPhoto"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gambar"
+            android:textColor="#646464"
+            android:textSize="@dimen/text_16"
+            android:lineHeight="@dimen/text_28"
+            android:drawableLeft="@drawable/ic_photo_red"
+            android:drawablePadding="@dimen/size_28"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clBottomSheetAnnouncementAttachmentFile"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_20"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tvBottomSheetAnnouncementAttachmentFile"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="File"
+            android:textColor="#646464"
+            android:textSize="@dimen/text_16"
+            android:lineHeight="@dimen/text_28"
+            android:drawableLeft="@drawable/ic_file_red"
+            android:drawablePadding="@dimen/size_28"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clBottomSheetAnnouncementAttachmentLink"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_20"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tvBottomSheetAnnouncementAttachmentLink"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Link"
+            android:textColor="#646464"
+            android:textSize="@dimen/text_16"
+            android:lineHeight="@dimen/text_28"
+            android:drawableLeft="@drawable/ic_link_red"
+            android:drawablePadding="@dimen/size_28"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clBottomSheetAnnouncementAttachmentUseCamera"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_20"
+        android:orientation="horizontal">
+
+        <TextView
+            android:id="@+id/tvBottomSheetAnnouncementAttachmentUseCamera"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Gunakan Kamera"
+            android:textColor="#646464"
+            android:textSize="@dimen/text_16"
+            android:lineHeight="@dimen/text_28"
+            android:drawableLeft="@drawable/ic_camera_red"
+            android:drawablePadding="@dimen/size_28"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</LinearLayout>

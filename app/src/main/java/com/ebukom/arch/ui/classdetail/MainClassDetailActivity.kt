@@ -35,19 +35,13 @@ class MainClassDetailActivity : AppCompatActivity(), OnMoreCallback {
             true
         }
 
-        // Header
-        clClassHeaderClassName.setOnClickListener {
-            popupMenu()
-        }
-
         // Class Header Dropdown
         val bottomSheetDialog = BottomSheetDialog(this)
-
         val view = layoutInflater.inflate(R.layout.bottom_sheet_class_detail_header, null)
 
         bottomSheetDialog.setContentView(view)
 
-        ivClassHeaderDropdown.setOnClickListener {
+        tvClassHeaderClassName.setOnClickListener {
             bottomSheetDialog.show()
         }
 
@@ -79,7 +73,7 @@ class MainClassDetailActivity : AppCompatActivity(), OnMoreCallback {
             bottomSheetDialog.show()
 //        }
 //
-//        view.editInfo.setOnClickListener {
+//        view.tvEditInfo.setOnClickListener {
 //            bottomSheetDialog.dismiss()
 //            Toast.makeText(this, "Edit Info", Toast.LENGTH_LONG).show()
 //        }

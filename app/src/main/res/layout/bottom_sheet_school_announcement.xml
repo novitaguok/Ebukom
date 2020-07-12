@@ -2,84 +2,48 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="156dp"
+    android:layout_height="wrap_content"
     android:background="@color/colorWhite"
     android:orientation="vertical"
+    android:paddingHorizontal="@dimen/activity_horizontal_margin"
+    android:paddingVertical="@dimen/size_18"
     app:behavior_hideable="false"
     app:behavior_peekHeight="0dp"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
-    <LinearLayout
-        android:id="@+id/editInfo"
-        android:layout_width="match_parent"
-        android:layout_height="52dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:orientation="horizontal">
+    <TextView
+        android:id="@+id/tvEditInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:drawableLeft="@drawable/ic_edit_red"
+        android:drawablePadding="@dimen/size_28"
+        android:text="Edit Informasi"
+        android:textColor="#666666"
+        android:textSize="@dimen/text_16" />
 
-        <ImageView
-            android:id="@+id/ivEditInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="@dimen/size_16"
-            android:layout_marginRight="@dimen/size_24"
-            android:src="@drawable/ic_edit_red" />
 
-        <TextView
-            android:id="@+id/tvEditInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:text="Edit Informasi"
-            android:textSize="@dimen/text_16"
-            android:textColor="#666666"/>
-    </LinearLayout>
+    <TextView
+        android:id="@+id/tvDeleteInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:drawableLeft="@drawable/ic_delete_red"
+        android:drawablePadding="@dimen/size_28"
+        android:text="Hapus Informasi"
+        android:textColor="#666666"
+        android:textSize="@dimen/text_16"
+        android:layout_marginTop="@dimen/size_20"/>
 
-    <LinearLayout
-        android:id="@+id/deleteInfo"
-        android:layout_width="match_parent"
-        android:layout_height="52dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:orientation="horizontal">
-
-        <ImageView
-            android:id="@+id/ivDeleteInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="@dimen/size_16"
-            android:layout_marginRight="@dimen/size_24"
-            android:src="@drawable/ic_delete_red" />
-
-        <TextView
-            android:id="@+id/tvDeleteInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:text="Hapus Informasi"
-            android:textSize="@dimen/text_16"
-            android:textColor="#666666"/>
-    </LinearLayout>
-
-    <LinearLayout
-        android:id="@+id/cancelInfo"
-        android:layout_width="match_parent"
-        android:layout_height="52dp"
-        android:clickable="true"
-        android:focusable="true"
-        android:orientation="horizontal">
-
-        <TextView
-            android:id="@+id/tvCancelInfo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:layout_marginLeft="@dimen/size_64"
-            android:text="Batalkan"
-            android:textSize="@dimen/text_16"
-            android:textColor="@color/colorRed"/>
-    </LinearLayout>
+    <TextView
+        android:id="@+id/tvCancelInfo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/size_52"
+        android:text="Batalkan"
+        android:textColor="@color/colorRed"
+        android:textSize="@dimen/text_16"
+        android:layout_marginTop="@dimen/size_20"/>
 
 </LinearLayout>

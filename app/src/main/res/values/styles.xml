@@ -23,9 +23,16 @@
         <item name="colorControlActivated">@color/colorBlack</item>
     </style>
 
+    <style name="GeneralTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <item name="colorAccent">@color/colorGray</item>
+        <item name="colorControlNormal">@color/colorGray</item>
+        <item name="colorControlActivated">@color/colorGray</item>
+    </style>
+
     <style name="Base.Widget.Design.TabLayout" parent="android:Widget">
         <item name="tabBackground">@drawable/bg_tab_selector</item>
         <item name="android:textSize">@dimen/text_12</item>
         <item name="fontWeight">500</item>
     </style>
+
 </resources>

@@ -9,11 +9,8 @@ import com.ebukom.R
 import com.ebukom.arch.dao.ClassDetailAnnouncementCommentDao
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.activity_school_announcement_detail.*
-import kotlinx.android.synthetic.main.activity_school_announcement_detail.view.*
-import kotlinx.android.synthetic.main.bottom_sheet_class_detail_header.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_school_announcement.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_school_announcement_comment.view.*
-import kotlinx.android.synthetic.main.item_announcement_detail_comment.view.*
 
 class SchoolAnnouncementDetailActivity : AppCompatActivity() {
 
@@ -45,12 +42,12 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
         val view = layoutInflater.inflate(R.layout.bottom_sheet_school_announcement, null)
         bottomSheetDialog.setContentView(view)
 
-        view.editInfo.setOnClickListener {
+        view.tvEditInfo.setOnClickListener {
             bottomSheetDialog.dismiss()
             Toast.makeText(this, "Edit", Toast.LENGTH_LONG).show()
         }
 
-        view.deleteInfo.setOnClickListener {
+        view.tvDeleteInfo.setOnClickListener {
             val builder = AlertDialog.Builder(this@SchoolAnnouncementDetailActivity)
 
             bottomSheetDialog.dismiss()
@@ -68,7 +65,7 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
             dialog.show()
         }
 
-        view.cancelInfo.setOnClickListener {
+        view.tvCancelInfo.setOnClickListener {
             bottomSheetDialog.dismiss()
             Toast.makeText(this, "Cancel", Toast.LENGTH_LONG).show()
         }
@@ -81,18 +78,31 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
         val view = layoutInflater.inflate(R.layout.bottom_sheet_school_announcement_comment, null)
         bottomSheetDialog.setContentView(view)
 
-        view.editComment.setOnClickListener {
+        view.tvEditComment.setOnClickListener {
+            val builder = AlertDialog.Builder(this@SchoolAnnouncementDetailActivity)
+            val view = layoutInflater.inflate(R.layout.alert_edit_text, null)
+
             bottomSheetDialog.dismiss()
-            Toast.makeText(this, "Edit", Toast.LENGTH_LONG).show()
+
+//            builder.setTitle("Edit Kometar")
+            builder.setView(view)
+            builder.setNegativeButton("BATALKAN") { dialog, which ->
+                Toast.makeText(applicationContext,"Next?", Toast.LENGTH_SHORT).show()
+            }
+            builder.setPositiveButton("SELESAI") { dialog, which ->
+                Toast.makeText(applicationContext, "Next?", Toast.LENGTH_SHORT).show()
+            }
+
+            val dialog: AlertDialog = builder.create()
+            dialog.show()
         }
 
-        view.deleteComment.setOnClickListener {
+        view.tvDeleteComment.setOnClickListener {
             val builder = AlertDialog.Builder(this@SchoolAnnouncementDetailActivity)
 
             bottomSheetDialog.dismiss()
 
-            builder.setMessage("Apakah Anda yakin ingin menghapus pengumuman ini?")
-
+            builder.setMessage("Apakah Anda yakin ingin menghapus komentar ini?")
             builder.setNegativeButton("BATALKAN") { dialog, which ->
                 Toast.makeText(applicationContext,"Next?", Toast.LENGTH_SHORT).show()
             }
@@ -104,7 +114,7 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
             dialog.show()
         }
 
-        view.cancelComment.setOnClickListener {
+        view.tvCancelComment.setOnClickListener {
             bottomSheetDialog.dismiss()
             Toast.makeText(this, "Cancel", Toast.LENGTH_LONG).show()
         }
