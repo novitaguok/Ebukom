@@ -18,7 +18,6 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_school_announcement_detail)
 
-
         val list = ArrayList<ClassDetailAnnouncementCommentDao>()
 
         list.add(ClassDetailAnnouncementCommentDao("Ade Andreansyah", "Aku pusing banyak euy yang dibawa, udahlah mending skip cuy", R.drawable.ic_book_blue))
@@ -83,8 +82,6 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
             val view = layoutInflater.inflate(R.layout.alert_edit_text, null)
 
             bottomSheetDialog.dismiss()
-
-//            builder.setTitle("Edit Kometar")
             builder.setView(view)
             builder.setNegativeButton("BATALKAN") { dialog, which ->
                 Toast.makeText(applicationContext,"Next?", Toast.LENGTH_SHORT).show()

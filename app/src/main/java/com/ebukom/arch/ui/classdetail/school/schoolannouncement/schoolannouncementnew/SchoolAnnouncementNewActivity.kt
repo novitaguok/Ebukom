@@ -1,23 +1,20 @@
 package com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementnew
 
-import android.app.Activity
-import android.content.Intent
-import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.MediaStore
 import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ebukom.R
 import com.ebukom.arch.dao.ClassDetailAnnouncementAttachmentDao
 import com.ebukom.arch.dao.ClassDetailAnnouncementTemplateDao
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.SchoolAnnouncementAttachmentAdapter
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.SchoolAnnouncementTemplateAdapter
-import com.github.dhaval2404.imagepicker.ImagePicker.Companion.REQUEST_CODE
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.activity_school_anouncement_new.*
 import kotlinx.android.synthetic.main.activity_school_anouncement_new.rvSchoolAnnouncementNewTemplate
 import kotlinx.android.synthetic.main.bottom_sheet_announcement_attachment.view.*
+import kotlinx.android.synthetic.main.item_announcement_attachment.*
 
 class SchoolAnnouncementNewActivity : AppCompatActivity() {
 
@@ -46,8 +43,6 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
                 "drive.google.com", 2
             )
         )
-
-
         rvSchoolAnnouncementAttachment.apply {
             layoutManager = LinearLayoutManager(
                 this@SchoolAnnouncementNewActivity,
@@ -95,37 +90,6 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
             Toast.makeText(this, "F", Toast.LENGTH_LONG).show()
         }
         view.clBottomSheetAnnouncementAttachmentUseCamera.setOnClickListener {
-            val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-
-            if (takePictureIntent.resolveActivity(this.packageManager) != null) {
-                startActivityForResult(takePictureIntent, REQUEST_CODE)
-            } else {
-                Toast.makeText(this, "Unable to open camera", Toast.LENGTH_SHORT).show()
-            }
         }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (requestCode == REQUEST_CODE && resultCode == Activity.RESULT_OK) {
-            val takenImage = data?.extras?.get("data") as Bitmap
-//            imageView.setImageBitmap(takenImage)
-        } else {
-            super.onActivityResult(requestCode, resultCode, data)
-        }
-    }
-
-    fun popupMenu() {
-        val bottomSheetDialog = BottomSheetDialog(this)
-        val view = layoutInflater.inflate(R.layout.bottom_sheet_announcement_attachment, null)
-
-        bottomSheetDialog.setContentView(view)
-//        ivAnnouncementMoreButton.setOnClickListener {
-        bottomSheetDialog.show()
-//        }
-//
-//        view.tvEditInfo.setOnClickListener {
-//            bottomSheetDialog.dismiss()
-//            Toast.makeText(this, "Edit Info", Toast.LENGTH_LONG).show()
-//        }
     }
 }

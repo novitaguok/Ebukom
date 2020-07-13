@@ -26,7 +26,7 @@ class MainClassDetailActivity : AppCompatActivity(), OnMoreCallback {
 
         makeCurrentFragment(schoolFragment)
         bnClassDetail.setOnNavigationItemSelectedListener {
-            when(it.itemId) {
+            when (it.itemId) {
                 R.id.schoolInfo -> makeCurrentFragment(schoolFragment)
                 R.id.personalInfo -> makeCurrentFragment(personalFragment)
                 R.id.studyMaterial -> makeCurrentFragment(materialFragment)
@@ -64,28 +64,12 @@ class MainClassDetailActivity : AppCompatActivity(), OnMoreCallback {
 
     fun popupMenu() {
         val bottomSheetDialog = BottomSheetDialog(this)
-
         val view = layoutInflater.inflate(R.layout.bottom_sheet_school_announcement, null)
-
         bottomSheetDialog.setContentView(view)
-//
-//        ivAnnouncementMoreButton.setOnClickListener {
-            bottomSheetDialog.show()
-//        }
-//
-//        view.tvEditInfo.setOnClickListener {
-//            bottomSheetDialog.dismiss()
-//            Toast.makeText(this, "Edit Info", Toast.LENGTH_LONG).show()
-//        }
-    }
-
-    public fun showSheet(id: String) {
-        // show bottom sheet
-        Toast.makeText(this,"show bottom Sheet",Toast.LENGTH_SHORT).show()
+        bottomSheetDialog.show()
     }
 
     override fun onMoreClicked(id: String) {
         popupMenu()
-//        Toast.makeText(this,"show bottom Sheet",Toast.LENGTH_SHORT).show()
     }
 }
