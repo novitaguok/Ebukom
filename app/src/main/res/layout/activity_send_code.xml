@@ -14,7 +14,7 @@
         android:elevation="@dimen/size_10"
         app:elevation="@dimen/size_10">
 
-        <com.google.android.material.appbar.CollapsingToolbarLayout
+        <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -22,7 +22,6 @@
             android:minHeight="?attr/actionBarSize">
 
             <TextView
-                android:id="@+id/tv_login_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -30,7 +29,7 @@
                 android:textColor="@color/colorSuperDarkBlue"
                 android:textSize="@dimen/text_16"
                 android:textStyle="bold" />
-        </com.google.android.material.appbar.CollapsingToolbarLayout>
+        </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
