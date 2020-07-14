@@ -64,7 +64,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:nestedScrollingEnabled="false"
-                android:paddingBottom="@dimen/size_14"
+                android:paddingTop="@dimen/size_8"
+                android:paddingBottom="@dimen/size_8"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/btnSchoolPhotoNew"/>

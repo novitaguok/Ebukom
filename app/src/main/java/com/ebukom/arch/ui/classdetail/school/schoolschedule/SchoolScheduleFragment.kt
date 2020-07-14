@@ -11,10 +11,11 @@ import com.ebukom.R
 import com.ebukom.arch.dao.ClassDetailScheduleDao
 import com.ebukom.arch.ui.classdetail.OnMoreCallback
 import kotlinx.android.synthetic.main.fragment_school_schedule.*
+import kotlinx.android.synthetic.main.fragment_school_schedule.view.*
 
 class SchoolScheduleFragment : Fragment() {
     var objectList = ArrayList<ClassDetailScheduleDao>()
-    lateinit var schoolScheduleAdapter : SchoolScheduleAdapter
+    lateinit var schoolScheduleAdapter: SchoolScheduleAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,29 +30,52 @@ class SchoolScheduleFragment : Fragment() {
         schoolScheduleAdapter = SchoolScheduleAdapter(objectList, callback)
         rvSchoolSchedule.layoutManager = LinearLayoutManager(this.context)
         rvSchoolSchedule.adapter = schoolScheduleAdapter
-    }
 
-    private fun addData() {
-        for (i in 0..10) {
-            objectList.add(
-                ClassDetailScheduleDao(
-                    "Jadwal Pelajaran",
-                    0,
-                    "JadwalPelajaran2020.pdf"
-                )
-            )
+        if (!objectList.isEmpty()) {
+            view.ivSchoolScheduleEmpty.visibility = View.INVISIBLE
+        } else {
+            view.ivSchoolScheduleEmpty.visibility = View.VISIBLE
         }
     }
 
-    lateinit var callback : OnMoreCallback
+    private fun addData() {
+        objectList.add(
+            ClassDetailScheduleDao(
+                "Jadwal",
+                "Pelajaran",
+                "Lihat Jadwal",
+                0
+            )
+        )
+        objectList.add(
+            ClassDetailScheduleDao(
+                "Jadwal",
+                "Eskul",
+                "Lihat Jadwal",
+                1
+            )
+        )
+        objectList.add(
+            ClassDetailScheduleDao(
+                "Kalender",
+                "Akademik",
+                "Lihat Kalender",
+                2
+            )
+        )
+    }
+
+    lateinit var callback: OnMoreCallback
 
     override fun onAttach(context: Context) {
         super.onAttach(context)
         try {
             callback = context as OnMoreCallback
-        } catch (e : ClassCastException){
-            throw ClassCastException(activity.toString()
-                    + " must implement MyInterface ");
+        } catch (e: ClassCastException) {
+            throw ClassCastException(
+                activity.toString()
+                        + " must implement MyInterface "
+            );
         }
     }
 }

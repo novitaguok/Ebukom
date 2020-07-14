@@ -11,6 +11,7 @@ import com.ebukom.R
 import com.ebukom.arch.dao.ClassDetailPhotoDao
 import com.ebukom.arch.ui.classdetail.OnMoreCallback
 import kotlinx.android.synthetic.main.fragment_school_photo.*
+import kotlinx.android.synthetic.main.fragment_school_photo.view.*
 
 class SchoolPhotoFragment : Fragment() {
     var objectList = ArrayList<ClassDetailPhotoDao>()
@@ -29,6 +30,12 @@ class SchoolPhotoFragment : Fragment() {
         schoolPhotoAdapter = SchoolPhotoAdapter(objectList, callback)
         rvSchoolPhoto.layoutManager = LinearLayoutManager(this.context)
         rvSchoolPhoto.adapter = schoolPhotoAdapter
+
+        if (!objectList.isEmpty()) {
+            view.ivSchoolPhotoEmpty.visibility = View.INVISIBLE
+        } else {
+            view.ivSchoolPhotoEmpty.visibility = View.VISIBLE
+        }
     }
 
     private fun addData() {

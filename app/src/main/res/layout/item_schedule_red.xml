@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="120dp"
+    android:layout_marginHorizontal="@dimen/size_10"
+    app:cardCornerRadius="@dimen/size_8"
+    app:cardUseCompatPadding="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/ivItemScheduleEskul"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="centerCrop"
+            android:src="@drawable/bg_schedule_red"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/ibItemScheduleEskul"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_more_vertical"
+            android:background="@android:color/transparent"
+            android:layout_marginTop="@dimen/size_12"
+            android:layout_marginRight="@dimen/size_18"
+            app:layout_constraintTop_toTopOf="@+id/ivItemScheduleEskul"
+            app:layout_constraintRight_toRightOf="@+id/ivItemScheduleEskul"/>
+
+        <TextView
+            android:id="@+id/tvItemScheduleEskulType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_24"
+            android:lineHeight="@dimen/size_20"
+            android:text="Jadwal"
+            android:textColor="#7B3C3C"
+            android:textFontWeight="500"
+            android:textSize="@dimen/text_16"
+            android:firstBaselineToTopHeight="@dimen/size_18"
+            app:layout_constraintBottom_toTopOf="@+id/tvItemScheduleEskul"
+            app:layout_constraintLeft_toLeftOf="@+id/tvItemScheduleEskul" />
+
+        <TextView
+            android:id="@+id/tvItemScheduleEskul"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/size_20"
+            android:text="Eskul"
+            android:textColor="#E4EEF9"
+            android:textSize="@dimen/text_28"
+            android:lineHeight="@dimen/size_32"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/ivItemScheduleEskul"
+            app:layout_constraintLeft_toLeftOf="@+id/ivItemScheduleEskul"
+            app:layout_constraintTop_toTopOf="@id/ivItemScheduleEskul" />
+
+        <TextView
+            android:id="@+id/tvItemScheduleEskulOpen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_4"
+            android:layout_marginBottom="@dimen/size_24"
+            android:lineHeight="@dimen/size_16"
+            android:text="Lihat Jadwal"
+            android:textColor="#7B3C3C"
+            android:textFontWeight="500"
+            android:textSize="@dimen/text_14"
+            app:layout_constraintLeft_toLeftOf="@+id/tvItemScheduleEskul"
+            app:layout_constraintTop_toBottomOf="@+id/tvItemScheduleEskul" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>
