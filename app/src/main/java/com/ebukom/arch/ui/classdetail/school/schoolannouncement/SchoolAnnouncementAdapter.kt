@@ -30,7 +30,6 @@ class SchoolAnnouncementAdapter(
             LayoutInflater.from(parent.context)
                 .inflate(R.layout.item_announcement, parent, false)
         return ViewHolder(view, callback)
-
     }
 
     override fun getItemCount(): Int {

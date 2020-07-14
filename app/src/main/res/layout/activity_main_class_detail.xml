@@ -89,7 +89,6 @@
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:background="@color/colorWhite"
-
         app:itemIconSize="@dimen/size_18"
         app:itemIconTint="@drawable/selector_bottom"
         app:itemTextColor="@drawable/selector_bottom"

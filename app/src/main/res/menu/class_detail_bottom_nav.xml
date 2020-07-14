@@ -8,15 +8,15 @@
     <item
         android:id="@+id/personalInfo"
         android:icon="@drawable/ic_student_blue"
-        android:title="Info Sekolah" />
+        android:title="Info Pribadi" />
 
     <item
         android:id="@+id/studyMaterial"
         android:icon="@drawable/ic_book_blue"
-        android:title="Info Sekolah" />
+        android:title="Materi Belajar" />
 
     <item
         android:id="@+id/classMember"
         android:icon="@drawable/ic_member_blue"
-        android:title="Info Sekolah" />
+        android:title="Anggota Kelas" />
 </menu>

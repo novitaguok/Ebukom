@@ -37,7 +37,7 @@ class SchoolAnnouncementFragment : androidx.fragment.app.Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         addData()
-        schoolAnnouncementAdapter = SchoolAnnouncementAdapter(objectList,callback)
+        schoolAnnouncementAdapter = SchoolAnnouncementAdapter(objectList, callback)
 //        schoolAnnouncementAdapter.announcements = objectList
         rvSchoolAnnouncement.layoutManager = LinearLayoutManager(this.context)
         rvSchoolAnnouncement.adapter = schoolAnnouncementAdapter
