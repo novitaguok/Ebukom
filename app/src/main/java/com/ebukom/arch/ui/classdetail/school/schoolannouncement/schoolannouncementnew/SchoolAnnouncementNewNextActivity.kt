@@ -1,7 +1,8 @@
-package com.ebukom
+package com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementnew
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.ebukom.R
 
 class SchoolAnnouncementNewNextActivity : AppCompatActivity() {
 

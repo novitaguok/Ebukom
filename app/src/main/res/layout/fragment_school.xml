@@ -8,7 +8,7 @@
     tools:context=".arch.ui.classdetail.school.SchoolFragment">
 
     <com.google.android.material.tabs.TabLayout
-        android:id="@+id/mainClassTabLayout"
+        android:id="@+id/mainClassSchoolTabLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
@@ -16,10 +16,10 @@
         app:tabMode="fixed" />
 
     <androidx.viewpager.widget.ViewPager
-        android:id="@+id/mainClassViewPager"
+        android:id="@+id/mainClassSchoolViewPager"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mainClassTabLayout" />
+        app:layout_constraintTop_toBottomOf="@+id/mainClassSchoolTabLayout" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

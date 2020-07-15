@@ -63,7 +63,7 @@
                 android:layout_marginTop="@dimen/size_32"
                 android:layout_width="@dimen/size_100"
                 android:layout_height="@dimen/size_100"
-                android:src="@drawable/solid_gray"
+                android:src="@drawable/bg_solid_gray"
                 app:civ_border_color="#FF000000"/>
 
             <TextView

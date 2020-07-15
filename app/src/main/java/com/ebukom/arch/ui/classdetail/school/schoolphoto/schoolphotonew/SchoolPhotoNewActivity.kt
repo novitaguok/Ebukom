@@ -1,7 +1,8 @@
-package com.ebukom
+package com.ebukom.arch.ui.classdetail.school.schoolphoto.schoolphotonew
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import com.ebukom.R
 
 class SchoolPhotoNewActivity : AppCompatActivity() {
 

@@ -2,7 +2,7 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="210dp"
+    android:layout_height="235dp"
     android:layout_marginTop="@dimen/size_8"
     android:layout_marginHorizontal="5dp"
     app:cardCornerRadius="@dimen/size_4"
@@ -13,14 +13,25 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/tvAnnouncementTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/ivItemNoteProfilePicture"
+            android:layout_width="@dimen/size_40"
+            android:layout_height="@dimen/size_40"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:src="@color/colorGray"
+            app:civ_border_color="#FF000000"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintLeft_toLeftOf="parent"
-            android:layout_marginLeft="@dimen/size_10"
-            android:layout_marginTop="@dimen/size_16"
+            android:layout_marginLeft="@dimen/size_10" />
+
+        <TextView
+            android:id="@+id/tvItemNoteTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="@+id/ivItemNoteProfilePicture"
+            app:layout_constraintBottom_toBottomOf="@+id/ivItemNoteProfilePicture"
+            app:layout_constraintLeft_toRightOf="@+id/ivItemNoteProfilePicture"
+            android:layout_marginLeft="@dimen/size_12"
             android:text="Kegiatan Pentas Seni"
             android:textSize="@dimen/text_16"
             android:lineHeight="@dimen/text_24"
@@ -28,35 +39,35 @@
             android:textColor="@color/colorSuperDarkBlue"/>
 
         <ImageView
-            android:id="@+id/ivAnnouncementMoreButton"
+            android:id="@+id/ivItemNoteMoreButton"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            android:layout_marginTop="@dimen/size_20"
+            app:layout_constraintTop_toTopOf="@+id/tvItemNoteTitle"
+            app:layout_constraintBottom_toBottomOf="@+id/tvItemNoteTitle"
             android:layout_marginRight="@dimen/size_20"
             android:clickable="true"
             android:src="@drawable/ic_more_vertical" />
 
         <TextView
-            android:id="@+id/tvAnnouncementContent"
+            android:id="@+id/tvItemNoteContent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toBottomOf="@+id/tvAnnouncementTitle"
+            app:layout_constraintTop_toBottomOf="@+id/ivItemNoteProfilePicture"
             app:layout_constraintLeft_toLeftOf="parent"
             android:paddingLeft="@dimen/size_10"
             android:paddingRight="@dimen/size_10"
-            android:layout_marginTop="@dimen/size_8"
+            android:layout_marginTop="@dimen/size_16"
             android:text="@string/announcement_content"
             android:textSize="@dimen/text_14"
             android:lineHeight="@dimen/size_20"
             android:textColor="#222222"/>
 
         <TextView
-            android:id="@+id/tvAnnouncementMore"
+            android:id="@+id/tvItemNoteMore"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/tvAnnouncementComment"
+            app:layout_constraintBottom_toTopOf="@+id/tvItemNoteComment"
             app:layout_constraintLeft_toLeftOf="parent"
             android:paddingLeft="@dimen/size_10"
             android:paddingRight="@dimen/size_10"
@@ -67,7 +78,7 @@
             android:textColor="#3F3B5C"/>
 
         <TextView
-            android:id="@+id/tvAnnouncementComment"
+            android:id="@+id/tvItemNoteComment"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
@@ -82,10 +93,10 @@
             android:textColor="@color/colorRed"/>
 
         <TextView
-            android:id="@+id/tvAnnouncementTime"
+            android:id="@+id/tvItemNoteTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toBottomOf="@id/tvAnnouncementComment"
+            app:layout_constraintBottom_toBottomOf="@id/tvItemNoteComment"
             app:layout_constraintRight_toRightOf="parent"
             android:layout_marginRight="@dimen/size_10"
             android:layout_marginLeft="@dimen/size_10"

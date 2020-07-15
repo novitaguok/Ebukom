@@ -17,10 +17,10 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".SchoolPhotoNewActivity"></activity>
-        <activity android:name=".SchoolScheduleNewActivity" />
-        <activity android:name=".SchoolAnnouncementNewNextActivity" />
-        <activity android:name=".SchoolAnnouncementAddTemplateActivity" />
+        <activity android:name=".arch.ui.classdetail.school.schoolphoto.schoolphotonew.SchoolPhotoNewActivity"></activity>
+        <activity android:name=".arch.ui.classdetail.school.schoolschedule.schoolschedulenew.SchoolScheduleNewActivity" />
+        <activity android:name=".arch.ui.classdetail.school.schoolannouncement.schoolannouncementnew.SchoolAnnouncementNewNextActivity" />
+        <activity android:name=".arch.ui.classdetail.school.schoolannouncement.SchoolAnnouncementAddTemplateActivity" />
         <activity
             android:name=".arch.ui.classdetail.school.schoolannouncement.schoolannouncementnew.SchoolAnnouncementNewActivity"
             android:windowSoftInputMode="stateHidden" />

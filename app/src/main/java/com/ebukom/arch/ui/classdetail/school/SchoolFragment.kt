@@ -6,12 +6,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.viewpager.widget.PagerAdapter
 import androidx.viewpager.widget.ViewPager
 import com.ebukom.R
 import com.ebukom.arch.ui.classdetail.OnMoreCallback
 import com.google.android.material.tabs.TabLayout
-import kotlinx.android.synthetic.main.fragment_school.*
 import java.lang.ClassCastException
 
 class SchoolFragment : Fragment() {
@@ -27,8 +25,8 @@ class SchoolFragment : Fragment() {
     ): View? {
 
         val view = inflater.inflate(R.layout.fragment_school, container, false)
-        tabLayout = view.findViewById(R.id.mainClassTabLayout) as TabLayout
-        viewPager = view.findViewById(R.id.mainClassViewPager) as ViewPager
+        tabLayout = view.findViewById(R.id.mainClassSchoolTabLayout) as TabLayout
+        viewPager = view.findViewById(R.id.mainClassSchoolViewPager) as ViewPager
         viewPager?.adapter = SchoolPageAdapter(childFragmentManager)
         tabLayout?.setupWithViewPager(viewPager)
         viewPager?.currentItem = 0
