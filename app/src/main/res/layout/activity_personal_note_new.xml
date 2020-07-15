@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".arch.ui.classdetail.personal.PersonalNoteNewActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:elevation="@dimen/size_2"
+        app:elevation="@dimen/size_2">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:elevation="@dimen/size_2"
+            android:minHeight="?attr/actionBarSize"
+            app:elevation="@dimen/size_2">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tvPersonalNoteNewTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="Buat Catatan untuk Wali Murid"
+                    android:textColor="@color/colorSuperDarkBlue"
+                    android:textSize="@dimen/text_16"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/ivPersonalNoteNewAttach"
+                    android:layout_width="@dimen/size_24"
+                    android:layout_height="@dimen/size_24"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/size_20"
+                    android:src="@drawable/ic_attachment_red" />
+
+            </RelativeLayout>
+
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+            <EditText
+                android:id="@+id/etPersonalNoteNewContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/size_24"
+                android:background="@android:color/transparent"
+                android:gravity="top"
+                android:hint="Masukkan catatan yang ingin disampaikan..."
+                android:lineHeight="@dimen/text_16"
+                android:minLines="10"
+                android:textColorHint="#9E9E9E"
+                android:textSize="@dimen/text_14"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvPersonalNoteNewAttachmentTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:lineHeight="@dimen/text_20"
+                android:text="Lampiran"
+                android:textColor="#222222"
+                android:textSize="@dimen/text_12"
+                app:layout_constraintTop_toBottomOf="@id/etPersonalNoteNewContent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvPersonalNoteNewAttachment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/tvPersonalNoteNewAttachmentTitle" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clPersonalNoteNewTemplate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:elevation="@dimen/size_2">
+
+        <TextView
+            android:id="@+id/tvPersonalNoteNewTemplateTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/size_16"
+            android:lineHeight="@dimen/text_20"
+            android:text="Template Catatan"
+            android:textColor="#222222"
+            android:textSize="@dimen/text_12"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvPersonalNoteNewTemplateAdd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_16"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:lineHeight="@dimen/text_20"
+            android:text="Tambah template"
+            android:textColor="@color/colorRed"
+            android:textSize="@dimen/text_12"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvPersonalNoteNewTemplate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/clPersonalNoteNewTemplate"
+            android:layout_marginTop="@dimen/size_16"
+            android:paddingHorizontal="@dimen/size_14"
+            android:paddingBottom="@dimen/size_24"
+            app:layout_constraintBottom_toTopOf="@+id/btnPersonalNoteNewNext"
+            app:layout_constraintTop_toBottomOf="@id/tvPersonalNoteNewTemplateAdd" />
+
+        <Button
+            android:id="@+id/btnPersonalNoteNewNext"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorSuperDarkBlue"
+            android:lineHeight="@dimen/text_16"
+            android:text="SELANJUTNYA"
+            android:textColor="@color/colorWhite"
+            android:textFontWeight="500"
+            android:textSize="@dimen/text_14"
+            app:layout_constraintTop_toBottomOf="@id/rvPersonalNoteNewTemplate" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

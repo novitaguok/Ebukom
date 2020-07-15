@@ -17,7 +17,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".arch.ui.classdetail.school.schoolphoto.schoolphotonew.SchoolPhotoNewActivity"></activity>
+        <activity android:name=".arch.ui.classdetail.personal.PersonalNoteNewNextActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".arch.ui.classdetail.personal.PersonalNoteAddTemplateActivity" />
+        <activity
+            android:name=".arch.ui.classdetail.personal.PersonalNoteNewActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".arch.ui.classdetail.school.schoolphoto.schoolphotonew.SchoolPhotoNewActivity" />
         <activity android:name=".arch.ui.classdetail.school.schoolschedule.schoolschedulenew.SchoolScheduleNewActivity" />
         <activity android:name=".arch.ui.classdetail.school.schoolannouncement.schoolannouncementnew.SchoolAnnouncementNewNextActivity" />
         <activity android:name=".arch.ui.classdetail.school.schoolannouncement.SchoolAnnouncementAddTemplateActivity" />
@@ -29,13 +40,7 @@
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".arch.ui.classdetail.school.schoolannouncement.schoolannouncementdetail.SchoolAnnouncementDetailActivity" />
         <activity android:name=".arch.ui.forgotpassword.resetpassword.ResetPasswordActivity" />
-        <activity android:name=".arch.ui.classdetail.MainClassDetailActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".arch.ui.classdetail.MainClassDetailActivity" />
         <activity android:name=".arch.ui.joinclass.JoinClassActivity" />
         <activity android:name=".NotificationActivity" />
         <activity android:name=".arch.ui.editprofile.EditProfileActivity" />

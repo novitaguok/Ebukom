@@ -9,13 +9,13 @@
     android:orientation="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/clBottomSheetAnnouncementAttachmentPhoto"
+        android:id="@+id/clBottomClassDetailAttachmentPhoto"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/tvAnnouncementAttachmentPhoto"
+            android:id="@+id/tvClassDetailAttachmentPhoto"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Gambar"
@@ -30,14 +30,14 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/clBottomSheetAnnouncementAttachmentFile"
+        android:id="@+id/clBottomSheetClassDetailAttachmentFile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/size_20"
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/tvBottomSheetAnnouncementAttachmentFile"
+            android:id="@+id/tvBottomSheetClassDetailAttachmentFile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="File"
@@ -52,14 +52,14 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/clBottomSheetAnnouncementAttachmentLink"
+        android:id="@+id/clBottomSheetClassDetailAttachmentLink"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/size_20"
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/tvBottomSheetAnnouncementAttachmentLink"
+            android:id="@+id/tvBottomSheetClassDetailAttachmentLink"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Link"
@@ -74,14 +74,14 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/clBottomSheetAnnouncementAttachmentUseCamera"
+        android:id="@+id/clBottomSheetClassDetailAttachmentUseCamera"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/size_20"
         android:orientation="horizontal">
 
         <TextView
-            android:id="@+id/tvBottomSheetAnnouncementAttachmentUseCamera"
+            android:id="@+id/tvBottomSheetClassDetailAttachmentUseCamera"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Gunakan Kamera"

@@ -1,7 +1,6 @@
-package com.ebukom.arch.ui.classdetail.school.schoolannouncement
+package com.ebukom.arch.ui.classdetail
 
 import android.content.Context
-import android.media.Image
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,15 +8,13 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ebukom.R
-import com.ebukom.arch.dao.ClassDetailAnnouncementAttachmentDao
-import com.ebukom.arch.dao.ClassDetailAnnouncementTemplateDao
+import com.ebukom.arch.dao.ClassDetailAttachmentDao
 import com.ebukom.utils.load
 import kotlinx.android.synthetic.main.item_announcement_attachment.view.*
-import kotlinx.android.synthetic.main.item_announcement_edit_template.view.*
 
-class SchoolAnnouncementAttachmentAdapter(private val data: List<ClassDetailAnnouncementAttachmentDao>) :
-    RecyclerView.Adapter<SchoolAnnouncementAttachmentAdapter.ViewHolder>() {
-    private val items: MutableList<ClassDetailAnnouncementAttachmentDao>
+class ClassDetailAttachmentAdapter(private val data: List<ClassDetailAttachmentDao>) :
+    RecyclerView.Adapter<ClassDetailAttachmentAdapter.ViewHolder>() {
+    private val items: MutableList<ClassDetailAttachmentDao>
     lateinit var context : Context
 
     init {

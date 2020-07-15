@@ -1,30 +1,20 @@
 package com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementedit
 
-import android.app.Activity
-import android.content.Intent
-import android.graphics.Bitmap
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.MediaStore
-import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
-import androidx.core.content.FileProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ebukom.R
-import com.ebukom.arch.dao.ClassDetailAnnouncementAttachmentDao
-import com.ebukom.arch.dao.ClassDetailAnnouncementTemplateDao
-import com.ebukom.arch.ui.classdetail.school.schoolannouncement.SchoolAnnouncementAttachmentAdapter
-import com.ebukom.arch.ui.classdetail.school.schoolannouncement.SchoolAnnouncementTemplateAdapter
-import com.github.dhaval2404.imagepicker.ImagePicker.Companion.REQUEST_CODE
+import com.ebukom.arch.dao.ClassDetailAttachmentDao
+import com.ebukom.arch.dao.ClassDetailTemplateTextDao
+import com.ebukom.arch.ui.classdetail.ClassDetailAttachmentAdapter
+import com.ebukom.arch.ui.classdetail.ClassDetailTemplateTextAdapter
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.activity_school_announcement_edit.*
 import kotlinx.android.synthetic.main.activity_school_announcement_edit.rvSchoolAnnouncementAttachment
-import kotlinx.android.synthetic.main.activity_school_anouncement_new.*
-import kotlinx.android.synthetic.main.alert_edit_text.*
 import kotlinx.android.synthetic.main.alert_edit_text.view.*
-import kotlinx.android.synthetic.main.bottom_sheet_announcement_attachment.view.*
-import kotlinx.android.synthetic.main.item_announcement_attachment.*
+import kotlinx.android.synthetic.main.bottom_sheet_class_detail_attachment.view.*
 
 class SchoolAnnouncementEditActivity : AppCompatActivity() {
 
@@ -33,22 +23,22 @@ class SchoolAnnouncementEditActivity : AppCompatActivity() {
         setContentView(R.layout.activity_school_announcement_edit)
 
         // Attachment
-        val attachment: MutableList<ClassDetailAnnouncementAttachmentDao> = ArrayList()
+        val attachment: MutableList<ClassDetailAttachmentDao> = ArrayList()
 
         attachment.add(
-            ClassDetailAnnouncementAttachmentDao(
+            ClassDetailAttachmentDao(
                 "https://drive.google.com",
                 "drive.google.com", 0
             )
         )
         attachment.add(
-            ClassDetailAnnouncementAttachmentDao(
+            ClassDetailAttachmentDao(
                 "-",
                 "drive.google.com", 1
             )
         )
         attachment.add(
-            ClassDetailAnnouncementAttachmentDao(
+            ClassDetailAttachmentDao(
                 "-",
                 "drive.google.com", 2
             )
@@ -61,15 +51,16 @@ class SchoolAnnouncementEditActivity : AppCompatActivity() {
                 LinearLayoutManager.VERTICAL,
                 false
             )
-            adapter = SchoolAnnouncementAttachmentAdapter(
-                attachment
-            )
+            adapter =
+                ClassDetailAttachmentAdapter(
+                    attachment
+                )
         }
 
         // Template Title
-        val template: MutableList<ClassDetailAnnouncementTemplateDao> = ArrayList()
-        template.add(ClassDetailAnnouncementTemplateDao("Field Trip"))
-        for (i: Int in 1..10) template.add(ClassDetailAnnouncementTemplateDao("Perubahan Seragam"))
+        val templateText: MutableList<ClassDetailTemplateTextDao> = ArrayList()
+        templateText.add(ClassDetailTemplateTextDao("Field Trip"))
+        for (i: Int in 1..10) templateText.add(ClassDetailTemplateTextDao("Perubahan Seragam"))
         rvSchoolAnnouncementEditTemplate.apply {
             layoutManager =
                 LinearLayoutManager(
@@ -77,27 +68,28 @@ class SchoolAnnouncementEditActivity : AppCompatActivity() {
                     LinearLayoutManager.HORIZONTAL,
                     false
                 )
-            adapter = SchoolAnnouncementTemplateAdapter(
-                template
-            )
+            adapter =
+                ClassDetailTemplateTextAdapter(
+                    templateText
+                )
         }
 
         // Attach Icon
         val bottomSheetDialog = BottomSheetDialog(this)
-        val view = layoutInflater.inflate(R.layout.bottom_sheet_announcement_attachment, null)
+        val view = layoutInflater.inflate(R.layout.bottom_sheet_class_detail_attachment, null)
         bottomSheetDialog.setContentView(view)
         ivSchoolAnnouncementEditTitle.setOnClickListener {
             bottomSheetDialog.show()
         }
-        view.clBottomSheetAnnouncementAttachmentPhoto.setOnClickListener {
+        view.clBottomClassDetailAttachmentPhoto.setOnClickListener {
             bottomSheetDialog.dismiss()
             Toast.makeText(this, "A", Toast.LENGTH_LONG).show()
         }
-        view.clBottomSheetAnnouncementAttachmentFile.setOnClickListener {
+        view.clBottomSheetClassDetailAttachmentFile.setOnClickListener {
             bottomSheetDialog.dismiss()
             Toast.makeText(this, "F", Toast.LENGTH_LONG).show()
         }
-        view.clBottomSheetAnnouncementAttachmentLink.setOnClickListener {
+        view.clBottomSheetClassDetailAttachmentLink.setOnClickListener {
             bottomSheetDialog.dismiss()
 
             val builder = AlertDialog.Builder(this@SchoolAnnouncementEditActivity)
@@ -117,7 +109,7 @@ class SchoolAnnouncementEditActivity : AppCompatActivity() {
             val dialog: AlertDialog = builder.create()
             dialog.show()
         }
-        view.clBottomSheetAnnouncementAttachmentUseCamera.setOnClickListener {
+        view.clBottomSheetClassDetailAttachmentUseCamera.setOnClickListener {
 
         }
     }

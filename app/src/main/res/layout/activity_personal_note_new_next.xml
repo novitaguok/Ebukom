@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".arch.ui.classdetail.school.schoolannouncement.schoolannouncementnew.SchoolAnnouncementNewNextActivity">
+    tools:context=".arch.ui.classdetail.personal.PersonalNoteNewNextActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -24,7 +24,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Bagikan Pengumuman"
+                android:text="Buat Catatan untuk Wali Murid"
                 android:textColor="@color/colorSuperDarkBlue"
                 android:textSize="@dimen/text_16"
                 android:textStyle="bold" />
@@ -41,33 +41,33 @@
             android:layout_height="match_parent">
 
             <TextView
-                android:id="@+id/tvSchoolAnnouncementNewNextClass"
+                android:id="@+id/tvPersonalNoteNewNextClass"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
                 android:layout_marginTop="@dimen/size_24"
                 android:lineHeight="@dimen/size_20"
-                android:text="Pilih Kelas"
+                android:text="Pilih Wali Murid"
                 android:textColor="@color/colorSuperDarkBlue"
                 android:textSize="@dimen/text_12"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <androidx.recyclerview.widget.RecyclerView
-                android:layout_marginTop="@dimen/size_8"
-                android:id="@+id/rvSchoolAnnouncementNewNext"
+                android:id="@+id/rvPersonalNoteNewNext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/tvSchoolAnnouncementNewNextClass"/>
+                android:layout_marginTop="@dimen/size_8"
+                app:layout_constraintTop_toBottomOf="@+id/tvPersonalNoteNewNextClass" />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:cardUseCompatPadding="true"
-                android:layout_marginTop="@dimen/size_28"
                 android:layout_marginHorizontal="@dimen/size_8"
+                android:layout_marginTop="@dimen/size_28"
                 app:cardCornerRadius="@dimen/size_4"
-                app:layout_constraintTop_toBottomOf="@+id/rvSchoolAnnouncementNewNext">
+                app:cardUseCompatPadding="true"
+                app:layout_constraintTop_toBottomOf="@+id/rvPersonalNoteNewNext">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
@@ -76,37 +76,37 @@
                     android:paddingVertical="@dimen/activity_vertical_margin">
 
                     <TextView
-                        android:id="@+id/tvSchoolAnnouncementNewNextAlarmTitle"
+                        android:id="@+id/tvPersonalNoteNewNextAlarmTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:layout_constraintTop_toTopOf="parent"
-                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:lineHeight="@dimen/size_20"
                         android:text="@string/alarm_title"
+                        android:textColor="@color/colorSuperDarkBlue"
                         android:textFontWeight="500"
                         android:textSize="@dimen/text_14"
-                        android:lineHeight="@dimen/size_20"
-                        android:textColor="@color/colorSuperDarkBlue"/>
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
 
                     <Switch
-                        android:id="@+id/sSchoolAnnouncementNewNextAlarm"
+                        android:id="@+id/sPersonalNoteNewNextAlarm"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:layout_constraintRight_toRightOf="parent"
                         android:layout_marginRight="@dimen/size_12"
-                        app:layout_constraintTop_toTopOf="@+id/tvSchoolAnnouncementNewNextAlarmTitle"
-                        app:layout_constraintBottom_toBottomOf="@+id/tvSchoolAnnouncementNewNextAlarmTitle" />
+                        app:layout_constraintBottom_toBottomOf="@+id/tvPersonalNoteNewNextAlarmTitle"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/tvPersonalNoteNewNextAlarmTitle" />
 
                     <TextView
-                        android:id="@+id/tvSchoolAnnouncementNewNextAlarmContent"
+                        android:id="@+id/tvPersonalNoteNewNextAlarmContent"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/tvSchoolAnnouncementNewNextAlarmTitle"
                         android:layout_marginTop="@dimen/size_8"
-                        android:text="@string/alarm_content"
-                        android:textSize="@dimen/text_12"
                         android:lineHeight="@dimen/size_20"
-                        android:textColor="@color/colorSuperDarkBlue"/>
+                        android:text="@string/alarm_content"
+                        android:textColor="@color/colorSuperDarkBlue"
+                        android:textSize="@dimen/text_12"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvPersonalNoteNewNextAlarmTitle" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
@@ -114,14 +114,15 @@
     </androidx.core.widget.NestedScrollView>
 
     <Button
-        android:id="@+id/btnSchoolAnnouncementNewNextDone"
+        android:id="@+id/btnPersonalNoteNewNextDone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
         android:background="@color/colorSuperDarkBlue"
         android:lineHeight="@dimen/text_16"
-        android:text="BAGIKAN PENGUMUMAN"
+        android:text="KIRIM CATATAN"
         android:textColor="@color/colorWhite"
         android:textFontWeight="500"
-        android:textSize="@dimen/text_14"/>
+        android:textSize="@dimen/text_14" />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

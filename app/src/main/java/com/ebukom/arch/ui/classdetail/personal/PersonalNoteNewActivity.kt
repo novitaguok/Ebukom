@@ -1,4 +1,4 @@
-package com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementnew
+package com.ebukom.arch.ui.classdetail.personal
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -10,15 +10,13 @@ import com.ebukom.arch.dao.ClassDetailTemplateTextDao
 import com.ebukom.arch.ui.classdetail.ClassDetailAttachmentAdapter
 import com.ebukom.arch.ui.classdetail.ClassDetailTemplateTextAdapter
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import kotlinx.android.synthetic.main.activity_school_anouncement_new.*
-import kotlinx.android.synthetic.main.activity_school_anouncement_new.rvSchoolAnnouncementNewTemplate
+import kotlinx.android.synthetic.main.activity_personal_note_new.*
 import kotlinx.android.synthetic.main.bottom_sheet_class_detail_attachment.view.*
 
-class SchoolAnnouncementNewActivity : AppCompatActivity() {
-
+class PersonalNoteNewActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_school_anouncement_new)
+        setContentView(R.layout.activity_personal_note_new)
 
         // Attachment
         val attachment: MutableList<ClassDetailAttachmentDao> = ArrayList()
@@ -41,9 +39,9 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
                 "drive.google.com", 2
             )
         )
-        rvSchoolAnnouncementAttachment.apply {
+        rvPersonalNoteNewAttachment.apply {
             layoutManager = LinearLayoutManager(
-                this@SchoolAnnouncementNewActivity,
+                this@PersonalNoteNewActivity,
                 LinearLayoutManager.VERTICAL,
                 false
             )
@@ -55,12 +53,13 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
 
         // Template Title
         val templateText: MutableList<ClassDetailTemplateTextDao> = ArrayList()
-        templateText.add(ClassDetailTemplateTextDao("Field Trip"))
-        for (i: Int in 1..10) templateText.add(ClassDetailTemplateTextDao("Perubahan Seragam"))
-        rvSchoolAnnouncementNewTemplate.apply {
+        templateText.add(ClassDetailTemplateTextDao("Anak Sakit"))
+        templateText.add(ClassDetailTemplateTextDao("Anak Bertengkar"))
+        for (i: Int in 1..10) templateText.add(ClassDetailTemplateTextDao("Perubahan Kesulitan Bernafas"))
+        rvPersonalNoteNewTemplate.apply {
             layoutManager =
                 LinearLayoutManager(
-                    this@SchoolAnnouncementNewActivity,
+                    this@PersonalNoteNewActivity,
                     LinearLayoutManager.HORIZONTAL,
                     false
                 )
@@ -74,7 +73,7 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
         val bottomSheetDialog = BottomSheetDialog(this)
         val view = layoutInflater.inflate(R.layout.bottom_sheet_class_detail_attachment, null)
         bottomSheetDialog.setContentView(view)
-        ivSchoolAnnouncementNewAttach.setOnClickListener {
+        ivPersonalNoteNewAttach.setOnClickListener {
             bottomSheetDialog.show()
         }
         view.clBottomClassDetailAttachmentPhoto.setOnClickListener {

@@ -1,4 +1,4 @@
-package com.ebukom.arch.ui.classdetail.school.schoolannouncement
+package com.ebukom.arch.ui.classdetail
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,13 +6,13 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ebukom.R
-import com.ebukom.arch.dao.ClassDetailAnnouncementTemplateDao
+import com.ebukom.arch.dao.ClassDetailTemplateTextDao
 import kotlinx.android.synthetic.main.item_announcement_edit_template.view.*
 
-class SchoolAnnouncementTemplateAdapter(private val data: List<ClassDetailAnnouncementTemplateDao>) :
-    RecyclerView.Adapter<SchoolAnnouncementTemplateAdapter.ViewHolder>() {
+class ClassDetailTemplateTextAdapter(private val data: List<ClassDetailTemplateTextDao>) :
+    RecyclerView.Adapter<ClassDetailTemplateTextAdapter.ViewHolder>() {
 
-    private val items: MutableList<ClassDetailAnnouncementTemplateDao>
+    private val items: MutableList<ClassDetailTemplateTextDao>
 
     init {
         this.items = ArrayList()
