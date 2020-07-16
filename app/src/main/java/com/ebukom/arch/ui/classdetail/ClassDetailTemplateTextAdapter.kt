@@ -25,7 +25,7 @@ class ClassDetailTemplateTextAdapter(private val data: List<ClassDetailTemplateT
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.templateText.text = data[position].title
+        holder.templateText.text = data[position].text
     }
 
     override fun getItemCount(): Int {
