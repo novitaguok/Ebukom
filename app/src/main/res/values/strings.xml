@@ -15,4 +15,6 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="alarm_content">Orang tua kan diingatkan kembali\npada jadwal yang ditentukan</string>
     <string name="alarm_title">Atur Pengingat Berulang\nuntuk Orang Tua</string>
+    <string name="material_content">Untuk mendidk anak yang hyperaktif, diperlukan suatu kemampuan aitu kesabaran yang luar biasa. Selain itu perlu diketahui juga cara menghadapi anak dengan cara yang menyenangkan dan baik</string>
+    <string name="material_title">Mendidik Anak Hyperaktif</string>
 </resources>

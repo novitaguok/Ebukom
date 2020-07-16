@@ -17,14 +17,17 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".arch.ui.classdetail.material.materialsubject.MaterialSubjectAddActivity"/>
-        <activity android:name=".arch.ui.classdetail.material.materialsubject.MaterialSubjectNewActivity">
+        <activity android:name=".arch.ui.classdetail.material.materialeducation.materialeducationedit.MaterialEducationEditActivity"></activity>
+        <activity android:name=".arch.ui.classdetail.material.materialeducation.materialeducationdetail.MaterialEducationDetailActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".arch.ui.classdetail.material.materialeducation.materialeducationnew.MaterialEducationNewActivity" />
+        <activity android:name=".arch.ui.classdetail.material.materialsubject.MaterialSubjectAddActivity" />
+        <activity android:name=".arch.ui.classdetail.material.materialsubject.MaterialSubjectNewActivity" />
         <activity android:name=".arch.ui.classdetail.personal.PersonalNoteNewNextActivity" />
         <activity android:name=".arch.ui.classdetail.personal.PersonalNoteAddTemplateActivity" />
         <activity
@@ -42,9 +45,7 @@
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".arch.ui.classdetail.school.schoolannouncement.schoolannouncementdetail.SchoolAnnouncementDetailActivity" />
         <activity android:name=".arch.ui.forgotpassword.resetpassword.ResetPasswordActivity" />
-        <activity android:name=".arch.ui.classdetail.MainClassDetailActivity">
-
-        </activity>
+        <activity android:name=".arch.ui.classdetail.MainClassDetailActivity"></activity>
         <activity android:name=".arch.ui.joinclass.JoinClassActivity" />
         <activity android:name=".NotificationActivity" />
         <activity android:name=".arch.ui.editprofile.EditProfileActivity" />
