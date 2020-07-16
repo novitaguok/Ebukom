@@ -1,26 +1,12 @@
-package com.ebukom.arch.ui.classdetail.personal
+package com.ebukom.arch.ui.classdetail.personal.personalnotenew
 
-import android.content.Context
-import android.text.Layout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.ebukom.R
-import com.ebukom.arch.dao.ChooseClassDao
-import com.ebukom.arch.dao.ClassDetailAnnouncementDao
 import com.ebukom.arch.dao.ClassDetailPersonalNoteDao
-import com.ebukom.arch.ui.chooseclass.ChooseClassViewHolderBlue
-import com.ebukom.arch.ui.chooseclass.ChooseClassViewHolderGreen
 import com.ebukom.arch.ui.classdetail.OnMoreCallback
-import com.ebukom.base.BaseAdapter
-import com.google.android.material.bottomsheet.BottomSheetDialog
-import kotlinx.android.extensions.LayoutContainer
-import kotlinx.android.synthetic.main.bottom_sheet_school_announcement.view.*
-import kotlinx.android.synthetic.main.fragment_school_announcement.view.*
-import kotlinx.android.synthetic.main.item_announcement.view.*
-import kotlinx.android.synthetic.main.item_announcement_detail_comment.view.*
 import kotlinx.android.synthetic.main.item_note.view.*
 
 class PersonalNoteAdapter(
@@ -32,7 +18,10 @@ class PersonalNoteAdapter(
         val view =
             LayoutInflater.from(parent.context)
                 .inflate(R.layout.item_note, parent, false)
-        return ViewHolder(view, callback)
+        return ViewHolder(
+            view,
+            callback
+        )
     }
 
     override fun getItemCount(): Int {

@@ -48,7 +48,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/size_12"
-            android:src="@drawable/ic_notifications_dark_blue"
+            android:src="@drawable/ic_bell_blue"
             app:layout_constraintBottom_toBottomOf="@+id/ivClassHeaderProfilePicture"
             app:layout_constraintRight_toLeftOf="@+id/ivClassHeaderProfilePicture"
             app:layout_constraintTop_toTopOf="@+id/ivClassHeaderProfilePicture" />

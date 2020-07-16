@@ -1,4 +1,4 @@
-package com.ebukom.arch.ui.classdetail.personal
+package com.ebukom.arch.ui.classdetail.personal.personalnotenew
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle

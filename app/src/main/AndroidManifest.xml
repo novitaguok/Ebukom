@@ -18,20 +18,14 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".arch.ui.classdetail.material.materialeducation.materialeducationedit.MaterialEducationEditActivity"></activity>
-        <activity android:name=".arch.ui.classdetail.material.materialeducation.materialeducationdetail.MaterialEducationDetailActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".arch.ui.classdetail.material.materialeducation.materialeducationdetail.MaterialEducationDetailActivity"/>
         <activity android:name=".arch.ui.classdetail.material.materialeducation.materialeducationnew.MaterialEducationNewActivity" />
         <activity android:name=".arch.ui.classdetail.material.materialsubject.MaterialSubjectAddActivity" />
         <activity android:name=".arch.ui.classdetail.material.materialsubject.MaterialSubjectNewActivity" />
-        <activity android:name=".arch.ui.classdetail.personal.PersonalNoteNewNextActivity" />
-        <activity android:name=".arch.ui.classdetail.personal.PersonalNoteAddTemplateActivity" />
+        <activity android:name=".arch.ui.classdetail.personal.personalnotenew.PersonalNoteNewNextActivity" />
+        <activity android:name=".arch.ui.classdetail.personal.personalnotenew.PersonalNoteAddTemplateActivity" />
         <activity
-            android:name=".arch.ui.classdetail.personal.PersonalNoteNewActivity"
+            android:name=".arch.ui.classdetail.personal.personalnotenew.PersonalNoteNewActivity"
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".arch.ui.classdetail.school.schoolphoto.schoolphotonew.SchoolPhotoNewActivity" />
         <activity android:name=".arch.ui.classdetail.school.schoolschedule.schoolschedulenew.SchoolScheduleNewActivity" />
@@ -45,9 +39,15 @@
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".arch.ui.classdetail.school.schoolannouncement.schoolannouncementdetail.SchoolAnnouncementDetailActivity" />
         <activity android:name=".arch.ui.forgotpassword.resetpassword.ResetPasswordActivity" />
-        <activity android:name=".arch.ui.classdetail.MainClassDetailActivity"></activity>
+        <activity android:name=".arch.ui.classdetail.MainClassDetailActivity"/>
         <activity android:name=".arch.ui.joinclass.JoinClassActivity" />
-        <activity android:name=".NotificationActivity" />
+        <activity android:name=".arch.ui.classdetail.notification.NotificationActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".arch.ui.editprofile.EditProfileActivity" />
         <activity android:name=".arch.ui.chooseclass.ChooseClassActivity" />
         <activity android:name=".arch.ui.register.school.RegisterSchoolActivity" />

@@ -43,5 +43,4 @@ class PersonalFragment : Fragment() {
             );
         }
     }
-
 }

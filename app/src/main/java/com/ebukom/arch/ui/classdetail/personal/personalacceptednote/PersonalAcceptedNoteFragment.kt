@@ -8,15 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ebukom.R
-import com.ebukom.arch.dao.ClassDetailAnnouncementDao
 import com.ebukom.arch.dao.ClassDetailPersonalNoteDao
 import com.ebukom.arch.ui.classdetail.OnMoreCallback
-import com.ebukom.arch.ui.classdetail.personal.PersonalNoteAdapter
-import com.ebukom.arch.ui.classdetail.school.schoolannouncement.SchoolAnnouncementAdapter
-import kotlinx.android.synthetic.main.fragment_personal.*
-import kotlinx.android.synthetic.main.fragment_personal.view.*
+import com.ebukom.arch.ui.classdetail.personal.personalnotenew.PersonalNoteAdapter
 import kotlinx.android.synthetic.main.fragment_personal_accepted_note.*
-import kotlinx.android.synthetic.main.fragment_personal_sent_note.*
 
 class PersonalAcceptedNoteFragment : Fragment() {
     var objectList = ArrayList<ClassDetailPersonalNoteDao>()
@@ -32,7 +27,11 @@ class PersonalAcceptedNoteFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         addData()
-        personalNoteAdapter = PersonalNoteAdapter(objectList, callback)
+        personalNoteAdapter =
+            PersonalNoteAdapter(
+                objectList,
+                callback
+            )
 //        schoolAnnouncementAdapter.announcements = objectList
         rvPersonalAcceptedNote.layoutManager = LinearLayoutManager(this.context)
         rvPersonalAcceptedNote.adapter = personalNoteAdapter

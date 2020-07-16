@@ -1,9 +1,7 @@
 package com.ebukom.arch.ui.classdetail.material.materialeducation
 
 import android.content.Context
-import android.graphics.Color
 import android.os.Bundle
-import android.util.TypedValue
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -11,15 +9,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ebukom.R
 import com.ebukom.arch.dao.ClassDetailAnnouncementDao
-import com.ebukom.arch.dao.ClassDetailPersonalNoteDao
 import com.ebukom.arch.ui.classdetail.OnMoreCallback
-import com.ebukom.arch.ui.classdetail.personal.PersonalNoteAdapter
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.SchoolAnnouncementAdapter
 import kotlinx.android.synthetic.main.fragment_material_education.*
-import kotlinx.android.synthetic.main.fragment_personal_accepted_note.*
-import kotlinx.android.synthetic.main.fragment_school_announcement.*
-import kotlinx.android.synthetic.main.item_announcement.*
-import kotlinx.android.synthetic.main.item_announcement.view.*
 import java.lang.ClassCastException
 
 class MaterialEducationFragment : Fragment() {

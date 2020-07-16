@@ -1,4 +1,4 @@
-package com.ebukom.arch.ui.classdetail.personal.personalsentnote
+package com.ebukom.arch.ui.classdetail.member.memberschool
 
 import android.content.Context
 import android.os.Bundle
@@ -8,32 +8,37 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ebukom.R
+import com.ebukom.arch.dao.ClassDetailMemberContactDao
 import com.ebukom.arch.dao.ClassDetailPersonalNoteDao
 import com.ebukom.arch.ui.classdetail.OnMoreCallback
+import com.ebukom.arch.ui.classdetail.member.MemberContactAdapter
 import com.ebukom.arch.ui.classdetail.personal.personalnotenew.PersonalNoteAdapter
-import kotlinx.android.synthetic.main.fragment_personal_sent_note.*
+import kotlinx.android.synthetic.main.fragment_member_parent.*
+import kotlinx.android.synthetic.main.fragment_member_school.*
+import kotlinx.android.synthetic.main.fragment_personal_accepted_note.*
 
-class PersonalSentNoteFragment : Fragment() {
-    var objectList = ArrayList<ClassDetailPersonalNoteDao>()
-    lateinit var personalNoteAdapter: PersonalNoteAdapter
+class MemberSchoolFragment : Fragment() {
+    var objectList = ArrayList<ClassDetailMemberContactDao>()
+    lateinit var memberContactAdapter: MemberContactAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        return inflater.inflate(R.layout.fragment_personal_sent_note, container, false)
+        return inflater.inflate(R.layout.fragment_member_school, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         addData()
-        personalNoteAdapter =
-            PersonalNoteAdapter(
+        memberContactAdapter =
+            MemberContactAdapter(
                 objectList,
                 callback
             )
-        rvPersonalSentNote.layoutManager = LinearLayoutManager(this.context)
-        rvPersonalSentNote.adapter = personalNoteAdapter
+//        schoolAnnouncementAdapter.announcements = objectList
+        rvMemberSchool.layoutManager = LinearLayoutManager(this.context)
+        rvMemberSchool.adapter = memberContactAdapter
 
 //        if (objectList.isNotEmpty()) {
 //            view.ivPersonalEmpty.visibility = View.INVISIBLE
@@ -47,12 +52,10 @@ class PersonalSentNoteFragment : Fragment() {
     private fun addData() {
         for (i in 0..10) {
             objectList.add(
-                ClassDetailPersonalNoteDao(
-                    R.drawable.bg_solid_gray,
-                    "Untuk: Rina Musyifa",
-                    "Besok akan dilaksanakan kegiatan pentas seni. Orang tua dimohon untuk mempersiapkan peralatan di bawah ini. Tolong diperhatikan ya Ibu...",
-                    "1 KOMENTAR",
-                    "12.00 - Senin, 12 Maret 2020"
+                ClassDetailMemberContactDao(
+                    "Eni Trikuswanti",
+                    "Guru Kelas 1 Aurora",
+                    R.drawable.bg_solid_gray
                 )
             )
         }
