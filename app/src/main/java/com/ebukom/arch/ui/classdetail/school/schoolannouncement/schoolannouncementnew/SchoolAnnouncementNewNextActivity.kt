@@ -2,12 +2,18 @@ package com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncem
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
+import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ebukom.R
 import com.ebukom.arch.dao.ClassDetailItemCheckDao
 import com.ebukom.arch.ui.classdetail.ClassDetailCheckAdapter
+import com.github.florent37.singledateandtimepicker.dialog.SingleDateAndTimePickerDialog
 import kotlinx.android.synthetic.main.activity_personal_note_new_next.*
 import kotlinx.android.synthetic.main.activity_school_announcement_new_next.*
+import kotlinx.android.synthetic.main.alert_edit_text.view.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 class SchoolAnnouncementNewNextActivity : AppCompatActivity() {
 
@@ -34,6 +40,28 @@ class SchoolAnnouncementNewNextActivity : AppCompatActivity() {
                     list
                 )
         }
-    }
 
+        sSchoolAnnouncementNewNextAlarm.setOnCheckedChangeListener { buttonView, isChecked ->
+
+            if (isChecked) {
+//                val builder = AlertDialog.Builder(this@SchoolAnnouncementNewNextActivity)
+//                val view = layoutInflater.inflate(R.layout.alert_edit_text, null)
+//
+//                view.tvAlertEditText.setText("Link")
+//                view.tilAlertEditText.setHint("Masukkan Link")
+//
+//                builder.setView(view)
+//                builder.setNegativeButton("BATALKAN") { dialog, which ->
+//                    Toast.makeText(applicationContext, "Next?", Toast.LENGTH_SHORT).show()
+//                }
+//                builder.setPositiveButton("LAMPIRKAN") { dialog, which ->
+//                    Toast.makeText(applicationContext, "Next?", Toast.LENGTH_SHORT).show()
+//                }
+//
+//                val dialog: AlertDialog = builder.create()
+//                dialog.show()
+
+            }
+        }
+    }
 }

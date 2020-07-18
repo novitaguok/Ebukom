@@ -1,0 +1,513 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".arch.ui.classdetail.personal.personalparent.personalparentschoolfeeinfo.PersonalParentSchoolFeeInfoActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:elevation="@dimen/size_10"
+        app:elevation="@dimen/size_10">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:minHeight="?attr/actionBarSize" />
+
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:paddingBottom="@dimen/size_16">
+
+            <TextView
+                android:id="@+id/tvPersonalParentSchoolFeeInfoTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/size_24"
+                android:lineHeight="@dimen/size_20"
+                android:text="Informasi Biaya Pendidikan"
+                android:textColor="@color/colorSuperDarkBlue"
+                android:textSize="@dimen/text_16"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvPersonalParentSchoolFeeInfoDate"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/size_4"
+                android:lineHeight="@dimen/text_14"
+                android:text="28 Maret 2020"
+                android:textColor="@color/colorSuperDarkBlue"
+                android:textSize="@dimen/text_16"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvPersonalParentSchoolFeeInfoTitle" />
+
+            <TextView
+                android:id="@+id/tvPersonalParentSchoolFeeInfoDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/size_28"
+                android:lineHeight="@dimen/size_20"
+                android:text="Detail Pembayaran"
+                android:textColor="#212121"
+                android:textFontWeight="500"
+                android:textSize="@dimen/text_12"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvPersonalParentSchoolFeeInfoDate" />
+
+            <TableLayout
+                android:id="@+id/tbPersonalParentSchoolFeeInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_8"
+                app:layout_constraintTop_toBottomOf="@+id/tvPersonalParentSchoolFeeInfoDetail">
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#F7F7F7">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:layout_weight="5"
+                        android:lineHeight="@dimen/size_20"
+                        android:paddingVertical="@dimen/text_14"
+                        android:text="Pengembangan I/II"
+                        android:textColor="#000000"
+                        android:textSize="@dimen/text_14" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:lineHeight="@dimen/size_20"
+                        android:paddingVertical="@dimen/text_14"
+                        android:text="Rp."
+                        android:textColor="#212121"
+                        android:textFontWeight="500"
+                        android:textSize="@dimen/text_14" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/activity_horizontal_margin"
+                        android:layout_weight="2"
+                        android:gravity="right"
+                        android:lineHeight="@dimen/size_20"
+                        android:paddingVertical="@dimen/text_14"
+                        android:text="880.000"
+                        android:textColor="#212121"
+                        android:textFontWeight="500"
+                        android:textSize="@dimen/text_14" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#FFFFFF">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:layout_weight="5"
+                        android:lineHeight="@dimen/size_20"
+                        android:paddingVertical="@dimen/text_14"
+                        android:text="Kegiatan s.d. 2019-2020"
+                        android:textColor="#000000"
+                        android:textSize="@dimen/text_14" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/activity_horizontal_margin"
+                        android:layout_weight="3"
+                        android:gravity="right"
+                        android:lineHeight="@dimen/size_20"
+                        android:paddingVertical="@dimen/text_14"
+                        android:text="Lunas (07/11/2019)"
+                        android:textColor="#212121"
+                        android:textFontWeight="500"
+                        android:textSize="@dimen/text_14" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#F7F7F7">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:layout_weight="5"
+                        android:lineHeight="@dimen/size_20"
+                        android:paddingVertical="@dimen/text_14"
+                        android:text="Pengembangan I/II"
+                        android:textColor="#000000"
+                        android:textSize="@dimen/text_14" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:lineHeight="@dimen/size_20"
+                        android:paddingVertical="@dimen/text_14"
+                        android:text="Rp."
+                        android:textColor="#212121"
+                        android:textFontWeight="500"
+                        android:textSize="@dimen/text_14" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/activity_horizontal_margin"
+                        android:layout_weight="2"
+                        android:gravity="right"
+                        android:lineHeight="@dimen/size_20"
+                        android:paddingVertical="@dimen/text_14"
+                        android:text="2.300.000"
+                        android:textColor="#212121"
+                        android:textFontWeight="500"
+                        android:textSize="@dimen/text_14" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#FFFFFF">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:layout_weight="5"
+                        android:lineHeight="@dimen/size_20"
+                        android:paddingVertical="@dimen/text_14"
+                        android:text="Katering Jan-Feb 2020"
+                        android:textColor="#000000"
+                        android:textSize="@dimen/text_14" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/activity_horizontal_margin"
+                        android:layout_weight="3"
+                        android:gravity="right"
+                        android:lineHeight="@dimen/size_20"
+                        android:paddingVertical="@dimen/text_14"
+                        android:text="Sudah Termasuk SPP"
+                        android:textColor="#212121"
+                        android:textFontWeight="500"
+                        android:textSize="@dimen/text_14" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#F7F7F7">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:layout_weight="5"
+                        android:lineHeight="@dimen/size_20"
+                        android:paddingVertical="@dimen/text_14"
+                        android:text="Pendamping Feb 2020"
+                        android:textColor="#000000"
+                        android:textSize="@dimen/text_14" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/activity_horizontal_margin"
+                        android:layout_weight="3"
+                        android:gravity="right"
+                        android:lineHeight="@dimen/size_20"
+                        android:paddingVertical="@dimen/text_14"
+                        android:text="Tidak Terdaftar"
+                        android:textColor="#212121"
+                        android:textFontWeight="500"
+                        android:textSize="@dimen/text_14" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#FFFFFF">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:layout_weight="5"
+                        android:lineHeight="@dimen/size_20"
+                        android:paddingVertical="@dimen/text_14"
+                        android:text="Eskul"
+                        android:textColor="#000000"
+                        android:textSize="@dimen/text_14" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/activity_horizontal_margin"
+                        android:layout_weight="3"
+                        android:gravity="right"
+                        android:lineHeight="@dimen/size_20"
+                        android:paddingVertical="@dimen/text_14"
+                        android:text="Tidak Terdaftar"
+                        android:textColor="#212121"
+                        android:textFontWeight="500"
+                        android:textSize="@dimen/text_14" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#F7F7F7">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:layout_weight="5"
+                        android:lineHeight="@dimen/size_20"
+                        android:paddingVertical="@dimen/text_14"
+                        android:text="Seragam"
+                        android:textColor="#000000"
+                        android:textSize="@dimen/text_14" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/activity_horizontal_margin"
+                        android:layout_weight="3"
+                        android:gravity="right"
+                        android:lineHeight="@dimen/size_20"
+                        android:paddingVertical="@dimen/text_14"
+                        android:text="Lunas (09/08/2019)"
+                        android:textColor="#212121"
+                        android:textFontWeight="500"
+                        android:textSize="@dimen/text_14" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#FFFFFF">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:layout_weight="5"
+                        android:lineHeight="@dimen/size_20"
+                        android:paddingVertical="@dimen/text_14"
+                        android:text="Piutang eskul Semester 1"
+                        android:textColor="#000000"
+                        android:textSize="@dimen/text_14" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:lineHeight="@dimen/size_20"
+                        android:paddingVertical="@dimen/text_14"
+                        android:text="Rp."
+                        android:textColor="#212121"
+                        android:textFontWeight="500"
+                        android:textSize="@dimen/text_14" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/activity_horizontal_margin"
+                        android:layout_weight="2"
+                        android:gravity="right"
+                        android:lineHeight="@dimen/size_20"
+                        android:paddingVertical="@dimen/text_14"
+                        android:text="0"
+                        android:textColor="#212121"
+                        android:textFontWeight="500"
+                        android:textSize="@dimen/text_14" />
+
+                </TableRow>
+
+                <TableRow
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="#F7F7F7">
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                        android:layout_weight="5"
+                        android:lineHeight="@dimen/size_20"
+                        android:paddingVertical="@dimen/text_14"
+                        android:text="Total"
+                        android:textColor="@color/colorRed"
+                        android:textSize="@dimen/text_14" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:lineHeight="@dimen/size_20"
+                        android:paddingVertical="@dimen/text_14"
+                        android:text="Rp."
+                        android:textColor="#212121"
+                        android:textFontWeight="500"
+                        android:textSize="@dimen/text_14" />
+
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/activity_horizontal_margin"
+                        android:layout_weight="2"
+                        android:gravity="right"
+                        android:lineHeight="@dimen/size_20"
+                        android:paddingVertical="@dimen/text_14"
+                        android:text="3.180.000"
+                        android:textColor="#212121"
+                        android:textFontWeight="500"
+                        android:textSize="@dimen/text_14" />
+
+                </TableRow>
+            </TableLayout>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvPersonalParentSchoolFeeInfoNote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_16"
+                android:layout_marginHorizontal="@dimen/size_8"
+                android:elevation="@dimen/size_2"
+                app:cardElevation="@dimen/size_2"
+                app:layout_constraintTop_toBottomOf="@+id/tbPersonalParentSchoolFeeInfo"
+                app:cardUseCompatPadding="true">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tvPersonalParentSchoolFeeInfoNoteTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/size_12"
+                        android:layout_marginLeft="@dimen/size_10"
+                        android:text="Catatan"
+                        android:textSize="@dimen/text_12"
+                        android:lineHeight="@dimen/size_20"
+                        android:textFontWeight="500"
+                        android:textColor="#212121"/>
+
+                    <TextView
+                        android:layout_marginHorizontal="@dimen/size_10"
+                        android:id="@+id/tvPersonalParentSchoolFeeInfoNoteContent"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/size_8"
+                        android:layout_marginBottom="@dimen/size_16"
+                        android:text="@string/note_content"
+                        android:textSize="@dimen/text_14"
+                        android:lineHeight="@dimen/size_20"
+                        android:textColor="#212121"/>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvPersonalParentSchoolFeeInfoProcedure"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_8"
+                android:layout_marginHorizontal="@dimen/size_8"
+                android:elevation="@dimen/size_2"
+                app:cardElevation="@dimen/size_2"
+                app:layout_constraintTop_toBottomOf="@+id/cvPersonalParentSchoolFeeInfoNote"
+                app:cardUseCompatPadding="true">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/size_32">
+
+                    <TextView
+                        android:id="@+id/tvPersonalParentSchoolFeeInfoProcedureTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/size_12"
+                        android:layout_marginLeft="@dimen/size_10"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:text="Tata Cara Melakukan Pembayaran"
+                        android:textSize="@dimen/text_12"
+                        android:lineHeight="@dimen/size_20"
+                        android:textFontWeight="500"
+                        android:textColor="#212121"/>
+
+                    <TextView
+                        android:id="@+id/tvPersonalParentSchoolFeeInfoProcedure1"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/size_8"
+                        android:layout_marginBottom="@dimen/size_16"
+                        android:layout_marginLeft="@dimen/size_8"
+                        app:layout_constraintTop_toBottomOf="@id/tvPersonalParentSchoolFeeInfoProcedureTitle"
+                        android:text="@string/procedure1"
+                        android:textSize="@dimen/text_14"
+                        android:lineHeight="@dimen/size_20"
+                        android:textColor="#212121"/>
+
+                    <TextView
+                        android:layout_marginHorizontal="@dimen/size_10"
+                        android:id="@+id/tvPersonalParentSchoolFeeInfoProcedure2"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginTop="@dimen/size_16"
+                        app:layout_constraintTop_toBottomOf="@+id/tvPersonalParentSchoolFeeInfoProcedure1"
+                        android:text="@string/procedure2"
+                        android:textSize="@dimen/text_14"
+                        android:lineHeight="@dimen/size_20"
+                        android:textColor="#212121"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+            </androidx.cardview.widget.CardView>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

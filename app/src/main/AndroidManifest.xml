@@ -17,8 +17,15 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".arch.ui.classdetail.material.materialeducation.materialeducationedit.MaterialEducationEditActivity"></activity>
-        <activity android:name=".arch.ui.classdetail.material.materialeducation.materialeducationdetail.MaterialEducationDetailActivity"/>
+        <activity android:name=".arch.ui.classdetail.personal.personalparent.personalparentschoolfeeinfo.PersonalParentSchoolFeeInfoActivity">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        <activity android:name=".arch.ui.classdetail.material.materialeducation.materialeducationedit.MaterialEducationEditActivity" />
+        <activity android:name=".arch.ui.classdetail.material.materialeducation.materialeducationdetail.MaterialEducationDetailActivity" />
         <activity android:name=".arch.ui.classdetail.material.materialeducation.materialeducationnew.MaterialEducationNewActivity" />
         <activity android:name=".arch.ui.classdetail.material.materialsubject.MaterialSubjectAddActivity" />
         <activity android:name=".arch.ui.classdetail.material.materialsubject.MaterialSubjectNewActivity" />
@@ -39,15 +46,9 @@
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".arch.ui.classdetail.school.schoolannouncement.schoolannouncementdetail.SchoolAnnouncementDetailActivity" />
         <activity android:name=".arch.ui.forgotpassword.resetpassword.ResetPasswordActivity" />
-        <activity android:name=".arch.ui.classdetail.MainClassDetailActivity"/>
+        <activity android:name=".arch.ui.classdetail.MainClassDetailActivity" />
         <activity android:name=".arch.ui.joinclass.JoinClassActivity" />
-        <activity android:name=".arch.ui.classdetail.notification.NotificationActivity" >
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+        <activity android:name=".arch.ui.classdetail.notification.NotificationActivity" />
         <activity android:name=".arch.ui.editprofile.EditProfileActivity" />
         <activity android:name=".arch.ui.chooseclass.ChooseClassActivity" />
         <activity android:name=".arch.ui.register.school.RegisterSchoolActivity" />
