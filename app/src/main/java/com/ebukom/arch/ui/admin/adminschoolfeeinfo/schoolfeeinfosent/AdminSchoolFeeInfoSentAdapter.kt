@@ -1,35 +1,44 @@
 package com.ebukom.arch.ui.admin.adminschoolfeeinfo.schoolfeeinfosent
 
-import android.text.Layout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ebukom.R
 import com.ebukom.arch.dao.AdminSchoolFeeInfoSentDao
-import com.ebukom.arch.dao.ClassDetailItemCheckDao
+import com.ebukom.arch.dao.ClassDetailMemberContactDao
+import com.ebukom.arch.dao.ClassDetailPersonalNoteDao
+import com.ebukom.arch.ui.classdetail.OnMoreCallback
 import kotlinx.android.synthetic.main.item_admin_info_sent.view.*
-import kotlinx.android.synthetic.main.item_check.view.*
+import kotlinx.android.synthetic.main.item_member.view.*
+import kotlinx.android.synthetic.main.item_note.view.*
 
-class AdminSchoolFeeInfoSentAdapter(val list: ArrayList<AdminSchoolFeeInfoSentDao>) :
-    RecyclerView.Adapter<AdminSchoolFeeInfoSentAdapter.ViewHolder>() {
+class AdminSchoolFeeInfoSentAdapter(
+    var data: List<AdminSchoolFeeInfoSentDao>) :
+    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
+        val view =
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.item_admin_info_sent, parent, false)
         return ViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.item_admin_info_sent, parent, false)
+            view
         )
     }
 
     override fun getItemCount(): Int {
-        return list?.size
+        return data.size
     }
 
-    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.view.tvItemAdminInfoSentTitle.text = list?.get(position)?.title
-        holder.view.tvItemAdminInfoSentDetail.text = list?.get(position)?.detail
-        holder.view.tvItemAdminInfoSentDate.text = list?.get(position)?.date
+    override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
+        (holder as ViewHolder).bind(data[position])
     }
 
-    class ViewHolder(val view: View) : RecyclerView.ViewHolder(view)
-
+    class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
+        fun bind(info: AdminSchoolFeeInfoSentDao) {
+            itemView.tvItemAdminInfoSentTitle.text = info?.title
+            itemView.tvItemAdminInfoSentDetail.text = info?.date
+            itemView.tvItemAdminInfoSentDate.text = info?.date
+        }
+    }
 }

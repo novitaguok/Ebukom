@@ -1,14 +1,92 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".arch.ui.admin.adminschoolfeeinfo.schoolfeeinfoparentlist.AdminSchoolFeeInfoParentListFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:descendantFocusability="blocksDescendants">
+
+            <Button
+                android:id="@+id/btnAdminSchoolFeeInfoParentListClass"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_24"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:background="@drawable/btn_transaprent_rectangle_4dp"
+                android:drawableRight="@drawable/ic_dropdown"
+                android:drawablePadding="@dimen/size_24"
+                android:minHeight="@dimen/size_52"
+                android:padding="@dimen/size_16"
+                android:text="Semua Kelas"
+                android:textAlignment="textStart"
+                android:textAllCaps="false"
+                android:textColor="@color/colorGray"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <Button
+                android:id="@+id/btnAdminSchoolFeeInfoParentListEskul"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_8"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:background="@drawable/btn_transaprent_rectangle_4dp"
+                android:drawableRight="@drawable/ic_dropdown"
+                android:drawablePadding="@dimen/size_24"
+                android:minHeight="@dimen/size_52"
+                android:padding="@dimen/size_16"
+                android:text="Semua Eskul"
+                android:textAlignment="textStart"
+                android:textAllCaps="false"
+                android:textColor="@color/colorGray"
+                app:layout_constraintTop_toBottomOf="@+id/btnAdminSchoolFeeInfoParentListClass" />
+
+            <TextView
+                android:id="@+id/tvAdminSchoolFeeInfoParentListSort"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_14"
+                android:lineHeight="@dimen/size_20"
+                android:text="Urutkan dari yang paling lama diupdate"
+                android:textColor="#212121"
+                android:textSize="@dimen/text_14"
+                app:layout_constraintLeft_toLeftOf="@+id/btnAdminSchoolFeeInfoParentListEskul"
+                app:layout_constraintTop_toBottomOf="@+id/btnAdminSchoolFeeInfoParentListEskul" />
+
+            <Switch
+                android:id="@+id/sAdminSchoolFeeInfoParentListSort"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                app:layout_constraintBottom_toBottomOf="@+id/tvAdminSchoolFeeInfoParentListSort"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tvAdminSchoolFeeInfoParentListSort" />
+
+            <View
+                android:id="@+id/vAdminSchoolFeeInfoParentList"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_1"
+                android:layout_marginTop="@dimen/size_16"
+                android:background="#EEEEEE"
+                app:layout_constraintTop_toBottomOf="@+id/tvAdminSchoolFeeInfoParentListSort" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvSchoolFeeInfoParentList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_24"
+                android:nestedScrollingEnabled="false"
+                app:layout_constraintTop_toBottomOf="@+id/vAdminSchoolFeeInfoParentList" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
 
 </FrameLayout>

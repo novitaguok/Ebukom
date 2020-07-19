@@ -11,7 +11,7 @@ import com.ebukom.arch.ui.classdetail.school.schoolannouncement.SchoolAnnounceme
 import com.ebukom.arch.ui.classdetail.school.schoolphoto.SchoolPhotoFragment
 import com.ebukom.arch.ui.classdetail.school.schoolschedule.SchoolScheduleFragment
 
-class AdminSchoolFeeInfoAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
+class AdminSchoolFeeInfoPageAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
     override fun getItem(position: Int): Fragment {
         when (position) {
             0 -> {return AdminSchoolFeeInfoParentListFragment()}

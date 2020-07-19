@@ -1,6 +1,5 @@
 package com.ebukom.arch.ui.admin.adminschoolfeeinfo.schoolfeeinfosent
 
-import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,12 +8,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ebukom.R
 import com.ebukom.arch.dao.AdminSchoolFeeInfoSentDao
-import com.ebukom.arch.dao.ClassDetailPersonalNoteDao
-import com.ebukom.arch.ui.classdetail.OnMoreCallback
-import com.ebukom.arch.ui.classdetail.personal.personalnotenew.PersonalNoteAdapter
+import com.ebukom.arch.ui.admin.adminschoolfeeinfo.AdminSchoolFeeInfoPageAdapter
 import kotlinx.android.synthetic.main.fragment_admin_school_fee_info_sent.*
 import kotlinx.android.synthetic.main.fragment_admin_school_fee_info_sent.view.*
-import kotlinx.android.synthetic.main.fragment_personal_accepted_note.*
 
 class AdminSchoolFeeInfoSentFragment : Fragment() {
     var objectList = ArrayList<AdminSchoolFeeInfoSentDao>()
@@ -34,7 +30,6 @@ class AdminSchoolFeeInfoSentFragment : Fragment() {
             AdminSchoolFeeInfoSentAdapter(
                 objectList
             )
-//        schoolAnnouncementAdapter.announcements = objectList
         rvSchoolFeeInfoSent.layoutManager = LinearLayoutManager(this.context)
         rvSchoolFeeInfoSent.adapter = adminSchoolFeeInfoSentAdapter
 
