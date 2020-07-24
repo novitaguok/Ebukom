@@ -89,7 +89,7 @@
                 app:boxCornerRadiusTopEnd="@dimen/size_8"
                 app:boxCornerRadiusTopStart="@dimen/size_8"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/size_52"
                 android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
                 android:layout_marginTop="@dimen/size_32"
                 android:hint="Nama lengkap"
@@ -100,9 +100,9 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etRegisterParentName"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:padding="@dimen/size_16"
-                    android:background="@drawable/edit_text_rectangle_selector"/>
+                    android:layout_height="match_parent"
+                    android:background="@drawable/edit_text_rectangle_selector"
+                    android:padding="@dimen/size_16" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -114,7 +114,7 @@
                 app:boxCornerRadiusTopEnd="@dimen/size_8"
                 app:boxCornerRadiusTopStart="@dimen/size_8"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/size_52"
                 android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
                 android:layout_marginTop="@dimen/size_24"
                 android:hint="Nama anak"
@@ -125,7 +125,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etRegisterParentChild"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:padding="@dimen/size_16"/>
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -138,7 +138,7 @@
                 app:boxCornerRadiusTopEnd="@dimen/size_8"
                 app:boxCornerRadiusTopStart="@dimen/size_8"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/size_52"
                 android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
                 android:layout_marginTop="@dimen/size_24"
                 android:hint="Nomor telepon"
@@ -149,20 +149,21 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etRegisterParentPhone"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:padding="@dimen/size_16"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
                 android:id="@+id/btnRegisterParentEskul"
+                android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/size_48"
                 android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
                 app:layout_constraintTop_toBottomOf="@+id/tilRegisterParentPhone"
                 android:textAlignment="textStart"
                 android:text="Eskul"
                 android:textColor="@color/colorGray"
-                android:padding="@dimen/size_16"
+                android:padding="@dimen/size_12"
                 android:textAllCaps="false"
                 android:drawableRight="@drawable/ic_dropdown"
                 android:drawablePadding="@dimen/size_24"
@@ -179,7 +180,7 @@
                 app:boxCornerRadiusTopEnd="@dimen/size_8"
                 app:boxCornerRadiusTopStart="@dimen/size_8"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/size_52"
                 android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
                 android:layout_marginTop="@dimen/size_24"
                 android:hint="Kata Sandi"
@@ -190,7 +191,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etRegisterParentPassword"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:padding="@dimen/size_16" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -203,7 +204,7 @@
                 app:boxCornerRadiusTopEnd="@dimen/size_8"
                 app:boxCornerRadiusTopStart="@dimen/size_8"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/size_52"
                 android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
                 android:layout_marginTop="@dimen/size_24"
                 android:hint="Konfirmasi kata sandi"
@@ -214,7 +215,7 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etLoginPassword"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:padding="@dimen/size_16" />
             </com.google.android.material.textfield.TextInputLayout>
 

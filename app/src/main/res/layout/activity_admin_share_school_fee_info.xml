@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".arch.ui.admin.AdminShareSchoolFeeInfoActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:elevation="@dimen/size_10"
+        app:elevation="@dimen/size_10">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:minHeight="?attr/actionBarSize">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Bagikan Info Biaya Pendidikan"
+                android:textColor="@color/colorSuperDarkBlue"
+                android:textSize="@dimen/text_16"
+                android:textStyle="bold" />
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tvAdminShareSchoolFeeInfoAdd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="@dimen/size_4"
+                android:text="Tambah Item Pembayaran"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_16"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/btnAdminShareSchoolFeeInfoAdd"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintLeft_toRightOf="@+id/ivAdminShareSchoolFeeInfoAdd"
+                app:layout_constraintRight_toRightOf="@+id/btnAdminShareSchoolFeeInfoAdd"
+                app:layout_constraintTop_toTopOf="@+id/btnAdminShareSchoolFeeInfoAdd" />
+
+            <ImageView
+                android:id="@+id/ivAdminShareSchoolFeeInfoAdd"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/size_12"
+                android:elevation="@dimen/size_4"
+                android:src="@drawable/ic_plus_yellow"
+                app:layout_constraintBottom_toBottomOf="@+id/tvAdminShareSchoolFeeInfoAdd"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintLeft_toLeftOf="@+id/btnAdminShareSchoolFeeInfoAdd"
+                app:layout_constraintRight_toLeftOf="@+id/tvAdminShareSchoolFeeInfoAdd"
+                app:layout_constraintTop_toTopOf="@+id/tvAdminShareSchoolFeeInfoAdd" />
+
+            <Button
+                android:id="@+id/btnAdminShareSchoolFeeInfoAdd"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/size_16"
+                android:height="@dimen/size_48"
+                android:background="@drawable/btn_blue_rectangle_4dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <TextView
+                android:id="@+id/tvAdminShareSchoolFeeInfoAddNote"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="@dimen/size_4"
+                android:text="Tambah Catatan"
+                android:textColor="@color/colorSuperDarkBlue"
+                android:textSize="@dimen/text_16"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/btnAdminShareSchoolFeeInfoAddNote"
+                app:layout_constraintRight_toRightOf="@+id/btnAdminShareSchoolFeeInfoAddNote"
+                app:layout_constraintLeft_toLeftOf="@+id/btnAdminShareSchoolFeeInfoAddNote"
+                app:layout_constraintTop_toTopOf="@+id/btnAdminShareSchoolFeeInfoAddNote" />
+
+            <Button
+                android:id="@+id/btnAdminShareSchoolFeeInfoAddNote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/size_14"
+                android:height="@dimen/size_48"
+                android:background="@drawable/btn_white_rectangle_4dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnAdminShareSchoolFeeInfoAdd"/>
+
+            <View
+                android:id="@+id/vAdminShareSchoolFeeInfo"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_1"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/size_20"
+                app:layout_constraintTop_toBottomOf="@+id/btnAdminShareSchoolFeeInfoAddNote"
+                android:background="#EEEEEE"/>
+
+            <TextView
+                android:id="@+id/tvAdminShareSchoolFeeInfoDetail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_16"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/vAdminShareSchoolFeeInfo"
+                android:text="Detail Pembayaran"
+                android:textSize="@dimen/text_12"
+                android:lineHeight="@dimen/size_20"
+                android:textFontWeight="500"/>
+
+            <Button
+                android:id="@+id/btnAdminShareSchoolFeeInfoDetailEdit"
+                android:layout_width="@dimen/size_96"
+                android:layout_height="@dimen/size_36"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:text="EDIT"
+                android:background="@drawable/btn_white_rectangle_4dp"
+                android:textSize="@dimen/text_14"
+                android:lineHeight="@dimen/size_16"
+                android:textFontWeight="500"
+                app:layout_constraintTop_toTopOf="@+id/tvAdminShareSchoolFeeInfoDetail"
+                app:layout_constraintBottom_toBottomOf="@+id/tvAdminShareSchoolFeeInfoDetail"
+                app:layout_constraintRight_toRightOf="parent"/>
+
+            <ImageView
+                android:id="@+id/ivAdminShareSchoolFeeInfoEmpty"
+                android:layout_width="@dimen/size_100"
+                android:layout_height="@dimen/size_100"
+                android:layout_marginTop="@dimen/size_28"
+                app:layout_constraintTop_toBottomOf="@+id/tvAdminShareSchoolFeeInfoDetail"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:src="@drawable/ic_info_gray"/>
+
+            <TextView
+                android:id="@+id/tvAdminShareSchoolFeeInfoEmpty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_8"
+                app:layout_constraintTop_toBottomOf="@+id/ivAdminShareSchoolFeeInfoEmpty"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:text="Belum ada item pembayaran"
+                android:textSize="@dimen/text_14"
+                android:lineHeight="@dimen/size_24"
+                android:textFontWeight="500"
+                android:textColor="#E0E0E0"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <Button
+        android:id="@+id/btnAdminShareSchoolFeeInfoNext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/colorSuperDarkBlue"
+        android:lineHeight="@dimen/text_16"
+        android:text="SELANJUTNYA"
+        android:textColor="@color/colorWhite"
+        android:textFontWeight="500"
+        android:textSize="@dimen/text_14"/>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

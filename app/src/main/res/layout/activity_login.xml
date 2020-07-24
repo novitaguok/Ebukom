@@ -22,7 +22,6 @@
             android:minHeight="?attr/actionBarSize">
 
             <TextView
-                android:id="@+id/tv_login_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -43,15 +42,15 @@
             android:id="@+id/tilLoginPhone"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/size_52"
             android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
             android:layout_marginTop="@dimen/size_36"
+            android:hint="Nomor Telepon"
+            android:theme="@style/LoginTextInputLayoutLabel"
             app:boxCornerRadiusBottomEnd="@dimen/size_8"
             app:boxCornerRadiusBottomStart="@dimen/size_8"
             app:boxCornerRadiusTopEnd="@dimen/size_8"
             app:boxCornerRadiusTopStart="@dimen/size_8"
-            android:hint="Nomor Telepon"
-            android:theme="@style/LoginTextInputLayoutLabel"
             app:boxStrokeColor="@color/colorBlack"
             app:boxStrokeWidth="@dimen/size_1"
             app:layout_constraintTop_toTopOf="parent">
@@ -59,57 +58,84 @@
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etLoginPhone"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/size_16"
-                android:background="@drawable/edit_text_rectangle_selector" />
+                android:layout_height="match_parent"
+                android:background="@drawable/edit_text_rectangle_selector"
+                android:padding="@dimen/size_16" />
         </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/tvLoginPhoneErrorMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/size_32"
+            android:lineHeight="@dimen/size_16"
+            android:text="Nomor telepon yang Anda masukkan salah"
+            android:textColor="@color/colorRed"
+            android:textSize="@dimen/text_12"
+            android:visibility="gone"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tilLoginPhone" />
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tilLoginPassword"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/size_52"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/size_18"
+            android:hint="Kata Sandi"
+            android:theme="@style/LoginTextInputLayoutLabel"
+            app:passwordToggleEnabled="true"
             app:boxCornerRadiusBottomEnd="@dimen/size_8"
             app:boxCornerRadiusBottomStart="@dimen/size_8"
             app:boxCornerRadiusTopEnd="@dimen/size_8"
             app:boxCornerRadiusTopStart="@dimen/size_8"
-            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="@dimen/size_24"
-            android:hint="Kata Sandi"
-            android:theme="@style/LoginTextInputLayoutLabel"
             app:boxStrokeColor="@color/colorBlack"
             app:boxStrokeWidth="@dimen/size_1"
-            app:layout_constraintTop_toBottomOf="@+id/tilLoginPhone">
+            app:layout_constraintTop_toBottomOf="@+id/tvLoginPhoneErrorMessage">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/etLoginPassword"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/size_16"
-                android:drawableRight="@drawable/ic_show_password"
-                android:drawablePadding="@dimen/size_16" />
+                android:layout_height="match_parent"
+                android:inputType="textPassword"
+                android:padding="@dimen/size_16" />
         </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/tvLoginPasswordErrorMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/size_32"
+            android:lineHeight="@dimen/size_16"
+            android:text="Kata sandi yang Anda masukkan salah"
+            android:textColor="@color/colorRed"
+            android:textSize="@dimen/text_12"
+            android:visibility="gone"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tilLoginPassword" />
 
         <Button
             android:id="@+id/btnLoginLogin"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="@dimen/size_24"
+            android:layout_marginTop="@dimen/size_18"
             android:background="@drawable/btn_darkblue_rectangle"
             android:padding="@dimen/size_16"
             android:text="LOGIN"
             android:textColor="@color/colorWhite"
             android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@+id/tilLoginPassword" />
+            app:layout_constraintTop_toBottomOf="@+id/tvLoginPasswordErrorMessage" />
 
         <TextView
             android:id="@+id/tvLoginForgetPassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_24"
+            android:clickable="true"
             android:text="Saya lupa kata sandi"
-            android:textColor="@color/colorRed"
+            android:textColor="@color/colorSuperDarkBlue"
             android:textFontWeight="500"
             android:textSize="@dimen/text_14"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -122,6 +148,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_24"
             android:layout_marginBottom="@dimen/size_16"
+            android:clickable="true"
             android:text="Belum punya akun?"
             android:textColor="@color/colorBlack"
             android:textFontWeight="500"
@@ -145,4 +172,9 @@
             app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <include
+        android:id="@+id/loading"
+        layout="@layout/layout_loading"
+        android:visibility="gone" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

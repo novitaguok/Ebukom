@@ -1,0 +1,118 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".arch.ui.admin.adminschoolfeeinfo.AdminSchoolFeeInfoAddNoteActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:elevation="@dimen/size_10"
+        app:elevation="@dimen/size_10">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:minHeight="?attr/actionBarSize">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Catatan"
+                android:textColor="@color/colorSuperDarkBlue"
+                android:textSize="@dimen/text_16"
+                android:textStyle="bold" />
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+           <EditText
+               android:id="@+id/etAdminSchoolFeeInfoAddNote"
+               android:layout_width="match_parent"
+               android:layout_height="wrap_content"
+               android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+               android:gravity="top"
+               android:background="@android:color/transparent"
+               app:layout_constraintTop_toTopOf="parent"
+               android:text="Masukkan catatan yang ingin dibagikan..."
+               android:textSize="@dimen/text_16"
+               android:lineHeight="@dimen/size_20"
+               android:textColor="#9E9E9E"
+               android:minLines="10"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clAdminSchoolFeeInfoAddNoteTemplate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:elevation="@dimen/size_2">
+
+        <TextView
+            android:id="@+id/tvAdminSchoolFeeInfoAddNoteTemplateTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/size_16"
+            android:lineHeight="@dimen/text_20"
+            android:text="Template Nama Item"
+            android:textColor="#222222"
+            android:textSize="@dimen/text_12"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvAdminSchoolFeeInfoAddNoteAddTemplate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_16"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:lineHeight="@dimen/text_20"
+            android:text="Tambah template"
+            android:textColor="@color/colorRed"
+            android:textSize="@dimen/text_12"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvAdminSchoolFeeInfoAddNoteTemplate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_16"
+            android:paddingHorizontal="@dimen/size_14"
+            android:paddingBottom="@dimen/size_24"
+            app:layout_constraintBottom_toTopOf="@+id/btnAdminSchoolFeeInfoAddNoteDone"
+            app:layout_constraintTop_toBottomOf="@id/tvAdminSchoolFeeInfoAddNoteTemplateTitle" />
+
+        <Button
+            android:id="@+id/btnAdminSchoolFeeInfoAddNoteDone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/colorSuperDarkBlue"
+            android:lineHeight="@dimen/text_16"
+            android:text="TAMBAH CATATAN"
+            android:textColor="@color/colorWhite"
+            android:textFontWeight="500"
+            android:textSize="@dimen/text_14"
+            app:layout_constraintTop_toBottomOf="@id/rvAdminSchoolFeeInfoAddNoteTemplate" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

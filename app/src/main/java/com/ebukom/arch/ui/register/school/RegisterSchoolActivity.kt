@@ -2,12 +2,10 @@ package com.ebukom.arch.ui.register.school
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.widget.AdapterView
-import android.widget.ArrayAdapter
-import android.widget.Spinner
-import android.widget.Toast
 import com.ebukom.R
+import com.google.android.material.bottomsheet.BottomSheetDialog
+import kotlinx.android.synthetic.main.activity_register_school.*
+import kotlinx.android.synthetic.main.activity_register_school.toolbar
 
 class RegisterSchoolActivity : AppCompatActivity() {
 
@@ -15,34 +13,23 @@ class RegisterSchoolActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_register_school)
 
-        val spinner = findViewById<Spinner>(R.id.spRegisterSchoolJabatan) as Spinner
+        initToolbar()
 
-        val jabatan = arrayOf("Jabatan", "Jabatan 1", "Jabatan 2")
+        // Pop Up
+        val bottomSheetDialog = BottomSheetDialog(this)
+        val view = layoutInflater.inflate(R.layout.bottom_sheet_register_school, null)
+        bottomSheetDialog.setContentView(view)
+        btnRegisterSchoolRole.setOnClickListener {
+            bottomSheetDialog.show()
+        }
+    }
 
-        val adapter = ArrayAdapter(
-            this@RegisterSchoolActivity,
-            android.R.layout.simple_spinner_dropdown_item,
-            jabatan
-        )
-        spinner.adapter = adapter
-
-        spinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
-            override fun onNothingSelected(parent: AdapterView<*>?) {
-                TODO("Not yet implemented")
-            }
-
-            override fun onItemSelected(
-                parent: AdapterView<*>?,
-                view: View?,
-                position: Int,
-                id: Long
-            ) {
-                Toast.makeText(
-                    this@RegisterSchoolActivity,
-                    jabatan[position] + " selected",
-                    Toast.LENGTH_LONG
-                )
-            }
+    fun initToolbar() {
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = ""
+        toolbar.setNavigationOnClickListener {
+            onBackPressed()
         }
     }
 }

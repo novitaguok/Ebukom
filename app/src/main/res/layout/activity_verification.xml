@@ -14,7 +14,7 @@
         android:elevation="@dimen/size_10"
         app:elevation="@dimen/size_10">
 
-        <com.google.android.material.appbar.CollapsingToolbarLayout
+        <androidx.appcompat.widget.Toolbar
             android:id="@+id/toolbar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -22,7 +22,6 @@
             android:minHeight="?attr/actionBarSize">
 
             <TextView
-                android:id="@+id/tv_login_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
@@ -30,7 +29,7 @@
                 android:textColor="@color/colorSuperDarkBlue"
                 android:textSize="@dimen/text_16"
                 android:textStyle="bold" />
-        </com.google.android.material.appbar.CollapsingToolbarLayout>
+        </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -46,6 +45,7 @@
             android:layout_marginTop="@dimen/size_32"
             android:lineHeight="@dimen/size_24"
             android:text="@string/verification_text"
+            android:textColor="#222222"
             android:textSize="@dimen/text_14"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -72,18 +72,17 @@
             app:pinCharacterSpacing="@dimen/size_8"/>
 
         <TextView
-            android:id="@+id/tvSendCodeErrorMessage"
+            android:id="@+id/tvVerificationErrorMessage"
             app:layout_constraintTop_toBottomOf="@+id/txt_pin_entry"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_12"
-            android:layout_marginLeft="@dimen/size_32"
             android:textSize="@dimen/text_12"
             android:text="Kode yang Anda masukkan salah"
             android:textColor="@color/colorRed"
-            android:visibility="invisible" />
+            android:visibility="gone" />
 
         <Button
             android:id="@+id/btnVerificationReset"
@@ -96,7 +95,7 @@
             android:text="ATUR ULANG KATA SANDI"
             android:textColor="@color/colorWhite"
             android:textStyle="bold"
-            app:layout_constraintTop_toBottomOf="@+id/tvSendCodeErrorMessage" />
+            app:layout_constraintTop_toBottomOf="@+id/tvVerificationErrorMessage" />
 
         <TextView
             android:id="@+id/tvVerificationResendCode"
@@ -117,8 +116,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_12"
+            android:clickable="true"
             android:text="Kirim ulang kode"
-            android:textColor="@color/colorRed"
+            android:textColor="@color/colorSuperDarkBlue"
             android:textFontWeight="500"
             android:textSize="@dimen/text_16"
             app:layout_constraintLeft_toLeftOf="parent"
@@ -137,7 +137,12 @@
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/tvVerificationNotReceiveCode"
-            android:visibility="invisible"/>
+            android:visibility="gone"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <include
+        android:id="@+id/loading"
+        layout="@layout/layout_loading"
+        android:visibility="gone"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

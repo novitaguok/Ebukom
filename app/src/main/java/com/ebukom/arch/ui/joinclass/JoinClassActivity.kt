@@ -29,17 +29,41 @@ class JoinClassActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(this@JoinClassActivity)
         }
 
-        mList.add(ChooseClassDao("", "", "", 0))
-        mList.add(ChooseClassDao("", "", "", 1))
-        mList.add(ChooseClassDao("", "", "", 0))
-        mList.add(ChooseClassDao("", "", "", 1))
-        mList.add(ChooseClassDao("", "", "", 0))
-        mList.add(ChooseClassDao("", "", "", 1))
-        mList.add(ChooseClassDao("", "", "", 0))
-        mList.add(ChooseClassDao("", "", "", 1))
-        mList.add(ChooseClassDao("", "", "", 0))
-        mList.add(ChooseClassDao("", "", "", 1))
+        initToolbar()
+
+        // Get intent
+        val level = intent.getIntExtra("Level", -1)
+        when (level) {
+            0 -> {
+                mList.add(ChooseClassDao("", "", "", 0))
+            }
+            1 -> {
+                mList.add(ChooseClassDao("", "", "", 1))
+                mList.add(ChooseClassDao("", "", "", 0))
+                mList.add(ChooseClassDao("", "", "", 1))
+            }
+            2 -> {
+                mList.add(ChooseClassDao("", "", "", 0))
+                mList.add(ChooseClassDao("", "", "", 1))
+                mList.add(ChooseClassDao("", "", "", 0))
+                mList.add(ChooseClassDao("", "", "", 1))
+                mList.add(ChooseClassDao("", "", "", 0))
+                mList.add(ChooseClassDao("", "", "", 1))
+            }
+            else -> {
+
+            }
+        }
 
         mAdapter.addAll(mList)
+    }
+
+    fun initToolbar() {
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = ""
+        toolbar.setNavigationOnClickListener {
+            onBackPressed()
+        }
     }
 }

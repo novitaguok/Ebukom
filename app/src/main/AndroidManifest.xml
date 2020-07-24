@@ -17,14 +17,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".arch.ui.admin.MainAdminActivity">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity android:name=".arch.ui.classdetail.personal.personalparent.personalparentschoolfeeinfo.PersonalParentSchoolFeeInfoActivity"/>
+        <activity android:name=".arch.ui.admin.adminschoolfeeinfo.AdminSchoolFeeInfoAddNoteActivity"></activity>
+        <activity android:name=".arch.ui.admin.adminschoolfeeinfo.AdminSchoolFeeInfoAddPaymentItemActivity" />
+        <activity android:name=".arch.ui.admin.AdminShareSchoolFeeInfoActivity" />
+        <activity android:name=".arch.ui.admin.MainAdminActivity" />
+        <activity android:name=".arch.ui.classdetail.personal.personalparent.personalparentschoolfeeinfo.PersonalParentSchoolFeeInfoActivity" />
         <activity android:name=".arch.ui.classdetail.material.materialeducation.materialeducationedit.MaterialEducationEditActivity" />
         <activity android:name=".arch.ui.classdetail.material.materialeducation.materialeducationdetail.MaterialEducationDetailActivity" />
         <activity android:name=".arch.ui.classdetail.material.materialeducation.materialeducationnew.MaterialEducationNewActivity" />
@@ -46,7 +43,7 @@
             android:name=".arch.ui.classdetail.school.schoolannouncement.schoolannouncementedit.SchoolAnnouncementEditActivity"
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".arch.ui.classdetail.school.schoolannouncement.schoolannouncementdetail.SchoolAnnouncementDetailActivity" />
-        <activity android:name=".arch.ui.forgotpassword.resetpassword.ResetPasswordActivity" />
+        <activity android:name=".arch.ui.forgotpassword.resetpassword.ResetPasswordActivity"/>
         <activity android:name=".arch.ui.classdetail.MainClassDetailActivity" />
         <activity android:name=".arch.ui.joinclass.JoinClassActivity" />
         <activity android:name=".arch.ui.classdetail.notification.NotificationActivity" />
@@ -54,9 +51,15 @@
         <activity android:name=".arch.ui.chooseclass.ChooseClassActivity" />
         <activity android:name=".arch.ui.register.school.RegisterSchoolActivity" />
         <activity android:name=".arch.ui.register.parent.RegisterParentActivity" />
-        <activity android:name=".arch.ui.forgotpassword.verification.VerificationActivity" />
+        <activity android:name=".arch.ui.forgotpassword.verification.VerificationActivity"/>
         <activity android:name=".arch.ui.forgotpassword.sendcode.SendCodeActivity" />
-        <activity android:name=".arch.ui.login.LoginActivity" />
+        <activity android:name=".arch.ui.login.LoginActivity" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity android:name=".arch.ui.splash.SplashActivity" />
         <activity android:name=".arch.ui.main.MainActivity" />
     </application>

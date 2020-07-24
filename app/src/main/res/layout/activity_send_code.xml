@@ -37,11 +37,6 @@
         android:layout_height="match_parent"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
-        <include
-            android:id="@+id/scrProgressBar"
-            android:visibility="gone"
-            layout="@layout/progress_bar"/>
-
         <TextView
             android:id="@+id/tvSendCodeText"
             android:layout_width="match_parent"
@@ -72,7 +67,7 @@
             app:boxStrokeWidth="@dimen/size_1">
 
             <com.google.android.material.textfield.TextInputEditText
-                android:id="@+id/etLoginPhone"
+                android:id="@+id/etSendCodePhone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="@dimen/size_16"
@@ -89,7 +84,7 @@
             android:layout_marginLeft="@dimen/size_32"
             android:text="Nomor telepon Anda tidak terdaftar"
             android:textColor="@color/colorRed"
-            android:visibility="invisible"
+            android:visibility="gone"
             android:textSize="@dimen/text_12"/>
 
         <Button
@@ -97,7 +92,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="@dimen/size_24"
+            android:layout_marginTop="@dimen/size_18"
             android:background="@drawable/btn_darkblue_rectangle"
             android:padding="@dimen/size_16"
             android:text="ATUR ULANG KATA SANDI"
@@ -107,4 +102,10 @@
 
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <include
+        android:id="@+id/loading"
+        layout="@layout/layout_loading"
+        android:visibility="gone"/>
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
