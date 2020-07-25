@@ -8,7 +8,9 @@ import android.view.View
 import com.ebukom.R
 import com.ebukom.arch.ui.forgotpassword.verification.VerificationActivity
 import kotlinx.android.synthetic.main.activity_send_code.*
+import kotlinx.android.synthetic.main.activity_send_code.loading
 import kotlinx.android.synthetic.main.activity_send_code.toolbar
+import kotlinx.android.synthetic.main.activity_verification.*
 
 class SendCodeActivity : AppCompatActivity() {
 
@@ -18,14 +20,16 @@ class SendCodeActivity : AppCompatActivity() {
 
         initToolbar()
 
-        // Intent to Join Class
+        // Intent to Verification Activity
         btnSendCodeReset.setOnClickListener {
             loading.visibility = View.VISIBLE
             if (etSendCodePhone.text.toString() == "000" || etSendCodePhone.text.toString() == "123" || etSendCodePhone.text.toString() == "456") {
+                val intent = Intent(this, VerificationActivity::class.java)
+
+                intent.putExtra("Layout", 0)
                 Handler().postDelayed({
                     loading.visibility = View.GONE
-                    startActivity(Intent(this, VerificationActivity::class.java))
-                    finish()
+                    startActivity(intent)
                 }, 1000)
             } else {
                 Handler().postDelayed({

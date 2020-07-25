@@ -2,18 +2,11 @@ package com.ebukom.arch.ui.joinclass
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.View
-import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ebukom.R
 import com.ebukom.arch.dao.ChooseClassDao
-import com.ebukom.arch.ui.chooseclass.ChooseClassActivity
 import com.ebukom.arch.ui.chooseclass.ChooseClassAdapter
-import kotlinx.android.synthetic.main.activity_choose_class.*
 import kotlinx.android.synthetic.main.activity_join_class.*
-import kotlinx.android.synthetic.main.item_class_blue.*
-import kotlinx.android.synthetic.main.item_class_green.*
 
 class JoinClassActivity : AppCompatActivity() {
 
@@ -31,17 +24,25 @@ class JoinClassActivity : AppCompatActivity() {
 
         initToolbar()
 
-        // Get intent
+        // Get intent from Choose Class
         val level = intent.getIntExtra("Level", -1)
         when (level) {
+            // Teacher
             0 -> {
-                mList.add(ChooseClassDao("", "", "", 0))
+                mList.add(ChooseClassDao("Kelas 1", "Aurora", "Ratna Hendrawati", 0))
+                mList.add(ChooseClassDao("Kelas 2", "Spectra", "Eni Trikuswanti", 1))
+                mList.add(ChooseClassDao("Kelas 1", "Aurora", "Ratna Hendrawati", 0))
+                mList.add(ChooseClassDao("Kelas 2", "Spectra", "Eni Trikuswanti", 1))
             }
+
+            // Parent
             1 -> {
                 mList.add(ChooseClassDao("", "", "", 1))
                 mList.add(ChooseClassDao("", "", "", 0))
                 mList.add(ChooseClassDao("", "", "", 1))
             }
+
+            // Admin
             2 -> {
                 mList.add(ChooseClassDao("", "", "", 0))
                 mList.add(ChooseClassDao("", "", "", 1))

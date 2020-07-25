@@ -1,5 +1,6 @@
 package com.ebukom.arch.ui.chooseclass
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -8,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ebukom.R
 import com.ebukom.arch.dao.ChooseClassDao
+import com.ebukom.arch.ui.joinclass.JoinClassActivity
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.activity_choose_class.*
 import kotlinx.android.synthetic.main.bottom_sheet_choose_class.view.*
@@ -28,12 +30,17 @@ class ChooseClassActivity : AppCompatActivity() {
             layoutManager = LinearLayoutManager(this@ChooseClassActivity)
         }
 
-        mList.add(ChooseClassDao("", "", "", 0))
-        mList.add(ChooseClassDao("", "", "", 1))
-        mList.add(ChooseClassDao("", "", "", 0))
-        mList.add(ChooseClassDao("", "", "", 1))
+        // "Gabung Kelas" Button
+        btnChooseClassJoin.setOnClickListener {
+            startActivity(Intent(this, JoinClassActivity::class.java))
+        }
 
-        mAdapter.addAll(mList)
+//        mList.add(ChooseClassDao("", "", "", 0))
+//        mList.add(ChooseClassDao("", "", "", 1))
+//        mList.add(ChooseClassDao("", "", "", 0))
+//        mList.add(ChooseClassDao("", "", "", 1))
+
+//        mAdapter.addAll(mList)
 
         // Class list
         if (mList.isEmpty()) {

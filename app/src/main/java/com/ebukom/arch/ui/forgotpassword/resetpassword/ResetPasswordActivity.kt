@@ -1,8 +1,6 @@
 package com.ebukom.arch.ui.forgotpassword.resetpassword
 
-import android.app.Dialog
 import android.content.Context
-import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.inputmethod.InputMethodManager

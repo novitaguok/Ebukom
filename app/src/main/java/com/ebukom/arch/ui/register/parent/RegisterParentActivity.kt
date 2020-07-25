@@ -1,10 +1,14 @@
 package com.ebukom.arch.ui.register.parent
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import com.ebukom.R
+import com.ebukom.arch.ui.forgotpassword.verification.VerificationActivity
+import com.ebukom.arch.ui.login.LoginActivity
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.activity_register_parent.*
+import kotlinx.android.synthetic.main.bottom_sheet_register_parent.view.*
 
 class RegisterParentActivity : AppCompatActivity() {
 
@@ -22,24 +26,17 @@ class RegisterParentActivity : AppCompatActivity() {
         btnRegisterParentEskul.setOnClickListener {
             bottomSheetDialog.show()
         }
-
-//        view.btnRegisterParentBottomSheetDone.setOnClickListener {
-//
-//            val pramuka = view.cbRegisterParentBottomSheetPramuka.isChecked
-//            val futsal = view.cbRegisterParentBottomSheetFutsal.isChecked
-//            val basket = view.cbRegisterParentBottomSheetBasket.isChecked
-//            val pmr = view.cbRegisterParentBottomSheetPMR.isChecked
-//
-//            if(pramuka) {
-//                Toast.makeText(this, "Hello", Toast.LENGTH_LONG).show()
-//            } else if(futsal) {
-//                Toast.makeText(this, "Hello", Toast.LENGTH_LONG).show()
-//            } else if(basket) {
-//                Toast.makeText(this, "Hello", Toast.LENGTH_LONG).show()
-//            } else {
-//                Toast.makeText(this, "Hello", Toast.LENGTH_LONG).show()
-//            }
-//        }
+        view.btnRegisterParentBottomSheetDone.setOnClickListener{
+            bottomSheetDialog.dismiss()
+        }
+        btnRegisterParentRegister.setOnClickListener {
+            val intent = Intent(this, VerificationActivity::class.java)
+            intent.putExtra("Layout", 1)
+            startActivity(intent)
+        }
+        btnRegisterParentLogin.setOnClickListener {
+            startActivity(Intent(this, LoginActivity::class.java))
+        }
     }
 
     fun initToolbar() {

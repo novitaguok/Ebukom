@@ -264,4 +264,8 @@
     </androidx.core.widget.NestedScrollView>
 
     <include layout="@layout/bottom_sheet_register_parent"/>
+    <include
+        android:id="@+id/loading"
+        layout="@layout/layout_loading"
+        android:visibility="gone"/>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

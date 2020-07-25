@@ -6,8 +6,8 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import com.ebukom.R
+import com.ebukom.arch.ui.chooseclass.ChooseClassActivity
 import com.ebukom.arch.ui.forgotpassword.sendcode.SendCodeActivity
-import com.ebukom.arch.ui.joinclass.JoinClassActivity
 import com.ebukom.arch.ui.register.parent.RegisterParentActivity
 import com.ebukom.arch.ui.register.school.RegisterSchoolActivity
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -38,10 +38,10 @@ class LoginActivity : AppCompatActivity() {
             startActivity(Intent(this, RegisterParentActivity::class.java))
         }
 
-        // Intent to Join Class
+        // Intent to Choose Class
         btnLoginLogin.setOnClickListener {
 
-            val intent = Intent(this, JoinClassActivity::class.java)
+            val intent = Intent(this, ChooseClassActivity::class.java)
             loading.visibility = View.VISIBLE
             if (etLoginPhone.text.toString() == "000") {
                 if (etLoginPassword.text.toString() == "000") {

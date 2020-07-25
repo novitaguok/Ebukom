@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">ebukom</string>
     <string name="send_code_text">Masukkan nomor telepon Anda, kami akan mengirimkan kode untuk mengatur ulang kata sandi Anda</string>
-    <string name="verification_text">Kami sudah mengirimkan kode ke nomor telepon Ana melalui SMS. Silakan memasukkan 4 digit kode tersebut.</string>
+    <string name="verification_text">Kami sudah mengirimkan kode ke nomor telepon Anda melalui SMS. Silakan memasukkan 4 digit kode tersebut.</string>
     <string name="announcement_content">Besok akan dilaksanakan kegiatan pentas seni. Orang tua dimohon untuk mempersiapkan peralatan di bawah ini. Tolong diperhatikan ya Ibu.</string>
     <string name="announcement_title">Kegiatan Pentas Seni</string>
     <string name="announcement_content_complete">Besok akan dilaksanakan kegiatan pentas seni. Orang tua dimohon untuk mempersiapkan peralatan di bawah ini. Tolong diperhatikan ya Ibu. Ada beberapa barang yang harus dibawa, jangan sampai ada yang ketinggalan.
