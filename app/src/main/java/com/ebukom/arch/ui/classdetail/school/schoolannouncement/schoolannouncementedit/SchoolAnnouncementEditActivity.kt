@@ -11,8 +11,10 @@ import com.ebukom.arch.dao.ClassDetailTemplateTextDao
 import com.ebukom.arch.ui.classdetail.ClassDetailAttachmentAdapter
 import com.ebukom.arch.ui.classdetail.ClassDetailTemplateTextAdapter
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import kotlinx.android.synthetic.main.activity_school_announcement_detail.*
 import kotlinx.android.synthetic.main.activity_school_announcement_edit.*
 import kotlinx.android.synthetic.main.activity_school_announcement_edit.rvSchoolAnnouncementAttachment
+import kotlinx.android.synthetic.main.activity_school_announcement_edit.toolbar
 import kotlinx.android.synthetic.main.alert_edit_text.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_class_detail_attachment.view.*
 
@@ -22,9 +24,10 @@ class SchoolAnnouncementEditActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_school_announcement_edit)
 
+        initToolbar()
+
         // Attachment
         val attachment: MutableList<ClassDetailAttachmentDao> = ArrayList()
-
         attachment.add(
             ClassDetailAttachmentDao(
                 "https://drive.google.com",
@@ -114,4 +117,12 @@ class SchoolAnnouncementEditActivity : AppCompatActivity() {
         }
     }
 
+    fun initToolbar() {
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = ""
+        toolbar.setNavigationOnClickListener {
+            onBackPressed()
+        }
+    }
 }

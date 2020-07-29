@@ -12,7 +12,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:paddingBottom="@dimen/size_56">
+            android:paddingBottom="@dimen/size_56"
+            android:descendantFocusability="blocksDescendants">
 
                 <androidx.cardview.widget.CardView
                     android:id="@+id/cvChooseClassHeader"

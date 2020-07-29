@@ -9,6 +9,7 @@
     app:cardCornerRadius="@dimen/size_8">
 
     <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clItemClassBlue"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center">
@@ -72,4 +73,9 @@
             app:layout_constraintLeft_toLeftOf="@+id/tvItemClassName2"
             app:layout_constraintTop_toBottomOf="@+id/tvItemClassName2" />
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <include
+        android:id="@+id/loading"
+        layout="@layout/layout_loading"
+        android:visibility="gone" />
 </androidx.cardview.widget.CardView>

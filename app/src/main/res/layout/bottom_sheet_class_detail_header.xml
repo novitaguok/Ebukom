@@ -77,7 +77,7 @@
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:layout_marginLeft="@dimen/size_32"
-            android:text="Kelas 1 Fatamorgana"
+            android:text="Kelas 2 Fatamorgana"
             android:textSize="@dimen/text_16"
             android:textColor="#212121"/>
 

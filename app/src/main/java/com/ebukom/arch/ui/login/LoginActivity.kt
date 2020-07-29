@@ -1,6 +1,8 @@
 package com.ebukom.arch.ui.login
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
@@ -17,9 +19,13 @@ import kotlinx.android.synthetic.main.bottom_sheet_login.view.*
 
 class LoginActivity : AppCompatActivity() {
 
+    lateinit var sharePref: SharedPreferences
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
+
+        sharePref = getSharedPreferences("EBUKOM", Context.MODE_PRIVATE)
 
         // Register button
         val bottomSheetDialog = BottomSheetDialog(this)
@@ -42,10 +48,20 @@ class LoginActivity : AppCompatActivity() {
         btnLoginLogin.setOnClickListener {
 
             val intent = Intent(this, ChooseClassActivity::class.java)
+
+            val phone = etLoginPhone.text.toString()
+
             loading.visibility = View.VISIBLE
             if (etLoginPhone.text.toString() == "000") {
                 if (etLoginPassword.text.toString() == "000") {
                     intent.putExtra("Level", 0)
+
+                    sharePref.edit().apply {
+                        putBoolean("isLogin", true)
+                        putString("phone",phone)
+                        putInt("level",0)
+                    }.apply()
+
                     Handler().postDelayed({
                         loading.visibility = View.GONE
                         startActivity(intent)
@@ -62,6 +78,14 @@ class LoginActivity : AppCompatActivity() {
             } else if (etLoginPhone.text.toString() == "123") {
                 if (etLoginPassword.text.toString() == "123") {
                     intent.putExtra("Level", 1)
+
+                    sharePref.edit().apply {
+                        putBoolean("isLogin", true)
+                        putString("phone",phone)
+                        putInt("level",1)
+                    }.apply()
+
+
                     Handler().postDelayed({
                         loading.visibility = View.GONE
                         startActivity(intent)
@@ -82,6 +106,13 @@ class LoginActivity : AppCompatActivity() {
                         startActivity(intent)
                         finish()
                     }, 1000)
+
+                    sharePref.edit().apply {
+                        putBoolean("isLogin", true)
+                        putString("phone",phone)
+                        putInt("level",2)
+                    }.apply()
+
                 } else {
                     Handler().postDelayed({
                         loading.visibility = View.GONE

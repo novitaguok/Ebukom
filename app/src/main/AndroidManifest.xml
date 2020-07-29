@@ -42,8 +42,10 @@
         <activity
             android:name=".arch.ui.classdetail.school.schoolannouncement.schoolannouncementedit.SchoolAnnouncementEditActivity"
             android:windowSoftInputMode="stateHidden" />
-        <activity android:name=".arch.ui.classdetail.school.schoolannouncement.schoolannouncementdetail.SchoolAnnouncementDetailActivity" />
-        <activity android:name=".arch.ui.forgotpassword.resetpassword.ResetPasswordActivity"/>
+        <activity
+            android:name=".arch.ui.classdetail.school.schoolannouncement.schoolannouncementdetail.SchoolAnnouncementDetailActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".arch.ui.forgotpassword.resetpassword.ResetPasswordActivity" />
         <activity android:name=".arch.ui.classdetail.MainClassDetailActivity" />
         <activity android:name=".arch.ui.joinclass.JoinClassActivity" />
         <activity android:name=".arch.ui.classdetail.notification.NotificationActivity" />
@@ -51,9 +53,9 @@
         <activity android:name=".arch.ui.chooseclass.ChooseClassActivity" />
         <activity android:name=".arch.ui.register.school.RegisterSchoolActivity" />
         <activity android:name=".arch.ui.register.parent.RegisterParentActivity" />
-        <activity android:name=".arch.ui.forgotpassword.verification.VerificationActivity"/>
+        <activity android:name=".arch.ui.forgotpassword.verification.VerificationActivity" />
         <activity android:name=".arch.ui.forgotpassword.sendcode.SendCodeActivity" />
-        <activity android:name=".arch.ui.login.LoginActivity" >
+        <activity android:name=".arch.ui.login.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -1,14 +1,26 @@
 package com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementdetail
 
+import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.view.View
+import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ebukom.R
 import com.ebukom.arch.dao.ClassDetailAnnouncementCommentDao
+import com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementedit.SchoolAnnouncementEditActivity
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import kotlinx.android.synthetic.main.activity_join_class.*
 import kotlinx.android.synthetic.main.activity_school_announcement_detail.*
+import kotlinx.android.synthetic.main.activity_school_announcement_detail.toolbar
+import kotlinx.android.synthetic.main.alert_edit_text.*
+import kotlinx.android.synthetic.main.alert_edit_text.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_school_announcement.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_school_announcement_comment.view.*
 
@@ -18,13 +30,45 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_school_announcement_detail)
 
+        initToolbar()
+
         val list = ArrayList<ClassDetailAnnouncementCommentDao>()
 
-        list.add(ClassDetailAnnouncementCommentDao("Ade Andreansyah", "Aku pusing banyak euy yang dibawa, udahlah mending skip cuy", R.drawable.ic_book_blue))
-        list.add(ClassDetailAnnouncementCommentDao("Ade Andreansyah", "Aku pusing banyak euy yang dibawa, udahlah mending skip cuy", R.drawable.ic_book_blue))
-        list.add(ClassDetailAnnouncementCommentDao("Ade Andreansyah", "Aku pusing banyak euy yang dibawa, udahlah mending skip cuy", R.drawable.ic_book_blue))
-        list.add(ClassDetailAnnouncementCommentDao("Ade Andreansyah", "Aku pusing banyak euy yang dibawa, udahlah mending skip cuy", R.drawable.ic_book_blue))
-        list.add(ClassDetailAnnouncementCommentDao("Ade Andreansyah", "Aku pusing banyak euy yang dibawa, udahlah mending skip cuy", R.drawable.ic_book_blue))
+        list.add(
+            ClassDetailAnnouncementCommentDao(
+                "Ade Andreansyah",
+                "Aku pusing banyak euy yang dibawa, udahlah mending skip cuy",
+                R.drawable.ic_book_blue
+            )
+        )
+        list.add(
+            ClassDetailAnnouncementCommentDao(
+                "Ade Andreansyah",
+                "Aku pusing banyak euy yang dibawa, udahlah mending skip cuy",
+                R.drawable.ic_book_blue
+            )
+        )
+        list.add(
+            ClassDetailAnnouncementCommentDao(
+                "Ade Andreansyah",
+                "Aku pusing banyak euy yang dibawa, udahlah mending skip cuy",
+                R.drawable.ic_book_blue
+            )
+        )
+        list.add(
+            ClassDetailAnnouncementCommentDao(
+                "Ade Andreansyah",
+                "Aku pusing banyak euy yang dibawa, udahlah mending skip cuy",
+                R.drawable.ic_book_blue
+            )
+        )
+        list.add(
+            ClassDetailAnnouncementCommentDao(
+                "Ade Andreansyah",
+                "Aku pusing banyak euy yang dibawa, udahlah mending skip cuy",
+                R.drawable.ic_book_blue
+            )
+        )
 
         val adapter = SchoolAnnouncementDetailAdapter(list, this)
 
@@ -32,18 +76,19 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
         rvSchoolAnnouncementDetailComment.adapter = adapter
 
         ivAnnouncementDetailMoreButton.setOnClickListener {
-            popupMenu1()
+            popupMenuInfo()
         }
     }
 
-    fun popupMenu1() {
+    fun popupMenuInfo() {
         val bottomSheetDialog = BottomSheetDialog(this)
         val view = layoutInflater.inflate(R.layout.bottom_sheet_school_announcement, null)
         bottomSheetDialog.setContentView(view)
 
         view.tvEditInfo.setOnClickListener {
             bottomSheetDialog.dismiss()
-            Toast.makeText(this, "Edit", Toast.LENGTH_LONG).show()
+
+            startActivity(Intent(this, SchoolAnnouncementEditActivity::class.java))
         }
 
         view.tvDeleteInfo.setOnClickListener {
@@ -54,7 +99,7 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
             builder.setMessage("Apakah Anda yakin ingin menghapus pengumuman ini?")
 
             builder.setNegativeButton("BATALKAN") { dialog, which ->
-                Toast.makeText(applicationContext,"Next?", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, "Next?", Toast.LENGTH_SHORT).show()
             }
             builder.setPositiveButton("HAPUS") { dialog, which ->
                 Toast.makeText(applicationContext, "Next?", Toast.LENGTH_SHORT).show()
@@ -62,6 +107,22 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
 
             val dialog: AlertDialog = builder.create()
             dialog.show()
+
+            val positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+            positiveButton.setTextColor(
+                ContextCompat.getColor(
+                    applicationContext,
+                    R.color.colorGray
+                )
+            )
+
+            val negativeButton = dialog.getButton(AlertDialog.BUTTON_NEGATIVE)
+            negativeButton.setTextColor(
+                ContextCompat.getColor(
+                    applicationContext,
+                    R.color.colorRed
+                )
+            )
         }
 
         view.tvCancelInfo.setOnClickListener {
@@ -72,28 +133,51 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
         bottomSheetDialog.show()
     }
 
-    fun popupMenu2() {
+    fun popupMenuComment() {
         val bottomSheetDialog = BottomSheetDialog(this)
         val view = layoutInflater.inflate(R.layout.bottom_sheet_school_announcement_comment, null)
         bottomSheetDialog.setContentView(view)
 
+        // Edit comment
         view.tvEditComment.setOnClickListener {
             val builder = AlertDialog.Builder(this@SchoolAnnouncementDetailActivity)
             val view = layoutInflater.inflate(R.layout.alert_edit_text, null)
 
             bottomSheetDialog.dismiss()
+
             builder.setView(view)
+
+            builder.setPositiveButton("SELESAI", null)
             builder.setNegativeButton("BATALKAN") { dialog, which ->
-                Toast.makeText(applicationContext,"Next?", Toast.LENGTH_SHORT).show()
-            }
-            builder.setPositiveButton("SELESAI") { dialog, which ->
-                Toast.makeText(applicationContext, "Next?", Toast.LENGTH_SHORT).show()
+                dialog.dismiss()
             }
 
             val dialog: AlertDialog = builder.create()
             dialog.show()
+
+            val positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+            positiveButton.setOnClickListener {
+                if (view.etAlertEditText.text.toString().isEmpty()) {
+                    view.tvAlertEditTextErrorMessage.visibility = View.VISIBLE
+                }
+            }
+            positiveButton.setTextColor(
+                ContextCompat.getColor(
+                    applicationContext,
+                    R.color.colorGray
+                )
+            )
+
+            val negativeButton = dialog.getButton(AlertDialog.BUTTON_NEGATIVE)
+            negativeButton.setTextColor(
+                ContextCompat.getColor(
+                    applicationContext,
+                    R.color.colorRed
+                )
+            )
         }
 
+        // Delete comment
         view.tvDeleteComment.setOnClickListener {
             val builder = AlertDialog.Builder(this@SchoolAnnouncementDetailActivity)
 
@@ -101,7 +185,7 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
 
             builder.setMessage("Apakah Anda yakin ingin menghapus komentar ini?")
             builder.setNegativeButton("BATALKAN") { dialog, which ->
-                Toast.makeText(applicationContext,"Next?", Toast.LENGTH_SHORT).show()
+                Toast.makeText(applicationContext, "Next?", Toast.LENGTH_SHORT).show()
             }
             builder.setPositiveButton("HAPUS") { dialog, which ->
                 Toast.makeText(applicationContext, "Next?", Toast.LENGTH_SHORT).show()
@@ -111,11 +195,20 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
             dialog.show()
         }
 
+        // Cancel
         view.tvCancelComment.setOnClickListener {
             bottomSheetDialog.dismiss()
-            Toast.makeText(this, "Cancel", Toast.LENGTH_LONG).show()
         }
 
         bottomSheetDialog.show()
+    }
+
+    fun initToolbar() {
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = ""
+        toolbar.setNavigationOnClickListener {
+            onBackPressed()
+        }
     }
 }

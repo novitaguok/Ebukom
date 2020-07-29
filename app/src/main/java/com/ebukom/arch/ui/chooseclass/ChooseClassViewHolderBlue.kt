@@ -2,21 +2,15 @@ package com.ebukom.arch.ui.chooseclass
 
 import android.content.Context
 import android.content.Intent
-import android.view.LayoutInflater
+import android.os.Handler
 import android.view.View
-import android.view.View.inflate
-import android.widget.ImageButton
-import android.widget.Toast
-import com.ebukom.R
+import androidx.core.content.ContextCompat.startActivity
 import com.ebukom.arch.dao.ChooseClassDao
+import com.ebukom.arch.ui.classdetail.MainClassDetailActivity
+import com.ebukom.arch.ui.joinclass.JoinClassActivity
 import com.ebukom.base.BaseViewHolder
-import com.ebukom.utils.load
-import com.google.android.material.bottomsheet.BottomSheetDialog
-import kotlinx.android.synthetic.*
-import kotlinx.android.synthetic.main.bottom_sheet_choose_class.view.*
-import kotlinx.android.synthetic.main.item_class_blue.*
 import kotlinx.android.synthetic.main.item_class_blue.view.*
-import kotlinx.android.synthetic.main.item_class_green.*
+import kotlinx.android.synthetic.main.item_class_blue.view.loading
 
 class ChooseClassViewHolderBlue(var view: View, var context: Context) :
     BaseViewHolder<ChooseClassDao>(view) {
@@ -31,8 +25,21 @@ class ChooseClassViewHolderBlue(var view: View, var context: Context) :
             view.ibItemClassTwo.setOnClickListener {
                 (context as ChooseClassActivity).popupMenu()
             }
+            view.clItemClassBlue.setOnClickListener {
+                (context as ChooseClassActivity).startActivity(Intent((context as ChooseClassActivity), MainClassDetailActivity::class.java))
+            }
+
         } else {
             view.ibItemClassTwo.visibility = View.INVISIBLE
+
+            view.clItemClassBlue.setOnClickListener {
+                (context as JoinClassActivity).addClass()
+
+                view.loading.visibility = View.VISIBLE
+                Handler().postDelayed({
+                    view.loading.visibility = View.GONE
+                }, 1000)
+            }
         }
     }
 }

@@ -37,5 +37,16 @@
             android:hint="Komentar"
             android:textCursorDrawable="@null"/>
 
+        <TextView
+            android:id="@+id/tvAlertEditTextErrorMessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/size_16"
+            android:text="Komentar tidak boleh kosong"
+            android:textSize="@dimen/text_12"
+            android:lineHeight="@dimen/size_12"
+            android:textColor="#D93250"
+            android:visibility="gone"/>
+
     </com.google.android.material.textfield.TextInputLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

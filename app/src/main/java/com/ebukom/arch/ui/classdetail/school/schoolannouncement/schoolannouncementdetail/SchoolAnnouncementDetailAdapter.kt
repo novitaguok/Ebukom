@@ -40,7 +40,7 @@ class SchoolAnnouncementDetailAdapter(
             itemView.ivAnnouncementDetailCommentProfilePicture.setImageResource(comment.profilePic)
 
             itemView.ivAnnouncementDetailCommentMoreButton.setOnClickListener {
-                (context as SchoolAnnouncementDetailActivity).popupMenu2()
+                (context as SchoolAnnouncementDetailActivity).popupMenuComment()
             }
         }
     }

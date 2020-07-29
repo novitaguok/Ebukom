@@ -1,25 +1,17 @@
 package com.ebukom.arch.ui.classdetail.school.schoolannouncement
 
-import android.app.Fragment
 import android.content.Context
-import android.os.Build
+import android.content.Intent
 import android.os.Bundle
-import android.util.Log
 import android.view.*
-import android.widget.Toast
-import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.ListAdapter
 import com.ebukom.R
-import com.ebukom.arch.dao.ChooseClassDao
 import com.ebukom.arch.dao.ClassDetailAnnouncementDao
-import com.ebukom.arch.ui.chooseclass.ChooseClassAdapter
+import com.ebukom.arch.ui.classdetail.MainClassDetailActivity
 import com.ebukom.arch.ui.classdetail.OnMoreCallback
-import com.ebukom.arch.ui.classdetail.school.SchoolPageAdapter
-import com.google.android.material.bottomsheet.BottomSheetDialog
-import kotlinx.android.synthetic.main.bottom_sheet_school_announcement.view.*
+import com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementnew.SchoolAnnouncementNewActivity
+import kotlinx.android.synthetic.main.activity_school_announcement_edit.*
 import kotlinx.android.synthetic.main.fragment_school_announcement.*
-import kotlinx.android.synthetic.main.item_announcement.*
 import java.lang.ClassCastException
 
 class SchoolAnnouncementFragment : androidx.fragment.app.Fragment() {
@@ -33,14 +25,19 @@ class SchoolAnnouncementFragment : androidx.fragment.app.Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_school_announcement, container, false)
+
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         addData()
         schoolAnnouncementAdapter = SchoolAnnouncementAdapter(objectList, callback)
-//        schoolAnnouncementAdapter.announcements = objectList
         rvSchoolAnnouncement.layoutManager = LinearLayoutManager(this.context)
         rvSchoolAnnouncement.adapter = schoolAnnouncementAdapter
+
+        btnSchoolAnnouncementNew.setOnClickListener {
+            (context as MainClassDetailActivity).startActivity(Intent((context as MainClassDetailActivity), SchoolAnnouncementNewActivity::class.java))
+        }
     }
 
     private fun addData() {

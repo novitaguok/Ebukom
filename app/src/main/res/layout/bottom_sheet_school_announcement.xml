@@ -5,17 +5,16 @@
     android:layout_height="wrap_content"
     android:background="@color/colorWhite"
     android:orientation="vertical"
-    android:paddingHorizontal="@dimen/activity_horizontal_margin"
-    android:paddingVertical="@dimen/size_18"
     app:behavior_hideable="false"
     app:behavior_peekHeight="0dp"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
     <TextView
         android:id="@+id/tvEditInfo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_56"
+        android:paddingHorizontal="@dimen/activity_horizontal_margin"
+        android:gravity="center_vertical"
         android:drawableLeft="@drawable/ic_edit_red"
         android:drawablePadding="@dimen/size_28"
         android:text="Edit Informasi"
@@ -25,25 +24,24 @@
 
     <TextView
         android:id="@+id/tvDeleteInfo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_56"
+        android:paddingHorizontal="@dimen/activity_horizontal_margin"
+        android:gravity="center_vertical"
         android:drawableLeft="@drawable/ic_delete_red"
         android:drawablePadding="@dimen/size_28"
         android:text="Hapus Informasi"
         android:textColor="#666666"
-        android:textSize="@dimen/text_16"
-        android:layout_marginTop="@dimen/size_20"/>
+        android:textSize="@dimen/text_16" />
 
     <TextView
         android:id="@+id/tvCancelInfo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="@dimen/size_52"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_56"
+        android:paddingHorizontal="68dp"
+        android:gravity="center_vertical"
         android:text="Batalkan"
         android:textColor="@color/colorRed"
-        android:textSize="@dimen/text_16"
-        android:layout_marginTop="@dimen/size_20"/>
+        android:textSize="@dimen/text_16"/>
 
 </LinearLayout>

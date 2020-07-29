@@ -24,37 +24,10 @@ class JoinClassActivity : AppCompatActivity() {
 
         initToolbar()
 
-        // Get intent from Choose Class
-        val level = intent.getIntExtra("Level", -1)
-        when (level) {
-            // Teacher
-            0 -> {
-                mList.add(ChooseClassDao("Kelas 1", "Aurora", "Ratna Hendrawati", 0))
-                mList.add(ChooseClassDao("Kelas 2", "Spectra", "Eni Trikuswanti", 1))
-                mList.add(ChooseClassDao("Kelas 1", "Aurora", "Ratna Hendrawati", 0))
-                mList.add(ChooseClassDao("Kelas 2", "Spectra", "Eni Trikuswanti", 1))
-            }
-
-            // Parent
-            1 -> {
-                mList.add(ChooseClassDao("", "", "", 1))
-                mList.add(ChooseClassDao("", "", "", 0))
-                mList.add(ChooseClassDao("", "", "", 1))
-            }
-
-            // Admin
-            2 -> {
-                mList.add(ChooseClassDao("", "", "", 0))
-                mList.add(ChooseClassDao("", "", "", 1))
-                mList.add(ChooseClassDao("", "", "", 0))
-                mList.add(ChooseClassDao("", "", "", 1))
-                mList.add(ChooseClassDao("", "", "", 0))
-                mList.add(ChooseClassDao("", "", "", 1))
-            }
-            else -> {
-
-            }
-        }
+        mList.add(ChooseClassDao("Kelas 1", "Aurora", "Ratna Hendrawati", 0))
+        mList.add(ChooseClassDao("Kelas 2", "Spectra", "Eni Trikuswanti", 1))
+        mList.add(ChooseClassDao("Kelas 1", "Aurora", "Ratna Hendrawati", 0))
+        mList.add(ChooseClassDao("Kelas 2", "Spectra", "Eni Trikuswanti", 1))
 
         mAdapter.addAll(mList)
     }
@@ -67,4 +40,6 @@ class JoinClassActivity : AppCompatActivity() {
             onBackPressed()
         }
     }
+
+    fun addClass() {}
 }

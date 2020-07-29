@@ -1,15 +1,18 @@
 package com.ebukom.arch.ui.classdetail
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.ebukom.R
 import com.ebukom.arch.ui.classdetail.material.MaterialFragment
 import com.ebukom.arch.ui.classdetail.member.MemberFragment
 import com.ebukom.arch.ui.classdetail.personal.PersonalFragment
 import com.ebukom.arch.ui.classdetail.school.SchoolFragment
+import com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementedit.SchoolAnnouncementEditActivity
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.activity_main_class_detail.*
 import kotlinx.android.synthetic.main.bottom_sheet_class_detail_header.view.*
@@ -58,46 +61,67 @@ class MainClassDetailActivity : AppCompatActivity(), OnMoreCallback {
         }
     }
 
+    // Move fragment
     private fun makeCurrentFragment(fragment: Fragment) =
         supportFragmentManager.beginTransaction().apply {
             replace(R.id.flClassDetail, fragment)
             commit()
         }
 
-    fun popupMenu() {
+    fun popupMenuInfo() {
         val bottomSheetDialog = BottomSheetDialog(this)
         val view = layoutInflater.inflate(R.layout.bottom_sheet_school_announcement, null)
         bottomSheetDialog.setContentView(view)
-        bottomSheetDialog.show()
 
         view.tvEditInfo.setOnClickListener {
             bottomSheetDialog.dismiss()
-            Toast.makeText(applicationContext, "Next?", Toast.LENGTH_SHORT).show()
-        }
-        view.tvDeleteInfo.setOnClickListener {
-            bottomSheetDialog.dismiss()
 
+            startActivity(Intent(this, SchoolAnnouncementEditActivity::class.java))
+        }
+
+        view.tvDeleteInfo.setOnClickListener {
             val builder = AlertDialog.Builder(this@MainClassDetailActivity)
 
-            builder.setMessage("Apakah Anda yakin ingin menghapus?")
+            bottomSheetDialog.dismiss()
+
+            builder.setMessage("Apakah Anda yakin ingin menghapus pengumuman ini?")
+
+            builder.setNegativeButton("BATALKAN") { dialog, which ->
+                Toast.makeText(applicationContext, "Next?", Toast.LENGTH_SHORT).show()
+            }
             builder.setPositiveButton("HAPUS") { dialog, which ->
                 Toast.makeText(applicationContext, "Next?", Toast.LENGTH_SHORT).show()
             }
 
-            builder.setNegativeButton("BATALKAN") { dialog, which ->
-                Toast.makeText(applicationContext,"Next?", Toast.LENGTH_SHORT).show()
-            }
-
             val dialog: AlertDialog = builder.create()
             dialog.show()
+
+            val positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+            positiveButton.setTextColor(
+                ContextCompat.getColor(
+                    applicationContext,
+                    R.color.colorGray
+                )
+            )
+
+            val negativeButton = dialog.getButton(AlertDialog.BUTTON_NEGATIVE)
+            negativeButton.setTextColor(
+                ContextCompat.getColor(
+                    applicationContext,
+                    R.color.colorRed
+                )
+            )
         }
+
         view.tvCancelInfo.setOnClickListener {
             bottomSheetDialog.dismiss()
-            Toast.makeText(applicationContext, "Next?", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Cancel", Toast.LENGTH_LONG).show()
         }
+
+        bottomSheetDialog.show()
     }
 
     override fun onMoreClicked(id: String) {
-        popupMenu()
+        popupMenuInfo()
     }
 }
