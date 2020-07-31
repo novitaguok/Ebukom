@@ -1,9 +1,14 @@
 package com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementedit
 
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
+import android.view.Menu
+import android.view.MenuItem
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ebukom.R
 import com.ebukom.arch.dao.ClassDetailAttachmentDao
@@ -11,11 +16,9 @@ import com.ebukom.arch.dao.ClassDetailTemplateTextDao
 import com.ebukom.arch.ui.classdetail.ClassDetailAttachmentAdapter
 import com.ebukom.arch.ui.classdetail.ClassDetailTemplateTextAdapter
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import kotlinx.android.synthetic.main.activity_school_announcement_detail.*
 import kotlinx.android.synthetic.main.activity_school_announcement_edit.*
 import kotlinx.android.synthetic.main.activity_school_announcement_edit.rvSchoolAnnouncementAttachment
 import kotlinx.android.synthetic.main.activity_school_announcement_edit.toolbar
-import kotlinx.android.synthetic.main.alert_edit_text.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_class_detail_attachment.view.*
 
 class SchoolAnnouncementEditActivity : AppCompatActivity() {
@@ -77,43 +80,43 @@ class SchoolAnnouncementEditActivity : AppCompatActivity() {
                 )
         }
 
-        // Attach Icon
-        val bottomSheetDialog = BottomSheetDialog(this)
-        val view = layoutInflater.inflate(R.layout.bottom_sheet_class_detail_attachment, null)
-        bottomSheetDialog.setContentView(view)
-        ivSchoolAnnouncementEditTitle.setOnClickListener {
-            bottomSheetDialog.show()
-        }
-        view.clBottomClassDetailAttachmentPhoto.setOnClickListener {
-            bottomSheetDialog.dismiss()
-            Toast.makeText(this, "A", Toast.LENGTH_LONG).show()
-        }
-        view.clBottomSheetClassDetailAttachmentFile.setOnClickListener {
-            bottomSheetDialog.dismiss()
-            Toast.makeText(this, "F", Toast.LENGTH_LONG).show()
-        }
-        view.clBottomSheetClassDetailAttachmentLink.setOnClickListener {
-            bottomSheetDialog.dismiss()
+        // Text watcher
+        etSchoolAnnouncementEditTitle.addTextChangedListener(textWatcher)
+        etSchoolAnnouncementEditContent.addTextChangedListener(textWatcher)
+    }
 
-            val builder = AlertDialog.Builder(this@SchoolAnnouncementEditActivity)
-            val view = layoutInflater.inflate(R.layout.alert_edit_text, null)
+    override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        menuInflater.inflate(R.menu.attachment_menu, menu)
+        return true
+    }
 
-            view.tvAlertEditText.setText("Link")
-            view.tilAlertEditText.setHint("Masukkan Link")
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        when (item.itemId) {
+            R.id.attachment -> {
+                val bottomSheetDialog = BottomSheetDialog(this)
+                val view =
+                    layoutInflater.inflate(R.layout.bottom_sheet_class_detail_attachment, null)
+                bottomSheetDialog.setContentView(view)
 
-            builder.setView(view)
-            builder.setNegativeButton("BATALKAN") { dialog, which ->
-                Toast.makeText(applicationContext,"Next?", Toast.LENGTH_SHORT).show()
+                view.clBottomClassDetailAttachmentPhoto.setOnClickListener {
+                    bottomSheetDialog.dismiss()
+                    Toast.makeText(this, "A", Toast.LENGTH_LONG).show()
+                }
+                view.clBottomSheetClassDetailAttachmentFile.setOnClickListener {
+                    bottomSheetDialog.dismiss()
+                    Toast.makeText(this, "F", Toast.LENGTH_LONG).show()
+                }
+                view.clBottomSheetClassDetailAttachmentLink.setOnClickListener {
+                    bottomSheetDialog.dismiss()
+                    Toast.makeText(this, "F", Toast.LENGTH_LONG).show()
+                }
+                view.clBottomSheetClassDetailAttachmentUseCamera.setOnClickListener {
+                }
+                bottomSheetDialog.show()
+
+                return true
             }
-            builder.setPositiveButton("LAMPIRKAN") { dialog, which ->
-                Toast.makeText(applicationContext, "Next?", Toast.LENGTH_SHORT).show()
-            }
-
-            val dialog: AlertDialog = builder.create()
-            dialog.show()
-        }
-        view.clBottomSheetClassDetailAttachmentUseCamera.setOnClickListener {
-
+            else -> return super.onOptionsItemSelected(item)
         }
     }
 
@@ -123,6 +126,35 @@ class SchoolAnnouncementEditActivity : AppCompatActivity() {
         supportActionBar?.title = ""
         toolbar.setNavigationOnClickListener {
             onBackPressed()
+        }
+    }
+
+    private val textWatcher = object : TextWatcher {
+        override fun afterTextChanged(s: Editable?) {
+        }
+
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+        }
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            if (etSchoolAnnouncementEditTitle.text.toString()
+                    .isNotEmpty() && etSchoolAnnouncementEditContent.text.toString()
+                    .isNotEmpty()
+            ) {
+                btnSchoolAnnouncementEditSave.setEnabled(true)
+                btnSchoolAnnouncementEditSave.setBackgroundColor(
+                    ContextCompat.getColor(
+                        applicationContext,
+                        R.color.colorSuperDarkBlue
+                    )
+                )
+            } else {
+                btnSchoolAnnouncementEditSave.setEnabled(false)
+                btnSchoolAnnouncementEditSave.setBackgroundColor(
+                    Color.parseColor("#828282")
+                )
+            }
         }
     }
 }

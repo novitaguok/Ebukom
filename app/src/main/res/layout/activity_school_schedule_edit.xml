@@ -26,7 +26,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Bagikan Jadwal &amp; Kalender"
+                android:text="Edit Jadwal &amp; Kalender"
                 android:textColor="@color/colorSuperDarkBlue"
                 android:textSize="@dimen/text_16"
                 android:textStyle="bold" />
@@ -43,7 +43,7 @@
             android:layout_height="match_parent">
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/cvSchoolScheduleNewSubject"
+                android:id="@+id/cvSchoolScheduleEditSubject"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/size_8"
@@ -56,7 +56,7 @@
                 app:cardUseCompatPadding="true">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/clSchoolScheduleNewSubject"
+                    android:id="@+id/clSchoolScheduleEditSubject"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
@@ -75,10 +75,10 @@
                         android:textColor="@color/colorSuperDarkBlue"/>
 
                     <Button
-                        android:id="@+id/btnSchoolScheduleNewSubject"
+                        android:id="@+id/btnSchoolScheduleEditSubject"
                         android:layout_width="175dp"
                         android:layout_height="@dimen/size_36"
-                        app:layout_constraintTop_toBottomOf="@+id/tvSchoolScheduleNewSubjectTitle"
+                        app:layout_constraintTop_toBottomOf="@+id/tvSchoolScheduleEditSubjectTitle"
                         app:layout_constraintLeft_toLeftOf="parent"
                         android:layout_marginLeft="@dimen/size_10"
                         android:layout_marginTop="@dimen/size_10"
@@ -90,13 +90,13 @@
                         android:textColor="@color/colorWhite"/>
 
                     <TextView
-                        android:id="@+id/tvSchoolScheduleNewSubjectPath"
+                        android:id="@+id/tvSchoolScheduleEditSubjectPath"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/size_16"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/btnSchoolScheduleNewSubject"
+                        app:layout_constraintTop_toBottomOf="@+id/btnSchoolScheduleEditSubject"
                         android:layout_marginLeft="@dimen/size_10"
                         android:layout_marginTop="@dimen/size_14"
                         android:text="JadwalPelajaran2020.pdf"
@@ -106,13 +106,13 @@
                         android:visibility="invisible"/>
 
                     <ImageView
-                        android:id="@+id/ivSchoolScheduleNewSubjectDelete"
+                        android:id="@+id/ivSchoolScheduleEditSubjectDelete"
                         android:layout_width="@dimen/size_24"
                         android:layout_height="@dimen/size_24"
                         android:layout_marginRight="@dimen/size_12"
                         app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/tvSchoolScheduleNewSubjectPath"
-                        app:layout_constraintBottom_toBottomOf="@+id/tvSchoolScheduleNewSubjectPath"
+                        app:layout_constraintTop_toTopOf="@+id/tvSchoolScheduleEditSubjectPath"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvSchoolScheduleEditSubjectPath"
                         android:src="@drawable/ic_close"
                         android:visibility="gone"/>
 
@@ -120,10 +120,10 @@
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/cvSchoolScheduleNewEskul"
+                android:id="@+id/cvSchoolScheduleEditEskul"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/cvSchoolScheduleNewSubject"
+                app:layout_constraintTop_toBottomOf="@+id/cvSchoolScheduleEditSubject"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 android:layout_marginHorizontal="@dimen/size_8"
@@ -132,12 +132,12 @@
                 app:cardUseCompatPadding="true">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/clSchoolScheduleNewEskul"
+                    android:id="@+id/clSchoolScheduleEditEskul"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
                     <TextView
-                        android:id="@+id/tvSchoolScheduleNewEskulTitle"
+                        android:id="@+id/tvSchoolScheduleEditEskulTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/size_16"
@@ -151,10 +151,10 @@
                         android:textColor="@color/colorSuperDarkBlue"/>
 
                     <Button
-                        android:id="@+id/btnSchoolScheduleNewEskul"
+                        android:id="@+id/btnSchoolScheduleEditEskul"
                         android:layout_width="175dp"
                         android:layout_height="@dimen/size_36"
-                        app:layout_constraintTop_toBottomOf="@+id/tvSchoolScheduleNewEskulTitle"
+                        app:layout_constraintTop_toBottomOf="@+id/tvSchoolScheduleEditEskulTitle"
                         app:layout_constraintLeft_toLeftOf="parent"
                         android:layout_marginLeft="@dimen/size_10"
                         android:layout_marginTop="@dimen/size_10"
@@ -166,13 +166,13 @@
                         android:textColor="@color/colorWhite"/>
 
                     <TextView
-                        android:id="@+id/tvSchoolScheduleNewEskulPath"
+                        android:id="@+id/tvSchoolScheduleEditEskulPath"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/size_16"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/btnSchoolScheduleNewEskul"
+                        app:layout_constraintTop_toBottomOf="@+id/btnSchoolScheduleEditEskul"
                         android:layout_marginLeft="@dimen/size_10"
                         android:layout_marginTop="@dimen/size_14"
                         android:text="JadwalEskul.pdf"
@@ -182,24 +182,24 @@
                         android:visibility="invisible"/>
 
                     <ImageView
-                        android:id="@+id/ivSchoolScheduleNewEskulDelete"
+                        android:id="@+id/ivSchoolScheduleEditEskulDelete"
                         android:layout_width="@dimen/size_24"
                         android:layout_height="@dimen/size_24"
                         android:layout_marginRight="@dimen/size_12"
                         android:src="@drawable/ic_close"
-                        app:layout_constraintBottom_toBottomOf="@+id/tvSchoolScheduleNewEskulPath"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvSchoolScheduleEditEskulPath"
                         app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/tvSchoolScheduleNewEskulPath"
+                        app:layout_constraintTop_toTopOf="@+id/tvSchoolScheduleEditEskulPath"
                         android:visibility="gone"/>
 
                 </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.cardview.widget.CardView>
 
             <androidx.cardview.widget.CardView
-                android:id="@+id/cvSchoolScheduleNewAcademicCalendar"
+                android:id="@+id/cvSchoolScheduleEditAcademicCalendar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/cvSchoolScheduleNewEskul"
+                app:layout_constraintTop_toBottomOf="@+id/cvSchoolScheduleEditEskul"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 android:layout_marginHorizontal="@dimen/size_8"
@@ -208,12 +208,12 @@
                 app:cardUseCompatPadding="true">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
-                    android:id="@+id/clSchoolScheduleNewCalendar"
+                    android:id="@+id/clSchoolScheduleEditCalendar"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
 
                     <TextView
-                        android:id="@+id/tvSchoolScheduleNewCalendarTitle"
+                        android:id="@+id/tvSchoolScheduleEditCalendarTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/size_16"
@@ -227,10 +227,10 @@
                         android:textColor="@color/colorSuperDarkBlue"/>
 
                     <Button
-                        android:id="@+id/btnSchoolScheduleNewCalendar"
+                        android:id="@+id/btnSchoolScheduleEditCalendar"
                         android:layout_width="175dp"
                         android:layout_height="@dimen/size_36"
-                        app:layout_constraintTop_toBottomOf="@+id/tvSchoolScheduleNewCalendarTitle"
+                        app:layout_constraintTop_toBottomOf="@+id/tvSchoolScheduleEditCalendarTitle"
                         app:layout_constraintLeft_toLeftOf="parent"
                         android:layout_marginLeft="@dimen/size_10"
                         android:layout_marginTop="@dimen/size_10"
@@ -242,13 +242,13 @@
                         android:textColor="@color/colorWhite"/>
 
                     <TextView
-                        android:id="@+id/tvSchoolScheduleNewCalendarPath"
+                        android:id="@+id/tvSchoolScheduleEditCalendarPath"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="@dimen/size_16"
                         app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
-                        app:layout_constraintTop_toBottomOf="@+id/btnSchoolScheduleNewCalendar"
+                        app:layout_constraintTop_toBottomOf="@+id/btnSchoolScheduleEditCalendar"
                         android:layout_marginLeft="@dimen/size_10"
                         android:layout_marginTop="@dimen/size_14"
                         android:text="KalenderAkademik.pdf"
@@ -258,13 +258,13 @@
                         android:visibility="invisible"/>
 
                     <ImageView
-                        android:id="@+id/ivSchoolScheduleNewCalendarDelete"
+                        android:id="@+id/ivSchoolScheduleEditCalendarDelete"
                         android:layout_width="@dimen/size_24"
                         android:layout_height="@dimen/size_24"
                         android:layout_marginRight="@dimen/size_12"
                         app:layout_constraintRight_toRightOf="parent"
-                        app:layout_constraintTop_toTopOf="@+id/tvSchoolScheduleNewCalendarPath"
-                        app:layout_constraintBottom_toBottomOf="@+id/tvSchoolScheduleNewCalendarPath"
+                        app:layout_constraintTop_toTopOf="@+id/tvSchoolScheduleEditCalendarPath"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvSchoolScheduleEditCalendarPath"
                         android:src="@drawable/ic_close"
                         android:visibility="gone"/>
 
@@ -274,7 +274,7 @@
     </androidx.core.widget.NestedScrollView>
 
     <Button
-        android:id="@+id/btnSchoolScheduleNewDone"
+        android:id="@+id/btnSchoolScheduleEditDone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
@@ -284,7 +284,7 @@
         android:textColor="@color/colorWhite"
         android:textFontWeight="500"
         android:textSize="@dimen/text_14"
-        app:layout_constraintTop_toBottomOf="@id/rvSchoolAnnouncementNewTemplate"
+        app:layout_constraintTop_toBottomOf="@id/rvSchoolAnnouncementEditTemplate"
         android:enabled="false"/>
 
     <include

@@ -1,4 +1,4 @@
-package com.ebukom.arch.ui.classdetail.school.schoolphoto.schoolphotonew
+package com.ebukom.arch.ui.classdetail.school.schoolphoto.schoolphotoedit
 
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
@@ -9,23 +9,24 @@ import android.text.TextWatcher
 import android.view.View
 import androidx.core.content.ContextCompat
 import com.ebukom.R
+import kotlinx.android.synthetic.main.activity_school_photo_edit.*
 import kotlinx.android.synthetic.main.activity_school_photo_new.*
 import kotlinx.android.synthetic.main.activity_school_photo_new.loading
 import kotlinx.android.synthetic.main.activity_school_photo_new.toolbar
 
-class SchoolPhotoNewActivity : AppCompatActivity() {
+class SchoolPhotoEditActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_school_photo_new)
+        setContentView(R.layout.activity_school_photo_edit)
 
         initToolbar()
 
         // Text watcher
-        etSchoolPhotoNewEventName.addTextChangedListener(textWatcher)
-        etSchoolPhotoNewLink.addTextChangedListener(textWatcher)
+        etSchoolPhotoEditEventName.addTextChangedListener(textWatcher)
+        etSchoolPhotoEditLink.addTextChangedListener(textWatcher)
 
-        btnSchoolPhotoNewDone.setOnClickListener {
+        btnSchoolPhotoEditSave.setOnClickListener {
             loading.visibility = View.VISIBLE
             Handler().postDelayed({
                 loading.visibility = View.GONE
@@ -52,20 +53,20 @@ class SchoolPhotoNewActivity : AppCompatActivity() {
         }
 
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            if (etSchoolPhotoNewEventName.text.toString()
+            if (etSchoolPhotoEditEventName.text.toString()
                     .isNotEmpty() && etSchoolPhotoNewLink.text.toString()
                     .isNotEmpty()
             ) {
-                btnSchoolPhotoNewDone.setEnabled(true)
-                btnSchoolPhotoNewDone.setBackgroundColor(
+                btnSchoolPhotoEditSave.setEnabled(true)
+                btnSchoolPhotoEditSave.setBackgroundColor(
                     ContextCompat.getColor(
                         applicationContext,
                         R.color.colorSuperDarkBlue
                     )
                 )
             } else {
-                btnSchoolPhotoNewDone.setEnabled(false)
-                btnSchoolPhotoNewDone.setBackgroundColor(
+                btnSchoolPhotoEditSave.setEnabled(false)
+                btnSchoolPhotoEditSave.setBackgroundColor(
                     Color.parseColor("#828282")
                 )
             }

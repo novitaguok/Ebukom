@@ -193,6 +193,22 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
 
             val dialog: AlertDialog = builder.create()
             dialog.show()
+
+            val positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+            positiveButton.setTextColor(
+                ContextCompat.getColor(
+                    applicationContext,
+                    R.color.colorGray
+                )
+            )
+
+            val negativeButton = dialog.getButton(AlertDialog.BUTTON_NEGATIVE)
+            negativeButton.setTextColor(
+                ContextCompat.getColor(
+                    applicationContext,
+                    R.color.colorRed
+                )
+            )
         }
 
         // Cancel

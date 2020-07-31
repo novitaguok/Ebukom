@@ -18,33 +18,19 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorWhite"
-            android:minHeight="?attr/actionBarSize"
             android:elevation="@dimen/size_2"
+            android:minHeight="?attr/actionBarSize"
             app:elevation="@dimen/size_2">
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <TextView
-                    android:id="@+id/tvSchoolAnnouncementEditTitle"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:text="Edit Pengumuman"
-                    android:textColor="@color/colorSuperDarkBlue"
-                    android:textSize="@dimen/text_16"
-                    android:textStyle="bold" />
-
-                <ImageView
-                    android:id="@+id/ivSchoolAnnouncementEditTitle"
-                    android:layout_width="@dimen/size_24"
-                    android:layout_height="@dimen/size_24"
-                    android:src="@drawable/ic_attachment_red"
-                    android:layout_alignParentRight="true"
-                    android:layout_marginRight="@dimen/size_20"/>
-
-            </RelativeLayout>
+            <TextView
+                android:id="@+id/tvSchoolAnnouncementEditTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Edit Pengumuman"
+                android:textColor="@color/colorSuperDarkBlue"
+                android:textSize="@dimen/text_16"
+                android:textStyle="bold" />
 
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
@@ -91,12 +77,12 @@
                 android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
                 android:layout_marginTop="@dimen/size_28"
                 android:background="@android:color/transparent"
-                android:hint="Masukkan pengumuman yang ingin dibagikan..."
                 android:gravity="top"
+                android:hint="Masukkan pengumuman yang ingin dibagikan..."
                 android:lineHeight="@dimen/text_16"
                 android:minLines="10"
-                android:textColorHint="#9E9E9E"
                 android:text="@string/announcement_content"
+                android:textColorHint="#9E9E9E"
                 android:textSize="@dimen/text_14"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/tilSchoolAnnouncementEditTitle" />
@@ -105,8 +91,8 @@
                 android:id="@+id/tvSchoolAnnouncementEditAttachmentTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:lineHeight="@dimen/text_20"
                 android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:lineHeight="@dimen/text_20"
                 android:text="Lampiran"
                 android:textColor="#222222"
                 android:textSize="@dimen/text_12"
@@ -124,16 +110,16 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clSchoolAnnouncementEditTemplate"
-        android:layout_gravity="bottom"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
         android:elevation="@dimen/size_2">
 
         <TextView
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:id="@+id/tvSchoolAnnouncementEditTemplateTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
             android:layout_marginTop="@dimen/size_16"
             android:lineHeight="@dimen/text_20"
             android:text="Template Pengumuman"
@@ -147,11 +133,11 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_16"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:lineHeight="@dimen/text_20"
             android:text="Tambah template"
             android:textColor="@color/colorRed"
             android:textSize="@dimen/text_12"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
@@ -161,23 +147,24 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/clSchoolAnnouncementNewTemplate"
             android:layout_marginTop="@dimen/size_16"
-            android:paddingBottom="@dimen/size_24"
             android:paddingHorizontal="@dimen/size_14"
-            app:layout_constraintTop_toBottomOf="@id/tvSchoolAnnouncementEditTemplateAdd"
-            app:layout_constraintBottom_toTopOf="@+id/btnSchoolAnnouncementEditSave"/>
+            android:paddingBottom="@dimen/size_24"
+            app:layout_constraintBottom_toTopOf="@+id/btnSchoolAnnouncementEditSave"
+            app:layout_constraintTop_toBottomOf="@id/tvSchoolAnnouncementEditTemplateAdd" />
 
         <Button
             android:id="@+id/btnSchoolAnnouncementEditSave"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:background="@color/colorSuperDarkBlue"
+            android:background="#828282"
             android:lineHeight="@dimen/text_16"
             android:text="SIMPAN PERUBAHAN"
             android:textColor="@color/colorWhite"
             android:textFontWeight="500"
             android:textSize="@dimen/text_14"
-            app:layout_constraintTop_toBottomOf="@id/rvSchoolAnnouncementEditTemplate"/>
+            app:layout_constraintTop_toBottomOf="@id/rvSchoolAnnouncementEditTemplate"
+            android:enabled="false"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

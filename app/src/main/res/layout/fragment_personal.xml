@@ -45,26 +45,6 @@
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/mainClassPersonalTabLayout" />
-    
-    <ImageView
-        android:id="@+id/ivPersonalEmpty"
-        android:layout_width="@dimen/size_100"
-        android:layout_height="@dimen/size_100"
-        android:layout_marginTop="@dimen/size_44"
-        app:layout_constraintTop_toBottomOf="@+id/mainClassPersonalTabLayout"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:src="@drawable/ic_file_gray"/>
 
-    <TextView
-        android:id="@+id/tvPersonalEmpty"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/size_8"
-        app:layout_constraintTop_toBottomOf="@+id/ivPersonalEmpty"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        android:text="Belum ada catatan yang dibagikan"
-        android:textColor="#E0E0E0"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

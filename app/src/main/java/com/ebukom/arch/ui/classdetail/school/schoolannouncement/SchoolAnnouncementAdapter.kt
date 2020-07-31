@@ -5,7 +5,6 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.content.ContextCompat.startActivity
 import androidx.recyclerview.widget.RecyclerView
 import com.ebukom.R
 import com.ebukom.arch.dao.ClassDetailAnnouncementDao
@@ -47,7 +46,7 @@ class SchoolAnnouncementAdapter(
             itemView.tvAnnouncementTime.text = announcement?.time
 
             itemView.ivAnnouncementMoreButton.setOnClickListener {
-                callback.onMoreClicked("")
+                callback.onMoreClicked("0")
             }
 
             itemView.clItemAnnouncement.setOnClickListener {

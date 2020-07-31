@@ -1,5 +1,6 @@
 package com.ebukom.arch.ui.classdetail
 
+import android.content.Context
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -13,8 +14,14 @@ import com.ebukom.arch.ui.classdetail.member.MemberFragment
 import com.ebukom.arch.ui.classdetail.personal.PersonalFragment
 import com.ebukom.arch.ui.classdetail.school.SchoolFragment
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementedit.SchoolAnnouncementEditActivity
+import com.ebukom.arch.ui.classdetail.school.schoolphoto.SchoolPhotoFragment
+import com.ebukom.arch.ui.classdetail.school.schoolphoto.schoolphotoedit.SchoolPhotoEditActivity
+import com.ebukom.arch.ui.classdetail.school.schoolphoto.schoolphotonew.SchoolPhotoNewActivity
+import com.ebukom.arch.ui.classdetail.school.schoolschedule.schoolscheduleedit.SchoolScheduleEditActivity
+import com.ebukom.arch.ui.classdetail.school.schoolschedule.schoolschedulenew.SchoolScheduleNewActivity
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.activity_main_class_detail.*
+import kotlinx.android.synthetic.main.activity_school_schedule_new.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_class_detail_header.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_school_announcement.view.*
 
@@ -68,23 +75,44 @@ class MainClassDetailActivity : AppCompatActivity(), OnMoreCallback {
             commit()
         }
 
-    fun popupMenuInfo() {
+    fun popupMenuInfo(id: String) {
         val bottomSheetDialog = BottomSheetDialog(this)
         val view = layoutInflater.inflate(R.layout.bottom_sheet_school_announcement, null)
         bottomSheetDialog.setContentView(view)
 
+        if (id == "1") {
+            view.tvEditInfo.text = "Edit Jadwal"
+            view.tvDeleteInfo.text = "Hapus Jadwal"
+        } else if (id == "2") {
+            view.tvEditInfo.text = "Edit Informasi Foto"
+            view.tvDeleteInfo.text = "Hapus Foto"
+        }
+
         view.tvEditInfo.setOnClickListener {
             bottomSheetDialog.dismiss()
 
-            startActivity(Intent(this, SchoolAnnouncementEditActivity::class.java))
+            if (id == "0") { // Pengumuman
+                intent = Intent(this, SchoolAnnouncementEditActivity::class.java)
+            } else if (id == "1") { // Jadwal
+                intent = Intent(this, SchoolScheduleEditActivity::class.java)
+            } else if (id == "2") { // Foto
+                intent = Intent(this, SchoolPhotoEditActivity::class.java)
+            }
+
+            startActivity(intent)
         }
 
         view.tvDeleteInfo.setOnClickListener {
             val builder = AlertDialog.Builder(this@MainClassDetailActivity)
+            var alert = "pengumuman"
+
+            if (id == "1") {
+                alert = "jadwal"
+            }
 
             bottomSheetDialog.dismiss()
 
-            builder.setMessage("Apakah Anda yakin ingin menghapus pengumuman ini?")
+            builder.setMessage("Apakah Anda yakin ingin menghapus $alert ini?")
 
             builder.setNegativeButton("BATALKAN") { dialog, which ->
                 Toast.makeText(applicationContext, "Next?", Toast.LENGTH_SHORT).show()
@@ -122,6 +150,6 @@ class MainClassDetailActivity : AppCompatActivity(), OnMoreCallback {
     }
 
     override fun onMoreClicked(id: String) {
-        popupMenuInfo()
+        popupMenuInfo(id)
     }
 }

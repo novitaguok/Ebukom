@@ -1,4 +1,4 @@
-package com.ebukom.arch.ui.classdetail.school.schoolschedule.schoolschedulenew
+package com.ebukom.arch.ui.classdetail.school.schoolschedule.schoolscheduleedit
 
 import android.app.Activity
 import android.content.Intent
@@ -14,38 +14,41 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import com.ebukom.R
+import kotlinx.android.synthetic.main.activity_school_schedule_edit.*
 import kotlinx.android.synthetic.main.activity_school_schedule_new.*
+import kotlinx.android.synthetic.main.activity_school_schedule_new.loading
+import kotlinx.android.synthetic.main.activity_school_schedule_new.toolbar
 
-class SchoolScheduleNewActivity : AppCompatActivity() {
+class SchoolScheduleEditActivity : AppCompatActivity() {
     var isSetPelajaran = false
     var isSetEskul = false
     var isSetCalender = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_school_schedule_new)
+        setContentView(R.layout.activity_school_schedule_edit)
 
         initToolbar()
 
         // File chooser
-        btnSchoolScheduleNewSubject.setOnClickListener {
+        btnSchoolScheduleEditSubject.setOnClickListener {
             val fileIntent = Intent(Intent.ACTION_GET_CONTENT)
             fileIntent.type = "*/*"
             startActivityForResult(fileIntent, 10)
         }
-        btnSchoolScheduleNewEskul.setOnClickListener {
+        btnSchoolScheduleEditEskul.setOnClickListener {
             val fileIntent = Intent(Intent.ACTION_GET_CONTENT)
             fileIntent.type = "*/*"
             startActivityForResult(fileIntent, 11)
         }
-        btnSchoolScheduleNewCalendar.setOnClickListener {
+        btnSchoolScheduleEditCalendar.setOnClickListener {
             val fileIntent = Intent(Intent.ACTION_GET_CONTENT)
             fileIntent.type = "*/*"
             startActivityForResult(fileIntent, 12)
         }
 
         // "BAGIKAN JADWAL % KALENDER" button
-        btnSchoolScheduleNewDone.setOnClickListener {
+        btnSchoolScheduleEditDone.setOnClickListener {
             Handler().postDelayed({
                 loading.visibility = View.GONE
                 finish()
@@ -63,8 +66,8 @@ class SchoolScheduleNewActivity : AppCompatActivity() {
                     newSchedule(path, requestCode)
                 }
                 else -> {
-                    btnSchoolScheduleNewDone.isEnabled = false
-                    btnSchoolScheduleNewDone.setBackgroundColor(
+                    btnSchoolScheduleEditDone.isEnabled = false
+                    btnSchoolScheduleEditDone.setBackgroundColor(
                         Color.parseColor("#BDBDBD")
                     )
                 }
@@ -75,27 +78,27 @@ class SchoolScheduleNewActivity : AppCompatActivity() {
     }
 
     fun newSchedule(path: String, section: Int = 0) {
-        var btn: Button? = findViewById(R.id.btnSchoolScheduleNewSubject)
-        var tv: TextView? = findViewById(R.id.tvSchoolScheduleNewSubjectPath)
-        var iv: ImageView? = findViewById(R.id.ivSchoolScheduleNewSubjectDelete)
+        var btn: Button? = findViewById(R.id.btnSchoolScheduleEditSubject)
+        var tv: TextView? = findViewById(R.id.tvSchoolScheduleEditSubjectPath)
+        var iv: ImageView? = findViewById(R.id.ivSchoolScheduleEditSubjectDelete)
         var alert: String? = ""
 
         if (section == 10) {
-            btn = findViewById(R.id.btnSchoolScheduleNewSubject)
-            tv = findViewById(R.id.tvSchoolScheduleNewSubjectPath)
-            iv = findViewById(R.id.ivSchoolScheduleNewSubjectDelete)
+            btn = findViewById(R.id.btnSchoolScheduleEditSubject)
+            tv = findViewById(R.id.tvSchoolScheduleEditSubjectPath)
+            iv = findViewById(R.id.ivSchoolScheduleEditSubjectDelete)
             alert = "jadwal"
             isSetPelajaran = true
         } else if (section == 11) {
-            btn = findViewById(R.id.btnSchoolScheduleNewEskul)
-            tv = findViewById(R.id.tvSchoolScheduleNewEskulPath)
-            iv = findViewById(R.id.ivSchoolScheduleNewEskulDelete)
+            btn = findViewById(R.id.btnSchoolScheduleEditEskul)
+            tv = findViewById(R.id.tvSchoolScheduleEditEskulPath)
+            iv = findViewById(R.id.ivSchoolScheduleEditEskulDelete)
             alert = "jadwal"
             isSetEskul = true
         } else if (section == 12) {
-            btn = findViewById(R.id.btnSchoolScheduleNewCalendar)
-            tv = findViewById(R.id.tvSchoolScheduleNewCalendarPath)
-            iv = findViewById(R.id.ivSchoolScheduleNewCalendarDelete)
+            btn = findViewById(R.id.btnSchoolScheduleEditCalendar)
+            tv = findViewById(R.id.tvSchoolScheduleEditCalendarPath)
+            iv = findViewById(R.id.ivSchoolScheduleEditCalendarDelete)
             alert = "kalender"
             isSetCalender = true;
         }
@@ -110,8 +113,8 @@ class SchoolScheduleNewActivity : AppCompatActivity() {
                 R.drawable.btn_red_rectangle
             )
 
-        btnSchoolScheduleNewDone.isEnabled = true
-        btnSchoolScheduleNewDone.setBackgroundColor(
+        btnSchoolScheduleEditDone.isEnabled = true
+        btnSchoolScheduleEditDone.setBackgroundColor(
             ContextCompat.getColor(
                 applicationContext,
                 R.color.colorSuperDarkBlue
@@ -120,7 +123,7 @@ class SchoolScheduleNewActivity : AppCompatActivity() {
 
         // Alert
         iv?.setOnClickListener {
-            val builder = AlertDialog.Builder(this@SchoolScheduleNewActivity)
+            val builder = AlertDialog.Builder(this@SchoolScheduleEditActivity)
 
             builder.setMessage("Apakah Anda yakin ingin menghapus $alert ini?")
 
@@ -174,8 +177,8 @@ class SchoolScheduleNewActivity : AppCompatActivity() {
             && !isSetEskul
             && !isSetPelajaran
         ) {
-            btnSchoolScheduleNewDone.isEnabled = false
-            btnSchoolScheduleNewDone.setBackgroundColor(
+            btnSchoolScheduleEditDone.isEnabled = false
+            btnSchoolScheduleEditDone.setBackgroundColor(
                 Color.parseColor("#BDBDBD")
             )
         }

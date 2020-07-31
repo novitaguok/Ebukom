@@ -1,8 +1,11 @@
 package com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementnew
 
 import android.content.Intent
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.Menu
 import android.view.MenuItem
 import android.widget.Toast
@@ -119,8 +122,43 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
             startActivity(Intent(this, SchoolAnnouncementAddTemplateActivity::class.java))
         }
 
+        // Text watcher
+        etSchoolAnnouncementNewTitle.addTextChangedListener(textWatcher)
+        etSchoolAnnouncementNewContent.addTextChangedListener(textWatcher)
+
         // Next page
-        btnSchoolAnnouncementNewNext
+        btnSchoolAnnouncementNewNext.setOnClickListener {
+            startActivity(Intent(this, SchoolAnnouncementNewNextActivity::class.java))
+        }
+    }
+
+    private val textWatcher = object : TextWatcher {
+        override fun afterTextChanged(s: Editable?) {
+        }
+
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+        }
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            if (etSchoolAnnouncementNewTitle.text.toString()
+                    .isNotEmpty() && etSchoolAnnouncementNewContent.text.toString()
+                    .isNotEmpty()
+            ) {
+                btnSchoolAnnouncementNewNext.setEnabled(true)
+                btnSchoolAnnouncementNewNext.setBackgroundColor(
+                    ContextCompat.getColor(
+                        applicationContext,
+                        R.color.colorSuperDarkBlue
+                    )
+                )
+            } else {
+                btnSchoolAnnouncementNewNext.setEnabled(false)
+                btnSchoolAnnouncementNewNext.setBackgroundColor(
+                    Color.parseColor("#828282")
+                )
+            }
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {

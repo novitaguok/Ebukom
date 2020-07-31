@@ -1,12 +1,16 @@
 package com.ebukom.arch.ui.classdetail.school.schoolschedule
 
+import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ebukom.R
 import com.ebukom.arch.dao.ClassDetailScheduleDao
+import com.ebukom.arch.ui.classdetail.MainClassDetailActivity
 import com.ebukom.arch.ui.classdetail.OnMoreCallback
+import com.ebukom.arch.ui.classdetail.school.schoolschedule.schoolschedulefile.SchoolScheduleFileActivity
 import kotlinx.android.synthetic.main.item_schedule_purple.view.*
 import kotlinx.android.synthetic.main.item_schedule_purple.view.tvItemScheduleSubjectOpen
 import kotlinx.android.synthetic.main.item_schedule_red.view.*
@@ -22,7 +26,11 @@ class SchoolScheduleAdapter(
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    class SchoolScheduleViewHolderPurple(itemView: View, val callback: OnMoreCallback) :
+    class SchoolScheduleViewHolderPurple(
+        itemView: View,
+        val callback: OnMoreCallback,
+        val context: Context
+    ) :
         RecyclerView.ViewHolder(itemView) {
         fun bind(dataModel: ClassDetailScheduleDao) {
             itemView.tvItemScheduleSubjectType.text = dataModel.type
@@ -30,12 +38,20 @@ class SchoolScheduleAdapter(
             itemView.tvItemScheduleSubjectOpen.text = dataModel.open
 
             itemView.ibItemScheduleSubject.setOnClickListener {
-                callback.onMoreClicked("")
+                callback.onMoreClicked("1")
+            }
+
+            itemView.clItemSchedulePurple.setOnClickListener {
+                (context as MainClassDetailActivity).startActivity(Intent(context, SchoolScheduleFileActivity::class.java))
             }
         }
     }
 
-    class SchoolScheduleViewHolderRed(itemView: View, val callback: OnMoreCallback) :
+    class SchoolScheduleViewHolderRed(
+        itemView: View,
+        val callback: OnMoreCallback,
+        val context: Context
+    ) :
         RecyclerView.ViewHolder(itemView) {
         fun bind(dataModel: ClassDetailScheduleDao) {
             itemView.tvItemScheduleEskulType.text = dataModel.type
@@ -43,12 +59,20 @@ class SchoolScheduleAdapter(
             itemView.tvItemScheduleEskulOpen.text = dataModel.open
 
             itemView.ibItemScheduleEskul.setOnClickListener {
-                callback.onMoreClicked("")
+                callback.onMoreClicked("1")
+            }
+
+            itemView.clItemScheduleRed.setOnClickListener {
+                (context as MainClassDetailActivity).startActivity(Intent(context, SchoolScheduleFileActivity::class.java))
             }
         }
     }
 
-    class SchoolScheduleViewHolderYellow(itemView: View, val callback: OnMoreCallback) :
+    class SchoolScheduleViewHolderYellow(
+        itemView: View,
+        val callback: OnMoreCallback,
+        val context: Context
+    ) :
         RecyclerView.ViewHolder(itemView) {
         fun bind(dataModel: ClassDetailScheduleDao) {
             itemView.tvItemScheduleAcademicType.text = dataModel.type
@@ -56,7 +80,11 @@ class SchoolScheduleAdapter(
             itemView.tvItemScheduleAcademicOpen.text = dataModel.open
 
             itemView.ibItemScheduleAcademic.setOnClickListener {
-                callback.onMoreClicked("")
+                callback.onMoreClicked("1")
+            }
+
+            itemView.clItemScheduleYellow.setOnClickListener {
+                (context as MainClassDetailActivity).startActivity(Intent(context, SchoolScheduleFileActivity::class.java))
             }
         }
     }
@@ -65,15 +93,15 @@ class SchoolScheduleAdapter(
         if (viewType == TYPE_PURPLE) {
             val view =
                 LayoutInflater.from(parent.context).inflate(R.layout.item_schedule_purple, parent, false)
-            return SchoolScheduleViewHolderPurple(view, callback)
+            return SchoolScheduleViewHolderPurple(view, callback, parent.context)
         } else if (viewType == TYPE_RED) {
             val view =
                 LayoutInflater.from(parent.context).inflate(R.layout.item_schedule_red, parent, false)
-            return SchoolScheduleViewHolderRed(view, callback)
+            return SchoolScheduleViewHolderRed(view, callback, parent.context)
         } else {
             val view =
                 LayoutInflater.from(parent.context).inflate(R.layout.item_schedule_yellow, parent, false)
-            return SchoolScheduleViewHolderYellow(view, callback)
+            return SchoolScheduleViewHolderYellow(view, callback, parent.context)
         }
     }
 

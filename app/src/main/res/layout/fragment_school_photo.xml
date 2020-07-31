@@ -27,7 +27,7 @@
                 android:background="@drawable/btn_white_rectangle_4dp"
                 android:elevation="@dimen/size_2"
                 android:lineHeight="@dimen/text_24"
-                android:text="Bagikan Pengumuman Baru"
+                android:text="Bagikan Foto Kegiatan"
                 android:textAllCaps="false"
                 android:textColor="@color/colorSuperDarkBlue"
                 android:textSize="@dimen/text_16"

@@ -160,13 +160,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:background="@color/colorSuperDarkBlue"
+            android:background="#828282"
             android:lineHeight="@dimen/text_16"
             android:text="SELANJUTNYA"
             android:textColor="@color/colorWhite"
             android:textFontWeight="500"
             android:textSize="@dimen/text_14"
-            app:layout_constraintTop_toBottomOf="@id/rvSchoolAnnouncementNewTemplate" />
+            app:layout_constraintTop_toBottomOf="@id/rvSchoolAnnouncementNewTemplate"
+            android:enabled="false"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

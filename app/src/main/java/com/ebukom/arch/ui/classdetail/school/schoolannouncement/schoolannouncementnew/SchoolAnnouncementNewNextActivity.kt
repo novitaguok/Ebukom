@@ -1,18 +1,17 @@
 package com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementnew
 
+import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ebukom.R
 import com.ebukom.arch.dao.ClassDetailItemCheckDao
 import com.ebukom.arch.ui.classdetail.ClassDetailCheckAdapter
-import com.github.florent37.singledateandtimepicker.dialog.SingleDateAndTimePickerDialog
-import kotlinx.android.synthetic.main.activity_personal_note_new_next.*
 import kotlinx.android.synthetic.main.activity_school_announcement_new_next.*
-import kotlinx.android.synthetic.main.alert_edit_text.view.*
-import java.util.*
+import kotlinx.android.synthetic.main.activity_school_announcement_new_next.toolbar
+import kotlinx.android.synthetic.main.item_check.view.*
 import kotlin.collections.ArrayList
 
 class SchoolAnnouncementNewNextActivity : AppCompatActivity() {
@@ -22,6 +21,8 @@ class SchoolAnnouncementNewNextActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_school_announcement_new_next)
+
+        initToolbar()
 
         list.add(ClassDetailItemCheckDao("Semua Kelas"))
         list.add(ClassDetailItemCheckDao("Kelas 1 Aurora"))
@@ -41,11 +42,29 @@ class SchoolAnnouncementNewNextActivity : AppCompatActivity() {
                 )
         }
 
+        // Checkbox is checked
+        val view = layoutInflater.inflate(R.layout.item_check, null)
+        if (view.cbItemCheck.isChecked) {
+            btnSchoolAnnouncementNewNextDone.setEnabled(true)
+            btnSchoolAnnouncementNewNextDone.setBackgroundColor(
+                ContextCompat.getColor(
+                    applicationContext,
+                    R.color.colorSuperDarkBlue
+                )
+            )
+        } else {
+            btnSchoolAnnouncementNewNextDone.setEnabled(false)
+            btnSchoolAnnouncementNewNextDone.setBackgroundColor(
+                Color.parseColor("#828282")
+            )
+        }
+
+        //
         sSchoolAnnouncementNewNextAlarm.setOnCheckedChangeListener { buttonView, isChecked ->
 
             if (isChecked) {
-//                val builder = AlertDialog.Builder(this@SchoolAnnouncementNewNextActivity)
-//                val view = layoutInflater.inflate(R.layout.alert_edit_text, null)
+                val builder = AlertDialog.Builder(this@SchoolAnnouncementNewNextActivity)
+                val view = layoutInflater.inflate(R.layout.alert_datetime_picker, null)
 //
 //                view.tvAlertEditText.setText("Link")
 //                view.tilAlertEditText.setHint("Masukkan Link")
@@ -62,6 +81,15 @@ class SchoolAnnouncementNewNextActivity : AppCompatActivity() {
 //                dialog.show()
 
             }
+        }
+    }
+
+    fun initToolbar() {
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = ""
+        toolbar.setNavigationOnClickListener {
+            onBackPressed()
         }
     }
 }

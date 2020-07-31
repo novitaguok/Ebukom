@@ -1,18 +1,12 @@
 package com.ebukom.arch.ui.classdetail.school.schoolphoto
 
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ebukom.R
-import com.ebukom.arch.dao.ChooseClassDao
-import com.ebukom.arch.dao.ClassDetailAnnouncementDao
 import com.ebukom.arch.dao.ClassDetailPhotoDao
-import com.ebukom.arch.ui.classdetail.MainClassDetailActivity
 import com.ebukom.arch.ui.classdetail.OnMoreCallback
-import com.ebukom.base.BaseAdapter
-import kotlinx.android.synthetic.main.bottom_sheet_school_announcement.view.*
 import kotlinx.android.synthetic.main.item_photo_blue.view.*
 import kotlinx.android.synthetic.main.item_photo_red.view.*
 
@@ -31,7 +25,7 @@ class SchoolPhotoAdapter(
             itemView.tvItemPhotoRed.text = dataModel.photoTitle
 
             itemView.ibItemPhotoRed.setOnClickListener {
-                callback.onMoreClicked("")
+                callback.onMoreClicked("2")
             }
         }
     }
@@ -42,7 +36,7 @@ class SchoolPhotoAdapter(
             itemView.tvItemPhotoBlue.text = dataModel.photoTitle
 
             itemView.ibItemPhotoBlue.setOnClickListener {
-                callback.onMoreClicked("")
+                callback.onMoreClicked("2")
             }
         }
     }
