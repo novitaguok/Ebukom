@@ -11,6 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
+        android:background="@color/colorWhite"
         android:paddingBottom="@dimen/size_20">
 
         <TextView
@@ -80,6 +81,7 @@
         android:id="@+id/flClassDetail"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:background="@color/colorWhite"
         android:layout_above="@+id/bnClassDetail"
         android:layout_below="@+id/clClassHeader" />
 

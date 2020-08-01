@@ -1,26 +1,27 @@
 package com.ebukom.arch.ui.classdetail.material.materialsubject
 
-import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ebukom.R
-import com.ebukom.arch.dao.ClassDetailAnnouncementCommentDao
 import com.ebukom.arch.dao.ClassDetailTemplateTextDao
-import com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementdetail.SchoolAnnouncementDetailAdapter
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import kotlinx.android.synthetic.main.activity_material_subject.*
-import kotlinx.android.synthetic.main.activity_school_announcement_detail.*
+import kotlinx.android.synthetic.main.activity_material_subject_new.*
+import kotlinx.android.synthetic.main.activity_material_subject_new.toolbar
+import kotlinx.android.synthetic.main.activity_material_subject_new.tvToolbarTitle
 import kotlinx.android.synthetic.main.bottom_sheet_school_announcement.view.*
-import kotlinx.android.synthetic.main.item_subject.*
 
 class MaterialSubjectNewActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_material_subject)
+        setContentView(R.layout.activity_material_subject_new)
+
+        initToolbar()
 
         val list = ArrayList<ClassDetailTemplateTextDao>()
 
@@ -37,6 +38,38 @@ class MaterialSubjectNewActivity : AppCompatActivity() {
         if (list.isNotEmpty()) {
             ivMaterialSubjectEmpty.visibility = View.INVISIBLE
             tvMaterialSubjectEmpty.visibility = View.INVISIBLE
+        }
+
+        // Get intent from MaterialSubjectFragment
+        val material = intent.extras?.getString("material", "0")
+        when (material) {
+            "0" -> {
+                val intent = Intent(this, MaterialSubjectAddActivity::class.java)
+                tvToolbarTitle.text = "Matematika"
+                btnMaterialSubject.text = "Tambah Materi Matematika"
+                btnMaterialSubject.setOnClickListener {
+                    intent.putExtra("material", "0")
+                    startActivity(intent)
+                }
+            }
+            "1" -> {
+                val intent = Intent(this, MaterialSubjectAddActivity::class.java)
+                tvToolbarTitle.text = "Ilmu Pengetahuan Alam"
+                btnMaterialSubject.text = "Tambah Materi IPA"
+                btnMaterialSubject.setOnClickListener {
+                    intent.putExtra("material", "1")
+                    startActivity(intent)
+                }
+            }
+            "2" -> {
+                val intent = Intent(this, MaterialSubjectAddActivity::class.java)
+                tvToolbarTitle.text = "Bahasa Inggris"
+                btnMaterialSubject.text = "Tambah Materi Bahasa Inggris"
+                btnMaterialSubject.setOnClickListener {
+                    intent.putExtra("material", "2")
+                    startActivity(intent)
+                }
+            }
         }
     }
 
@@ -71,6 +104,22 @@ class MaterialSubjectNewActivity : AppCompatActivity() {
 
             val dialog: AlertDialog = builder.create()
             dialog.show()
+
+            val positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+            positiveButton.setTextColor(
+                ContextCompat.getColor(
+                    applicationContext,
+                    R.color.colorRed
+                )
+            )
+
+            val negativeButton = dialog.getButton(AlertDialog.BUTTON_NEGATIVE)
+            negativeButton.setTextColor(
+                ContextCompat.getColor(
+                    applicationContext,
+                    R.color.colorGray
+                )
+            )
         }
 
         view.tvCancelInfo.setOnClickListener {
@@ -81,4 +130,12 @@ class MaterialSubjectNewActivity : AppCompatActivity() {
         bottomSheetDialog.show()
     }
 
+    fun initToolbar() {
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = ""
+        toolbar.setNavigationOnClickListener {
+            onBackPressed()
+        }
+    }
 }

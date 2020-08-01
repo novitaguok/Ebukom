@@ -11,7 +11,9 @@ import androidx.fragment.app.Fragment
 import com.ebukom.R
 import com.ebukom.arch.ui.classdetail.material.MaterialFragment
 import com.ebukom.arch.ui.classdetail.member.MemberFragment
+import com.ebukom.arch.ui.classdetail.notification.NotificationActivity
 import com.ebukom.arch.ui.classdetail.personal.PersonalFragment
+import com.ebukom.arch.ui.classdetail.personal.personalnoteedit.PersonalNoteEditActivity
 import com.ebukom.arch.ui.classdetail.school.SchoolFragment
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementedit.SchoolAnnouncementEditActivity
 import com.ebukom.arch.ui.classdetail.school.schoolphoto.SchoolPhotoFragment
@@ -19,6 +21,7 @@ import com.ebukom.arch.ui.classdetail.school.schoolphoto.schoolphotoedit.SchoolP
 import com.ebukom.arch.ui.classdetail.school.schoolphoto.schoolphotonew.SchoolPhotoNewActivity
 import com.ebukom.arch.ui.classdetail.school.schoolschedule.schoolscheduleedit.SchoolScheduleEditActivity
 import com.ebukom.arch.ui.classdetail.school.schoolschedule.schoolschedulenew.SchoolScheduleNewActivity
+import com.ebukom.arch.ui.editprofile.EditProfileActivity
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.activity_main_class_detail.*
 import kotlinx.android.synthetic.main.activity_school_schedule_new.view.*
@@ -30,6 +33,14 @@ class MainClassDetailActivity : AppCompatActivity(), OnMoreCallback {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_class_detail)
+
+        ivClassHeaderNotificationBell.setOnClickListener {
+            startActivity(Intent(this, NotificationActivity::class.java))
+        }
+
+        ivClassHeaderProfilePicture.setOnClickListener{
+            startActivity(Intent(this, EditProfileActivity::class.java))
+        }
 
         val schoolFragment = SchoolFragment()
         val personalFragment = PersonalFragment()
@@ -80,23 +91,28 @@ class MainClassDetailActivity : AppCompatActivity(), OnMoreCallback {
         val view = layoutInflater.inflate(R.layout.bottom_sheet_school_announcement, null)
         bottomSheetDialog.setContentView(view)
 
-        if (id == "1") {
+        if (id == "1") { // School Schedule
             view.tvEditInfo.text = "Edit Jadwal"
             view.tvDeleteInfo.text = "Hapus Jadwal"
-        } else if (id == "2") {
+        } else if (id == "2") { // School Photo
             view.tvEditInfo.text = "Edit Informasi Foto"
             view.tvDeleteInfo.text = "Hapus Foto"
+        } else if (id == "3") { // Personal Note
+            view.tvEditInfo.text = "Edit Catatan"
+            view.tvDeleteInfo.text = "Hapus Catatan"
         }
 
         view.tvEditInfo.setOnClickListener {
             bottomSheetDialog.dismiss()
 
-            if (id == "0") { // Pengumuman
+            if (id == "0") { // School Announcement
                 intent = Intent(this, SchoolAnnouncementEditActivity::class.java)
-            } else if (id == "1") { // Jadwal
+            } else if (id == "1") { // School Schedule
                 intent = Intent(this, SchoolScheduleEditActivity::class.java)
-            } else if (id == "2") { // Foto
+            } else if (id == "2") { // School Photo
                 intent = Intent(this, SchoolPhotoEditActivity::class.java)
+            } else if (id == "3") { // Personal Note
+                intent = Intent(this, PersonalNoteEditActivity::class.java)
             }
 
             startActivity(intent)
@@ -108,6 +124,8 @@ class MainClassDetailActivity : AppCompatActivity(), OnMoreCallback {
 
             if (id == "1") {
                 alert = "jadwal"
+            } else if (id == "3") {
+                alert = "catatan"
             }
 
             bottomSheetDialog.dismiss()

@@ -11,7 +11,9 @@ import com.ebukom.R
 import com.ebukom.arch.dao.ClassDetailPersonalNoteDao
 import com.ebukom.arch.ui.classdetail.OnMoreCallback
 import com.ebukom.arch.ui.classdetail.personal.personalnotenew.PersonalNoteAdapter
+import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.fragment_personal_accepted_note.*
+import kotlinx.android.synthetic.main.fragment_personal_accepted_note.view.*
 
 class PersonalAcceptedNoteFragment : Fragment() {
     var objectList = ArrayList<ClassDetailPersonalNoteDao>()
@@ -32,17 +34,16 @@ class PersonalAcceptedNoteFragment : Fragment() {
                 objectList,
                 callback
             )
-//        schoolAnnouncementAdapter.announcements = objectList
         rvPersonalAcceptedNote.layoutManager = LinearLayoutManager(this.context)
         rvPersonalAcceptedNote.adapter = personalNoteAdapter
 
-//        if (objectList.isNotEmpty()) {
-//            view.ivPersonalEmpty.visibility = View.INVISIBLE
-//            view.tvPersonalEmpty.visibility = View.INVISIBLE
-//        } else {
-//            view.ivPersonalEmpty.visibility = View.VISIBLE
-//            view.tvPersonalEmpty.visibility = View.VISIBLE
-//        }
+        if (objectList.isNotEmpty()) {
+            view.ivPersonalEmpty.visibility = View.INVISIBLE
+            view.tvPersonalEmpty.visibility = View.INVISIBLE
+        } else {
+            view.ivPersonalEmpty.visibility = View.VISIBLE
+            view.tvPersonalEmpty.visibility = View.VISIBLE
+        }
     }
 
     private fun addData() {
@@ -73,3 +74,4 @@ class PersonalAcceptedNoteFragment : Fragment() {
         }
     }
 }
+

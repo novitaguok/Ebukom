@@ -19,7 +19,7 @@ import kotlinx.android.synthetic.main.activity_school_schedule_new.*
 class SchoolScheduleNewActivity : AppCompatActivity() {
     var isSetPelajaran = false
     var isSetEskul = false
-    var isSetCalender = false
+    var isSetCalendar = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -97,7 +97,7 @@ class SchoolScheduleNewActivity : AppCompatActivity() {
             tv = findViewById(R.id.tvSchoolScheduleNewCalendarPath)
             iv = findViewById(R.id.ivSchoolScheduleNewCalendarDelete)
             alert = "kalender"
-            isSetCalender = true;
+            isSetCalendar = true;
         }
 
         tv?.text = path
@@ -140,7 +140,7 @@ class SchoolScheduleNewActivity : AppCompatActivity() {
 
                 if (section == 10) isSetPelajaran = false
                 else if (section == 11) isSetEskul = false
-                else if (section == 12) isSetCalender = false
+                else if (section == 12) isSetCalendar = false
 
                 checkSection()
             }
@@ -170,7 +170,7 @@ class SchoolScheduleNewActivity : AppCompatActivity() {
 
     fun checkSection() {
         // Button disabled
-        if (!isSetCalender
+        if (!isSetCalendar
             && !isSetEskul
             && !isSetPelajaran
         ) {

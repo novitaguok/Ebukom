@@ -39,11 +39,15 @@
     </style>
 
     <!-- Customize Checkbox -->
-    <style name="colored_checkBox" parent="Widget.AppCompat.CompoundButton.CheckBox">
+    <style name="colored_checkbox" parent="Widget.AppCompat.CompoundButton.CheckBox">
         <!-- Checked -->
         <item name="colorAccent">@color/colorRed</item>
         <!-- Default/unchecked -->
         <item name="android:textColorSecondary">#BDBDBD</item>
     </style>
 
+    <!-- Customize Switch Button -->
+    <style name="colored_switch">
+        <item name="colorControlActivated">@color/colorRed</item>
+    </style>
 </resources>

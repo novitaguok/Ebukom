@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ebukom.R
 import com.ebukom.arch.dao.ClassDetailAnnouncementCommentDao
+import com.ebukom.arch.ui.classdetail.personal.personalnotedetail.PersonalNoteDetailActivity
 import kotlinx.android.synthetic.main.activity_school_announcement_detail.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_school_announcement.view.*
 import kotlinx.android.synthetic.main.item_announcement_detail_comment.view.*
@@ -40,7 +41,8 @@ class SchoolAnnouncementDetailAdapter(
             itemView.ivAnnouncementDetailCommentProfilePicture.setImageResource(comment.profilePic)
 
             itemView.ivAnnouncementDetailCommentMoreButton.setOnClickListener {
-                (context as SchoolAnnouncementDetailActivity).popupMenuComment()
+                if (context is SchoolAnnouncementDetailActivity) context.popupMenuComment()
+                else if (context is PersonalNoteDetailActivity) context.popupMenuComment()
             }
         }
     }

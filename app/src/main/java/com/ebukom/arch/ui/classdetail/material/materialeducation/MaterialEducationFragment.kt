@@ -1,6 +1,7 @@
 package com.ebukom.arch.ui.classdetail.material.materialeducation
 
 import android.content.Context
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,7 +10,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ebukom.R
 import com.ebukom.arch.dao.ClassDetailAnnouncementDao
+import com.ebukom.arch.ui.classdetail.MainClassDetailActivity
 import com.ebukom.arch.ui.classdetail.OnMoreCallback
+import com.ebukom.arch.ui.classdetail.material.materialeducation.materialeducationnew.MaterialEducationNewActivity
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.SchoolAnnouncementAdapter
 import kotlinx.android.synthetic.main.fragment_material_education.*
 import java.lang.ClassCastException
@@ -29,12 +32,12 @@ class MaterialEducationFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         addData()
         schoolAnnouncementAdapter = SchoolAnnouncementAdapter(objectList, callback)
-//        schoolAnnouncementAdapter.announcements = objectList
         rvMaterialEducation.layoutManager = LinearLayoutManager(this.context)
         rvMaterialEducation.adapter = schoolAnnouncementAdapter
 
-//        view.tvAnnouncementComment.setTextColor(Color.parseColor("#7A7A7A"))
-//        view.tvAnnouncementComment.setTextSize(TypedValue.COMPLEX_UNIT_SP, getResources().getDimension(R.dimen.text_12))
+        btnMaterialEducationNew.setOnClickListener {
+            (context as MainClassDetailActivity).startActivity(Intent((context as MainClassDetailActivity), MaterialEducationNewActivity::class.java))
+        }
     }
 
     private fun addData() {

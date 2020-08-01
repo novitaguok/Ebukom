@@ -23,7 +23,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginRight="@dimen/size_18"
-        android:theme="@style/colored_checkBox"
+        android:theme="@style/colored_checkbox"
         app:layout_constraintBottom_toBottomOf="@id/tvItemCheck"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintLeft_toRightOf="@id/tvItemCheck"

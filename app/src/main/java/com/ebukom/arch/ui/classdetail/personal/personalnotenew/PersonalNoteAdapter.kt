@@ -1,12 +1,16 @@
 package com.ebukom.arch.ui.classdetail.personal.personalnotenew
 
+import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ebukom.R
 import com.ebukom.arch.dao.ClassDetailPersonalNoteDao
+import com.ebukom.arch.ui.classdetail.MainClassDetailActivity
 import com.ebukom.arch.ui.classdetail.OnMoreCallback
+import com.ebukom.arch.ui.classdetail.personal.personalnotedetail.PersonalNoteDetailActivity
 import kotlinx.android.synthetic.main.item_note.view.*
 
 class PersonalNoteAdapter(
@@ -20,7 +24,7 @@ class PersonalNoteAdapter(
                 .inflate(R.layout.item_note, parent, false)
         return ViewHolder(
             view,
-            callback
+            callback, parent.context
         )
     }
 
@@ -32,7 +36,7 @@ class PersonalNoteAdapter(
         (holder as ViewHolder).bind(data[position])
     }
 
-    class ViewHolder(itemView: View, val callback : OnMoreCallback) : RecyclerView.ViewHolder(itemView) {
+    class ViewHolder(itemView: View, val callback : OnMoreCallback, val context: Context) : RecyclerView.ViewHolder(itemView) {
         fun bind(note: ClassDetailPersonalNoteDao) {
             itemView.ivItemNoteProfilePicture.setImageResource(note.profilePicture)
             itemView.tvItemNoteTitle.text = note?.noteTitle
@@ -41,10 +45,12 @@ class PersonalNoteAdapter(
             itemView.tvItemNoteTime.text = note?.time
 
             itemView.ivItemNoteMoreButton.setOnClickListener {
-                callback.onMoreClicked("")
+                callback.onMoreClicked("3")
             }
 
-
+            itemView.clItemNote.setOnClickListener {
+                (context as MainClassDetailActivity).startActivity(Intent(context, PersonalNoteDetailActivity::class.java))
+            }
         }
     }
 }

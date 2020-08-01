@@ -8,7 +8,6 @@ import android.text.TextWatcher
 import androidx.core.content.ContextCompat
 import com.ebukom.R
 import kotlinx.android.synthetic.main.activity_school_announcement_add_template.*
-import kotlinx.android.synthetic.main.activity_school_anouncement_new.toolbar
 
 class SchoolAnnouncementAddTemplateActivity : AppCompatActivity() {
 
@@ -18,8 +17,15 @@ class SchoolAnnouncementAddTemplateActivity : AppCompatActivity() {
 
         initToolbar()
 
+        // Textwatcher
         etSchoolAnnouncementAddTemplate.addTextChangedListener(textWatcher)
         etSchoolAnnouncementAddTemplateContent.addTextChangedListener(textWatcher)
+
+        // Toolbar name
+        var layout = intent.extras?.getString("layout", "announcement")
+        when(layout) {
+            "note" -> tvToolbarTitle.setText("Tambah Template Catatan")
+        }
     }
 
     private val textWatcher = object : TextWatcher {

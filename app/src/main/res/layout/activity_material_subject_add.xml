@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".arch.ui.classdetail.material.materialeducation.materialeducationnew.MaterialEducationNewActivity">
+    tools:context=".arch.ui.classdetail.material.materialsubject.MaterialSubjectAddActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -21,10 +21,11 @@
             android:minHeight="?attr/actionBarSize">
 
             <TextView
+                android:id="@+id/tvToolbarTitle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:text="Tambah Materi Mendidik Anak"
+                android:text="Tambah Materi Matematika"
                 android:textColor="@color/colorSuperDarkBlue"
                 android:textSize="@dimen/text_16"
                 android:textStyle="bold" />
@@ -42,13 +43,13 @@
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tilMaterialEducationNewTitle"
+                android:id="@+id/tilMaterialSubjectAdd"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
                 android:layout_marginTop="@dimen/size_24"
-                android:hint="Nama materi"
+                android:hint="Nama Materi"
                 android:theme="@style/LoginTextInputLayoutLabel"
                 app:boxCornerRadiusBottomEnd="@dimen/size_8"
                 app:boxCornerRadiusBottomStart="@dimen/size_8"
@@ -59,45 +60,77 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etMaterialEducationNewTitle"
+                    android:id="@+id/etMaterialSubjectAdd"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/edit_text_rectangle_selector"
                     android:padding="@dimen/size_16" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <EditText
-                android:id="@+id/etMaterialEducationNewContent"
-                android:layout_width="match_parent"
+            <Button
+                android:id="@+id/btnMaterialSubjectChooseFile"
+                android:layout_width="175dp"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-                android:layout_marginTop="@dimen/size_28"
-                android:background="@android:color/transparent"
-                android:gravity="top"
-                android:hint="@string/material_content"
+                android:layout_marginLeft="@dimen/size_16"
+                android:layout_marginTop="@dimen/size_32"
+                android:background="@drawable/btn_darkblue_rectangle"
                 android:lineHeight="@dimen/text_16"
-                android:minLines="10"
-                android:text="@string/announcement_content"
-                android:textColorHint="#9E9E9E"
+                android:text="TAMBAH TEMPLATE"
+                android:textColor="@color/colorWhite"
+                android:textFontWeight="500"
                 android:textSize="@dimen/text_14"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tilMaterialEducationNewTitle" />
+                app:layout_constraintTop_toBottomOf="@+id/tilMaterialSubjectAdd" />
+
+            <TextView
+                android:id="@+id/tvMaterialSubjectFilePath"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_16"
+                android:layout_marginTop="@dimen/size_14"
+                android:lineHeight="@dimen/size_16"
+                android:text="MateriMatematika.pdf"
+                android:textColor="#212121"
+                android:textSize="@dimen/text_12"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnMaterialSubjectChooseFile"
+                android:visibility="gone"/>
+
+            <ImageView
+                android:id="@+id/ivMaterialSubjectDelete"
+                android:layout_width="@dimen/size_24"
+                android:layout_height="@dimen/size_24"
+                android:layout_marginRight="@dimen/size_12"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@+id/tvMaterialSubjectFilePath"
+                app:layout_constraintBottom_toBottomOf="@+id/tvMaterialSubjectFilePath"
+                android:src="@drawable/ic_close"
+                android:visibility="gone"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </androidx.core.widget.NestedScrollView>
 
-    <Button
-        android:id="@+id/btnMaterialEducationNewDone"
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clMaterialSubjectAdd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:background="#828282"
-        android:lineHeight="@dimen/text_16"
-        android:text="BAGIKAN MATERI"
-        android:textColor="@color/colorWhite"
-        android:textFontWeight="500"
-        android:textSize="@dimen/text_14"
-        android:enabled="false"/>
+        android:elevation="@dimen/size_2">
+
+        <Button
+            android:id="@+id/btnMaterialSubjectDone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="#828282"
+            android:enabled="false"
+            android:lineHeight="@dimen/text_16"
+            android:text="BAGIKAN MATERI"
+            android:textColor="@color/colorWhite"
+            android:textFontWeight="500"
+            android:textSize="@dimen/text_14"
+            app:layout_constraintTop_toTopOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
