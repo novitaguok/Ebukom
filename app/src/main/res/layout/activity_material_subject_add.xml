@@ -75,7 +75,7 @@
                 android:layout_marginTop="@dimen/size_32"
                 android:background="@drawable/btn_darkblue_rectangle"
                 android:lineHeight="@dimen/text_16"
-                android:text="TAMBAH TEMPLATE"
+                android:text="PILIH FILE MATERI"
                 android:textColor="@color/colorWhite"
                 android:textFontWeight="500"
                 android:textSize="@dimen/text_14"

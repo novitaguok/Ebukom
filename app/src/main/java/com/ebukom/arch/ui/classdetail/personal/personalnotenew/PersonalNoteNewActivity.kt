@@ -1,6 +1,8 @@
 package com.ebukom.arch.ui.classdetail.personal.personalnotenew
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -17,6 +19,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.ebukom.R
 import com.ebukom.arch.dao.ClassDetailAttachmentDao
 import com.ebukom.arch.dao.ClassDetailTemplateTextDao
+import com.ebukom.arch.ui.chooseclass.ChooseClassActivity
 import com.ebukom.arch.ui.classdetail.ClassDetailAttachmentAdapter
 import com.ebukom.arch.ui.classdetail.ClassDetailTemplateTextAdapter
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.SchoolAnnouncementAddTemplateActivity
@@ -30,6 +33,12 @@ class PersonalNoteNewActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_personal_note_new)
+
+        val sharePref: SharedPreferences = getSharedPreferences("EBUKOM", Context.MODE_PRIVATE)
+
+        if(sharePref.getInt("level", 0) == 1){
+            tvPersonalNoteNewTitle.text = "Buat Catatan untuk Guru"
+        }
 
         initToolbar()
 

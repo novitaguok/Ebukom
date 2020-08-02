@@ -1,6 +1,5 @@
 package com.ebukom.arch.ui.classdetail
 
-import android.text.Layout
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,7 +8,10 @@ import com.ebukom.R
 import com.ebukom.arch.dao.ClassDetailItemCheckDao
 import kotlinx.android.synthetic.main.item_check.view.*
 
-class ClassDetailCheckAdapter(val list: ArrayList<ClassDetailItemCheckDao>) :
+class ClassDetailCheckAdapter(
+    public val list: ArrayList<ClassDetailItemCheckDao>,
+    val callback: OnCheckListener
+) :
     RecyclerView.Adapter<ClassDetailCheckAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
@@ -25,11 +27,25 @@ class ClassDetailCheckAdapter(val list: ArrayList<ClassDetailItemCheckDao>) :
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.view.tvItemCheck.text = list?.get(position)?.item
 
+        holder.view.cbItemCheck.isChecked = list[position].isChecked
+
         if (position == list?.size - 1) {
             holder.view.vItemCheck.visibility = View.INVISIBLE
         }
     }
 
-    class ViewHolder(val view: View) : RecyclerView.ViewHolder(view)
+    inner class ViewHolder(
+        val view: View
+    ) : RecyclerView.ViewHolder(view) {
+        init {
+            view.cbItemCheck.setOnCheckedChangeListener { buttonView, isChecked ->
+                list[adapterPosition].isChecked = isChecked
+                callback.onCheckChange()
+            }
+        }
+    }
 
+    interface OnCheckListener {
+        fun onCheckChange()
+    }
 }

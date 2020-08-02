@@ -2,6 +2,7 @@ package com.ebukom.arch.ui.classdetail.school.schoolphoto
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -29,6 +30,11 @@ class SchoolPhotoFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val sharePref: SharedPreferences = activity!!.getSharedPreferences("EBUKOM", Context.MODE_PRIVATE)
+        if(sharePref.getInt("level", 0) == 1){
+            btnSchoolPhotoNew.visibility = View.GONE
+        }
+
         addData()
         schoolPhotoAdapter = SchoolPhotoAdapter(objectList, callback)
         rvSchoolPhoto.layoutManager = LinearLayoutManager(this.context)

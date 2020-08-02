@@ -43,6 +43,11 @@ class MaterialSubjectAddActivity : AppCompatActivity() {
             }
         }
 
+        val page = intent.extras?.getString("page", "edit")
+        when(page) {
+            "edit" -> tvToolbarTitle.text = "Edit Materi"
+        }
+
         // Textwatcher
         etMaterialSubjectAdd.addTextChangedListener(textWatcher)
 
@@ -88,7 +93,7 @@ class MaterialSubjectAddActivity : AppCompatActivity() {
                     tvMaterialSubjectFilePath.text = data?.data?.path ?: ""
                     tvMaterialSubjectFilePath.visibility = View.VISIBLE
                     ivMaterialSubjectDelete.visibility = View.VISIBLE
-                    btnMaterialSubjectChooseFile.setText("UBAH FILE")
+                    btnMaterialSubjectChooseFile.setText("UBAH FILE MATERI")
                     btnMaterialSubjectChooseFile.background =
                         ContextCompat.getDrawable(
                             applicationContext,

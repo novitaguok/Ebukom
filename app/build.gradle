@@ -93,5 +93,5 @@ dependencies {
     implementation 'de.hdodenhof:circleimageview:3.1.0'
 
     // Datetime picker
-    implementation 'com.github.michaldrabik:classicmaterialtimepicker:1.0.0'
+    implementation 'com.github.Kunzisoft:Android-SwitchDateTimePicker:2.0'
 }

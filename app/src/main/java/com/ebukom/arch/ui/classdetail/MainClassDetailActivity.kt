@@ -29,6 +29,10 @@ import kotlinx.android.synthetic.main.bottom_sheet_class_detail_header.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_school_announcement.view.*
 
 class MainClassDetailActivity : AppCompatActivity(), OnMoreCallback {
+    companion object{
+        var isAnnouncement = true
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -91,6 +95,8 @@ class MainClassDetailActivity : AppCompatActivity(), OnMoreCallback {
         val view = layoutInflater.inflate(R.layout.bottom_sheet_school_announcement, null)
         bottomSheetDialog.setContentView(view)
 
+
+
         if (id == "1") { // School Schedule
             view.tvEditInfo.text = "Edit Jadwal"
             view.tvDeleteInfo.text = "Hapus Jadwal"
@@ -98,6 +104,9 @@ class MainClassDetailActivity : AppCompatActivity(), OnMoreCallback {
             view.tvEditInfo.text = "Edit Informasi Foto"
             view.tvDeleteInfo.text = "Hapus Foto"
         } else if (id == "3") { // Personal Note
+            view.tvEditInfo.text = "Edit Catatan"
+            view.tvDeleteInfo.text = "Hapus Catatan"
+        } else if (!isAnnouncement) { // Personal Note FRAGMENT
             view.tvEditInfo.text = "Edit Catatan"
             view.tvDeleteInfo.text = "Hapus Catatan"
         }
@@ -125,6 +134,8 @@ class MainClassDetailActivity : AppCompatActivity(), OnMoreCallback {
             if (id == "1") {
                 alert = "jadwal"
             } else if (id == "3") {
+                alert = "catatan"
+            } else if (!isAnnouncement) {
                 alert = "catatan"
             }
 

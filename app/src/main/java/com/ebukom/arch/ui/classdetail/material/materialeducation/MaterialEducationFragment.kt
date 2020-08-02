@@ -67,4 +67,9 @@ class MaterialEducationFragment : Fragment() {
             );
         }
     }
+
+    override fun onResume() {
+        super.onResume()
+        MainClassDetailActivity.isAnnouncement = false
+    }
 }

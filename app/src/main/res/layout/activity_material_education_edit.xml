@@ -93,11 +93,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
-        android:background="@color/colorSuperDarkBlue"
+        android:background="#BDBDBD"
         android:lineHeight="@dimen/text_16"
         android:text="BAGIKAN MATERI"
         android:textColor="@color/colorWhite"
         android:textFontWeight="500"
-        android:textSize="@dimen/text_14" />
+        android:textSize="@dimen/text_14"
+        android:enabled="false"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

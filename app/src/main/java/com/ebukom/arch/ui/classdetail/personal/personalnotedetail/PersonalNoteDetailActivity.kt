@@ -2,6 +2,7 @@ package com.ebukom.arch.ui.classdetail.personal.personalnotedetail
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -26,6 +27,7 @@ import kotlinx.android.synthetic.main.alert_edit_text.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_choose_class.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_school_announcement.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_school_announcement_comment.view.*
+import kotlinx.android.synthetic.main.item_announcement.view.*
 
 class PersonalNoteDetailActivity : AppCompatActivity() {
 
@@ -52,8 +54,14 @@ class PersonalNoteDetailActivity : AppCompatActivity() {
             )
         )
 
-        val adapter = SchoolAnnouncementDetailAdapter(list, this)
+        // Shared Preference
+        val sharePref: SharedPreferences = getSharedPreferences("EBUKOM", Context.MODE_PRIVATE)
+        if(sharePref.getInt("level", 0) == 1){
+            ivPersonalNoteDetailMoreButton.visibility = View.GONE
+        }
 
+        // Recycler View
+        val adapter = SchoolAnnouncementDetailAdapter(list, this)
         rvPersonalNoteDetailComment.layoutManager = LinearLayoutManager(this)
         rvPersonalNoteDetailComment.adapter = adapter
 

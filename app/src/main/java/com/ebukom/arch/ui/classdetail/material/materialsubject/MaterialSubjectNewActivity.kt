@@ -85,7 +85,10 @@ class MaterialSubjectNewActivity : AppCompatActivity() {
 
         view.tvEditInfo.setOnClickListener {
             bottomSheetDialog.dismiss()
-            Toast.makeText(this, "Edit", Toast.LENGTH_LONG).show()
+
+            val intent = Intent(this, MaterialSubjectAddActivity::class.java)
+            intent.putExtra("page", "edit")
+            startActivity(intent)
         }
 
         view.tvDeleteInfo.setOnClickListener {

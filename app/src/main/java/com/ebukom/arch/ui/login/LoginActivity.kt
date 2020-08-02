@@ -54,12 +54,11 @@ class LoginActivity : AppCompatActivity() {
             loading.visibility = View.VISIBLE
             if (etLoginPhone.text.toString() == "000") {
                 if (etLoginPassword.text.toString() == "000") {
-                    intent.putExtra("Level", 0)
-
+                    // Teacher
                     sharePref.edit().apply {
                         putBoolean("isLogin", true)
-                        putString("phone",phone)
-                        putInt("level",0)
+                        putString("phone", phone)
+                        putInt("level", 0)
                     }.apply()
 
                     Handler().postDelayed({
@@ -76,15 +75,13 @@ class LoginActivity : AppCompatActivity() {
                     }, 1000)
                 }
             } else if (etLoginPhone.text.toString() == "123") {
+                // Parent
                 if (etLoginPassword.text.toString() == "123") {
-                    intent.putExtra("Level", 1)
-
                     sharePref.edit().apply {
                         putBoolean("isLogin", true)
-                        putString("phone",phone)
-                        putInt("level",1)
+                        putString("phone", phone)
+                        putInt("level", 1)
                     }.apply()
-
 
                     Handler().postDelayed({
                         loading.visibility = View.GONE
@@ -99,20 +96,19 @@ class LoginActivity : AppCompatActivity() {
                     }, 1000)
                 }
             } else if (etLoginPhone.text.toString() == "456") {
+                // Admin
                 if (etLoginPassword.text.toString() == "456") {
-                    intent.putExtra("Level", 2)
+                    sharePref.edit().apply {
+                        putBoolean("isLogin", true)
+                        putString("phone", phone)
+                        putInt("level", 2)
+                    }.apply()
+
                     Handler().postDelayed({
                         loading.visibility = View.GONE
                         startActivity(intent)
                         finish()
                     }, 1000)
-
-                    sharePref.edit().apply {
-                        putBoolean("isLogin", true)
-                        putString("phone",phone)
-                        putInt("level",2)
-                    }.apply()
-
                 } else {
                     Handler().postDelayed({
                         loading.visibility = View.GONE

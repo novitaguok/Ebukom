@@ -2,14 +2,17 @@ package com.ebukom.arch.ui.classdetail.school.schoolannouncement
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ebukom.R
 import com.ebukom.arch.dao.ClassDetailAnnouncementDao
+import com.ebukom.arch.ui.classdetail.MainClassDetailActivity
 import com.ebukom.arch.ui.classdetail.OnMoreCallback
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementdetail.SchoolAnnouncementDetailActivity
+import kotlinx.android.synthetic.main.fragment_school_announcement.*
 import kotlinx.android.synthetic.main.item_announcement.view.*
 
 class SchoolAnnouncementAdapter(
@@ -45,12 +48,21 @@ class SchoolAnnouncementAdapter(
             itemView.tvAnnouncementComment.text = announcement?.comment
             itemView.tvAnnouncementTime.text = announcement?.time
 
+            val sharePref: SharedPreferences = context.getSharedPreferences("EBUKOM", Context.MODE_PRIVATE)
+            if(sharePref.getInt("level", 0) == 1){
+                itemView.ivAnnouncementMoreButton.visibility = View.GONE
+            }
+
             itemView.ivAnnouncementMoreButton.setOnClickListener {
                 callback.onMoreClicked("0")
             }
 
             itemView.clItemAnnouncement.setOnClickListener {
-                context.startActivity(Intent(context, SchoolAnnouncementDetailActivity::class.java))
+                val intent = Intent(context, SchoolAnnouncementDetailActivity::class.java)
+                if (!(MainClassDetailActivity.isAnnouncement)) {
+                    intent.putExtra("layout", "1")
+                }
+                context.startActivity(intent)
             }
         }
     }

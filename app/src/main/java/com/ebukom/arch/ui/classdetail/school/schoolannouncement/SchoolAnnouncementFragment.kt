@@ -2,6 +2,7 @@ package com.ebukom.arch.ui.classdetail.school.schoolannouncement
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.*
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,11 +26,15 @@ class SchoolAnnouncementFragment : androidx.fragment.app.Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         return inflater.inflate(R.layout.fragment_school_announcement, container, false)
-
-
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val sharePref: SharedPreferences = activity!!.getSharedPreferences("EBUKOM", Context.MODE_PRIVATE)
+
+        if(sharePref.getInt("level", 0) == 1){
+            btnSchoolAnnouncementNew.visibility = View.GONE
+        }
+
         addData()
         schoolAnnouncementAdapter = SchoolAnnouncementAdapter(objectList, callback)
         rvSchoolAnnouncement.layoutManager = LinearLayoutManager(this.context)
@@ -44,8 +49,8 @@ class SchoolAnnouncementFragment : androidx.fragment.app.Fragment() {
         for (i in 0..10) {
             objectList.add(
                 ClassDetailAnnouncementDao(
-                    "Title",
-                    "This is the content",
+                    "Kegiatan Pentas Seni",
+                    "Besok akan dilaksanakan kegiatan pentas seni. Orang tua dimohon untuk mempersiapkan peralatan di bawah ini. Tolong diperhatikan ya Ibu.",
                     "9 KOMENTAR",
                     "02/02/02"
                 )
@@ -63,5 +68,10 @@ class SchoolAnnouncementFragment : androidx.fragment.app.Fragment() {
             throw ClassCastException(activity.toString()
                     + " must implement MyInterface ");
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        MainClassDetailActivity.isAnnouncement = true
     }
 }

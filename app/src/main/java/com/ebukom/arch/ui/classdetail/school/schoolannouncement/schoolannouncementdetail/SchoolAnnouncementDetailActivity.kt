@@ -2,6 +2,7 @@ package com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncem
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -31,6 +32,16 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
         setContentView(R.layout.activity_school_announcement_detail)
 
         initToolbar()
+
+        // Get intent from Material Education FRAGMENT
+        val layout = intent.extras?.getString("layout", "0")
+        when (layout) {
+            "1" -> {
+                tvSchoolAnnouncementDetailTitle.text = "Mendidik Anak Hyperaktif"
+                tvSchoolAnnouncementDetailContent.text =
+                    "Untuk mendidik anak yang hyperaktif, diperlukan suatu kemampuan yaitu kesabaran yang luar biasa. Selain itu, perlu diketahui juga cara menghadapi anak dengan cara yang menyenangkan dan baik."
+            }
+        }
 
         val list = ArrayList<ClassDetailAnnouncementCommentDao>()
 
@@ -70,8 +81,14 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
             )
         )
 
-        val adapter = SchoolAnnouncementDetailAdapter(list, this)
+        // Shared Preference
+        val sharePref: SharedPreferences = getSharedPreferences("EBUKOM", Context.MODE_PRIVATE)
+        if(sharePref.getInt("level", 0) == 1){
+            ivAnnouncementDetailMoreButton.visibility = View.GONE
+        }
 
+        // Adapter
+        val adapter = SchoolAnnouncementDetailAdapter(list, this)
         rvSchoolAnnouncementDetailComment.layoutManager = LinearLayoutManager(this)
         rvSchoolAnnouncementDetailComment.adapter = adapter
 
