@@ -37,7 +37,7 @@ class AdminSchoolFeeInfoSentAdapter(
     class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind(info: AdminSchoolFeeInfoSentDao) {
             itemView.tvItemAdminInfoSentTitle.text = info?.title
-            itemView.tvItemAdminInfoSentDetail.text = info?.date
+            itemView.tvItemAdminInfoSentDetail.text = info?.detail
             itemView.tvItemAdminInfoSentDate.text = info?.date
         }
     }

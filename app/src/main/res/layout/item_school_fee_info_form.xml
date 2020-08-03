@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="188dp"
+    android:layout_marginHorizontal="@dimen/activity_horizontal_margin">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilItemSchoolFeeInfoForm"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_24"
+        android:hint="Nama Item"
+        android:theme="@style/LoginTextInputLayoutLabel"
+        app:boxCornerRadiusBottomEnd="@dimen/size_8"
+        app:boxCornerRadiusBottomStart="@dimen/size_8"
+        app:boxCornerRadiusTopEnd="@dimen/size_8"
+        app:boxCornerRadiusTopStart="@dimen/size_8"
+        app:boxStrokeColor="@color/colorBlack"
+        app:boxStrokeWidth="@dimen/size_1"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etItemSchoolFeeInfoForm"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_rectangle_selector"
+            android:padding="@dimen/size_16" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilItemSchoolFeeInfoFormFee"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_24"
+        android:hint="Biaya"
+        android:theme="@style/LoginTextInputLayoutLabel"
+        app:boxCornerRadiusBottomEnd="@dimen/size_8"
+        app:boxCornerRadiusBottomStart="@dimen/size_8"
+        app:boxCornerRadiusTopEnd="@dimen/size_8"
+        app:boxCornerRadiusTopStart="@dimen/size_8"
+        app:boxStrokeColor="@color/colorBlack"
+        app:boxStrokeWidth="@dimen/size_1"
+        app:layout_constraintTop_toBottomOf="@+id/tilItemSchoolFeeInfoForm">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etItemSchoolFeeInfoFormFee"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_rectangle_selector"
+            android:padding="@dimen/size_16" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <View
+        android:id="@+id/vItemSchoolFeeInfoForm"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/size_1"
+        android:background="#EEEEEE"
+        android:layout_marginTop="@dimen/size_24"
+        app:layout_constraintLeft_toLeftOf="@+id/tilItemSchoolFeeInfoFormFee"
+        app:layout_constraintTop_toBottomOf="@+id/tilItemSchoolFeeInfoFormFee"
+        app:layout_constraintRight_toRightOf="@+id/tilItemSchoolFeeInfoFormFee"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

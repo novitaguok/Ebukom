@@ -1,5 +1,6 @@
 package com.ebukom.arch.ui.admin.adminschoolfeeinfo
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -7,7 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.viewpager.widget.ViewPager
 import com.ebukom.R
+import com.ebukom.arch.ui.admin.AdminShareSchoolFeeInfoActivity
+import com.ebukom.arch.ui.admin.MainAdminActivity
 import com.google.android.material.tabs.TabLayout
+import kotlinx.android.synthetic.main.fragment_school_fee_info.*
 
 class AdminSchoolFeeInfoFragment : Fragment() {
     private var tabLayout: TabLayout? = null
@@ -28,5 +32,11 @@ class AdminSchoolFeeInfoFragment : Fragment() {
         tabLayout?.setupWithViewPager(viewPager)
         viewPager?.currentItem = 0
         return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        btnSchoolFeeInfo.setOnClickListener {
+            (context as MainAdminActivity).startActivity(Intent((context as MainAdminActivity), AdminShareSchoolFeeInfoActivity::class.java))
+        }
     }
 }

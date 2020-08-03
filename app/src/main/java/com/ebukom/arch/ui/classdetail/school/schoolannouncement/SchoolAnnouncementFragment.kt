@@ -30,7 +30,6 @@ class SchoolAnnouncementFragment : androidx.fragment.app.Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val sharePref: SharedPreferences = activity!!.getSharedPreferences("EBUKOM", Context.MODE_PRIVATE)
-
         if(sharePref.getInt("level", 0) == 1){
             btnSchoolAnnouncementNew.visibility = View.GONE
         }

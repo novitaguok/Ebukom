@@ -2,8 +2,10 @@ package com.ebukom.arch.ui.classdetail
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
@@ -14,6 +16,7 @@ import com.ebukom.arch.ui.classdetail.member.MemberFragment
 import com.ebukom.arch.ui.classdetail.notification.NotificationActivity
 import com.ebukom.arch.ui.classdetail.personal.PersonalFragment
 import com.ebukom.arch.ui.classdetail.personal.personalnoteedit.PersonalNoteEditActivity
+import com.ebukom.arch.ui.classdetail.personal.personalparent.PersonalParentFragment
 import com.ebukom.arch.ui.classdetail.school.SchoolFragment
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementedit.SchoolAnnouncementEditActivity
 import com.ebukom.arch.ui.classdetail.school.schoolphoto.SchoolPhotoFragment
@@ -29,7 +32,7 @@ import kotlinx.android.synthetic.main.bottom_sheet_class_detail_header.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_school_announcement.view.*
 
 class MainClassDetailActivity : AppCompatActivity(), OnMoreCallback {
-    companion object{
+    companion object {
         var isAnnouncement = true
     }
 
@@ -42,12 +45,17 @@ class MainClassDetailActivity : AppCompatActivity(), OnMoreCallback {
             startActivity(Intent(this, NotificationActivity::class.java))
         }
 
-        ivClassHeaderProfilePicture.setOnClickListener{
+        ivClassHeaderProfilePicture.setOnClickListener {
             startActivity(Intent(this, EditProfileActivity::class.java))
         }
 
+        val sharePref: SharedPreferences = getSharedPreferences("EBUKOM", Context.MODE_PRIVATE)
         val schoolFragment = SchoolFragment()
-        val personalFragment = PersonalFragment()
+        val personalFragment = if (sharePref.getInt("level", 0) == 1) {
+            PersonalParentFragment()
+        } else {
+            PersonalFragment()
+        }
         val materialFragment = MaterialFragment()
         val memberFragment = MemberFragment()
 

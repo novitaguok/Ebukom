@@ -27,23 +27,21 @@ class PersonalParentFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
-        val view = inflater.inflate(R.layout.fragment_personal, container, false)
-        tabLayout = view.findViewById(R.id.mainClassPersonalParentTabLayout) as TabLayout
-        viewPager = view.findViewById(R.id.mainClassPersonalParentViewPager) as ViewPager
-        viewPager?.adapter = PersonalParentPageAdapter(childFragmentManager)
+        val view = inflater.inflate(R.layout.fragment_material, container, false)
+        tabLayout = view.findViewById(R.id.mainClassMaterialTabLayout) as TabLayout
+        viewPager = view.findViewById(R.id.mainClassMaterialViewPager) as ViewPager
+        viewPager?.adapter = MaterialPageAdapter(childFragmentManager, context!!)
         tabLayout?.setupWithViewPager(viewPager)
         viewPager?.currentItem = 0
         return view
     }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-//        super.onViewCreated(view, savedInstanceState)
-        val sharePref: SharedPreferences = activity!!.getSharedPreferences("EBUKOM", Context.MODE_PRIVATE)
-
-        if(sharePref.getInt("level", 0) == 1){
-            btnPersonalNew.text = "Buat Catatan untuk Guru"
-        }
-    }
+//    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+//        val sharePref: SharedPreferences = activity!!.getSharedPreferences("EBUKOM", Context.MODE_PRIVATE)
+//        if(sharePref.getInt("level", 0) == 1){
+//            btnPersonalNew.text = "Buat Catatan untuk Guru"
+//        }
+//    }
 
     override fun onAttach(context: Context) {
         super.onAttach(context)

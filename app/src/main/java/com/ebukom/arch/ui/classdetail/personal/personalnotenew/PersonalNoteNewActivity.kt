@@ -97,8 +97,10 @@ class PersonalNoteNewActivity : AppCompatActivity() {
 
         // Tambah template
         tvPersonalNoteNewTemplateAdd.setOnClickListener {
+            val intent = Intent(this, SchoolAnnouncementAddTemplateActivity::class.java)
+
             intent.putExtra("layout", "note")
-            startActivity(Intent(this, SchoolAnnouncementAddTemplateActivity::class.java))
+            startActivity(intent)
         }
 
         // "SELANJUTNYA"

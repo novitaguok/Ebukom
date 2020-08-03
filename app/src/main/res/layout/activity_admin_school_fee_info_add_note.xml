@@ -44,15 +44,17 @@
                android:id="@+id/etAdminSchoolFeeInfoAddNote"
                android:layout_width="match_parent"
                android:layout_height="wrap_content"
+               android:layout_marginTop="@dimen/size_24"
                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
                android:gravity="top"
                android:background="@android:color/transparent"
                app:layout_constraintTop_toTopOf="parent"
-               android:text="Masukkan catatan yang ingin dibagikan..."
+               android:hint="Masukkan catatan yang ingin dibagikan..."
                android:textSize="@dimen/text_16"
                android:lineHeight="@dimen/size_20"
-               android:textColor="#9E9E9E"
-               android:minLines="10"/>
+               android:textColor="#212121"
+               android:minLines="10"
+               android:textCursorDrawable="@color/colorBlack"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -63,6 +65,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
+        android:background="@color/colorWhite"
         android:elevation="@dimen/size_2">
 
         <TextView
@@ -106,13 +109,14 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:background="@color/colorSuperDarkBlue"
+            android:background="#BDBDBD"
             android:lineHeight="@dimen/text_16"
             android:text="TAMBAH CATATAN"
             android:textColor="@color/colorWhite"
             android:textFontWeight="500"
             android:textSize="@dimen/text_14"
-            app:layout_constraintTop_toBottomOf="@id/rvAdminSchoolFeeInfoAddNoteTemplate" />
+            app:layout_constraintTop_toBottomOf="@id/rvAdminSchoolFeeInfoAddNoteTemplate"
+            android:enabled="false"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

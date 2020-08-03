@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.View
 import com.ebukom.R
+import com.ebukom.arch.ui.admin.MainAdminActivity
 import com.ebukom.arch.ui.chooseclass.ChooseClassActivity
 import com.ebukom.arch.ui.forgotpassword.sendcode.SendCodeActivity
 import com.ebukom.arch.ui.register.parent.RegisterParentActivity
@@ -47,8 +48,6 @@ class LoginActivity : AppCompatActivity() {
         // Intent to Choose Class
         btnLoginLogin.setOnClickListener {
 
-            val intent = Intent(this, ChooseClassActivity::class.java)
-
             val phone = etLoginPhone.text.toString()
 
             loading.visibility = View.VISIBLE
@@ -63,7 +62,7 @@ class LoginActivity : AppCompatActivity() {
 
                     Handler().postDelayed({
                         loading.visibility = View.GONE
-                        startActivity(intent)
+                        startActivity(Intent(this, ChooseClassActivity::class.java))
                         finish()
                     }, 1000)
 
@@ -85,7 +84,7 @@ class LoginActivity : AppCompatActivity() {
 
                     Handler().postDelayed({
                         loading.visibility = View.GONE
-                        startActivity(intent)
+                        startActivity(Intent(this, ChooseClassActivity::class.java))
                         finish()
                     }, 1000)
                 } else {
@@ -106,7 +105,7 @@ class LoginActivity : AppCompatActivity() {
 
                     Handler().postDelayed({
                         loading.visibility = View.GONE
-                        startActivity(intent)
+                        startActivity(Intent(this, MainAdminActivity::class.java))
                         finish()
                     }, 1000)
                 } else {

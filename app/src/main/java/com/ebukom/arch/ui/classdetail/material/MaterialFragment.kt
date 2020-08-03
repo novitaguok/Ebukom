@@ -27,7 +27,7 @@ class MaterialFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_material, container, false)
         tabLayout = view.findViewById(R.id.mainClassMaterialTabLayout) as TabLayout
         viewPager = view.findViewById(R.id.mainClassMaterialViewPager) as ViewPager
-        viewPager?.adapter = MaterialPageAdapter(childFragmentManager)
+        viewPager?.adapter = MaterialPageAdapter(childFragmentManager, context!!)
         tabLayout?.setupWithViewPager(viewPager)
         viewPager?.currentItem = 0
         return view
