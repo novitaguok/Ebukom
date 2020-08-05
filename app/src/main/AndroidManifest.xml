@@ -16,8 +16,10 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".arch.ui.admin.adminschoolfeeinfo.AdminSchoolFeeInfoAddPaymentItemTemplateIActivity"></activity>
+        android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <activity android:name=".arch.ui.admin.AdminShareSchoolFeeInfoRecheckActivity"></activity>
+        <activity android:name=".arch.ui.admin.AdminShareSchoolFeeInfoNextActivity" />
+        <activity android:name=".arch.ui.admin.adminschoolfeeinfo.AdminSchoolFeeInfoAddPaymentItemTemplateIActivity" />
         <activity android:name=".arch.ui.classdetail.personal.personalnoteedit.PersonalNoteEditActivity" />
         <activity android:name=".arch.ui.classdetail.personal.personalnotedetail.PersonalNoteDetailActivity" />
         <activity android:name=".arch.ui.classdetail.school.schoolschedule.schoolschedulefile.SchoolScheduleFileActivity" />

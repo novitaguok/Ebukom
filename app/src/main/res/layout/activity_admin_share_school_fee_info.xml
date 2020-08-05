@@ -4,9 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorWhite"
     tools:context=".arch.ui.admin.AdminShareSchoolFeeInfoActivity">
 
     <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/colorWhite"
@@ -38,7 +40,8 @@
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:descendantFocusability="blocksDescendants">
 
             <TextView
                 android:id="@+id/tvAdminShareSchoolFeeInfoAdd"
@@ -78,7 +81,7 @@
                 android:background="@drawable/btn_blue_rectangle_4dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tvAdminShareSchoolFeeInfoAddNote"
@@ -90,8 +93,8 @@
                 android:textSize="@dimen/text_16"
                 android:textStyle="bold"
                 app:layout_constraintBottom_toBottomOf="@+id/btnAdminShareSchoolFeeInfoAddNote"
-                app:layout_constraintRight_toRightOf="@+id/btnAdminShareSchoolFeeInfoAddNote"
                 app:layout_constraintLeft_toLeftOf="@+id/btnAdminShareSchoolFeeInfoAddNote"
+                app:layout_constraintRight_toRightOf="@+id/btnAdminShareSchoolFeeInfoAddNote"
                 app:layout_constraintTop_toTopOf="@+id/btnAdminShareSchoolFeeInfoAddNote" />
 
             <Button
@@ -104,7 +107,7 @@
                 android:background="@drawable/btn_white_rectangle_4dp"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnAdminShareSchoolFeeInfoAdd"/>
+                app:layout_constraintTop_toBottomOf="@+id/btnAdminShareSchoolFeeInfoAdd" />
 
             <View
                 android:id="@+id/vAdminShareSchoolFeeInfo"
@@ -112,61 +115,80 @@
                 android:layout_height="@dimen/size_1"
                 android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
                 android:layout_marginTop="@dimen/size_20"
-                app:layout_constraintTop_toBottomOf="@+id/btnAdminShareSchoolFeeInfoAddNote"
-                android:background="#EEEEEE"/>
+                android:background="#EEEEEE"
+                app:layout_constraintTop_toBottomOf="@+id/btnAdminShareSchoolFeeInfoAddNote" />
 
             <TextView
                 android:id="@+id/tvAdminShareSchoolFeeInfoDetail"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/size_16"
                 android:layout_marginLeft="@dimen/activity_horizontal_margin"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/vAdminShareSchoolFeeInfo"
+                android:layout_marginTop="@dimen/size_16"
+                android:lineHeight="@dimen/size_20"
                 android:text="Detail Pembayaran"
                 android:textColor="#212121"
+                android:textFontWeight="500"
                 android:textSize="@dimen/text_12"
-                android:lineHeight="@dimen/size_20"
-                android:textFontWeight="500" />
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/vAdminShareSchoolFeeInfo" />
 
-            <Button
-                android:id="@+id/btnAdminShareSchoolFeeInfoDetailEdit"
+
+            <ToggleButton
+                android:id="@+id/tbtnAdminShareSchoolFeeInfoDetailEdit"
                 android:layout_width="@dimen/size_96"
                 android:layout_height="@dimen/size_36"
                 android:layout_marginRight="@dimen/activity_horizontal_margin"
-                android:text="EDIT"
                 android:background="@drawable/btn_white_rectangle_4dp"
-                android:textSize="@dimen/text_14"
                 android:lineHeight="@dimen/size_16"
+                android:text="EDIT"
+                android:textOff="EDIT"
+                android:textOn="EDIT"
                 android:textFontWeight="500"
-                app:layout_constraintTop_toTopOf="@+id/tvAdminShareSchoolFeeInfoDetail"
+                android:textSize="@dimen/text_14"
+                android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="@+id/tvAdminShareSchoolFeeInfoDetail"
                 app:layout_constraintRight_toRightOf="parent"
-                android:visibility="gone"/>
+                app:layout_constraintTop_toTopOf="@+id/tvAdminShareSchoolFeeInfoDetail" />
+
+            <TableLayout
+                android:id="@+id/tbPersonalParentSchoolFeeInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_28"
+                app:layout_constraintTop_toBottomOf="@+id/tvAdminShareSchoolFeeInfoDetail">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvAdminShareSchoolFeeInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/size_24"
+                    android:paddingBottom="@dimen/size_24" />
+
+            </TableLayout>
 
             <ImageView
                 android:id="@+id/ivAdminShareSchoolFeeInfoEmpty"
                 android:layout_width="@dimen/size_100"
                 android:layout_height="@dimen/size_100"
                 android:layout_marginTop="@dimen/size_28"
-                app:layout_constraintTop_toBottomOf="@+id/tvAdminShareSchoolFeeInfoDetail"
+                android:src="@drawable/ic_info_gray"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                android:src="@drawable/ic_info_gray"/>
+                app:layout_constraintTop_toBottomOf="@+id/tvAdminShareSchoolFeeInfoDetail" />
 
             <TextView
                 android:id="@+id/tvAdminShareSchoolFeeInfoEmpty"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/size_8"
-                app:layout_constraintTop_toBottomOf="@+id/ivAdminShareSchoolFeeInfoEmpty"
+                android:lineHeight="@dimen/size_24"
+                android:text="Belum ada item pembayaran"
+                android:textColor="#E0E0E0"
+                android:textFontWeight="500"
+                android:textSize="@dimen/text_14"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                android:text="Belum ada item pembayaran"
-                android:textSize="@dimen/text_14"
-                android:lineHeight="@dimen/size_24"
-                android:textFontWeight="500"
-                android:textColor="#E0E0E0"/>
+                app:layout_constraintTop_toBottomOf="@+id/ivAdminShareSchoolFeeInfoEmpty" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
@@ -181,7 +203,8 @@
         android:text="SELANJUTNYA"
         android:textColor="@color/colorWhite"
         android:textFontWeight="500"
-        android:textSize="@dimen/text_14"
-        android:enabled="false"/>
+        android:textSize="@dimen/text_14" />
+
+<!--    android:enabled="false"-->
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

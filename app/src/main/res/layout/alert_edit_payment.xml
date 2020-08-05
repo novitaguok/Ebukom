@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    app:layout_constraintCircleRadius="@dimen/size_4">
+
+    <TextView
+        android:id="@+id/tvAlertEditPayment"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/size_20"
+        android:layout_marginTop="@dimen/size_20"
+        android:lineHeight="@dimen/size_24"
+        android:text="Edit Item Pembayaran"
+        android:textColor="#212121"
+        android:textSize="@dimen/text_16"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilAlertEditPaymentName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size_20"
+        android:layout_marginTop="@dimen/size_12"
+        android:background="#FBFBFB"
+        android:paddingHorizontal="@dimen/size_12"
+        android:paddingTop="@dimen/size_8"
+        android:theme="@style/GeneralTextInputLayoutStyle"
+        app:layout_constraintTop_toBottomOf="@+id/tvAlertEditPayment">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etAlertEditPaymentName"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Nama item"
+            android:textCursorDrawable="@null" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/tvAlertEditPaymentNameErrorMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="@+id/tilAlertEditPaymentName"
+        app:layout_constraintTop_toBottomOf="@+id/tilAlertEditPaymentName"
+        android:layout_marginHorizontal="@dimen/size_16"
+        android:text="Nama tidak boleh kosong"
+        android:textSize="@dimen/text_12"
+        android:lineHeight="@dimen/size_12"
+        android:textColor="#D93250"
+        android:visibility="gone"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilAlertEditPaymentFee"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size_20"
+        android:layout_marginTop="@dimen/size_8"
+        android:background="#FBFBFB"
+        android:paddingHorizontal="@dimen/size_12"
+        android:paddingTop="@dimen/size_8"
+        android:theme="@style/GeneralTextInputLayoutStyle"
+        app:layout_constraintTop_toBottomOf="@+id/tvAlertEditPaymentNameErrorMessage">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etAlertEditPaymentFee"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="Biaya"
+            android:textCursorDrawable="@null" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/tvAlertEditPaymentFeeErrorMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="@+id/tilAlertEditPaymentFee"
+        app:layout_constraintTop_toBottomOf="@+id/tilAlertEditPaymentFee"
+        android:layout_marginHorizontal="@dimen/size_16"
+        android:text="Biaya tidak boleh kosong"
+        android:textSize="@dimen/text_12"
+        android:lineHeight="@dimen/size_12"
+        android:textColor="#D93250"
+        android:visibility="gone"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>
