@@ -3,8 +3,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingHorizontal="@dimen/size_16"
-    android:paddingVertical="@dimen/size_18"
     android:background="@color/colorWhite"
     android:orientation="vertical"
     app:behavior_hideable="false"
@@ -13,9 +11,11 @@
 
     <TextView
         android:id="@+id/tvEditComment"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
+        android:paddingVertical="@dimen/size_18"
+        android:paddingLeft="@dimen/size_16"
         android:drawableLeft="@drawable/ic_edit_red"
         android:drawablePadding="@dimen/size_24"
         android:text="Edit Komentar"
@@ -25,10 +25,11 @@
 
         <TextView
             android:id="@+id/tvDeleteComment"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginTop="@dimen/size_20"
+            android:paddingVertical="@dimen/size_18"
+            android:paddingLeft="@dimen/size_16"
             android:drawableLeft="@drawable/ic_delete_red"
             android:drawablePadding="@dimen/size_24"
             android:text="Hapus Komentar"
@@ -39,11 +40,11 @@
 
         <TextView
             android:id="@+id/tvCancelComment"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"
-            android:layout_marginLeft="@dimen/size_48"
-            android:layout_marginTop="@dimen/size_20"
+            android:paddingLeft="@dimen/size_64"
+            android:paddingVertical="@dimen/size_18"
             android:text="Batalkan"
             android:textColor="@color/colorRed"
             android:textSize="@dimen/text_16" />

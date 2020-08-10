@@ -1,22 +1,22 @@
 package com.ebukom.arch.ui.admin.adminschoolfeeinfo.schoolfeeinfosent
 
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ebukom.R
 import com.ebukom.arch.dao.AdminSchoolFeeInfoSentDao
-import com.ebukom.arch.dao.ClassDetailMemberContactDao
-import com.ebukom.arch.dao.ClassDetailPersonalNoteDao
-import com.ebukom.arch.ui.admin.AdminShareSchoolFeeInfoNextActivity
-import com.ebukom.arch.ui.classdetail.OnMoreCallback
+import com.ebukom.arch.ui.admin.MainAdminActivity
+import com.ebukom.arch.ui.admin.adminschoolfeeinfo.adminshareschoolfeeinfonext.AdminShareSchoolFeeInfoNextActivity
+import com.ebukom.arch.ui.classdetail.personal.personalparent.personalparentschoolfeeinfo.PersonalParentSchoolFeeInfoActivity
 import kotlinx.android.synthetic.main.item_admin_info_sent.view.*
-import kotlinx.android.synthetic.main.item_member.view.*
-import kotlinx.android.synthetic.main.item_note.view.*
 
 class AdminSchoolFeeInfoSentAdapter(
-    var data: List<AdminSchoolFeeInfoSentDao>) :
+    var data: List<AdminSchoolFeeInfoSentDao>,
+    val callback: onCheckListener?
+) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
@@ -36,15 +36,34 @@ class AdminSchoolFeeInfoSentAdapter(
         (holder as ViewHolder).bind(data[position])
     }
 
-    class ViewHolder(itemView: View, val context: Context) : RecyclerView.ViewHolder(itemView) {
+    inner class ViewHolder(itemView: View, val context: Context) :
+        RecyclerView.ViewHolder(itemView) {
         fun bind(info: AdminSchoolFeeInfoSentDao) {
             itemView.tvItemAdminInfoSentTitle.text = info?.title
             itemView.tvItemAdminInfoSentDetail.text = info?.detail
             itemView.tvItemAdminInfoSentDate.text = info?.date
+            itemView.cbItemAdminInfoSent.isChecked = info?.isChecked
 
             if (context is AdminShareSchoolFeeInfoNextActivity) {
                 itemView.cbItemAdminInfoSent.visibility = View.VISIBLE
             }
+
+            itemView.cbItemAdminInfoSent.setOnCheckedChangeListener { buttonView, isChecked ->
+                data[adapterPosition].isChecked = isChecked
+                callback?.onCheckChange()
+            }
+
+            if (context is MainAdminActivity) {
+                itemView.clItemAdminInfoSent.setOnClickListener {
+                    val intent = Intent(context, PersonalParentSchoolFeeInfoActivity::class.java)
+                    intent.putExtra("role", "admin")
+                    context.startActivity(intent)
+                }
+            }
         }
+    }
+
+    interface onCheckListener {
+        fun onCheckChange()
     }
 }

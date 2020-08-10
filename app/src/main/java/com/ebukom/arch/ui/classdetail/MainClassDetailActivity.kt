@@ -103,8 +103,6 @@ class MainClassDetailActivity : AppCompatActivity(), OnMoreCallback {
         val view = layoutInflater.inflate(R.layout.bottom_sheet_school_announcement, null)
         bottomSheetDialog.setContentView(view)
 
-
-
         if (id == "1") { // School Schedule
             view.tvEditInfo.text = "Edit Jadwal"
             view.tvDeleteInfo.text = "Hapus Jadwal"

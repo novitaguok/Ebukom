@@ -1,4 +1,4 @@
-package com.ebukom.arch.ui.admin.adminschoolfeeinfo
+package com.ebukom.arch.ui.admin.adminschoolfeeinfo.adminshareschoolfeeinfoaddnote
 
 import android.content.Intent
 import android.graphics.Color
@@ -12,9 +12,8 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ebukom.R
 import com.ebukom.arch.dao.ClassDetailTemplateTextDao
-import com.ebukom.arch.ui.admin.AdminShareSchoolFeeInfoActivity
+import com.ebukom.arch.ui.admin.adminschoolfeeinfo.adminshareschoolfeeinfo.AdminShareSchoolFeeInfoActivity
 import com.ebukom.arch.ui.classdetail.ClassDetailTemplateTextAdapter
-import com.ebukom.arch.ui.classdetail.MainClassDetailActivity
 import com.ebukom.arch.ui.classdetail.personal.personalnotenew.PersonalNoteAddTemplateActivity
 import kotlinx.android.synthetic.main.activity_admin_school_fee_info_add_note.*
 import kotlinx.android.synthetic.main.activity_admin_school_fee_info_add_note.toolbar

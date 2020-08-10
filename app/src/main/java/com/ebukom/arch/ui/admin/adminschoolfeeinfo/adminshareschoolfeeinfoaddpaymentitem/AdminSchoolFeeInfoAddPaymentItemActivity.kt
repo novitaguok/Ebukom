@@ -1,4 +1,4 @@
-package com.ebukom.arch.ui.admin.adminschoolfeeinfo
+package com.ebukom.arch.ui.admin.adminschoolfeeinfo.adminshareschoolfeeinfoaddpaymentitem
 
 import android.content.Intent
 import android.graphics.Color

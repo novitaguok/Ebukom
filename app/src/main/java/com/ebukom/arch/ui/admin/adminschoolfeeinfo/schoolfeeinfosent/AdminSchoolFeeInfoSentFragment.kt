@@ -28,7 +28,7 @@ class AdminSchoolFeeInfoSentFragment : Fragment() {
         addData()
         adminSchoolFeeInfoSentAdapter =
             AdminSchoolFeeInfoSentAdapter(
-                objectList
+                objectList, null
             )
         rvSchoolFeeInfoSent.layoutManager = LinearLayoutManager(this.context)
         rvSchoolFeeInfoSent.adapter = adminSchoolFeeInfoSentAdapter
@@ -46,9 +46,9 @@ class AdminSchoolFeeInfoSentFragment : Fragment() {
         for (i in 0..10) {
             objectList.add(
                 AdminSchoolFeeInfoSentDao(
-                    "Info Biaya Pendidikan 14 Maret 2020",
-                    "Pramuka, Basket",
-                    "Dikirim pada 20.00 - 14 Maret 2020"
+                    "Jumaidah Estetika",
+                    "Bobbi Andrean • Pramuka, Basket • Kelas IA Aurora",
+                    "Terakhir diupdate: 20.00 - 14 Maret 2020"
                 )
             )
         }

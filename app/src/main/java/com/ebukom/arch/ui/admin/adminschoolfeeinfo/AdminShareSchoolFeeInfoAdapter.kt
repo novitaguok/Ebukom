@@ -1,16 +1,13 @@
-package com.ebukom.arch.ui.admin
+package com.ebukom.arch.ui.admin.adminschoolfeeinfo
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
-import android.view.View.inflate
 import android.view.ViewGroup
-import androidx.appcompat.app.AlertDialog
-import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.ebukom.R
 import com.ebukom.arch.dao.*
-import com.ebukom.arch.ui.classdetail.OnMoreCallback
-import kotlinx.android.synthetic.main.activity_admin_share_school_fee_info.view.*
+import com.ebukom.arch.ui.admin.adminschoolfeeinfo.adminshareschoolfeeinfo.AdminShareSchoolFeeInfoActivity
 import kotlinx.android.synthetic.main.item_admin_payment_detail_color.view.*
 import kotlinx.android.synthetic.main.item_admin_payment_detail_white.view.*
 
@@ -22,19 +19,47 @@ class AdminShareSchoolFeeInfoAdapter(
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    class AdminShareSchoolFeeInfoViewHolderColor(itemView: View) :
+    class AdminShareSchoolFeeInfoViewHolderColor(
+        itemView: View,
+        var context: Context
+    ) :
         RecyclerView.ViewHolder(itemView) {
         fun bind(dataModel: AdminPaymentItemFormDao) {
             itemView.tvItemAdminPaymentDetailName.text = dataModel.itemName
             itemView.tvItemAdminPaymentDetailFee.text = dataModel.itemFee
+            itemView.ivItemAdminPaymentDetailDelete.visibility = if (dataModel.itemEdit) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
+            itemView.ivItemAdminPaymentDetailDelete.setOnClickListener {
+                (context as AdminShareSchoolFeeInfoActivity).deleteItem(dataModel)
+            }
+            itemView.trItemAdminPaymentDetail.setOnClickListener {
+                (context as AdminShareSchoolFeeInfoActivity).editItem(dataModel)
+            }
         }
     }
 
-    class AdminShareSchoolFeeInfoViewHolderWhite(itemView: View) :
+    class AdminShareSchoolFeeInfoViewHolderWhite(
+        itemView: View,
+        var context: Context
+    ) :
         RecyclerView.ViewHolder(itemView) {
         fun bind(dataModel: AdminPaymentItemFormDao) {
             itemView.tvItemAdminPaymentDetailWhiteName.text = dataModel.itemName
             itemView.tvItemAdminPaymentDetailWhiteFee.text = dataModel.itemFee
+            itemView.ivItemAdminPaymentDetailWhiteDelete.visibility = if (dataModel.itemEdit) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
+            itemView.ivItemAdminPaymentDetailWhiteDelete.setOnClickListener {
+                (context as AdminShareSchoolFeeInfoActivity).deleteItem(dataModel)
+            }
+            itemView.trItemAdminPaymentDetailWhite.setOnClickListener {
+                (context as AdminShareSchoolFeeInfoActivity).editItem(dataModel)
+            }
         }
 
     }
@@ -44,12 +69,18 @@ class AdminShareSchoolFeeInfoAdapter(
             val view =
                 LayoutInflater.from(parent.context)
                     .inflate(R.layout.item_admin_payment_detail_color, parent, false)
-            return AdminShareSchoolFeeInfoViewHolderColor(view)
+            return AdminShareSchoolFeeInfoViewHolderColor(
+                view,
+                parent.context
+            )
         } else {
             val view =
                 LayoutInflater.from(parent.context)
                     .inflate(R.layout.item_admin_payment_detail_white, parent, false)
-            return AdminShareSchoolFeeInfoViewHolderWhite(view)
+            return AdminShareSchoolFeeInfoViewHolderWhite(
+                view,
+                parent.context
+            )
         }
     }
 

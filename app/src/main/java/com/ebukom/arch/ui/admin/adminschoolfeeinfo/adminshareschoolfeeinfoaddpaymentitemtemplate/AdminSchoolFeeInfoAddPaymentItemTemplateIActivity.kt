@@ -1,4 +1,4 @@
-package com.ebukom.arch.ui.admin.adminschoolfeeinfo
+package com.ebukom.arch.ui.admin.adminschoolfeeinfo.adminshareschoolfeeinfoaddpaymentitemtemplate
 
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
@@ -7,7 +7,6 @@ import android.text.Editable
 import android.text.TextWatcher
 import androidx.core.content.ContextCompat
 import com.ebukom.R
-import kotlinx.android.synthetic.main.activity_admin_school_fee_info_add_payment_item.*
 import kotlinx.android.synthetic.main.activity_admin_school_fee_info_add_payment_item_template.*
 import kotlinx.android.synthetic.main.activity_admin_school_fee_info_add_payment_item_template.toolbar
 

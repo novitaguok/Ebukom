@@ -34,7 +34,7 @@ class AdminSchoolFeeInfoParentListFragment : Fragment() {
         addData()
         adminSchoolFeeInfoSentAdapter =
             AdminSchoolFeeInfoSentAdapter(
-                objectList
+                objectList, null
             )
         rvSchoolFeeInfoParentList.layoutManager = LinearLayoutManager(this.context)
         rvSchoolFeeInfoParentList.adapter = adminSchoolFeeInfoSentAdapter

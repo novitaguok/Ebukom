@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorWhite"
     tools:context=".arch.ui.classdetail.personal.personalparent.personalparentschoolfeeinfo.PersonalParentSchoolFeeInfoActivity">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -18,7 +19,18 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorWhite"
-            android:minHeight="?attr/actionBarSize" />
+            android:minHeight="?attr/actionBarSize" >
+
+            <TextView
+                android:id="@+id/tvToolbarTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text=""
+                android:textColor="@color/colorSuperDarkBlue"
+                android:textSize="@dimen/text_16"
+                android:textStyle="bold" />
+        </androidx.appcompat.widget.Toolbar>
 
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -425,7 +437,7 @@
                     <TextView
                         android:id="@+id/tvPersonalParentSchoolFeeInfoNoteTitle"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/size_12"
                         android:layout_marginLeft="@dimen/size_10"
                         android:text="Catatan"
@@ -468,7 +480,7 @@
                     <TextView
                         android:id="@+id/tvPersonalParentSchoolFeeInfoProcedureTitle"
                         android:layout_width="match_parent"
-                        android:layout_height="match_parent"
+                        android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/size_12"
                         android:layout_marginLeft="@dimen/size_10"
                         app:layout_constraintTop_toTopOf="parent"
@@ -507,7 +519,56 @@
 
             </androidx.cardview.widget.CardView>
 
+            <View
+                android:id="@+id/vPersonalParentSchoolFeeInfo"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/size_16"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/cvPersonalParentSchoolFeeInfoNote"
+                android:background="#EEEEEE"
+                android:visibility="gone"/>
+
+            <TextView
+                android:id="@+id/tvPersonalParentSchoolFeeInfoRecipientTitle"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="@dimen/size_16"
+                android:layout_marginLeft="@dimen/size_10"
+                app:layout_constraintTop_toBottomOf="@+id/vPersonalParentSchoolFeeInfo"
+                android:text="Penerima"
+                android:textSize="@dimen/text_12"
+                android:lineHeight="@dimen/size_20"
+                android:textFontWeight="500"
+                android:textColor="#212121"
+                android:visibility="gone"/>
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvPersonalParentSchoolFeeInfoRecipient"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvPersonalParentSchoolFeeInfoRecipientTitle"
+                />
+
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
+
+    <Button
+        android:id="@+id/btnPersonalParentSchoolFeeInfoDone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/colorSuperDarkBlue"
+        android:lineHeight="@dimen/text_16"
+        android:text="BAGIKAN INFO BIAYA PENDIDIKAN"
+        android:textColor="@color/colorWhite"
+        android:textFontWeight="500"
+        android:textSize="@dimen/text_14"
+        android:visibility="gone"/>
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

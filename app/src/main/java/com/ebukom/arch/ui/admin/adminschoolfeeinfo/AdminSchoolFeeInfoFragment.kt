@@ -8,7 +8,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.viewpager.widget.ViewPager
 import com.ebukom.R
-import com.ebukom.arch.ui.admin.AdminShareSchoolFeeInfoActivity
+import com.ebukom.arch.ui.admin.adminschoolfeeinfo.adminshareschoolfeeinfo.AdminShareSchoolFeeInfoActivity
 import com.ebukom.arch.ui.admin.MainAdminActivity
 import com.google.android.material.tabs.TabLayout
 import kotlinx.android.synthetic.main.fragment_school_fee_info.*
