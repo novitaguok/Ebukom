@@ -1,5 +1,8 @@
 package com.ebukom.arch.ui.classdetail.personal.personalnoteedit
 
+import android.app.Activity
+import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -7,6 +10,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -107,8 +111,13 @@ class PersonalNoteEditActivity : AppCompatActivity() {
                     bottomSheetDialog.dismiss()
                     Toast.makeText(this, "F", Toast.LENGTH_LONG).show()
                 }
-                view.clBottomSheetClassDetailAttachmentUseCamera.setOnClickListener {
-                }
+                view.clBottomSheetClassDetailAttachmentUseCamera.setOnClickListener(object: View.OnClickListener {
+                    override fun onClick(v: View?) {
+                        bottomSheetDialog.dismiss()
+                        openCamera()
+                    }
+                })
+
                 bottomSheetDialog.show()
 
                 return true
@@ -151,6 +160,19 @@ class PersonalNoteEditActivity : AppCompatActivity() {
                     Color.parseColor("#828282")
                 )
             }
+        }
+    }
+
+    fun openCamera() {
+        val intent = Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)
+        startActivityForResult(intent, 0)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == RESULT_OK) {
+            val bp = (data?.extras?.get("data")) as Bitmap
+//            blabla.setImageBitmap(bp)
         }
     }
 }

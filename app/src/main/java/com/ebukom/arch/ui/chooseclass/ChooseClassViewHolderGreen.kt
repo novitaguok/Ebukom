@@ -5,6 +5,7 @@ import android.content.Intent
 import android.view.View
 import com.ebukom.arch.dao.ChooseClassDao
 import com.ebukom.arch.ui.classdetail.MainClassDetailActivity
+import com.ebukom.arch.ui.joinclass.JoinClassActivity
 import com.ebukom.base.BaseViewHolder
 import kotlinx.android.synthetic.main.item_class_green.view.*
 
@@ -17,13 +18,22 @@ class ChooseClassViewHolderGreen(var view: View, var context: Context) : BaseVie
 
         if (context is ChooseClassActivity) {
             view.ibItemClassOne.setOnClickListener {
-                (context as ChooseClassActivity).popupMenu()
+                (context as ChooseClassActivity).popupMenu(item)
             }
             view.clItemClassGreen.setOnClickListener {
                 (context as ChooseClassActivity).startActivity(Intent((context as ChooseClassActivity), MainClassDetailActivity::class.java))
             }
         } else {
             view.ibItemClassOne.visibility = View.INVISIBLE
+
+            view.clItemClassGreen.setOnClickListener{
+//                view.loading.visibility = View.VISIBLE
+//                Handler().postDelayed({
+//                    view.loading.visibility = View.GONE
+//                    (context as JoinClassActivity).addClass(item)
+//                }, 1000)
+                (context as JoinClassActivity).addClass(item)
+            }
         }
     }
 }

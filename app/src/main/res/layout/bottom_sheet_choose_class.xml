@@ -5,17 +5,17 @@
     android:layout_height="wrap_content"
     android:background="@color/colorWhite"
     android:orientation="vertical"
-    android:paddingHorizontal="@dimen/size_20"
-    android:paddingVertical="@dimen/size_18"
     app:behavior_hideable="false"
     app:behavior_peekHeight="0dp"
     app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
 
     <TextView
         android:id="@+id/tvDeleteClass"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center_vertical"
+        android:paddingHorizontal="@dimen/activity_horizontal_margin"
+        android:paddingVertical="@dimen/size_18"
         android:drawableLeft="@drawable/ic_exit_red"
         android:drawablePadding="@dimen/size_28"
         android:text="Hapus Kelas"
@@ -24,11 +24,11 @@
 
     <TextView
         android:id="@+id/tvCancelClass"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:paddingVertical="@dimen/size_18"
         android:layout_gravity="center_vertical"
-        android:layout_marginLeft="@dimen/size_52"
-        android:layout_marginTop="@dimen/size_20"
+        android:paddingHorizontal="68dp"
         android:text="Batalkan"
         android:textColor="@color/colorRed"
         android:textSize="@dimen/text_16" />

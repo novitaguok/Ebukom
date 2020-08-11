@@ -65,7 +65,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/size_12"
                         android:lineHeight="@dimen/text_24"
-                        android:text="Eni Trikuswant"
+                        android:text="Eni Trikuswanti"
                         android:textColor="@color/colorSuperDarkBlue"
                         android:textSize="@dimen/text_16"
                         android:textStyle="bold"

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".arch.ui.classdetail.school.schoolannouncement.schoolannouncementnew.SchoolAnnouncementNewNextActivity">
+    tools:context=".arch.ui.classdetail.school.schoolannouncement.schoolannouncementnewnext.SchoolAnnouncementNewNextActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -62,7 +62,7 @@
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="120dp"
                 app:cardUseCompatPadding="true"
                 android:layout_marginTop="@dimen/size_28"
                 android:layout_marginHorizontal="@dimen/size_8"

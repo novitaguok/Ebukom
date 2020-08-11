@@ -1,6 +1,7 @@
 package com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementnew
 
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -19,10 +20,9 @@ import com.ebukom.arch.dao.ClassDetailAttachmentDao
 import com.ebukom.arch.dao.ClassDetailTemplateTextDao
 import com.ebukom.arch.ui.classdetail.ClassDetailAttachmentAdapter
 import com.ebukom.arch.ui.classdetail.ClassDetailTemplateTextAdapter
-import com.ebukom.arch.ui.classdetail.MainClassDetailActivity
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.SchoolAnnouncementAddTemplateActivity
+import com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementnewnext.SchoolAnnouncementNewNextActivity
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import kotlinx.android.synthetic.main.activity_school_announcement_new_next.*
 import kotlinx.android.synthetic.main.activity_school_anouncement_new.*
 import kotlinx.android.synthetic.main.activity_school_anouncement_new.rvSchoolAnnouncementAttachment
 import kotlinx.android.synthetic.main.activity_school_anouncement_new.rvSchoolAnnouncementNewTemplate
@@ -195,8 +195,13 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
                     bottomSheetDialog.dismiss()
                     Toast.makeText(this, "F", Toast.LENGTH_LONG).show()
                 }
-                view.clBottomSheetClassDetailAttachmentUseCamera.setOnClickListener {
-                }
+                view.clBottomSheetClassDetailAttachmentUseCamera.setOnClickListener(object: View.OnClickListener {
+                    override fun onClick(v: View?) {
+                        bottomSheetDialog.dismiss()
+                        openCamera()
+                    }
+                })
+
                 bottomSheetDialog.show()
 
                 return true
@@ -211,6 +216,19 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
         supportActionBar?.title = ""
         toolbar.setNavigationOnClickListener {
             onBackPressed()
+        }
+    }
+
+    fun openCamera() {
+        val intent = Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)
+        startActivityForResult(intent, 0)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == RESULT_OK) {
+            val bp = (data?.extras?.get("data")) as Bitmap
+//            blabla.setImageBitmap(bp)
         }
     }
 }

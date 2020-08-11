@@ -1,6 +1,8 @@
 package com.ebukom.arch.ui.chooseclass
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -10,7 +12,10 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ebukom.R
 import com.ebukom.arch.dao.ChooseClassDao
+import com.ebukom.arch.ui.admin.MainAdminActivity
 import com.ebukom.arch.ui.joinclass.JoinClassActivity
+import com.ebukom.arch.ui.login.LoginActivity
+import com.ebukom.data.DataDummy
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.activity_choose_class.*
 import kotlinx.android.synthetic.main.bottom_sheet_choose_class.view.*
@@ -20,6 +25,7 @@ class ChooseClassActivity : AppCompatActivity() {
 
     private val mList: ArrayList<ChooseClassDao> = arrayListOf()
     private val mAdapter = ChooseClassAdapter()
+    lateinit var sharePref: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -37,33 +43,25 @@ class ChooseClassActivity : AppCompatActivity() {
         }
 
         // Class list
-        mList.add(ChooseClassDao("Kelas 1", "Aurora", "Ratna Hendrawati", 0))
-        mList.add(ChooseClassDao("Kelas 2", "Spectra", "Eni Trikuswanti", 1))
-        mList.add(ChooseClassDao("Kelas 1", "Aurora", "Ratna Hendrawati", 0))
-        mList.add(ChooseClassDao("Kelas 2", "Spectra", "Eni Trikuswanti", 1))
-        mList.add(ChooseClassDao("Kelas 1", "Aurora", "Ratna Hendrawati", 0))
-        mList.add(ChooseClassDao("Kelas 2", "Spectra", "Eni Trikuswanti", 1))
-        mList.add(ChooseClassDao("Kelas 1", "Aurora", "Ratna Hendrawati", 0))
-        mList.add(ChooseClassDao("Kelas 2", "Spectra", "Eni Trikuswanti", 1))
+        mList.addAll(DataDummy.chooseClassDataMain)
         mAdapter.addAll(mList)
 
-        if (mList.isEmpty()) {
-            tvChooseClassMainEmpty.visibility = View.VISIBLE
-            ivChooseClassMainEmpty.visibility = View.VISIBLE
-            rvChooseClassClasses.visibility = View.INVISIBLE
-        } else {
-            tvChooseClassMainEmpty.visibility = View.INVISIBLE
-            ivChooseClassMainEmpty.visibility = View.INVISIBLE
-            rvChooseClassClasses.visibility = View.VISIBLE
-        }
+        checkEmptyList()
 
         // Logout Button
         btnChooseClassLogout.setOnClickListener {
             val builder = AlertDialog.Builder(this@ChooseClassActivity)
 
+            sharePref = getSharedPreferences("EBUKOM", Context.MODE_PRIVATE)
+
             builder.setMessage("Apakah Anda yakin ingin melakukan logout?")
             builder.setPositiveButton("LOGOUT") { dialog, which ->
-                Toast.makeText(applicationContext, "Next?", Toast.LENGTH_SHORT).show()
+                sharePref.edit().remove("level").apply()
+                sharePref.edit().apply {
+                    putBoolean("isLogin", false)
+                }.apply()
+                startActivity(Intent(this, LoginActivity::class.java))
+                finish()
             }
 
             builder.setNegativeButton("BATALKAN") { dialog, which ->
@@ -91,7 +89,19 @@ class ChooseClassActivity : AppCompatActivity() {
 
     }
 
-    fun popupMenu() {
+    private fun checkEmptyList() {
+        if (mList.isEmpty()) {
+            tvChooseClassMainEmpty.visibility = View.VISIBLE
+            ivChooseClassMainEmpty.visibility = View.VISIBLE
+            rvChooseClassClasses.visibility = View.INVISIBLE
+        } else {
+            tvChooseClassMainEmpty.visibility = View.INVISIBLE
+            ivChooseClassMainEmpty.visibility = View.INVISIBLE
+            rvChooseClassClasses.visibility = View.VISIBLE
+        }
+    }
+
+    fun popupMenu(item: ChooseClassDao) {
         // Card menu
         val bottomSheetDialog = BottomSheetDialog(this)
         val view = layoutInflater.inflate(R.layout.bottom_sheet_choose_class, null)
@@ -108,7 +118,10 @@ class ChooseClassActivity : AppCompatActivity() {
                 Toast.makeText(applicationContext,"Next?", Toast.LENGTH_SHORT).show()
             }
             builder.setPositiveButton("HAPUS") { dialog, which ->
-                Toast.makeText(applicationContext, "Next?", Toast.LENGTH_SHORT).show()
+                DataDummy.chooseClassDataMain.remove(item)
+                mList.remove(item)
+                mAdapter.addAll(mList)
+//                mAdapter.notifyDataSetChanged()
             }
 
             val dialog: AlertDialog = builder.create()
@@ -134,5 +147,14 @@ class ChooseClassActivity : AppCompatActivity() {
         }
 
         bottomSheetDialog.show()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        mList.clear()
+        mList.addAll(DataDummy.chooseClassDataMain)
+        mAdapter.addAll(mList)
+        checkEmptyList()
     }
 }

@@ -2,15 +2,12 @@ package com.ebukom.arch.ui.chooseclass
 
 import android.content.Context
 import android.content.Intent
-import android.os.Handler
 import android.view.View
-import androidx.core.content.ContextCompat.startActivity
 import com.ebukom.arch.dao.ChooseClassDao
 import com.ebukom.arch.ui.classdetail.MainClassDetailActivity
 import com.ebukom.arch.ui.joinclass.JoinClassActivity
 import com.ebukom.base.BaseViewHolder
 import kotlinx.android.synthetic.main.item_class_blue.view.*
-import kotlinx.android.synthetic.main.item_class_blue.view.loading
 
 class ChooseClassViewHolderBlue(var view: View, var context: Context) :
     BaseViewHolder<ChooseClassDao>(view) {
@@ -23,7 +20,7 @@ class ChooseClassViewHolderBlue(var view: View, var context: Context) :
 
         if (context is ChooseClassActivity) {
             view.ibItemClassTwo.setOnClickListener {
-                (context as ChooseClassActivity).popupMenu()
+                (context as ChooseClassActivity).popupMenu(item)
             }
             view.clItemClassBlue.setOnClickListener {
                 (context as ChooseClassActivity).startActivity(Intent((context as ChooseClassActivity), MainClassDetailActivity::class.java))
@@ -32,13 +29,13 @@ class ChooseClassViewHolderBlue(var view: View, var context: Context) :
         } else {
             view.ibItemClassTwo.visibility = View.INVISIBLE
 
-            view.clItemClassBlue.setOnClickListener {
-                (context as JoinClassActivity).addClass()
-
-                view.loading.visibility = View.VISIBLE
-                Handler().postDelayed({
-                    view.loading.visibility = View.GONE
-                }, 1000)
+            view.clItemClassBlue.setOnClickListener{
+//                view.loading.visibility = View.VISIBLE
+//                Handler().postDelayed({
+//                    view.loading.visibility = View.GONE
+//                    (context as JoinClassActivity).addClass(item)
+//                }, 1000)
+                (context as JoinClassActivity).addClass(item)
             }
         }
     }

@@ -2,10 +2,14 @@ package com.ebukom.arch.ui.joinclass
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.view.View
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ebukom.R
 import com.ebukom.arch.dao.ChooseClassDao
 import com.ebukom.arch.ui.chooseclass.ChooseClassAdapter
+import com.ebukom.data.DataDummy
+import com.ebukom.data.buildDummy
 import kotlinx.android.synthetic.main.activity_join_class.*
 
 class JoinClassActivity : AppCompatActivity() {
@@ -24,11 +28,7 @@ class JoinClassActivity : AppCompatActivity() {
 
         initToolbar()
 
-        mList.add(ChooseClassDao("Kelas 1", "Aurora", "Ratna Hendrawati", 0))
-        mList.add(ChooseClassDao("Kelas 2", "Spectra", "Eni Trikuswanti", 1))
-        mList.add(ChooseClassDao("Kelas 1", "Aurora", "Ratna Hendrawati", 0))
-        mList.add(ChooseClassDao("Kelas 2", "Spectra", "Eni Trikuswanti", 1))
-
+        mList.addAll(DataDummy.chooseClassData.buildDummy())
         mAdapter.addAll(mList)
     }
 
@@ -41,5 +41,13 @@ class JoinClassActivity : AppCompatActivity() {
         }
     }
 
-    fun addClass() {}
+    fun addClass(item: ChooseClassDao) {
+        DataDummy.chooseClassDataMain.add(item)
+
+        loading.visibility = View.VISIBLE
+        Handler().postDelayed({
+            loading.visibility = View.GONE
+            finish()
+        }, 1000)
+    }
 }

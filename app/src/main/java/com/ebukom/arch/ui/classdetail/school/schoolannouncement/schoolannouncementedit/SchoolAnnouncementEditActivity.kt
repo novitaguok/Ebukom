@@ -1,12 +1,16 @@
 package com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementedit
 
+import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -110,8 +114,13 @@ class SchoolAnnouncementEditActivity : AppCompatActivity() {
                     bottomSheetDialog.dismiss()
                     Toast.makeText(this, "F", Toast.LENGTH_LONG).show()
                 }
-                view.clBottomSheetClassDetailAttachmentUseCamera.setOnClickListener {
-                }
+                view.clBottomSheetClassDetailAttachmentUseCamera.setOnClickListener(object: View.OnClickListener {
+                    override fun onClick(v: View?) {
+                        bottomSheetDialog.dismiss()
+                        openCamera()
+                    }
+                })
+
                 bottomSheetDialog.show()
 
                 return true
@@ -155,6 +164,19 @@ class SchoolAnnouncementEditActivity : AppCompatActivity() {
                     Color.parseColor("#828282")
                 )
             }
+        }
+    }
+
+    fun openCamera() {
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        startActivityForResult(intent, 0)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == RESULT_OK) {
+            val bp = (data?.extras?.get("data")) as Bitmap
+//            blabla.setImageBitmap(bp)
         }
     }
 }

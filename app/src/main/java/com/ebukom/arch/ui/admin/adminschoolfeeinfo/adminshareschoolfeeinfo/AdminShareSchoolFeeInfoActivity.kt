@@ -170,12 +170,6 @@ class AdminShareSchoolFeeInfoActivity : AppCompatActivity() {
                 R.color.colorRed
             )
         )
-
-//        if (objectList.isEmpty()) {
-//            ivAdminShareSchoolFeeInfoEmpty.visibility = View.VISIBLE
-//            tvAdminShareSchoolFeeInfoEmpty.visibility = View.VISIBLE
-//            tbtnAdminShareSchoolFeeInfoDetailEdit.visibility = View.GONE
-//        }
     }
 
     fun editItem(item: AdminPaymentItemFormDao) {

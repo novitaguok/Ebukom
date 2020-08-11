@@ -3,7 +3,7 @@
     <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/colorRed</item>
     </style>
 
     <!-- Customize Text Input Layout Style -->
@@ -49,5 +49,32 @@
     <!-- Customize Switch Button -->
     <style name="colored_switch">
         <item name="colorControlActivated">@color/colorRed</item>
+    </style>
+
+    <!-- Customize DateTime Picker-->
+    <style name="Theme.SwitchDateTime" parent="Theme.AppCompat.Light.DarkActionBar">
+        <item name="colorPrimary">@color/colorRed</item>
+        <item name="colorPrimaryDark">@color/colorSuperDarkBlue</item>
+        <item name="android:textColorPrimaryInverse">@color/colorSuperDarkBlue</item>
+        <item name="android:textColorSecondaryInverse">@color/colorSuperDarkBlue</item>
+    </style>
+    <style name="Theme.SwitchDateTime.TitleDateTimeLabelText">
+        <item name="android:textSize">@dimen/text_16</item>
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
+    <style name="Theme.SwitchDateTime.HeaderBackground">
+        <item name="android:background">@color/colorRed</item>
+    </style>
+    <style name="Theme.SwitchDateTime.Time">
+        <item name="timeCircleColor">#e1e1e1</item>
+        <item name="timeCenterColor">?attr/colorPrimary</item>
+        <item name="timeAmPmBackgroundColor">?attr/colorPrimary</item>
+        <item name="timeAmPmSelectBackgroundColor">?attr/colorPrimary</item> <!-- Alpha is apply-->
+        <item name="timeAmPmTextColor">?android:attr/textColorPrimaryInverse</item>
+        <item name="timeSelectorColor">#00D62F42</item>
+        <item name="timeCircularNumbersColor">#494949</item>
+    </style>
+    <style name="Theme.SwitchDateTime.Date" >
+        <item name="mcv_selectionColor">#D62F42</item>
     </style>
 </resources>

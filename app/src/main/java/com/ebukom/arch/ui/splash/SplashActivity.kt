@@ -14,12 +14,14 @@ import com.ebukom.arch.ui.main.MainActivity
 
 class SplashActivity : AppCompatActivity() {
 
-    val sharePref: SharedPreferences = getSharedPreferences("EBUKOM", Context.MODE_PRIVATE)
-    private val SPLASH_TIME_OUT:Long = 3000
+    lateinit var sharePref: SharedPreferences
+    private val SPLASH_TIME_OUT: Long = 3000
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_splash)
+
+        sharePref = getSharedPreferences("EBUKOM", Context.MODE_PRIVATE)
 
         val pos = Handler().postDelayed({
             if(sharePref.getBoolean("isLogin", false)){

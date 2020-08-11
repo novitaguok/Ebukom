@@ -3,6 +3,7 @@ package com.ebukom.arch.ui.classdetail.personal.personalnotenew
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Bitmap
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -175,8 +176,13 @@ class PersonalNoteNewActivity : AppCompatActivity() {
                         )
                     )
                 }
-                view.clBottomSheetClassDetailAttachmentUseCamera.setOnClickListener {
-                }
+                view.clBottomSheetClassDetailAttachmentUseCamera.setOnClickListener(object: View.OnClickListener {
+                    override fun onClick(v: View?) {
+                        bottomSheetDialog.dismiss()
+                        openCamera()
+                    }
+                })
+
                 bottomSheetDialog.show()
 
                 return true
@@ -217,6 +223,19 @@ class PersonalNoteNewActivity : AppCompatActivity() {
         supportActionBar?.title = ""
         toolbar.setNavigationOnClickListener {
             onBackPressed()
+        }
+    }
+
+    fun openCamera() {
+        val intent = Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)
+        startActivityForResult(intent, 0)
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        super.onActivityResult(requestCode, resultCode, data)
+        if (resultCode == RESULT_OK) {
+            val bp = (data?.extras?.get("data")) as Bitmap
+//            blabla.setImageBitmap(bp)
         }
     }
 }
