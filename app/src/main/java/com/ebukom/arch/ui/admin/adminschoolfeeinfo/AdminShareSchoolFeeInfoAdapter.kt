@@ -87,7 +87,6 @@ class AdminShareSchoolFeeInfoAdapter(
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
         if (getItemViewType(position) == TYPE_COLOR) {
             (holder as AdminShareSchoolFeeInfoViewHolderColor).bind(data[position])
-//            (holder as AdminShareSchoolFeeInfoViewHolderColor).itemView.ivItemAdminPaymentDetailDelete.visibility = data[position].visibility
         } else {
             (holder as AdminShareSchoolFeeInfoViewHolderWhite).bind(data[position])
         }

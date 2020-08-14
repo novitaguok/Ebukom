@@ -37,7 +37,7 @@ class PersonalNoteNewActivity : AppCompatActivity() {
 
         val sharePref: SharedPreferences = getSharedPreferences("EBUKOM", Context.MODE_PRIVATE)
 
-        if(sharePref.getInt("level", 0) == 1){
+        if (sharePref.getInt("level", 0) == 1) {
             tvPersonalNoteNewTitle.text = "Buat Catatan untuk Guru"
         }
 
@@ -47,19 +47,16 @@ class PersonalNoteNewActivity : AppCompatActivity() {
         val attachment: MutableList<ClassDetailAttachmentDao> = ArrayList()
         attachment.add(
             ClassDetailAttachmentDao(
-                "https://drive.google.com",
                 "drive.google.com", 0
             )
         )
         attachment.add(
             ClassDetailAttachmentDao(
-                "-",
                 "drive.google.com", 1
             )
         )
         attachment.add(
             ClassDetailAttachmentDao(
-                "-",
                 "drive.google.com", 2
             )
         )
@@ -77,9 +74,9 @@ class PersonalNoteNewActivity : AppCompatActivity() {
 
         // Template Title
         val templateText: MutableList<ClassDetailTemplateTextDao> = ArrayList()
-        templateText.add(ClassDetailTemplateTextDao("Anak Sakit"))
-        templateText.add(ClassDetailTemplateTextDao("Anak Bertengkar"))
-        for (i: Int in 1..10) templateText.add(ClassDetailTemplateTextDao("Perubahan Kesulitan Bernafas"))
+//        templateText.add(ClassDetailTemplateTextDao("Anak Sakit"))
+//        templateText.add(ClassDetailTemplateTextDao("Anak Bertengkar"))
+//        for (i: Int in 1..10) templateText.add(ClassDetailTemplateTextDao("Perubahan Kesulitan Bernafas"))
         rvPersonalNoteNewTemplate.apply {
             layoutManager =
                 LinearLayoutManager(
@@ -176,7 +173,8 @@ class PersonalNoteNewActivity : AppCompatActivity() {
                         )
                     )
                 }
-                view.clBottomSheetClassDetailAttachmentUseCamera.setOnClickListener(object: View.OnClickListener {
+                view.clBottomSheetClassDetailAttachmentUseCamera.setOnClickListener(object :
+                    View.OnClickListener {
                     override fun onClick(v: View?) {
                         bottomSheetDialog.dismiss()
                         openCamera()

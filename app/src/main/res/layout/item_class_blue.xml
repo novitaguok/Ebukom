@@ -29,7 +29,7 @@
             android:src="@drawable/ic_more_vertical"
             android:background="@android:color/transparent"
             android:layout_marginTop="@dimen/size_12"
-            android:layout_marginRight="@dimen/size_18"
+            android:layout_marginRight="@dimen/size_8"
             app:layout_constraintTop_toTopOf="@+id/ivItemClassTwo"
             app:layout_constraintRight_toRightOf="@+id/ivItemClassTwo"/>
 

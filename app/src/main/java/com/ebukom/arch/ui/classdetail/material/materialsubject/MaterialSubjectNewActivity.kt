@@ -25,10 +25,10 @@ class MaterialSubjectNewActivity : AppCompatActivity() {
 
         val list = ArrayList<ClassDetailTemplateTextDao>()
 
-        list.add(ClassDetailTemplateTextDao("Perkalian dan Pembagian"))
-        list.add(ClassDetailTemplateTextDao("Akar Kuadrat"))
-        list.add(ClassDetailTemplateTextDao("Angka Romawi"))
-        list.add(ClassDetailTemplateTextDao("Bilangan Prima"))
+//        list.add(ClassDetailTemplateTextDao("Perkalian dan Pembagian"))
+//        list.add(ClassDetailTemplateTextDao("Akar Kuadrat"))
+//        list.add(ClassDetailTemplateTextDao("Angka Romawi"))
+//        list.add(ClassDetailTemplateTextDao("Bilangan Prima"))
 
         val adapter = MaterialSubjectNewAdapter(list, this)
 

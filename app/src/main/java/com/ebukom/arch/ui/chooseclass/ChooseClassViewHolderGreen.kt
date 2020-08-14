@@ -16,12 +16,15 @@ class ChooseClassViewHolderGreen(var view: View, var context: Context) : BaseVie
         view.tvItemClassName1.text = item.className
         view.tvItemClassTeacher1.text = item.teacher
 
+        val intent = Intent((context as ChooseClassActivity), MainClassDetailActivity::class.java)
+        intent.putExtra("teacher", item.teacher)
+
         if (context is ChooseClassActivity) {
             view.ibItemClassOne.setOnClickListener {
                 (context as ChooseClassActivity).popupMenu(item)
             }
             view.clItemClassGreen.setOnClickListener {
-                (context as ChooseClassActivity).startActivity(Intent((context as ChooseClassActivity), MainClassDetailActivity::class.java))
+                (context as ChooseClassActivity).startActivity(intent)
             }
         } else {
             view.ibItemClassOne.visibility = View.INVISIBLE

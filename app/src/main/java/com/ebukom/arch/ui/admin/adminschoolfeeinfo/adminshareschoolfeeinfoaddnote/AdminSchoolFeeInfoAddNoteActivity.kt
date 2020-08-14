@@ -28,9 +28,9 @@ class AdminSchoolFeeInfoAddNoteActivity : AppCompatActivity() {
 
         // Template Note
         val templateText: MutableList<ClassDetailTemplateTextDao> = ArrayList()
-        templateText.add(ClassDetailTemplateTextDao("Catatan 1"))
-        templateText.add(ClassDetailTemplateTextDao("Catatan Field Trip"))
-        for (i: Int in 1..10) templateText.add(ClassDetailTemplateTextDao("Test tes"))
+//        templateText.add(ClassDetailTemplateTextDao("Catatan 1"))
+//        templateText.add(ClassDetailTemplateTextDao("Catatan Field Trip"))
+//        for (i: Int in 1..10) templateText.add(ClassDetailTemplateTextDao("Test tes"))
         rvAdminSchoolFeeInfoAddNoteTemplate.apply {
             layoutManager =
                 LinearLayoutManager(

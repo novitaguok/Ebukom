@@ -29,9 +29,10 @@
 
     <ImageView
         android:id="@+id/ivItemAnnouncementAttachmentDelete"
-        android:layout_width="@dimen/size_14"
-        android:layout_height="@dimen/size_14"
+        android:layout_width="@dimen/size_24"
+        android:layout_height="@dimen/size_24"
         android:src="@drawable/ic_close"
+        android:clickable="true"
         app:layout_constraintBottom_toBottomOf="@+id/tvItemAnnouncementAttachment"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintRight_toRightOf="parent"

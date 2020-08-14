@@ -11,26 +11,36 @@ import android.text.TextWatcher
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ebukom.R
+import com.ebukom.arch.dao.ClassDetailAnnouncementCommentDao
+import com.ebukom.arch.dao.ClassDetailAnnouncementDao
 import com.ebukom.arch.dao.ClassDetailAttachmentDao
 import com.ebukom.arch.dao.ClassDetailTemplateTextDao
 import com.ebukom.arch.ui.classdetail.ClassDetailAttachmentAdapter
 import com.ebukom.arch.ui.classdetail.ClassDetailTemplateTextAdapter
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.SchoolAnnouncementAddTemplateActivity
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementnewnext.SchoolAnnouncementNewNextActivity
+import com.ebukom.data.DataDummy
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.activity_school_anouncement_new.*
 import kotlinx.android.synthetic.main.activity_school_anouncement_new.rvSchoolAnnouncementAttachment
 import kotlinx.android.synthetic.main.activity_school_anouncement_new.rvSchoolAnnouncementNewTemplate
 import kotlinx.android.synthetic.main.activity_school_anouncement_new.toolbar
+import kotlinx.android.synthetic.main.alert_edit_text.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_class_detail_attachment.view.*
 import kotlinx.android.synthetic.main.item_announcement_attachment.view.*
+import kotlin.collections.ArrayList
 
 class SchoolAnnouncementNewActivity : AppCompatActivity() {
+
+    private val mAttachmentList: ArrayList<ClassDetailAttachmentDao> = arrayListOf()
+    private val mAttachmentAdapter = ClassDetailAttachmentAdapter(mAttachmentList)
+    private val mTemplateList: ArrayList<ClassDetailTemplateTextDao> = arrayListOf()
+    private val mTemplateAdapter = ClassDetailTemplateTextAdapter(mTemplateList)
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,41 +49,19 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
         initToolbar()
 
         // Attachment
-        val attachment: MutableList<ClassDetailAttachmentDao> = ArrayList()
-        attachment.add(
-            ClassDetailAttachmentDao(
-                "https://drive.google.com",
-                "drive.google.com", 0
-            )
-        )
-        attachment.add(
-            ClassDetailAttachmentDao(
-                "-",
-                "drive.google.com", 1
-            )
-        )
-        attachment.add(
-            ClassDetailAttachmentDao(
-                "-",
-                "drive.google.com", 2
-            )
-        )
+        checkAttachmentEmpty()
         rvSchoolAnnouncementAttachment.apply {
             layoutManager = LinearLayoutManager(
                 this@SchoolAnnouncementNewActivity,
                 LinearLayoutManager.VERTICAL,
                 false
             )
-            adapter =
-                ClassDetailAttachmentAdapter(
-                    attachment
-                )
+            adapter = mAttachmentAdapter
         }
 
-        // Template Title
-        val templateText: MutableList<ClassDetailTemplateTextDao> = ArrayList()
-        templateText.add(ClassDetailTemplateTextDao("Field Trip"))
-        for (i: Int in 1..10) templateText.add(ClassDetailTemplateTextDao("Perubahan Seragam"))
+        // Template List
+        mTemplateList.addAll(DataDummy.textTemplateData)
+        mTemplateAdapter.notifyDataSetChanged()
         rvSchoolAnnouncementNewTemplate.apply {
             layoutManager =
                 LinearLayoutManager(
@@ -81,61 +69,31 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
                     LinearLayoutManager.HORIZONTAL,
                     false
                 )
-            adapter =
-                ClassDetailTemplateTextAdapter(
-                    templateText
-                )
+            adapter = mTemplateAdapter
         }
 
-        // Delete Attachment
-        val view = layoutInflater.inflate(R.layout.item_announcement_attachment, null)
-        view.ivItemAnnouncementAttachmentDelete.setOnClickListener {
-            val builder = AlertDialog.Builder(this@SchoolAnnouncementNewActivity)
-
-            builder.setMessage("Apakah Anda yakin ingin menghapus lampiran ini?")
-
-            builder.setNegativeButton("BATALKAN") { dialog, which ->
-                Toast.makeText(applicationContext, "Next?", Toast.LENGTH_SHORT).show()
-            }
-            builder.setPositiveButton("HAPUS") { dialog, which ->
-                Toast.makeText(applicationContext, "Next?", Toast.LENGTH_SHORT).show()
-            }
-
-            val dialog: AlertDialog = builder.create()
-            dialog.show()
-
-            val positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
-            positiveButton.setTextColor(
-                ContextCompat.getColor(
-                    applicationContext,
-                    R.color.colorGray
-                )
-            )
-
-            val negativeButton = dialog.getButton(AlertDialog.BUTTON_NEGATIVE)
-            negativeButton.setTextColor(
-                ContextCompat.getColor(
-                    applicationContext,
-                    R.color.colorRed
-                )
-            )
-        }
-
-        // "Tambah Template"
+        // Intent to Add Template Activity
         tvSchoolAnnouncementNewTemplateAdd.setOnClickListener {
             startActivity(Intent(this, SchoolAnnouncementAddTemplateActivity::class.java))
         }
 
-        // Text watcher
+        // Text Watcher
         etSchoolAnnouncementNewTitle.addTextChangedListener(textWatcher)
         etSchoolAnnouncementNewContent.addTextChangedListener(textWatcher)
 
-        // Next page
+        // Next Page
         btnSchoolAnnouncementNewNext.setOnClickListener {
+            val title = etSchoolAnnouncementNewTitle.text.toString()
+            val content = etSchoolAnnouncementNewContent.text.toString()
+
             loading.visibility = View.VISIBLE
             Handler().postDelayed({
                 loading.visibility = View.GONE
-                startActivity(Intent(this, SchoolAnnouncementNewNextActivity::class.java))
+                val intent = Intent(this, SchoolAnnouncementNewNextActivity::class.java)
+                intent.putExtra("title", title)
+                intent.putExtra("content", content)
+                intent.putExtra("attachments", mAttachmentList)
+                startActivity(intent)
                 finish()
             }, 1000)
         }
@@ -185,22 +143,60 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
 
                 view.clBottomClassDetailAttachmentPhoto.setOnClickListener {
                     bottomSheetDialog.dismiss()
-                    Toast.makeText(this, "A", Toast.LENGTH_LONG).show()
+                    val fileIntent = Intent(Intent.ACTION_GET_CONTENT)
+                    fileIntent.type = "*/*"
+                    startActivityForResult(fileIntent, 10)
                 }
                 view.clBottomSheetClassDetailAttachmentFile.setOnClickListener {
                     bottomSheetDialog.dismiss()
-                    Toast.makeText(this, "F", Toast.LENGTH_LONG).show()
+                    val fileIntent = Intent(Intent.ACTION_GET_CONTENT)
+                    fileIntent.type = "*/*"
+                    startActivityForResult(fileIntent, 11)
                 }
                 view.clBottomSheetClassDetailAttachmentLink.setOnClickListener {
                     bottomSheetDialog.dismiss()
-                    Toast.makeText(this, "F", Toast.LENGTH_LONG).show()
-                }
-                view.clBottomSheetClassDetailAttachmentUseCamera.setOnClickListener(object: View.OnClickListener {
-                    override fun onClick(v: View?) {
-                        bottomSheetDialog.dismiss()
-                        openCamera()
+                    val builder = AlertDialog.Builder(this)
+                    val view = layoutInflater.inflate(R.layout.alert_edit_text, null)
+
+                    view.tvAlertEditText.text = "Link"
+                    view.etAlertEditText.hint = "Masukkan link"
+
+                    bottomSheetDialog.dismiss()
+                    builder.setView(view)
+                    builder.setNegativeButton("BATALKAN") { dialog, which ->
+                        dialog.dismiss()
                     }
-                })
+                    builder.setPositiveButton("LAMPIRKAN") { dialog, which ->
+                        val link = view.etAlertEditText?.text.toString()
+                        DataDummy.attachmentData.add(ClassDetailAttachmentDao(link, 0))
+                        insertAttachment(view, link)
+
+                        checkAttachmentEmpty()
+                    }
+
+                    val dialog: AlertDialog = builder.create()
+                    dialog.show()
+
+                    val positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+                    positiveButton.setTextColor(
+                        ContextCompat.getColor(
+                            applicationContext,
+                            R.color.colorSuperDarkBlue
+                        )
+                    )
+
+                    val negativeButton = dialog.getButton(AlertDialog.BUTTON_NEGATIVE)
+                    negativeButton.setTextColor(
+                        ContextCompat.getColor(
+                            applicationContext,
+                            R.color.colorRed
+                        )
+                    )
+                }
+                view.clBottomSheetClassDetailAttachmentUseCamera.setOnClickListener {
+                    bottomSheetDialog.dismiss()
+                    openCamera()
+                }
 
                 bottomSheetDialog.show()
 
@@ -225,11 +221,92 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        super.onActivityResult(requestCode, resultCode, data)
+        val view = layoutInflater.inflate(R.layout.item_announcement_attachment, null)
+        var path = data?.data?.path ?: ""
+
         if (resultCode == RESULT_OK) {
-            val bp = (data?.extras?.get("data")) as Bitmap
+            when (requestCode) {
+                10 -> {
+                    DataDummy.attachmentData.add(ClassDetailAttachmentDao(path, 1))
+                    insertAttachment(view, path)
+                }
+                11 -> {
+                    DataDummy.attachmentData.add(ClassDetailAttachmentDao(path, 2))
+                    insertAttachment(view, path)
+                }
+                else -> {
+                    val bp = (data?.extras?.get("data")) as Bitmap
 //            blabla.setImageBitmap(bp)
+                }
+            }
         }
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    private fun insertAttachment(view: View, path: String) {
+        mAttachmentAdapter.notifyDataSetChanged()
+        mAttachmentList.clear()
+        mAttachmentList.addAll(DataDummy.attachmentData)
+        view.tvItemAnnouncementAttachment?.text = path
+
+        checkAttachmentEmpty()
+    }
+
+    fun deleteAttachment(item: ClassDetailAttachmentDao) {
+        val builder = AlertDialog.Builder(this@SchoolAnnouncementNewActivity)
+
+        builder.setMessage("Apakah Anda yakin ingin menghapus lampiran ini?")
+
+        builder.setNegativeButton("BATALKAN") { dialog, which ->
+            dialog.dismiss()
+        }
+        builder.setPositiveButton("HAPUS") { dialog, which ->
+            DataDummy.attachmentData.remove(item)
+            mAttachmentList.remove(item)
+            mAttachmentAdapter.notifyDataSetChanged()
+
+            checkAttachmentEmpty()
+        }
+
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
+
+        val positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+        positiveButton.setTextColor(
+            ContextCompat.getColor(
+                applicationContext,
+                R.color.colorGray
+            )
+        )
+
+        val negativeButton = dialog.getButton(AlertDialog.BUTTON_NEGATIVE)
+        negativeButton.setTextColor(
+            ContextCompat.getColor(
+                applicationContext,
+                R.color.colorRed
+            )
+        )
+    }
+
+    private fun checkAttachmentEmpty() {
+        if (mAttachmentList.isEmpty()) {
+            tvSchoolAnnouncementNewAttachmentTitle.visibility = View.GONE
+        } else {
+            tvSchoolAnnouncementNewAttachmentTitle.visibility = View.VISIBLE
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        mTemplateList.clear()
+        mTemplateList.addAll(DataDummy.textTemplateData)
+        mTemplateAdapter.notifyDataSetChanged()
+    }
+
+    fun onClickedTemplate(item: ClassDetailTemplateTextDao) {
+        etSchoolAnnouncementNewTitle.setText(item.title)
+        etSchoolAnnouncementNewContent.setText(item.content)
     }
 }
 

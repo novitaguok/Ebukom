@@ -55,8 +55,8 @@ class MaterialEducationFragment : Fragment() {
                 ClassDetailAnnouncementDao(
                     "Mendidik Anak Hyperaktif",
                     "Untuk mendidk anak yang hyperaktif, diperlukan suatu kemampuan aitu kesabaran yang luar biasa. Selain itu perlu diketahui juga cara yang...",
-                    "Eni Trikuswanti",
-                    "02/02/02"
+                    teacherName = "Eni Trikuswanti",
+                    time = "02/02/02"
                 )
             )
         }

@@ -17,24 +17,21 @@ class ChooseClassViewHolderBlue(var view: View, var context: Context) :
         view.tvItemClassName2.text = item.className
         view.tvItemClassTeacher2.text = item.teacher
 
+        val intent = Intent((context as ChooseClassActivity), MainClassDetailActivity::class.java)
+        intent.putExtra("teacher", item.teacher)
 
         if (context is ChooseClassActivity) {
             view.ibItemClassTwo.setOnClickListener {
                 (context as ChooseClassActivity).popupMenu(item)
             }
             view.clItemClassBlue.setOnClickListener {
-                (context as ChooseClassActivity).startActivity(Intent((context as ChooseClassActivity), MainClassDetailActivity::class.java))
+                (context as ChooseClassActivity).startActivity(intent)
             }
 
         } else {
             view.ibItemClassTwo.visibility = View.INVISIBLE
 
             view.clItemClassBlue.setOnClickListener{
-//                view.loading.visibility = View.VISIBLE
-//                Handler().postDelayed({
-//                    view.loading.visibility = View.GONE
-//                    (context as JoinClassActivity).addClass(item)
-//                }, 1000)
                 (context as JoinClassActivity).addClass(item)
             }
         }

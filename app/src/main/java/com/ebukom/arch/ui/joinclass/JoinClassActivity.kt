@@ -9,7 +9,7 @@ import com.ebukom.R
 import com.ebukom.arch.dao.ChooseClassDao
 import com.ebukom.arch.ui.chooseclass.ChooseClassAdapter
 import com.ebukom.data.DataDummy
-import com.ebukom.data.buildDummy
+import com.ebukom.data.buildClassDummy
 import kotlinx.android.synthetic.main.activity_join_class.*
 
 class JoinClassActivity : AppCompatActivity() {
@@ -28,7 +28,7 @@ class JoinClassActivity : AppCompatActivity() {
 
         initToolbar()
 
-        mList.addAll(DataDummy.chooseClassData.buildDummy())
+        mList.addAll(DataDummy.chooseClassData.buildClassDummy())
         mAdapter.addAll(mList)
     }
 

@@ -121,7 +121,6 @@ class ChooseClassActivity : AppCompatActivity() {
                 DataDummy.chooseClassDataMain.remove(item)
                 mList.remove(item)
                 mAdapter.addAll(mList)
-//                mAdapter.notifyDataSetChanged()
             }
 
             val dialog: AlertDialog = builder.create()

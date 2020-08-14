@@ -45,7 +45,12 @@ class SchoolAnnouncementAdapter(
         fun bind(announcement: ClassDetailAnnouncementDao) {
             itemView.tvAnnouncementTitle.text = announcement?.announcementTitle
             itemView.tvAnnouncementContent.text = announcement?.announcementContent
-            itemView.tvAnnouncementComment.text = announcement?.comment
+
+            if(announcement.teacherName.isNullOrEmpty())
+                itemView.tvAnnouncementComment.text = announcement?.comments.size.toString() + " KOMENTAR"
+            else
+                itemView.tvAnnouncementComment.text = announcement.teacherName
+
             itemView.tvAnnouncementTime.text = announcement?.time
 
             val sharePref: SharedPreferences = context.getSharedPreferences("EBUKOM", Context.MODE_PRIVATE)
@@ -62,6 +67,7 @@ class SchoolAnnouncementAdapter(
                 if (!(MainClassDetailActivity.isAnnouncement)) {
                     intent.putExtra("layout", "1")
                 }
+                intent.putExtra("data", announcement)
                 context.startActivity(intent)
             }
         }

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorWhite"
     tools:context=".arch.ui.classdetail.school.schoolannouncement.schoolannouncementnewnext.SchoolAnnouncementNewNextActivity">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -71,14 +72,14 @@
 
                 <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:paddingHorizontal="@dimen/size_10"
-                    android:paddingVertical="@dimen/activity_vertical_margin">
+                    android:layout_height="match_parent"
+                    android:paddingHorizontal="@dimen/size_10">
 
                     <TextView
                         android:id="@+id/tvSchoolAnnouncementNewNextAlarmTitle"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/activity_horizontal_margin"
                         app:layout_constraintTop_toTopOf="parent"
                         app:layout_constraintLeft_toLeftOf="parent"
                         android:text="@string/alarm_title"
@@ -93,7 +94,6 @@
                         android:layout_height="wrap_content"
                         app:layout_constraintRight_toRightOf="parent"
                         android:theme="@style/colored_switch"
-                        android:layout_marginRight="@dimen/size_12"
                         app:layout_constraintTop_toTopOf="@+id/tvSchoolAnnouncementNewNextAlarmTitle"
                         app:layout_constraintBottom_toBottomOf="@+id/tvSchoolAnnouncementNewNextAlarmTitle" />
 

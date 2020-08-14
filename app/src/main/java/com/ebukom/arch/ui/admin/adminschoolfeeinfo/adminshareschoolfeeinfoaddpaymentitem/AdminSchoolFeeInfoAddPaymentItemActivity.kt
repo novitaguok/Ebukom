@@ -27,9 +27,9 @@ class AdminSchoolFeeInfoAddPaymentItemActivity : AppCompatActivity() {
 
         // Template Item
         val templateText: MutableList<ClassDetailTemplateTextDao> = ArrayList()
-        templateText.add(ClassDetailTemplateTextDao("Pengembangan I/II"))
-        templateText.add(ClassDetailTemplateTextDao("Kegiatan s.d. 2019-2020"))
-        for (i: Int in 1..10) templateText.add(ClassDetailTemplateTextDao("Test tes"))
+//        templateText.add(ClassDetailTemplateTextDao("Pengembangan I/II"))
+//        templateText.add(ClassDetailTemplateTextDao("Kegiatan s.d. 2019-2020"))
+//        for (i: Int in 1..10) templateText.add(ClassDetailTemplateTextDao("Test tes"))
         rvAdminSchoolFeeInfoAddItemNewTemplate.apply {
             layoutManager =
                 LinearLayoutManager(

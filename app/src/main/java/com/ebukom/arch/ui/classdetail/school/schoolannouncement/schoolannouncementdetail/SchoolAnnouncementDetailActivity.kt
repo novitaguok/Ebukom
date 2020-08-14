@@ -15,7 +15,13 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ebukom.R
 import com.ebukom.arch.dao.ClassDetailAnnouncementCommentDao
+import com.ebukom.arch.dao.ClassDetailAnnouncementDao
+import com.ebukom.arch.dao.ClassDetailAttachmentDao
+import com.ebukom.arch.ui.classdetail.ClassDetailAttachmentAdapter
+import com.ebukom.arch.ui.classdetail.OnMoreCallback
+import com.ebukom.arch.ui.classdetail.school.schoolannouncement.SchoolAnnouncementAdapter
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementedit.SchoolAnnouncementEditActivity
+import com.ebukom.data.DataDummy
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.activity_join_class.*
 import kotlinx.android.synthetic.main.activity_school_announcement_detail.*
@@ -24,14 +30,29 @@ import kotlinx.android.synthetic.main.alert_edit_text.*
 import kotlinx.android.synthetic.main.alert_edit_text.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_school_announcement.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_school_announcement_comment.view.*
+import kotlinx.android.synthetic.main.item_announcement.*
 
 class SchoolAnnouncementDetailActivity : AppCompatActivity() {
+
+    lateinit var callback: OnMoreCallback
+    private val mCommentList: ArrayList<ClassDetailAnnouncementCommentDao> = arrayListOf()
+    private val mCommentAdapter = SchoolAnnouncementDetailAdapter(mCommentList, this)
+    private val mAttachmentList: ArrayList<ClassDetailAttachmentDao> = arrayListOf()
+    private val mAttachmentAdapter = ClassDetailAttachmentAdapter(mAttachmentList)
+    private val mAnnouncementList: ArrayList<ClassDetailAnnouncementDao> = arrayListOf()
+    lateinit var mAnnouncementAdapter : SchoolAnnouncementAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_school_announcement_detail)
 
         initToolbar()
+
+        // Shared Preference
+        val sharePref: SharedPreferences = getSharedPreferences("EBUKOM", Context.MODE_PRIVATE)
+        if(sharePref.getInt("level", 0) == 1){
+            ivAnnouncementDetailMoreButton.visibility = View.GONE
+        }
 
         // Get intent from Material Education FRAGMENT
         val layout = intent.extras?.getString("layout", "0")
@@ -43,58 +64,66 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
             }
         }
 
-        val list = ArrayList<ClassDetailAnnouncementCommentDao>()
-
-        list.add(
-            ClassDetailAnnouncementCommentDao(
-                "Ade Andreansyah",
-                "Aku pusing banyak euy yang dibawa, udahlah mending skip cuy",
-                R.drawable.ic_book_blue
-            )
-        )
-        list.add(
-            ClassDetailAnnouncementCommentDao(
-                "Ade Andreansyah",
-                "Aku pusing banyak euy yang dibawa, udahlah mending skip cuy",
-                R.drawable.ic_book_blue
-            )
-        )
-        list.add(
-            ClassDetailAnnouncementCommentDao(
-                "Ade Andreansyah",
-                "Aku pusing banyak euy yang dibawa, udahlah mending skip cuy",
-                R.drawable.ic_book_blue
-            )
-        )
-        list.add(
-            ClassDetailAnnouncementCommentDao(
-                "Ade Andreansyah",
-                "Aku pusing banyak euy yang dibawa, udahlah mending skip cuy",
-                R.drawable.ic_book_blue
-            )
-        )
-        list.add(
-            ClassDetailAnnouncementCommentDao(
-                "Ade Andreansyah",
-                "Aku pusing banyak euy yang dibawa, udahlah mending skip cuy",
-                R.drawable.ic_book_blue
-            )
-        )
-
-        // Shared Preference
-        val sharePref: SharedPreferences = getSharedPreferences("EBUKOM", Context.MODE_PRIVATE)
-        if(sharePref.getInt("level", 0) == 1){
-            ivAnnouncementDetailMoreButton.visibility = View.GONE
+        // Get Intent from SchoolAnnouncementFragment
+        val data = intent?.extras?.getSerializable("data") as ClassDetailAnnouncementDao
+        tvSchoolAnnouncementDetailTitle.text = data.announcementTitle
+        tvSchoolAnnouncementDetailContent.text = data.announcementContent
+        tvSchoolAnnouncementDetailTeacher.text = "Eni Trikuswanti"
+        tvSchoolAnnouncementDetailDate.text = data.time
+        mAttachmentList.addAll(data.attachments)
+        mAttachmentAdapter.notifyDataSetChanged()
+        rvSchoolAnnouncementAttachmentDetail.apply {
+            layoutManager =
+                LinearLayoutManager(
+                    this.context,
+                    LinearLayoutManager.HORIZONTAL,
+                    false
+                )
+            adapter = mAttachmentAdapter
         }
+        if (mAttachmentList.isEmpty()) cvSchoolAnnouncementDetailAttachment.visibility = View.GONE
 
-        // Adapter
-        val adapter = SchoolAnnouncementDetailAdapter(list, this)
-        rvSchoolAnnouncementDetailComment.layoutManager = LinearLayoutManager(this)
-        rvSchoolAnnouncementDetailComment.adapter = adapter
+        // Comment List
+        ivSchoolAnnouncementDetailComment.setOnClickListener {
+            var comment = etSchoolAnnouncementDetailComment.text.toString()
 
+            etSchoolAnnouncementDetailComment.text.clear()
+            mCommentList.add(ClassDetailAnnouncementCommentDao("Ade Andreansyah", comment, R.drawable.bg_solid_gray))
+            mCommentAdapter.notifyDataSetChanged()
+
+//            callback = OnMoreCallback
+//            mAnnouncementAdapter = SchoolAnnouncementAdapter(mAnnouncementList, callback)
+            DataDummy.announcementData.add(ClassDetailAnnouncementDao(data.announcementTitle, data.announcementContent, mCommentList, data.time, data.attachments))
+//            mAnnouncementAdapter.notifyDataSetChanged()
+            mAnnouncementList.clear()
+            mAnnouncementList.addAll(DataDummy.announcementData)
+
+            rvSchoolAnnouncementDetailComment.apply {
+                layoutManager =
+                    LinearLayoutManager(
+                        this.context,
+                        LinearLayoutManager.VERTICAL,
+                        false
+                    )
+                adapter = mCommentAdapter
+            }
+
+            checkEmptyComment()
+        }
+        mAnnouncementList.clear()
+        mAnnouncementList.addAll(DataDummy.announcementData)
+//        mAnnouncementAdapter.notifyDataSetChanged()
+        checkEmptyComment()
+
+        // Announcement's More Button
         ivAnnouncementDetailMoreButton.setOnClickListener {
             popupMenuInfo()
         }
+    }
+
+    private fun checkEmptyComment() {
+        if (mCommentList.isNotEmpty()) cvSchoolAnnouncementDetailComment.visibility = View.VISIBLE
+        else cvSchoolAnnouncementDetailComment.visibility = View.GONE
     }
 
     fun popupMenuInfo() {

@@ -35,19 +35,16 @@ class PersonalNoteEditActivity : AppCompatActivity() {
         val attachment: MutableList<ClassDetailAttachmentDao> = ArrayList()
         attachment.add(
             ClassDetailAttachmentDao(
-                "https://drive.google.com",
                 "drive.google.com", 0
             )
         )
         attachment.add(
             ClassDetailAttachmentDao(
-                "-",
                 "drive.google.com", 1
             )
         )
         attachment.add(
             ClassDetailAttachmentDao(
-                "-",
                 "drive.google.com", 2
             )
         )
@@ -67,8 +64,8 @@ class PersonalNoteEditActivity : AppCompatActivity() {
 
         // Template Title
         val templateText: MutableList<ClassDetailTemplateTextDao> = ArrayList()
-        templateText.add(ClassDetailTemplateTextDao("Field Trip"))
-        for (i: Int in 1..10) templateText.add(ClassDetailTemplateTextDao("Perubahan Seragam"))
+//        templateText.add(ClassDetailTemplateTextDao("Field Trip"))
+//        for (i: Int in 1..10) templateText.add(ClassDetailTemplateTextDao("Perubahan Seragam"))
         rvPersonalNoteEditTemplate.apply {
             layoutManager =
                 LinearLayoutManager(

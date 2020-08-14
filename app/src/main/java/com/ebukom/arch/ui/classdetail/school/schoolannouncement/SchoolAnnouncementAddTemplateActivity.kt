@@ -5,8 +5,12 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
 import androidx.core.content.ContextCompat
 import com.ebukom.R
+import com.ebukom.arch.dao.ClassDetailTemplateTextDao
+import com.ebukom.arch.ui.classdetail.ClassDetailTemplateTextAdapter
+import com.ebukom.data.DataDummy
 import kotlinx.android.synthetic.main.activity_school_announcement_add_template.*
 
 class SchoolAnnouncementAddTemplateActivity : AppCompatActivity() {
@@ -15,16 +19,24 @@ class SchoolAnnouncementAddTemplateActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_school_announcement_add_template)
 
+        // Toolbar
         initToolbar()
+        var layout = intent.extras?.getString("layout", "announcement")
+        when(layout) {
+            "note" -> tvToolbarTitle.text = "Tambah Template Catatan"
+        }
 
-        // Textwatcher
+        // Text Watcher
         etSchoolAnnouncementAddTemplate.addTextChangedListener(textWatcher)
         etSchoolAnnouncementAddTemplateContent.addTextChangedListener(textWatcher)
 
-        // Toolbar name
-        var layout = intent.extras?.getString("layout", "announcement")
-        when(layout) {
-            "note" -> tvToolbarTitle.setText("Tambah Template Catatan")
+        // Add Template to Database
+        btnSchoolAnnouncementAddTemplate.setOnClickListener {
+            val title = etSchoolAnnouncementAddTemplate?.text.toString()
+            val content = etSchoolAnnouncementAddTemplateContent?.text.toString()
+            DataDummy.textTemplateData.add(ClassDetailTemplateTextDao(title, content))
+
+            finish()
         }
     }
 
@@ -41,7 +53,7 @@ class SchoolAnnouncementAddTemplateActivity : AppCompatActivity() {
                     .isNotEmpty() && etSchoolAnnouncementAddTemplateContent.text.toString()
                     .isNotEmpty()
             ) {
-                btnSchoolAnnouncementAddTemplate.setEnabled(true)
+                btnSchoolAnnouncementAddTemplate.isEnabled = true
                 btnSchoolAnnouncementAddTemplate.setBackgroundColor(
                     ContextCompat.getColor(
                         applicationContext,
@@ -49,7 +61,7 @@ class SchoolAnnouncementAddTemplateActivity : AppCompatActivity() {
                     )
                 )
             } else {
-                btnSchoolAnnouncementAddTemplate.setEnabled(false)
+                btnSchoolAnnouncementAddTemplate.isEnabled = false
                 btnSchoolAnnouncementAddTemplate.setBackgroundColor(
                     Color.parseColor("#828282")
                 )

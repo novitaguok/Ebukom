@@ -14,9 +14,12 @@ import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.manager.SupportRequestManagerFragment
 import com.ebukom.R
+import com.ebukom.arch.dao.ClassDetailAnnouncementDao
+import com.ebukom.arch.dao.ClassDetailAttachmentDao
 import com.ebukom.arch.dao.ClassDetailItemCheckDao
 import com.ebukom.arch.ui.classdetail.ClassDetailCheckAdapter
 import com.ebukom.arch.ui.classdetail.MainClassDetailActivity
+import com.ebukom.data.DataDummy
 import com.kunzisoft.switchdatetime.SwitchDateTimeDialogFragment
 import kotlinx.android.synthetic.main.activity_school_announcement_new_next.*
 import kotlinx.android.synthetic.main.activity_school_announcement_new_next.loading
@@ -27,8 +30,12 @@ import kotlin.collections.ArrayList
 
 class SchoolAnnouncementNewNextActivity : AppCompatActivity(),
     ClassDetailCheckAdapter.OnCheckListener {
+    private val mClassList: ArrayList<ClassDetailItemCheckDao> = arrayListOf()
 
-    val list = ArrayList<ClassDetailItemCheckDao>()
+    lateinit var title : String
+    lateinit var content : String
+    lateinit var dateTime : String
+    lateinit var attachments : List<ClassDetailAttachmentDao>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,12 +43,10 @@ class SchoolAnnouncementNewNextActivity : AppCompatActivity(),
 
         initToolbar()
 
-        list.add(ClassDetailItemCheckDao("Semua Kelas"))
-        list.add(ClassDetailItemCheckDao("Kelas 1 Aurora"))
-        list.add(ClassDetailItemCheckDao("Kelas 1 Astronot"))
-        list.add(ClassDetailItemCheckDao("Kelas 2 Aurora"))
-        list.add(ClassDetailItemCheckDao("Kelas 3 Astronot"))
-
+        // Class List
+        DataDummy.chooseClassDataMain.forEach {
+            mClassList.add(ClassDetailItemCheckDao(it.classNumber + " " + it.className))
+        }
         rvSchoolAnnouncementNewNext.apply {
             layoutManager = LinearLayoutManager(
                 this@SchoolAnnouncementNewNextActivity,
@@ -50,24 +55,21 @@ class SchoolAnnouncementNewNextActivity : AppCompatActivity(),
             )
             adapter =
                 ClassDetailCheckAdapter(
-                    list,
+                    mClassList,
                     this@SchoolAnnouncementNewNextActivity
                 )
         }
 
-        // Share Announcement Button
-        btnSchoolAnnouncementNewNextDone.setOnClickListener {
-            loading.visibility = View.VISIBLE
-            Handler().postDelayed({
-                loading.visibility = View.GONE
-                startActivity(Intent(this, MainClassDetailActivity::class.java))
-                finish()
-            }, 1000)
-        }
+        // Intent from SchoolAnnouncementNewActivity
+        title = intent?.extras?.getString("title","")?:""
+        content = intent?.extras?.getString("content","")?:""
+        attachments = intent?.getSerializableExtra("attachments") as List<ClassDetailAttachmentDao>
+        dateTime = ""
 
         // DateTime Picker
         sSchoolAnnouncementNewNextAlarm.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (isChecked) {
+            if (!isChecked)  dateTime = ""
+            else {
                 val dateTimeDialogFragment = SwitchDateTimeDialogFragment.newInstance(
                     "Atur Waktu Notifikasi Berulang",
                     "SELESAI",
@@ -101,6 +103,7 @@ class SchoolAnnouncementNewNextActivity : AppCompatActivity(),
                                 R.color.colorRed
                             )
                         )
+                        dateTime = dateFormat.format(date)
                     }
 
                     override fun onNegativeButtonClick(date: Date?) {}
@@ -108,6 +111,16 @@ class SchoolAnnouncementNewNextActivity : AppCompatActivity(),
 
                 dateTimeDialogFragment.show(supportFragmentManager, "")
             }
+        }
+
+        // Share Announcement Button
+        btnSchoolAnnouncementNewNextDone.setOnClickListener {
+            DataDummy.announcementData.add(ClassDetailAnnouncementDao(title, content, arrayListOf(), dateTime, attachments))
+            loading.visibility = View.VISIBLE
+            Handler().postDelayed({
+                loading.visibility = View.GONE
+                finish()
+            }, 1000)
         }
     }
 
@@ -122,7 +135,7 @@ class SchoolAnnouncementNewNextActivity : AppCompatActivity(),
 
     override fun onCheckChange() {
         var isCheckedItem = false
-        list.forEach {
+        mClassList.forEach {
             if (it.isChecked) isCheckedItem = true
         }
 
