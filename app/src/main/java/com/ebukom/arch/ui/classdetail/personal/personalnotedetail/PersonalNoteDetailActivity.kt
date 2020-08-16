@@ -120,7 +120,7 @@ class PersonalNoteDetailActivity : AppCompatActivity() {
         bottomSheetDialog.show()
     }
 
-    fun popupMenuComment() {
+    fun popupMenuComment(pos: Int) {
         val bottomSheetDialog = BottomSheetDialog(this)
         val view = layoutInflater.inflate(R.layout.bottom_sheet_school_announcement_comment, null)
         bottomSheetDialog.setContentView(view)

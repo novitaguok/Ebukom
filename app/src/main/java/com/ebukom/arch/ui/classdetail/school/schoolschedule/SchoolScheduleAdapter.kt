@@ -38,7 +38,7 @@ class SchoolScheduleAdapter(
             itemView.tvItemScheduleSubjectOpen.text = dataModel.open
 
             itemView.ibItemScheduleSubject.setOnClickListener {
-                callback.onMoreClicked("1")
+                callback.onMoreClicked("1", adapterPosition)
             }
 
             itemView.clItemSchedulePurple.setOnClickListener {
@@ -59,7 +59,7 @@ class SchoolScheduleAdapter(
             itemView.tvItemScheduleEskulOpen.text = dataModel.open
 
             itemView.ibItemScheduleEskul.setOnClickListener {
-                callback.onMoreClicked("1")
+                callback.onMoreClicked("1", adapterPosition)
             }
 
             itemView.clItemScheduleRed.setOnClickListener {
@@ -80,7 +80,7 @@ class SchoolScheduleAdapter(
             itemView.tvItemScheduleAcademicOpen.text = dataModel.open
 
             itemView.ibItemScheduleAcademic.setOnClickListener {
-                callback.onMoreClicked("1")
+                callback.onMoreClicked("1", adapterPosition)
             }
 
             itemView.clItemScheduleYellow.setOnClickListener {

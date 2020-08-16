@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ebukom.R
 import com.ebukom.arch.dao.ClassDetailAttachmentDao
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementdetail.SchoolAnnouncementDetailActivity
+import com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementedit.SchoolAnnouncementEditActivity
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementnew.SchoolAnnouncementNewActivity
 import com.ebukom.utils.load
 import kotlinx.android.synthetic.main.item_announcement_attachment.view.*
@@ -61,7 +62,11 @@ class ClassDetailAttachmentAdapter(private val data: List<ClassDetailAttachmentD
             if (context is SchoolAnnouncementDetailActivity) itemView.ivItemAnnouncementAttachmentDelete.visibility = View.GONE
 
             itemView.ivItemAnnouncementAttachmentDelete.setOnClickListener {
-                (context as SchoolAnnouncementNewActivity).deleteAttachment(dataModel)
+                if (context is SchoolAnnouncementNewActivity) {
+                    (context as SchoolAnnouncementNewActivity).deleteAttachment(dataModel)
+                } else {
+                    (context as SchoolAnnouncementEditActivity).deleteAttachment(dataModel)
+                }
             }
         }
     }

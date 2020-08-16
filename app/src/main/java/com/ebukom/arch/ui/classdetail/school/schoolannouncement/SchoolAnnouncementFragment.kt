@@ -19,7 +19,7 @@ import java.lang.ClassCastException
 class SchoolAnnouncementFragment : androidx.fragment.app.Fragment() {
 
     private val mAnnouncementList: ArrayList<ClassDetailAnnouncementDao> = arrayListOf()
-    lateinit var mAnnouncementAdapter : SchoolAnnouncementAdapter
+    lateinit var mAnnouncementAdapter: SchoolAnnouncementAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,8 +38,7 @@ class SchoolAnnouncementFragment : androidx.fragment.app.Fragment() {
 
         // Announcement List
         mAnnouncementAdapter = SchoolAnnouncementAdapter(mAnnouncementList, callback)
-        mAnnouncementList.addAll(DataDummy.announcementData)
-        mAnnouncementAdapter.notifyDataSetChanged()
+
         rvSchoolAnnouncement.apply {
             layoutManager =
                 LinearLayoutManager(
@@ -49,6 +48,8 @@ class SchoolAnnouncementFragment : androidx.fragment.app.Fragment() {
                 )
             adapter = mAnnouncementAdapter
         }
+        mAnnouncementList.addAll(DataDummy.announcementData)
+        mAnnouncementAdapter.notifyDataSetChanged()
 
         btnSchoolAnnouncementNew.setOnClickListener {
             (context as MainClassDetailActivity).startActivity(

@@ -59,7 +59,7 @@ class SchoolAnnouncementAdapter(
             }
 
             itemView.ivAnnouncementMoreButton.setOnClickListener {
-                callback.onMoreClicked("0")
+                callback.onMoreClicked("0", adapterPosition)
             }
 
             itemView.clItemAnnouncement.setOnClickListener {
@@ -67,6 +67,7 @@ class SchoolAnnouncementAdapter(
                 if (!(MainClassDetailActivity.isAnnouncement)) {
                     intent.putExtra("layout", "1")
                 }
+                intent.putExtra("pos", adapterPosition)
                 intent.putExtra("data", announcement)
                 context.startActivity(intent)
             }

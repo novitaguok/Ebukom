@@ -8,7 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.viewpager.widget.ViewPager
 import com.ebukom.R
+import com.ebukom.arch.dao.ClassDetailAnnouncementDao
 import com.ebukom.arch.ui.classdetail.OnMoreCallback
+import com.ebukom.arch.ui.classdetail.school.schoolannouncement.SchoolAnnouncementAdapter
+import com.ebukom.data.DataDummy
 import com.google.android.material.tabs.TabLayout
 import java.lang.ClassCastException
 
@@ -16,8 +19,9 @@ class SchoolFragment : Fragment() {
 
     private var tabLayout: TabLayout? = null
     private var viewPager: ViewPager? = null
-
     lateinit var callback : OnMoreCallback
+//    private val mAnnouncementList: ArrayList<ClassDetailAnnouncementDao> = DataDummy.announcementData
+//    lateinit var mAnnouncementAdapter: SchoolAnnouncementAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -42,4 +46,14 @@ class SchoolFragment : Fragment() {
                     + " must implement MyInterface ");
         }
     }
+
+//    override fun onResume() {
+//        super.onResume()
+//
+//        mAnnouncementAdapter = SchoolAnnouncementAdapter(mAnnouncementList, parentFragment?)
+//
+//        mAnnouncementList.clear()
+//        mAnnouncementList.addAll(DataDummy.announcementData)
+//        mAnnouncementAdapter.notifyDataSetChanged()
+//    }
 }

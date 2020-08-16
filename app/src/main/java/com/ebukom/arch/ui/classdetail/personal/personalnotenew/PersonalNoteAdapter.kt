@@ -45,7 +45,7 @@ class PersonalNoteAdapter(
             itemView.tvItemNoteTime.text = note?.time
 
             itemView.ivItemNoteMoreButton.setOnClickListener {
-                callback.onMoreClicked("3")
+                callback.onMoreClicked("3", adapterPosition)
             }
 
             itemView.clItemNote.setOnClickListener {

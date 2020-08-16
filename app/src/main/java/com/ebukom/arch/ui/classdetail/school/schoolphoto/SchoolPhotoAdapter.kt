@@ -25,7 +25,7 @@ class SchoolPhotoAdapter(
             itemView.tvItemPhotoRed.text = dataModel.photoTitle
 
             itemView.ibItemPhotoRed.setOnClickListener {
-                callback.onMoreClicked("2")
+                callback.onMoreClicked("2", adapterPosition)
             }
         }
     }
@@ -36,7 +36,7 @@ class SchoolPhotoAdapter(
             itemView.tvItemPhotoBlue.text = dataModel.photoTitle
 
             itemView.ibItemPhotoBlue.setOnClickListener {
-                callback.onMoreClicked("2")
+                callback.onMoreClicked("2", adapterPosition)
             }
         }
     }

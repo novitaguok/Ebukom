@@ -41,8 +41,8 @@ class SchoolAnnouncementDetailAdapter(
             itemView.ivAnnouncementDetailCommentProfilePicture.setImageResource(comment.profilePic)
 
             itemView.ivAnnouncementDetailCommentMoreButton.setOnClickListener {
-                if (context is SchoolAnnouncementDetailActivity) context.popupMenuComment()
-                else if (context is PersonalNoteDetailActivity) context.popupMenuComment()
+                if (context is SchoolAnnouncementDetailActivity) context.popupMenuComment(adapterPosition)
+                else if (context is PersonalNoteDetailActivity) context.popupMenuComment(adapterPosition)
             }
         }
     }

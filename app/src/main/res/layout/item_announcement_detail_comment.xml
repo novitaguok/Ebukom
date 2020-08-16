@@ -4,13 +4,13 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingTop="@dimen/size_8"
-    android:paddingBottom="@dimen/size_8"
-    android:layout_marginHorizontal="@dimen/size_10">
+    android:paddingBottom="@dimen/size_8">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/ivAnnouncementDetailCommentProfilePicture"
         android:layout_width="@dimen/size_40"
         android:layout_height="@dimen/size_40"
+        android:layout_marginLeft="@dimen/size_10"
         android:src="@color/colorGray"
         app:civ_border_color="#FF000000"
         app:layout_constraintLeft_toLeftOf="parent"
@@ -43,7 +43,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingRight="@dimen/size_10"
-        android:layout_marginLeft="@dimen/size_56"
+        android:layout_marginLeft="66dp"
         android:lineHeight="@dimen/text_20"
         android:text="@string/comment_content"
         android:textColor="#666666"

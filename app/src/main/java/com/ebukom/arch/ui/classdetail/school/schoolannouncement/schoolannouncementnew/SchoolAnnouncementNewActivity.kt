@@ -48,7 +48,7 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
 
         initToolbar()
 
-        // Attachment
+        // Attachment List
         checkAttachmentEmpty()
         rvSchoolAnnouncementAttachment.apply {
             layoutManager = LinearLayoutManager(

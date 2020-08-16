@@ -96,4 +96,10 @@
         app:itemTextColor="@drawable/selector_bottom"
         app:labelVisibilityMode="labeled"
         app:menu="@menu/class_detail_bottom_nav" />
+
+    <include
+        android:id="@+id/loading_main"
+        layout="@layout/layout_loading"
+        android:visibility="gone" />
+
 </RelativeLayout>

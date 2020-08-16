@@ -33,7 +33,7 @@ class MainAdminActivity : AppCompatActivity(), OnMoreCallback {
             commit()
         }
 
-    override fun onMoreClicked(id: String) {
+    override fun onMoreClicked(id: String, pos: Int) {
 
     }
 }

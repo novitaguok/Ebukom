@@ -34,19 +34,21 @@ import kotlinx.android.synthetic.main.item_announcement.*
 
 class SchoolAnnouncementDetailActivity : AppCompatActivity() {
 
-    lateinit var callback: OnMoreCallback
+    private var pos: Int = -1
     private val mCommentList: ArrayList<ClassDetailAnnouncementCommentDao> = arrayListOf()
     private val mCommentAdapter = SchoolAnnouncementDetailAdapter(mCommentList, this)
     private val mAttachmentList: ArrayList<ClassDetailAttachmentDao> = arrayListOf()
     private val mAttachmentAdapter = ClassDetailAttachmentAdapter(mAttachmentList)
     private val mAnnouncementList: ArrayList<ClassDetailAnnouncementDao> = arrayListOf()
-    lateinit var mAnnouncementAdapter : SchoolAnnouncementAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_school_announcement_detail)
 
         initToolbar()
+
+        mAnnouncementList.clear()
+        mAnnouncementList.addAll(DataDummy.announcementData)
 
         // Shared Preference
         val sharePref: SharedPreferences = getSharedPreferences("EBUKOM", Context.MODE_PRIVATE)
@@ -63,6 +65,8 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
                     "Untuk mendidik anak yang hyperaktif, diperlukan suatu kemampuan yaitu kesabaran yang luar biasa. Selain itu, perlu diketahui juga cara menghadapi anak dengan cara yang menyenangkan dan baik."
             }
         }
+
+        pos = intent?.extras?.getInt("pos", -1)?: -1
 
         // Get Intent from SchoolAnnouncementFragment
         val data = intent?.extras?.getSerializable("data") as ClassDetailAnnouncementDao
@@ -84,6 +88,18 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
         if (mAttachmentList.isEmpty()) cvSchoolAnnouncementDetailAttachment.visibility = View.GONE
 
         // Comment List
+        rvSchoolAnnouncementDetailComment.apply {
+            layoutManager =
+                LinearLayoutManager(
+                    this.context,
+                    LinearLayoutManager.VERTICAL,
+                    false
+                )
+            adapter = mCommentAdapter
+        }
+        mCommentList.addAll(data.comments)
+        mCommentAdapter.notifyDataSetChanged()
+
         ivSchoolAnnouncementDetailComment.setOnClickListener {
             var comment = etSchoolAnnouncementDetailComment.text.toString()
 
@@ -91,28 +107,14 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
             mCommentList.add(ClassDetailAnnouncementCommentDao("Ade Andreansyah", comment, R.drawable.bg_solid_gray))
             mCommentAdapter.notifyDataSetChanged()
 
-//            callback = OnMoreCallback
-//            mAnnouncementAdapter = SchoolAnnouncementAdapter(mAnnouncementList, callback)
-            DataDummy.announcementData.add(ClassDetailAnnouncementDao(data.announcementTitle, data.announcementContent, mCommentList, data.time, data.attachments))
-//            mAnnouncementAdapter.notifyDataSetChanged()
+            DataDummy.announcementData[pos].comments = mCommentList
             mAnnouncementList.clear()
             mAnnouncementList.addAll(DataDummy.announcementData)
-
-            rvSchoolAnnouncementDetailComment.apply {
-                layoutManager =
-                    LinearLayoutManager(
-                        this.context,
-                        LinearLayoutManager.VERTICAL,
-                        false
-                    )
-                adapter = mCommentAdapter
-            }
 
             checkEmptyComment()
         }
         mAnnouncementList.clear()
         mAnnouncementList.addAll(DataDummy.announcementData)
-//        mAnnouncementAdapter.notifyDataSetChanged()
         checkEmptyComment()
 
         // Announcement's More Button
@@ -131,12 +133,16 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
         val view = layoutInflater.inflate(R.layout.bottom_sheet_school_announcement, null)
         bottomSheetDialog.setContentView(view)
 
+        // Edit Info
         view.tvEditInfo.setOnClickListener {
             bottomSheetDialog.dismiss()
 
-            startActivity(Intent(this, SchoolAnnouncementEditActivity::class.java))
+            val intent = Intent(this, SchoolAnnouncementEditActivity::class.java)
+            intent.putExtra("pos", pos)
+            startActivity(intent)
         }
 
+        // Delete Info
         view.tvDeleteInfo.setOnClickListener {
             val builder = AlertDialog.Builder(this@SchoolAnnouncementDetailActivity)
 
@@ -145,10 +151,11 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
             builder.setMessage("Apakah Anda yakin ingin menghapus pengumuman ini?")
 
             builder.setNegativeButton("BATALKAN") { dialog, which ->
-                Toast.makeText(applicationContext, "Next?", Toast.LENGTH_SHORT).show()
+                dialog.dismiss()
             }
             builder.setPositiveButton("HAPUS") { dialog, which ->
-                Toast.makeText(applicationContext, "Next?", Toast.LENGTH_SHORT).show()
+                DataDummy.announcementData.removeAt(pos)
+                finish()
             }
 
             val dialog: AlertDialog = builder.create()
@@ -179,7 +186,7 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
         bottomSheetDialog.show()
     }
 
-    fun popupMenuComment() {
+    fun popupMenuComment(comPosition: Int) {
         val bottomSheetDialog = BottomSheetDialog(this)
         val view = layoutInflater.inflate(R.layout.bottom_sheet_school_announcement_comment, null)
         bottomSheetDialog.setContentView(view)
@@ -190,6 +197,7 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
             val view = layoutInflater.inflate(R.layout.alert_edit_text, null)
 
             bottomSheetDialog.dismiss()
+            view.etAlertEditText.setText(mCommentList[comPosition].comment)
 
             builder.setView(view)
 
@@ -205,6 +213,18 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
             positiveButton.setOnClickListener {
                 if (view.etAlertEditText.text.toString().isEmpty()) {
                     view.tvAlertEditTextErrorMessage.visibility = View.VISIBLE
+                } else {
+                    dialog.dismiss()
+
+                    var comment = view.etAlertEditText.text.toString()
+                    mCommentList[comPosition].comment = comment
+                    mCommentAdapter.notifyDataSetChanged()
+
+                    DataDummy.announcementData[pos].comments = mCommentList
+                    mAnnouncementList.clear()
+                    mAnnouncementList.addAll(DataDummy.announcementData)
+
+                    checkEmptyComment()
                 }
             }
             positiveButton.setTextColor(
@@ -234,7 +254,14 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
                 Toast.makeText(applicationContext, "Next?", Toast.LENGTH_SHORT).show()
             }
             builder.setPositiveButton("HAPUS") { dialog, which ->
-                Toast.makeText(applicationContext, "Next?", Toast.LENGTH_SHORT).show()
+                mCommentList.removeAt(comPosition)
+                mCommentAdapter.notifyDataSetChanged()
+
+                DataDummy.announcementData[pos].comments = mCommentList
+                mAnnouncementList.clear()
+                mAnnouncementList.addAll(DataDummy.announcementData)
+
+                checkEmptyComment()
             }
 
             val dialog: AlertDialog = builder.create()
