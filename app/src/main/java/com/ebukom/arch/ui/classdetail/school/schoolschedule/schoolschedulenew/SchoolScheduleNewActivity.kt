@@ -14,12 +14,19 @@ import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import com.ebukom.R
+import com.ebukom.arch.dao.ClassDetailScheduleDao
+import com.ebukom.arch.dao.ClassDetailTemplateTextDao
+import com.ebukom.arch.ui.classdetail.ClassDetailTemplateTextAdapter
+import com.ebukom.arch.ui.classdetail.school.schoolschedule.SchoolScheduleAdapter
+import com.ebukom.data.DataDummy
 import kotlinx.android.synthetic.main.activity_school_schedule_new.*
 
 class SchoolScheduleNewActivity : AppCompatActivity() {
     var isSetPelajaran = false
     var isSetEskul = false
     var isSetCalendar = false
+    private val mSchedule: ArrayList<ClassDetailScheduleDao> = arrayListOf()
+//    private val mScheduleAdapter = SchoolScheduleAdapter(mScheduleList, )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -86,24 +93,27 @@ class SchoolScheduleNewActivity : AppCompatActivity() {
             iv = findViewById(R.id.ivSchoolScheduleNewSubjectDelete)
             alert = "jadwal"
             isSetPelajaran = true
+            DataDummy.scheduleData.add(ClassDetailScheduleDao("Jadwal", "Pelajaran", "Lihat Jadwal", path, 0))
         } else if (section == 11) {
             btn = findViewById(R.id.btnSchoolScheduleNewEskul)
             tv = findViewById(R.id.tvSchoolScheduleNewEskulPath)
             iv = findViewById(R.id.ivSchoolScheduleNewEskulDelete)
             alert = "jadwal"
             isSetEskul = true
+            DataDummy.scheduleData.add(ClassDetailScheduleDao("Jadwal", "Eskul", "Lihat Jadwal", path, 1))
         } else if (section == 12) {
             btn = findViewById(R.id.btnSchoolScheduleNewCalendar)
             tv = findViewById(R.id.tvSchoolScheduleNewCalendarPath)
             iv = findViewById(R.id.ivSchoolScheduleNewCalendarDelete)
             alert = "kalender"
-            isSetCalendar = true;
+            isSetCalendar = true
+            DataDummy.scheduleData.add(ClassDetailScheduleDao("Kalender", "Akademik", "Lihat Kalender", path, 2))
         }
 
         tv?.text = path
         tv?.visibility = View.VISIBLE
         iv?.visibility = View.VISIBLE
-        btn?.setText("UBAH FILE")
+        btn?.text = "UBAH FILE"
         btn?.background =
             ContextCompat.getDrawable(
                 applicationContext,
@@ -118,7 +128,7 @@ class SchoolScheduleNewActivity : AppCompatActivity() {
             )
         )
 
-        // Alert
+        // Delete Schedule
         iv?.setOnClickListener {
             val builder = AlertDialog.Builder(this@SchoolScheduleNewActivity)
 
@@ -128,6 +138,10 @@ class SchoolScheduleNewActivity : AppCompatActivity() {
                 Toast.makeText(applicationContext, "Next?", Toast.LENGTH_SHORT).show()
             }
             builder.setPositiveButton("HAPUS") { dialog, which ->
+//                DataDummy.scheduleData.remove(item)
+//                mList.remove(item)
+//                mAdapter.addAll(mList)
+
                 alert = alert?.toUpperCase()
                 btn?.setText("PILIH FILE $alert")
                 btn?.background =

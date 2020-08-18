@@ -38,7 +38,6 @@ class SchoolAnnouncementFragment : androidx.fragment.app.Fragment() {
 
         // Announcement List
         mAnnouncementAdapter = SchoolAnnouncementAdapter(mAnnouncementList, callback)
-
         rvSchoolAnnouncement.apply {
             layoutManager =
                 LinearLayoutManager(

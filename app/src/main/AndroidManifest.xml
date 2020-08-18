@@ -40,7 +40,9 @@
             android:name=".arch.ui.classdetail.personal.personalnotenew.PersonalNoteNewActivity"
             android:windowSoftInputMode="stateHidden" />
         <activity android:name=".arch.ui.classdetail.school.schoolphoto.schoolphotonew.SchoolPhotoNewActivity" />
+        <activity android:name=".arch.ui.classdetail.school.schoolphoto.schoolphotoedit.SchoolPhotoEditActivity" />
         <activity android:name=".arch.ui.classdetail.school.schoolschedule.schoolschedulenew.SchoolScheduleNewActivity" />
+        <activity android:name=".arch.ui.classdetail.school.schoolschedule.schoolscheduleedit.SchoolScheduleEditActivity" />
         <activity android:name=".arch.ui.classdetail.school.schoolannouncement.schoolannouncementnewnext.SchoolAnnouncementNewNextActivity" />
         <activity android:name=".arch.ui.classdetail.school.schoolannouncement.SchoolAnnouncementAddTemplateActivity" />
         <activity

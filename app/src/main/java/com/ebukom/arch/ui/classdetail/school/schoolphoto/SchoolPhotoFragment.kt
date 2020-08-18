@@ -14,12 +14,15 @@ import com.ebukom.arch.dao.ClassDetailPhotoDao
 import com.ebukom.arch.ui.classdetail.MainClassDetailActivity
 import com.ebukom.arch.ui.classdetail.OnMoreCallback
 import com.ebukom.arch.ui.classdetail.school.schoolphoto.schoolphotonew.SchoolPhotoNewActivity
+import com.ebukom.data.DataDummy
 import kotlinx.android.synthetic.main.fragment_school_photo.*
 import kotlinx.android.synthetic.main.fragment_school_photo.view.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 class SchoolPhotoFragment : Fragment() {
-    var objectList = ArrayList<ClassDetailPhotoDao>()
-    lateinit var schoolPhotoAdapter: SchoolPhotoAdapter
+    private val mPhotoList: ArrayList<ClassDetailPhotoDao> = arrayListOf()
+    lateinit var mPhotoAdapter: SchoolPhotoAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,16 +38,23 @@ class SchoolPhotoFragment : Fragment() {
             btnSchoolPhotoNew.visibility = View.GONE
         }
 
-        addData()
-        schoolPhotoAdapter = SchoolPhotoAdapter(objectList, callback)
-        rvSchoolPhoto.layoutManager = LinearLayoutManager(this.context)
-        rvSchoolPhoto.adapter = schoolPhotoAdapter
+        mPhotoAdapter = SchoolPhotoAdapter(mPhotoList, callback)
+        mPhotoList.clear()
+        mPhotoList.addAll(DataDummy.photoData)
+        mPhotoAdapter.notifyDataSetChanged()
 
-        if (!objectList.isEmpty()) {
-            view.ivSchoolPhotoEmpty.visibility = View.INVISIBLE
-        } else {
-            view.ivSchoolPhotoEmpty.visibility = View.VISIBLE
+        // Photo List
+        rvSchoolPhoto.apply {
+            layoutManager =
+                LinearLayoutManager(
+                    this.context,
+                    LinearLayoutManager.VERTICAL,
+                    false
+                )
+            adapter = mPhotoAdapter
         }
+
+        checkPhotoEmpty()
 
         // "Bagikan Foto Kegiatan" button
         btnSchoolPhotoNew.setOnClickListener {
@@ -57,35 +67,16 @@ class SchoolPhotoFragment : Fragment() {
         }
     }
 
-    private fun addData() {
-        objectList.add(
-            ClassDetailPhotoDao(
-                "Study Tour\nBandung 2020",
-                0
-            )
-        )
-        objectList.add(
-            ClassDetailPhotoDao(
-                "Study Tour\nYogya 2020",
-                1
-            )
-        )
-        objectList.add(
-            ClassDetailPhotoDao(
-                "Study Tour\nBandung 2020",
-                0
-            )
-        )
-        objectList.add(
-            ClassDetailPhotoDao(
-                "Study Tour\nYogya 2020",
-                1
-            )
-        )
+    private fun checkPhotoEmpty() {
+        if (mPhotoList.isNotEmpty()) {
+            ivSchoolPhotoEmpty.visibility = View.GONE
+            tvSchoolPhotoEmpty.visibility = View.GONE
+        } else {
+            ivSchoolPhotoEmpty.visibility = View.VISIBLE
+            tvSchoolPhotoEmpty.visibility = View.VISIBLE
+        }
     }
-
     lateinit var callback: OnMoreCallback
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
         try {
@@ -96,5 +87,16 @@ class SchoolPhotoFragment : Fragment() {
                         + " must implement MyInterface "
             );
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        // Photo List
+        mPhotoList.clear()
+        mPhotoList.addAll(DataDummy.photoData)
+        mPhotoAdapter.notifyDataSetChanged()
+
+        checkPhotoEmpty()
     }
 }

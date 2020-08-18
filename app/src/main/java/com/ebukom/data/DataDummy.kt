@@ -9,6 +9,8 @@ class DataDummy {
         var announcementData = arrayListOf<ClassDetailAnnouncementDao>()
         var attachmentData = arrayListOf<ClassDetailAttachmentDao>()
         var textTemplateData = arrayListOf<ClassDetailTemplateTextDao>()
+        var scheduleData = arrayListOf<ClassDetailScheduleDao>()
+        var photoData = arrayListOf<ClassDetailPhotoDao>()
     }
 }
 

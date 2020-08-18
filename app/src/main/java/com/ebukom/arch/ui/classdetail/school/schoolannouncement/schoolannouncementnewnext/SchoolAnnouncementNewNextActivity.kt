@@ -31,7 +31,6 @@ import kotlin.collections.ArrayList
 class SchoolAnnouncementNewNextActivity : AppCompatActivity(),
     ClassDetailCheckAdapter.OnCheckListener {
     private val mClassList: ArrayList<ClassDetailItemCheckDao> = arrayListOf()
-
     lateinit var title : String
     lateinit var content : String
     lateinit var dateTime : String
@@ -140,7 +139,7 @@ class SchoolAnnouncementNewNextActivity : AppCompatActivity(),
         }
 
         if (isCheckedItem) {
-            btnSchoolAnnouncementNewNextDone.setEnabled(true)
+            btnSchoolAnnouncementNewNextDone.isEnabled = true
             btnSchoolAnnouncementNewNextDone.setBackgroundColor(
                 ContextCompat.getColor(
                     applicationContext,
@@ -148,7 +147,7 @@ class SchoolAnnouncementNewNextActivity : AppCompatActivity(),
                 )
             )
         } else {
-            btnSchoolAnnouncementNewNextDone.setEnabled(false)
+            btnSchoolAnnouncementNewNextDone.isEnabled = false
             btnSchoolAnnouncementNewNextDone.setBackgroundColor(
                 Color.parseColor("#828282")
             )

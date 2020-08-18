@@ -13,6 +13,9 @@ import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.ebukom.R
 import com.ebukom.arch.dao.ClassDetailAnnouncementDao
+import com.ebukom.arch.dao.ClassDetailPhotoDao
+import com.ebukom.arch.dao.ClassDetailScheduleDao
+import com.ebukom.arch.dao.ClassDetailTemplateTextDao
 import com.ebukom.arch.ui.classdetail.material.MaterialFragment
 import com.ebukom.arch.ui.classdetail.member.MemberFragment
 import com.ebukom.arch.ui.classdetail.notification.NotificationActivity
@@ -22,7 +25,9 @@ import com.ebukom.arch.ui.classdetail.personal.personalparent.PersonalParentFrag
 import com.ebukom.arch.ui.classdetail.school.SchoolFragment
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.SchoolAnnouncementAdapter
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementedit.SchoolAnnouncementEditActivity
+import com.ebukom.arch.ui.classdetail.school.schoolphoto.SchoolPhotoAdapter
 import com.ebukom.arch.ui.classdetail.school.schoolphoto.schoolphotoedit.SchoolPhotoEditActivity
+import com.ebukom.arch.ui.classdetail.school.schoolschedule.SchoolScheduleAdapter
 import com.ebukom.arch.ui.classdetail.school.schoolschedule.schoolscheduleedit.SchoolScheduleEditActivity
 import com.ebukom.arch.ui.editprofile.EditProfileActivity
 import com.ebukom.data.DataDummy
@@ -35,8 +40,12 @@ class MainClassDetailActivity : AppCompatActivity(), OnMoreCallback {
     companion object {
         var isAnnouncement = true
     }
-    val mAnnouncementList: ArrayList<ClassDetailAnnouncementDao> = DataDummy.announcementData
-    lateinit var mAnnouncementAdapter : SchoolAnnouncementAdapter
+    private val mAnnouncementList: ArrayList<ClassDetailAnnouncementDao> = DataDummy.announcementData
+    private lateinit var mAnnouncementAdapter : SchoolAnnouncementAdapter
+    private val mScheduleList: ArrayList<ClassDetailScheduleDao> = DataDummy.scheduleData
+    private lateinit var mScheduleAdapter : SchoolScheduleAdapter
+    private val mPhotoList: ArrayList<ClassDetailPhotoDao> = DataDummy.photoData
+    lateinit var mPhotoAdapter : SchoolPhotoAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -121,14 +130,19 @@ class MainClassDetailActivity : AppCompatActivity(), OnMoreCallback {
         view.tvEditInfo.setOnClickListener {
             bottomSheetDialog.dismiss()
 
-            if (id == "0") { // School Announcement
-                intent = Intent(this, SchoolAnnouncementEditActivity::class.java)
-            } else if (id == "1") { // School Schedule
-                intent = Intent(this, SchoolScheduleEditActivity::class.java)
-            } else if (id == "2") { // School Photo
-                intent = Intent(this, SchoolPhotoEditActivity::class.java)
-            } else if (id == "3") { // Personal Note
-                intent = Intent(this, PersonalNoteEditActivity::class.java)
+            when (id) {
+                "0" -> { // School Announcement
+                    intent = Intent(this, SchoolAnnouncementEditActivity::class.java)
+                }
+                "1" -> { // School Schedule
+                    intent = Intent(this, SchoolScheduleEditActivity::class.java)
+                }
+                "2" -> { // School Photo
+                    intent = Intent(this, SchoolPhotoEditActivity::class.java)
+                }
+                "3" -> { // Personal Note
+                    intent = Intent(this, PersonalNoteEditActivity::class.java)
+                }
             }
 
             intent.putExtra("pos", pos)
@@ -151,23 +165,44 @@ class MainClassDetailActivity : AppCompatActivity(), OnMoreCallback {
 
             builder.setMessage("Apakah Anda yakin ingin menghapus $alert ini?")
 
-            builder.setNegativeButton("BATALKAN") { dialog, which ->
+            builder.setNegativeButton("BATALKAN") { dialog, _ ->
                 dialog.dismiss()
             }
-            builder.setPositiveButton("HAPUS") { dialog, which ->
-                if (id == "0") { // School announcement
-                    DataDummy.announcementData.removeAt(pos)
+            builder.setPositiveButton("HAPUS") { _, _ ->
+                when (id) {
+                    "0" -> { // School announcement
+                        DataDummy.announcementData.removeAt(pos)
 
-                    mAnnouncementAdapter = SchoolAnnouncementAdapter(mAnnouncementList, this)
+                        mAnnouncementAdapter = SchoolAnnouncementAdapter(mAnnouncementList, this)
+                        mAnnouncementAdapter.notifyDataSetChanged()
 
-                    mAnnouncementList.clear()
-                    mAnnouncementList.addAll(DataDummy.announcementData)
-                    mAnnouncementAdapter.notifyDataSetChanged()
+                        loading_main.visibility = View.VISIBLE
+                        Handler().postDelayed({
+                            loading_main.visibility = View.GONE
+                        }, 1000)
+                    }
+                    "1" -> {
+                        DataDummy.scheduleData.removeAt(pos)
 
-                    loading_main.visibility = View.VISIBLE
-                    Handler().postDelayed({
-                        loading_main.visibility = View.GONE
-                    }, 1000)
+                        mScheduleAdapter = SchoolScheduleAdapter(mScheduleList, this)
+                        mScheduleAdapter.notifyDataSetChanged()
+
+                        loading_main.visibility = View.VISIBLE
+                        Handler().postDelayed({
+                            loading_main.visibility = View.GONE
+                        }, 1000)
+                    }
+                    "2" -> {
+                        DataDummy.photoData.removeAt(pos)
+
+                        mPhotoAdapter = SchoolPhotoAdapter(mPhotoList, this)
+                        mPhotoAdapter.notifyDataSetChanged()
+
+                        loading_main.visibility = View.VISIBLE
+                        Handler().postDelayed({
+                            loading_main.visibility = View.GONE
+                        }, 1000)
+                    }
                 }
             }
 
@@ -193,7 +228,6 @@ class MainClassDetailActivity : AppCompatActivity(), OnMoreCallback {
 
         view.tvCancelInfo.setOnClickListener {
             bottomSheetDialog.dismiss()
-            Toast.makeText(this, "Cancel", Toast.LENGTH_LONG).show()
         }
 
         bottomSheetDialog.show()

@@ -14,12 +14,13 @@ import com.ebukom.arch.dao.ClassDetailScheduleDao
 import com.ebukom.arch.ui.classdetail.MainClassDetailActivity
 import com.ebukom.arch.ui.classdetail.OnMoreCallback
 import com.ebukom.arch.ui.classdetail.school.schoolschedule.schoolschedulenew.SchoolScheduleNewActivity
+import com.ebukom.data.DataDummy
 import kotlinx.android.synthetic.main.fragment_school_schedule.*
 import kotlinx.android.synthetic.main.fragment_school_schedule.view.*
 
 class SchoolScheduleFragment : Fragment() {
-    var objectList = ArrayList<ClassDetailScheduleDao>()
-    lateinit var schoolScheduleAdapter: SchoolScheduleAdapter
+    private var mScheduleList = ArrayList<ClassDetailScheduleDao>()
+    lateinit var mScheduleAdapter: SchoolScheduleAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,48 +36,58 @@ class SchoolScheduleFragment : Fragment() {
             btnSchoolScheduleNew.visibility = View.GONE
         }
 
-        addData()
-        schoolScheduleAdapter = SchoolScheduleAdapter(objectList, callback)
-        rvSchoolSchedule.layoutManager = LinearLayoutManager(this.context)
-        rvSchoolSchedule.adapter = schoolScheduleAdapter
+        mScheduleAdapter = SchoolScheduleAdapter(mScheduleList, callback)
+        rvSchoolSchedule.apply {
+            layoutManager =
+                LinearLayoutManager(
+                    this.context,
+                    LinearLayoutManager.VERTICAL,
+                    false
+                )
+            adapter = mScheduleAdapter
+        }
+        mScheduleList.addAll(DataDummy.scheduleData)
+        mScheduleAdapter.notifyDataSetChanged()
 
-        if (!objectList.isEmpty()) {
-            view.ivSchoolScheduleEmpty.visibility = View.INVISIBLE
+        if (mScheduleList.isNotEmpty()) {
+            ivSchoolScheduleEmpty.visibility = View.GONE
+            tvSchoolScheduleEmpty.visibility = View.GONE
         } else {
-            view.ivSchoolScheduleEmpty.visibility = View.VISIBLE
+            ivSchoolScheduleEmpty.visibility = View.VISIBLE
+            tvSchoolScheduleEmpty.visibility = View.VISIBLE
         }
 
         btnSchoolScheduleNew.setOnClickListener {
             (context as MainClassDetailActivity).startActivity(Intent((context as MainClassDetailActivity), SchoolScheduleNewActivity::class.java))
         }
     }
-
-    private fun addData() {
-        objectList.add(
-            ClassDetailScheduleDao(
-                "Jadwal",
-                "Pelajaran",
-                "Lihat Jadwal",
-                0
-            )
-        )
-        objectList.add(
-            ClassDetailScheduleDao(
-                "Jadwal",
-                "Eskul",
-                "Lihat Jadwal",
-                1
-            )
-        )
-        objectList.add(
-            ClassDetailScheduleDao(
-                "Kalender",
-                "Akademik",
-                "Lihat Kalender",
-                2
-            )
-        )
-    }
+//
+//    private fun addData() {
+//        objectList.add(
+//            ClassDetailScheduleDao(
+//                "Jadwal",
+//                "Pelajaran",
+//                "Lihat Jadwal",
+//                0
+//            )
+//        )
+//        objectList.add(
+//            ClassDetailScheduleDao(
+//                "Jadwal",
+//                "Eskul",
+//                "Lihat Jadwal",
+//                1
+//            )
+//        )
+//        objectList.add(
+//            ClassDetailScheduleDao(
+//                "Kalender",
+//                "Akademik",
+//                "Lihat Kalender",
+//                2
+//            )
+//        )
+//    }
 
     lateinit var callback: OnMoreCallback
 
@@ -90,5 +101,14 @@ class SchoolScheduleFragment : Fragment() {
                         + " must implement MyInterface "
             );
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        // Announcement List
+        mScheduleList.clear()
+        mScheduleList.addAll(DataDummy.scheduleData)
+        mScheduleAdapter.notifyDataSetChanged()
     }
 }

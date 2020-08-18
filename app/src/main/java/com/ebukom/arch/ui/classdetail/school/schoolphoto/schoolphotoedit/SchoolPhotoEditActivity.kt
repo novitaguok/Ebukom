@@ -9,12 +9,17 @@ import android.text.TextWatcher
 import android.view.View
 import androidx.core.content.ContextCompat
 import com.ebukom.R
+import com.ebukom.arch.dao.ClassDetailPhotoDao
+import com.ebukom.arch.ui.classdetail.school.schoolphoto.SchoolPhotoAdapter
+import com.ebukom.data.DataDummy
 import kotlinx.android.synthetic.main.activity_school_photo_edit.*
-import kotlinx.android.synthetic.main.activity_school_photo_new.*
-import kotlinx.android.synthetic.main.activity_school_photo_new.loading
 import kotlinx.android.synthetic.main.activity_school_photo_new.toolbar
 
 class SchoolPhotoEditActivity : AppCompatActivity() {
+
+    private var pos: Int = -1
+    private val mPhotoList: ArrayList<ClassDetailPhotoDao> = DataDummy.photoData
+    lateinit var mPhotoAdapter : SchoolPhotoAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,11 +27,23 @@ class SchoolPhotoEditActivity : AppCompatActivity() {
 
         initToolbar()
 
+        // Get Photo Data
+        pos = intent?.extras?.getInt("pos", -1)?: -1
+
+        etSchoolPhotoEditEventName.setText(DataDummy.photoData[pos].photoTitle)
+        etSchoolPhotoEditLink.setText(DataDummy.photoData[pos].link)
+
         // Text watcher
         etSchoolPhotoEditEventName.addTextChangedListener(textWatcher)
         etSchoolPhotoEditLink.addTextChangedListener(textWatcher)
 
         btnSchoolPhotoEditSave.setOnClickListener {
+            var title = etSchoolPhotoEditEventName.text.toString()
+            var content = etSchoolPhotoEditLink.text.toString()
+
+            DataDummy.photoData[pos].photoTitle = title
+            DataDummy.photoData[pos].link = content
+
             loading.visibility = View.VISIBLE
             Handler().postDelayed({
                 loading.visibility = View.GONE
@@ -54,10 +71,10 @@ class SchoolPhotoEditActivity : AppCompatActivity() {
 
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
             if (etSchoolPhotoEditEventName.text.toString()
-                    .isNotEmpty() && etSchoolPhotoNewLink.text.toString()
+                    .isNotEmpty() && etSchoolPhotoEditLink.text.toString()
                     .isNotEmpty()
             ) {
-                btnSchoolPhotoEditSave.setEnabled(true)
+                btnSchoolPhotoEditSave.isEnabled = true
                 btnSchoolPhotoEditSave.setBackgroundColor(
                     ContextCompat.getColor(
                         applicationContext,
@@ -65,7 +82,7 @@ class SchoolPhotoEditActivity : AppCompatActivity() {
                     )
                 )
             } else {
-                btnSchoolPhotoEditSave.setEnabled(false)
+                btnSchoolPhotoEditSave.isEnabled = false
                 btnSchoolPhotoEditSave.setBackgroundColor(
                     Color.parseColor("#828282")
                 )

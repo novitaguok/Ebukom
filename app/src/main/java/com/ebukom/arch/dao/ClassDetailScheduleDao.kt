@@ -4,5 +4,6 @@ data class ClassDetailScheduleDao (
     var type: String,
     var title: String,
     var open: String,
+    var file: String,
     var viewType : Int
 )

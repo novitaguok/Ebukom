@@ -66,7 +66,6 @@ class SchoolPhotoAdapter(
     }
 
     override fun getItemViewType(position: Int): Int {
-//        return super.getItemViewType(position)
         return if (data[position].viewType == 0) {
             TYPE_RED
         } else
