@@ -27,11 +27,6 @@ class ChooseClassViewHolderGreen(var view: View, var context: Context) : BaseVie
             view.ibItemClassOne.visibility = View.INVISIBLE
 
             view.clItemClassGreen.setOnClickListener{
-//                view.loading.visibility = View.VISIBLE
-//                Handler().postDelayed({
-//                    view.loading.visibility = View.GONE
-//                    (context as JoinClassActivity).addClass(item)
-//                }, 1000)
                 (context as JoinClassActivity).addClass(item)
             }
         }

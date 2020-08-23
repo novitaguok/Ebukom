@@ -48,7 +48,7 @@ class AdminSchoolFeeInfoSentAdapter(
                 itemView.cbItemAdminInfoSent.visibility = View.VISIBLE
             }
 
-            itemView.cbItemAdminInfoSent.setOnCheckedChangeListener { buttonView, isChecked ->
+            itemView.cbItemAdminInfoSent.setOnCheckedChangeListener { _, isChecked ->
                 data[adapterPosition].isChecked = isChecked
                 callback?.onCheckChange()
             }

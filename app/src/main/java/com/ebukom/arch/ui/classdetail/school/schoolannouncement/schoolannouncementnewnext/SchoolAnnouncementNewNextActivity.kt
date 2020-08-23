@@ -31,10 +31,10 @@ import kotlin.collections.ArrayList
 class SchoolAnnouncementNewNextActivity : AppCompatActivity(),
     ClassDetailCheckAdapter.OnCheckListener {
     private val mClassList: ArrayList<ClassDetailItemCheckDao> = arrayListOf()
-    lateinit var title : String
-    lateinit var content : String
-    lateinit var dateTime : String
-    lateinit var attachments : List<ClassDetailAttachmentDao>
+    lateinit var title: String
+    lateinit var content: String
+    lateinit var dateTime: String
+    lateinit var attachments: List<ClassDetailAttachmentDao>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,14 +60,14 @@ class SchoolAnnouncementNewNextActivity : AppCompatActivity(),
         }
 
         // Intent from SchoolAnnouncementNewActivity
-        title = intent?.extras?.getString("title","")?:""
-        content = intent?.extras?.getString("content","")?:""
+        title = intent?.extras?.getString("title", "") ?: ""
+        content = intent?.extras?.getString("content", "") ?: ""
         attachments = intent?.getSerializableExtra("attachments") as List<ClassDetailAttachmentDao>
         dateTime = ""
 
         // DateTime Picker
-        sSchoolAnnouncementNewNextAlarm.setOnCheckedChangeListener { buttonView, isChecked ->
-            if (!isChecked)  dateTime = ""
+        sSchoolAnnouncementNewNextAlarm.setOnCheckedChangeListener { _, isChecked ->
+            if (!isChecked) dateTime = ""
             else {
                 val dateTimeDialogFragment = SwitchDateTimeDialogFragment.newInstance(
                     "Atur Waktu Notifikasi Berulang",
@@ -114,7 +114,15 @@ class SchoolAnnouncementNewNextActivity : AppCompatActivity(),
 
         // Share Announcement Button
         btnSchoolAnnouncementNewNextDone.setOnClickListener {
-            DataDummy.announcementData.add(ClassDetailAnnouncementDao(title, content, arrayListOf(), dateTime, attachments))
+            DataDummy.announcementData.add(
+                ClassDetailAnnouncementDao(
+                    title,
+                    content,
+                    arrayListOf(),
+                    dateTime,
+                    attachments
+                )
+            )
             loading.visibility = View.VISIBLE
             Handler().postDelayed({
                 loading.visibility = View.GONE

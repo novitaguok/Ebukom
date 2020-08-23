@@ -3,6 +3,7 @@ package com.ebukom.arch.ui.classdetail
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.CheckBox
 import androidx.recyclerview.widget.RecyclerView
 import com.ebukom.R
 import com.ebukom.arch.dao.ClassDetailItemCheckDao
@@ -38,7 +39,7 @@ class ClassDetailCheckAdapter(
         val view: View
     ) : RecyclerView.ViewHolder(view) {
         init {
-            view.cbItemCheck.setOnCheckedChangeListener { buttonView, isChecked ->
+            view.cbItemCheck.setOnCheckedChangeListener { _, isChecked ->
                 list[adapterPosition].isChecked = isChecked
                 callback.onCheckChange()
             }

@@ -5,11 +5,9 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.View
 import androidx.core.content.ContextCompat
 import com.ebukom.R
 import com.ebukom.arch.dao.ClassDetailTemplateTextDao
-import com.ebukom.arch.ui.classdetail.ClassDetailTemplateTextAdapter
 import com.ebukom.data.DataDummy
 import kotlinx.android.synthetic.main.activity_school_announcement_add_template.*
 
@@ -22,7 +20,7 @@ class SchoolAnnouncementAddTemplateActivity : AppCompatActivity() {
         // Toolbar
         initToolbar()
         var layout = intent.extras?.getString("layout", "announcement")
-        when(layout) {
+        when (layout) {
             "note" -> tvToolbarTitle.text = "Tambah Template Catatan"
         }
 
@@ -34,9 +32,27 @@ class SchoolAnnouncementAddTemplateActivity : AppCompatActivity() {
         btnSchoolAnnouncementAddTemplate.setOnClickListener {
             val title = etSchoolAnnouncementAddTemplate?.text.toString()
             val content = etSchoolAnnouncementAddTemplateContent?.text.toString()
-            DataDummy.textTemplateData.add(ClassDetailTemplateTextDao(title, content))
 
-            finish()
+            when (layout) {
+                "note" -> {
+                    DataDummy.noteTemplateData.add(
+                        ClassDetailTemplateTextDao(
+                            title,
+                            content
+                        )
+                    )
+                    finish()
+                }
+                else -> {
+                    DataDummy.announcementTemplateData.add(
+                        ClassDetailTemplateTextDao(
+                            title,
+                            content
+                        )
+                    )
+                    finish()
+                }
+            }
         }
     }
 

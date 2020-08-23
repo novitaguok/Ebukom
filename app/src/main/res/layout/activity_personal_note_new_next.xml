@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".arch.ui.classdetail.personal.personalnotenew.PersonalNoteNewNextActivity">
+    android:background="@color/colorWhite"
+    tools:context=".arch.ui.classdetail.personal.personalnotenewnext.PersonalNoteNewNextActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -54,12 +55,45 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <TextView
+                android:id="@+id/tvPersonalNoteNewNextAllParent"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:lineHeight="@dimen/size_24"
+                android:paddingVertical="@dimen/size_12"
+                android:text="Semua Wali Murid"
+                android:textColor="#212121"
+                android:textSize="@dimen/text_16"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvPersonalNoteNewNextClass" />
+
+            <CheckBox
+                android:id="@+id/cbPersonalNoteNewNextAllParent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/size_18"
+                android:theme="@style/colored_checkbox"
+                app:layout_constraintBottom_toBottomOf="@id/tvPersonalNoteNewNextAllParent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/tvPersonalNoteNewNextAllParent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tvPersonalNoteNewNextAllParent" />
+
+            <View
+                android:id="@+id/vPersonalNoteNewNextAllParent"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_1"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:background="#EEEEEE"
+                app:layout_constraintTop_toBottomOf="@+id/tvPersonalNoteNewNextAllParent" />
+
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvPersonalNoteNewNext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/size_8"
-                app:layout_constraintTop_toBottomOf="@+id/tvPersonalNoteNewNextClass" />
+                app:layout_constraintTop_toBottomOf="@+id/vPersonalNoteNewNextAllParent" />
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
@@ -92,7 +126,6 @@
                         android:id="@+id/sPersonalNoteNewNextAlarm"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginRight="@dimen/size_12"
                         android:theme="@style/colored_switch"
                         app:layout_constraintBottom_toBottomOf="@+id/tvPersonalNoteNewNextAlarmTitle"
                         app:layout_constraintRight_toRightOf="parent"

@@ -12,7 +12,6 @@ import android.text.TextWatcher
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,6 +21,7 @@ import com.ebukom.arch.dao.ClassDetailAttachmentDao
 import com.ebukom.arch.dao.ClassDetailTemplateTextDao
 import com.ebukom.arch.ui.classdetail.ClassDetailAttachmentAdapter
 import com.ebukom.arch.ui.classdetail.ClassDetailTemplateTextAdapter
+import com.ebukom.arch.ui.classdetail.school.schoolannouncement.SchoolAnnouncementAddTemplateActivity
 import com.ebukom.data.DataDummy
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.activity_school_announcement_edit.*
@@ -71,8 +71,6 @@ class SchoolAnnouncementEditActivity : AppCompatActivity() {
         else tvSchoolAnnouncementEditAttachmentTitle.visibility = View.VISIBLE
 
         // Template List
-        mTemplateList.addAll(DataDummy.textTemplateData)
-        mTemplateAdapter.notifyDataSetChanged()
         rvSchoolAnnouncementEditTemplate.apply {
             layoutManager =
                 LinearLayoutManager(
@@ -82,10 +80,19 @@ class SchoolAnnouncementEditActivity : AppCompatActivity() {
                 )
             adapter = mTemplateAdapter
         }
+        mTemplateList.addAll(DataDummy.announcementTemplateData)
+        mTemplateAdapter.notifyDataSetChanged()
 
         // Text watcher
         etSchoolAnnouncementEditTitle.addTextChangedListener(textWatcher)
         etSchoolAnnouncementEditContent.addTextChangedListener(textWatcher)
+
+        // Add Template
+        tvSchoolAnnouncementEditTemplateAdd.setOnClickListener {
+            val intent = Intent(this, SchoolAnnouncementAddTemplateActivity::class.java)
+            intent.putExtra("layout", "announcement")
+            startActivity(intent)
+        }
 
         // Save
         btnSchoolAnnouncementEditSave.setOnClickListener {
@@ -148,7 +155,7 @@ class SchoolAnnouncementEditActivity : AppCompatActivity() {
                     }
                     builder.setPositiveButton("LAMPIRKAN") { dialog, which ->
                         val link = view.etAlertEditText?.text.toString()
-                        DataDummy.attachmentData.add(ClassDetailAttachmentDao(link, 0))
+                        DataDummy.announcementAttachmentData.add(ClassDetailAttachmentDao(link, 0))
                         insertAttachment(view, link)
 
                         checkAttachmentEmpty()
@@ -252,11 +259,11 @@ class SchoolAnnouncementEditActivity : AppCompatActivity() {
         if (resultCode == RESULT_OK) {
             when (requestCode) {
                 10 -> {
-                    DataDummy.attachmentData.add(ClassDetailAttachmentDao(path, 1))
+                    DataDummy.announcementAttachmentData.add(ClassDetailAttachmentDao(path, 1))
                     insertAttachment(view, path)
                 }
                 11 -> {
-                    DataDummy.attachmentData.add(ClassDetailAttachmentDao(path, 2))
+                    DataDummy.announcementAttachmentData.add(ClassDetailAttachmentDao(path, 2))
                     insertAttachment(view, path)
                 }
                 else -> {
@@ -277,7 +284,7 @@ class SchoolAnnouncementEditActivity : AppCompatActivity() {
             dialog.dismiss()
         }
         builder.setPositiveButton("HAPUS") { dialog, which ->
-            DataDummy.attachmentData.remove(item)
+            DataDummy.announcementAttachmentData.remove(item)
             mAttachmentList.remove(item)
             mAttachmentAdapter.notifyDataSetChanged()
 
@@ -315,9 +322,17 @@ class SchoolAnnouncementEditActivity : AppCompatActivity() {
     private fun insertAttachment(view: View, path: String) {
         mAttachmentAdapter.notifyDataSetChanged()
         mAttachmentList.clear()
-        mAttachmentList.addAll(DataDummy.attachmentData)
+        mAttachmentList.addAll(DataDummy.announcementAttachmentData)
         view.tvItemAnnouncementAttachment?.text = path
 
         checkAttachmentEmpty()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        mTemplateList.clear()
+        mTemplateList.addAll(DataDummy.announcementTemplateData)
+        mTemplateAdapter.notifyDataSetChanged()
     }
 }

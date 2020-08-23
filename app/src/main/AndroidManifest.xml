@@ -34,7 +34,7 @@
         <activity android:name=".arch.ui.classdetail.material.materialeducation.materialeducationnew.MaterialEducationNewActivity" />
         <activity android:name=".arch.ui.classdetail.material.materialsubject.MaterialSubjectAddActivity" />
         <activity android:name=".arch.ui.classdetail.material.materialsubject.MaterialSubjectNewActivity" />
-        <activity android:name=".arch.ui.classdetail.personal.personalnotenew.PersonalNoteNewNextActivity" />
+        <activity android:name=".arch.ui.classdetail.personal.personalnotenewnext.PersonalNoteNewNextActivity" />
         <activity android:name=".arch.ui.classdetail.personal.personalnotenew.PersonalNoteAddTemplateActivity" />
         <activity
             android:name=".arch.ui.classdetail.personal.personalnotenew.PersonalNoteNewActivity"

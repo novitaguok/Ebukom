@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/colorWhite"
     tools:context=".arch.ui.classdetail.personal.personalnotenew.PersonalNoteNewActivity">
 
     <com.google.android.material.appbar.AppBarLayout
@@ -120,12 +121,11 @@
             android:id="@+id/rvPersonalNoteNewTemplate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@+id/clPersonalNoteNewTemplate"
+            app:layout_constraintBottom_toTopOf="@+id/btnPersonalNoteNewNext"
+            app:layout_constraintTop_toBottomOf="@id/tvPersonalNoteNewTemplateAdd"
             android:layout_marginTop="@dimen/size_16"
             android:paddingHorizontal="@dimen/size_14"
-            android:paddingBottom="@dimen/size_24"
-            app:layout_constraintBottom_toTopOf="@+id/btnPersonalNoteNewNext"
-            app:layout_constraintTop_toBottomOf="@id/tvPersonalNoteNewTemplateAdd" />
+            android:paddingBottom="@dimen/size_24" />
 
         <Button
             android:id="@+id/btnPersonalNoteNewNext"

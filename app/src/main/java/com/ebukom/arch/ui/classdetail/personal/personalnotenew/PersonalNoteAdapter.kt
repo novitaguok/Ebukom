@@ -10,11 +10,14 @@ import com.ebukom.R
 import com.ebukom.arch.dao.ClassDetailPersonalNoteDao
 import com.ebukom.arch.ui.classdetail.MainClassDetailActivity
 import com.ebukom.arch.ui.classdetail.OnMoreCallback
+import com.ebukom.arch.ui.classdetail.personal.personalacceptednote.PersonalAcceptedNoteFragment
 import com.ebukom.arch.ui.classdetail.personal.personalnotedetail.PersonalNoteDetailActivity
+import com.ebukom.data.DataDummy
 import kotlinx.android.synthetic.main.item_note.view.*
 
 class PersonalNoteAdapter(
     var data: List<ClassDetailPersonalNoteDao>,
+    var tabItem: Int,
     var callback: OnMoreCallback) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
@@ -36,12 +39,16 @@ class PersonalNoteAdapter(
         (holder as ViewHolder).bind(data[position])
     }
 
-    class ViewHolder(itemView: View, val callback : OnMoreCallback, val context: Context) : RecyclerView.ViewHolder(itemView) {
+    inner class ViewHolder(itemView: View, val callback : OnMoreCallback, val context: Context) : RecyclerView.ViewHolder(itemView) {
         fun bind(note: ClassDetailPersonalNoteDao) {
             itemView.ivItemNoteProfilePicture.setImageResource(note.profilePicture)
-            itemView.tvItemNoteTitle.text = note?.noteTitle
+            if (tabItem == 1) {
+                itemView.tvItemNoteTitle.text = "Untuk: " + note?.noteTitle
+            } else {
+                itemView.tvItemNoteTitle.text = note?.noteTitle
+            }
             itemView.tvItemNoteContent.text = note?.noteContent
-            itemView.tvItemNoteComment.text = note?.comment
+            itemView.tvItemNoteComment.text = note?.comments.size.toString() + " KOMENTAR"
             itemView.tvItemNoteTime.text = note?.time
 
             itemView.ivItemNoteMoreButton.setOnClickListener {
@@ -49,7 +56,10 @@ class PersonalNoteAdapter(
             }
 
             itemView.clItemNote.setOnClickListener {
-                (context as MainClassDetailActivity).startActivity(Intent(context, PersonalNoteDetailActivity::class.java))
+                val intent = Intent(context, PersonalNoteDetailActivity::class.java)
+                intent.putExtra("pos", adapterPosition)
+                intent.putExtra("data", note)
+                (context as MainClassDetailActivity).startActivity(intent)
             }
         }
     }

@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
@@ -15,8 +16,12 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ebukom.R
 import com.ebukom.arch.dao.ClassDetailAnnouncementCommentDao
+import com.ebukom.arch.dao.ClassDetailAttachmentDao
+import com.ebukom.arch.dao.ClassDetailPersonalNoteDao
+import com.ebukom.arch.ui.classdetail.ClassDetailAttachmentAdapter
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementdetail.SchoolAnnouncementDetailAdapter
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementedit.SchoolAnnouncementEditActivity
+import com.ebukom.data.DataDummy
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.activity_join_class.*
 import kotlinx.android.synthetic.main.activity_personal_note_detail.*
@@ -31,28 +36,18 @@ import kotlinx.android.synthetic.main.item_announcement.view.*
 
 class PersonalNoteDetailActivity : AppCompatActivity() {
 
+    private var pos: Int = -1
+    private val mCommentList: ArrayList<ClassDetailAnnouncementCommentDao> = arrayListOf()
+    private val mCommentAdapter = SchoolAnnouncementDetailAdapter(mCommentList, this)
+    private val mAttachmentList: ArrayList<ClassDetailAttachmentDao> = arrayListOf()
+    private val mAttachmentAdapter = ClassDetailAttachmentAdapter(mAttachmentList)
+    private val mNoteList: ArrayList<ClassDetailPersonalNoteDao> = arrayListOf()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_personal_note_detail)
 
         initToolbar()
-
-        val list = ArrayList<ClassDetailAnnouncementCommentDao>()
-
-        list.add(
-            ClassDetailAnnouncementCommentDao(
-                "Yusi Yuli",
-                "Tidak paham Bu...",
-                R.drawable.ic_book_blue
-            )
-        )
-        list.add(
-            ClassDetailAnnouncementCommentDao(
-                "Eni Trikuswanti",
-                "Baik Bu, Ibu Yuli bisa hubungi saya ketika ada yang tidak dipahami ya...",
-                R.drawable.ic_book_blue
-            )
-        )
 
         // Shared Preference
         val sharePref: SharedPreferences = getSharedPreferences("EBUKOM", Context.MODE_PRIVATE)
@@ -60,11 +55,56 @@ class PersonalNoteDetailActivity : AppCompatActivity() {
             ivPersonalNoteDetailMoreButton.visibility = View.GONE
         }
 
-        // Recycler View
-        val adapter = SchoolAnnouncementDetailAdapter(list, this)
-        rvPersonalNoteDetailComment.layoutManager = LinearLayoutManager(this)
-        rvPersonalNoteDetailComment.adapter = adapter
+        pos = intent?.extras?.getInt("pos", -1)?: -1
 
+        // Get Intent from SchoolAnnouncementFragment
+        val data = intent?.extras?.getSerializable("data") as ClassDetailPersonalNoteDao
+        tvPersonalNoteDetailTitle.text = data.noteTitle
+        tvPersonalNoteDetailContent.text = data.noteContent
+        tvPersonalNoteDetailTime.text = data.time
+        mAttachmentList.addAll(data.attachments)
+        mAttachmentAdapter.notifyDataSetChanged()
+        // Attachment List
+        rvPersonalNoteDetailAttachment.apply {
+            layoutManager =
+                LinearLayoutManager(
+                    this.context,
+                    LinearLayoutManager.VERTICAL,
+                    false
+                )
+            adapter = mAttachmentAdapter
+        }
+        if (mAttachmentList.isEmpty()) cvPersonalNoteDetailAttachment.visibility = View.GONE
+
+        // Comment List
+        checkEmptyComment()
+        rvPersonalNoteDetailComment.apply {
+            layoutManager =
+                LinearLayoutManager(
+                    this.context,
+                    LinearLayoutManager.VERTICAL,
+                    false
+                )
+            adapter = mCommentAdapter
+        }
+        mCommentList.addAll(data.comments)
+        mCommentAdapter.notifyDataSetChanged()
+
+        ivPersonalNoteDetailComment.setOnClickListener {
+            var comment = etPersonalNoteDetailComment.text.toString()
+
+            etPersonalNoteDetailComment.text.clear()
+            mCommentList.add(ClassDetailAnnouncementCommentDao("Ade Andreansyah", comment, R.drawable.bg_solid_gray))
+            mCommentAdapter.notifyDataSetChanged()
+
+            DataDummy.noteSentData[pos].comments = mCommentList
+            mNoteList.clear()
+            mNoteList.addAll(DataDummy.noteSentData)
+
+            checkEmptyComment()
+        }
+
+        // More Button
         ivPersonalNoteDetailMoreButton.setOnClickListener {
             popupMenuInfo()
         }
@@ -213,5 +253,10 @@ class PersonalNoteDetailActivity : AppCompatActivity() {
         toolbar.setNavigationOnClickListener {
             onBackPressed()
         }
+    }
+
+    private fun checkEmptyComment() {
+        if (mCommentList.isNotEmpty()) cvPersonalNoteDetailComment.visibility = View.VISIBLE
+        else cvPersonalNoteDetailComment.visibility = View.GONE
     }
 }

@@ -11,6 +11,9 @@ import com.ebukom.arch.ui.admin.MainAdminActivity
 import com.ebukom.arch.ui.chooseclass.ChooseClassActivity
 import com.ebukom.arch.ui.login.LoginActivity
 import com.ebukom.arch.ui.main.MainActivity
+import com.ebukom.data.DataDummy
+import com.ebukom.data.buildClassDummy
+import com.ebukom.data.buildParentNameDummy
 
 class SplashActivity : AppCompatActivity() {
 
@@ -22,6 +25,9 @@ class SplashActivity : AppCompatActivity() {
         setContentView(R.layout.activity_splash)
 
         sharePref = getSharedPreferences("EBUKOM", Context.MODE_PRIVATE)
+
+        DataDummy.chooseClassData.buildClassDummy()
+        DataDummy.parentNameData.buildParentNameDummy()
 
         val pos = Handler().postDelayed({
             if(sharePref.getBoolean("isLogin", false)){

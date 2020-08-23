@@ -65,7 +65,7 @@ class ChooseClassActivity : AppCompatActivity() {
             }
 
             builder.setNegativeButton("BATALKAN") { dialog, which ->
-                Toast.makeText(applicationContext,"Next?", Toast.LENGTH_SHORT).show()
+                dialog.dismiss()
             }
 
             val dialog: AlertDialog = builder.create()
@@ -115,9 +115,9 @@ class ChooseClassActivity : AppCompatActivity() {
             builder.setMessage("Apakah Anda yakin ingin menghapus kelas ini?")
 
             builder.setNegativeButton("BATALKAN") { dialog, which ->
-                Toast.makeText(applicationContext,"Next?", Toast.LENGTH_SHORT).show()
+                dialog.dismiss()
             }
-            builder.setPositiveButton("HAPUS") { dialog, which ->
+            builder.setPositiveButton("HAPUS") { _, _ ->
                 DataDummy.chooseClassDataMain.remove(item)
                 mList.remove(item)
                 mAdapter.addAll(mList)

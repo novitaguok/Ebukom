@@ -5,10 +5,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.View
-import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
@@ -18,19 +15,14 @@ import com.ebukom.arch.dao.ClassDetailAnnouncementCommentDao
 import com.ebukom.arch.dao.ClassDetailAnnouncementDao
 import com.ebukom.arch.dao.ClassDetailAttachmentDao
 import com.ebukom.arch.ui.classdetail.ClassDetailAttachmentAdapter
-import com.ebukom.arch.ui.classdetail.OnMoreCallback
-import com.ebukom.arch.ui.classdetail.school.schoolannouncement.SchoolAnnouncementAdapter
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementedit.SchoolAnnouncementEditActivity
 import com.ebukom.data.DataDummy
 import com.google.android.material.bottomsheet.BottomSheetDialog
-import kotlinx.android.synthetic.main.activity_join_class.*
 import kotlinx.android.synthetic.main.activity_school_announcement_detail.*
 import kotlinx.android.synthetic.main.activity_school_announcement_detail.toolbar
-import kotlinx.android.synthetic.main.alert_edit_text.*
 import kotlinx.android.synthetic.main.alert_edit_text.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_school_announcement.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_school_announcement_comment.view.*
-import kotlinx.android.synthetic.main.item_announcement.*
 
 class SchoolAnnouncementDetailActivity : AppCompatActivity() {
 
@@ -57,8 +49,7 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
         }
 
         // Get intent from Material Education FRAGMENT
-        val layout = intent.extras?.getString("layout", "0")
-        when (layout) {
+        when (intent.extras?.getString("layout", "0")) {
             "1" -> {
                 tvSchoolAnnouncementDetailTitle.text = "Mendidik Anak Hyperaktif"
                 tvSchoolAnnouncementDetailContent.text =

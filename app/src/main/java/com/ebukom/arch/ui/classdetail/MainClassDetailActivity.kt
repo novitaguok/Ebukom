@@ -12,15 +12,13 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.ebukom.R
-import com.ebukom.arch.dao.ClassDetailAnnouncementDao
-import com.ebukom.arch.dao.ClassDetailPhotoDao
-import com.ebukom.arch.dao.ClassDetailScheduleDao
-import com.ebukom.arch.dao.ClassDetailTemplateTextDao
+import com.ebukom.arch.dao.*
 import com.ebukom.arch.ui.classdetail.material.MaterialFragment
 import com.ebukom.arch.ui.classdetail.member.MemberFragment
 import com.ebukom.arch.ui.classdetail.notification.NotificationActivity
 import com.ebukom.arch.ui.classdetail.personal.PersonalFragment
 import com.ebukom.arch.ui.classdetail.personal.personalnoteedit.PersonalNoteEditActivity
+import com.ebukom.arch.ui.classdetail.personal.personalnotenew.PersonalNoteAdapter
 import com.ebukom.arch.ui.classdetail.personal.personalparent.PersonalParentFragment
 import com.ebukom.arch.ui.classdetail.school.SchoolFragment
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.SchoolAnnouncementAdapter
@@ -46,6 +44,8 @@ class MainClassDetailActivity : AppCompatActivity(), OnMoreCallback {
     private lateinit var mScheduleAdapter : SchoolScheduleAdapter
     private val mPhotoList: ArrayList<ClassDetailPhotoDao> = DataDummy.photoData
     lateinit var mPhotoAdapter : SchoolPhotoAdapter
+    private val mNoteList: ArrayList<ClassDetailPersonalNoteDao> = DataDummy.noteSentData
+    lateinit var mNoteAdapter : PersonalNoteAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -197,6 +197,17 @@ class MainClassDetailActivity : AppCompatActivity(), OnMoreCallback {
 
                         mPhotoAdapter = SchoolPhotoAdapter(mPhotoList, this)
                         mPhotoAdapter.notifyDataSetChanged()
+
+                        loading_main.visibility = View.VISIBLE
+                        Handler().postDelayed({
+                            loading_main.visibility = View.GONE
+                        }, 1000)
+                    }
+                    "3" -> {
+                        DataDummy.noteSentData.removeAt(pos)
+
+                        mNoteAdapter = PersonalNoteAdapter(mNoteList, 1, this)
+                        mNoteAdapter.notifyDataSetChanged()
 
                         loading_main.visibility = View.VISIBLE
                         Handler().postDelayed({

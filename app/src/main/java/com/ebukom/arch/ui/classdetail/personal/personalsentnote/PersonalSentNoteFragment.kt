@@ -11,12 +11,15 @@ import com.ebukom.R
 import com.ebukom.arch.dao.ClassDetailPersonalNoteDao
 import com.ebukom.arch.ui.classdetail.OnMoreCallback
 import com.ebukom.arch.ui.classdetail.personal.personalnotenew.PersonalNoteAdapter
+import com.ebukom.arch.ui.classdetail.school.schoolannouncement.SchoolAnnouncementAdapter
+import com.ebukom.data.DataDummy
 import kotlinx.android.synthetic.main.fragment_personal_sent_note.*
 import kotlinx.android.synthetic.main.fragment_personal_sent_note.view.*
+import kotlinx.android.synthetic.main.fragment_school_announcement.*
 
 class PersonalSentNoteFragment : Fragment() {
-    var objectList = ArrayList<ClassDetailPersonalNoteDao>()
-    lateinit var personalNoteAdapter: PersonalNoteAdapter
+    private val mNoteList: ArrayList<ClassDetailPersonalNoteDao> = arrayListOf()
+    lateinit var mNoteAdapter: PersonalNoteAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -27,40 +30,34 @@ class PersonalSentNoteFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        addData()
-        personalNoteAdapter =
-            PersonalNoteAdapter(
-                objectList,
-                callback
-            )
-        rvPersonalSentNote.layoutManager = LinearLayoutManager(this.context)
-        rvPersonalSentNote.adapter = personalNoteAdapter
+        // Note List
+        mNoteAdapter = PersonalNoteAdapter(mNoteList, 1, callback)
+        rvPersonalSentNote.apply {
+            layoutManager =
+                LinearLayoutManager(
+                    this.context,
+                    LinearLayoutManager.VERTICAL,
+                    false
+                )
+            adapter = mNoteAdapter
+        }
+//        mNoteList.addAll(DataDummy.noteSentData)
+//        mNoteAdapter.notifyDataSetChanged()
 
-        if (objectList.isNotEmpty()) {
-            view.ivPersonalEmpty.visibility = View.INVISIBLE
-            view.tvPersonalEmpty.visibility = View.INVISIBLE
+        checkNoteEmpty(view)
+    }
+
+    private fun checkNoteEmpty(view: View) {
+        if (mNoteList.isNotEmpty()) {
+            view.ivPersonalEmpty.visibility = View.GONE
+            view.tvPersonalEmpty.visibility = View.GONE
         } else {
             view.ivPersonalEmpty.visibility = View.VISIBLE
             view.tvPersonalEmpty.visibility = View.VISIBLE
         }
     }
 
-    private fun addData() {
-        for (i in 0..10) {
-            objectList.add(
-                ClassDetailPersonalNoteDao(
-                    R.drawable.bg_solid_gray,
-                    "Untuk: Rina Musyifa",
-                    "Besok akan dilaksanakan kegiatan pentas seni. Orang tua dimohon untuk mempersiapkan peralatan di bawah ini. Tolong diperhatikan ya Ibu...",
-                    "1 KOMENTAR",
-                    "12.00 - Senin, 12 Maret 2020"
-                )
-            )
-        }
-    }
-
     lateinit var callback: OnMoreCallback
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
         try {
@@ -71,5 +68,16 @@ class PersonalSentNoteFragment : Fragment() {
                         + " must implement MyInterface "
             );
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        // Announcement List
+        mNoteList.clear()
+        mNoteList.addAll(DataDummy.noteSentData)
+        mNoteAdapter.notifyDataSetChanged()
+
+        checkNoteEmpty(view!!)
     }
 }

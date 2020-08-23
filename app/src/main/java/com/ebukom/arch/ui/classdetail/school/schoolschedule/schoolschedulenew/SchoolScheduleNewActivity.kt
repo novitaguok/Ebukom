@@ -25,8 +25,6 @@ class SchoolScheduleNewActivity : AppCompatActivity() {
     var isSetPelajaran = false
     var isSetEskul = false
     var isSetCalendar = false
-    private val mSchedule: ArrayList<ClassDetailScheduleDao> = arrayListOf()
-//    private val mScheduleAdapter = SchoolScheduleAdapter(mScheduleList, )
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

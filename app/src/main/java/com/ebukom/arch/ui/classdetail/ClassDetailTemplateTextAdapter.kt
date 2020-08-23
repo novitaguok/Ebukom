@@ -8,6 +8,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ebukom.R
 import com.ebukom.arch.dao.ClassDetailTemplateTextDao
+import com.ebukom.arch.ui.classdetail.personal.personalnotenew.PersonalNoteNewActivity
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementnew.SchoolAnnouncementNewActivity
 import kotlinx.android.synthetic.main.item_announcement_edit_template.view.*
 
@@ -33,7 +34,8 @@ class ClassDetailTemplateTextAdapter(private val data: List<ClassDetailTemplateT
         val templateText: TextView = itemView.tvAnnouncementEditTemplate
         init {
             itemView.setOnClickListener {
-                (context as SchoolAnnouncementNewActivity).onClickedTemplate(data[adapterPosition])
+                if (context is SchoolAnnouncementNewActivity) (context as SchoolAnnouncementNewActivity).onClickedTemplate(data[adapterPosition])
+                else (context as PersonalNoteNewActivity).onClickedTemplate(data[adapterPosition])
             }
         }
     }

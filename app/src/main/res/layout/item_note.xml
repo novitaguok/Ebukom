@@ -46,7 +46,7 @@
             app:layout_constraintRight_toRightOf="parent"
             app:layout_constraintTop_toTopOf="@+id/tvItemNoteTitle"
             app:layout_constraintBottom_toBottomOf="@+id/tvItemNoteTitle"
-            android:layout_marginRight="@dimen/size_20"
+            android:layout_marginRight="@dimen/size_10"
             android:clickable="true"
             android:src="@drawable/ic_more_vertical" />
 

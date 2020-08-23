@@ -15,8 +15,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ebukom.R
-import com.ebukom.arch.dao.ClassDetailAnnouncementCommentDao
-import com.ebukom.arch.dao.ClassDetailAnnouncementDao
 import com.ebukom.arch.dao.ClassDetailAttachmentDao
 import com.ebukom.arch.dao.ClassDetailTemplateTextDao
 import com.ebukom.arch.ui.classdetail.ClassDetailAttachmentAdapter
@@ -59,7 +57,7 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
         }
 
         // Template List
-        mTemplateList.addAll(DataDummy.textTemplateData)
+        mTemplateList.addAll(DataDummy.announcementTemplateData)
         mTemplateAdapter.notifyDataSetChanged()
         rvSchoolAnnouncementNewTemplate.apply {
             layoutManager =
@@ -111,7 +109,7 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
                     .isNotEmpty() && etSchoolAnnouncementNewContent.text.toString()
                     .isNotEmpty()
             ) {
-                btnSchoolAnnouncementNewNext.setEnabled(true)
+                btnSchoolAnnouncementNewNext.isEnabled = true
                 btnSchoolAnnouncementNewNext.setBackgroundColor(
                     ContextCompat.getColor(
                         applicationContext,
@@ -119,7 +117,7 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
                     )
                 )
             } else {
-                btnSchoolAnnouncementNewNext.setEnabled(false)
+                btnSchoolAnnouncementNewNext.isEnabled = false
                 btnSchoolAnnouncementNewNext.setBackgroundColor(
                     Color.parseColor("#828282")
                 )
@@ -167,7 +165,7 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
                     }
                     builder.setPositiveButton("LAMPIRKAN") { dialog, which ->
                         val link = view.etAlertEditText?.text.toString()
-                        DataDummy.attachmentData.add(ClassDetailAttachmentDao(link, 0))
+                        DataDummy.announcementAttachmentData.add(ClassDetailAttachmentDao(link, 0))
                         insertAttachment(view, link)
 
                         checkAttachmentEmpty()
@@ -226,11 +224,11 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
         if (resultCode == RESULT_OK) {
             when (requestCode) {
                 10 -> {
-                    DataDummy.attachmentData.add(ClassDetailAttachmentDao(path, 1))
+                    DataDummy.announcementAttachmentData.add(ClassDetailAttachmentDao(path, 1))
                     insertAttachment(view, path)
                 }
                 11 -> {
-                    DataDummy.attachmentData.add(ClassDetailAttachmentDao(path, 2))
+                    DataDummy.announcementAttachmentData.add(ClassDetailAttachmentDao(path, 2))
                     insertAttachment(view, path)
                 }
                 else -> {
@@ -245,7 +243,7 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
     private fun insertAttachment(view: View, path: String) {
         mAttachmentAdapter.notifyDataSetChanged()
         mAttachmentList.clear()
-        mAttachmentList.addAll(DataDummy.attachmentData)
+        mAttachmentList.addAll(DataDummy.announcementAttachmentData)
         view.tvItemAnnouncementAttachment?.text = path
 
         checkAttachmentEmpty()
@@ -260,7 +258,7 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
             dialog.dismiss()
         }
         builder.setPositiveButton("HAPUS") { dialog, which ->
-            DataDummy.attachmentData.remove(item)
+            DataDummy.announcementAttachmentData.remove(item)
             mAttachmentList.remove(item)
             mAttachmentAdapter.notifyDataSetChanged()
 
@@ -299,7 +297,7 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
         super.onResume()
 
         mTemplateList.clear()
-        mTemplateList.addAll(DataDummy.textTemplateData)
+        mTemplateList.addAll(DataDummy.announcementTemplateData)
         mTemplateAdapter.notifyDataSetChanged()
     }
 

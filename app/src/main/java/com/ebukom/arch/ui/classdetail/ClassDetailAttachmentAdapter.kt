@@ -9,6 +9,8 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ebukom.R
 import com.ebukom.arch.dao.ClassDetailAttachmentDao
+import com.ebukom.arch.ui.classdetail.personal.personalnoteedit.PersonalNoteEditActivity
+import com.ebukom.arch.ui.classdetail.personal.personalnotenew.PersonalNoteNewActivity
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementdetail.SchoolAnnouncementDetailActivity
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementedit.SchoolAnnouncementEditActivity
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementnew.SchoolAnnouncementNewActivity
@@ -64,8 +66,12 @@ class ClassDetailAttachmentAdapter(private val data: List<ClassDetailAttachmentD
             itemView.ivItemAnnouncementAttachmentDelete.setOnClickListener {
                 if (context is SchoolAnnouncementNewActivity) {
                     (context as SchoolAnnouncementNewActivity).deleteAttachment(dataModel)
-                } else {
+                } else if (context is SchoolAnnouncementEditActivity) {
                     (context as SchoolAnnouncementEditActivity).deleteAttachment(dataModel)
+                } else if (context is PersonalNoteNewActivity) {
+                    (context as PersonalNoteNewActivity).deleteAttachment(dataModel)
+                } else {
+                    (context as PersonalNoteEditActivity).deleteAttachment(dataModel)
                 }
             }
         }

@@ -28,7 +28,8 @@ class JoinClassActivity : AppCompatActivity() {
 
         initToolbar()
 
-        mList.addAll(DataDummy.chooseClassData.buildClassDummy())
+        mList.clear()
+        mList.addAll(DataDummy.chooseClassData)
         mAdapter.addAll(mList)
     }
 

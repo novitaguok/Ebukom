@@ -45,7 +45,6 @@ class SchoolAnnouncementAdapter(
         fun bind(announcement: ClassDetailAnnouncementDao) {
             itemView.tvAnnouncementTitle.text = announcement?.announcementTitle
             itemView.tvAnnouncementContent.text = announcement?.announcementContent
-
             if(announcement.teacherName.isNullOrEmpty())
                 itemView.tvAnnouncementComment.text = announcement?.comments.size.toString() + " KOMENTAR"
             else
