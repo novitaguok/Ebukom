@@ -15,41 +15,20 @@ class MaterialPageAdapter(fm: FragmentManager, val context: Context) : FragmentP
     val sharePref: SharedPreferences = context.getSharedPreferences("EBUKOM", Context.MODE_PRIVATE)
 
     override fun getItem(position: Int): Fragment {
-
-        var fragment1 = if (sharePref.getInt("level", 0) == 1) {
-            PersonalFragment()
-        } else {
-            MaterialSubjectFragment()
-        }
-
-        var fragment2 = if (sharePref.getInt("level", 0) == 1) {
-            PersonalParentSchoolFeeInfoFragment()
-        } else {
-            MaterialEducationFragment()
-        }
-
-        when (position) {
+        return when (position) {
             0 -> {
-                return fragment1
+                MaterialSubjectFragment()
             }
             else -> {
-                return fragment2
+                MaterialEducationFragment()
             }
         }
     }
 
     override fun getPageTitle(position: Int): CharSequence? {
 
-        var tab1 = ""
-        var tab2 = ""
-
-        if (sharePref.getInt("level", 0) == 1) {
-            tab1 = "CATATAN PRIBADI"
-            tab2 = "INFO PEMBAYARAN SPP"
-        } else {
-            tab1 = "MATERI BELAJAR ANAK"
-            tab2 = "MATERI MENDIDIK ANAK"
-        }
+        var tab1 = "MATERI BELAJAR ANAK"
+        var tab2 = "MATERI MENDIDIK ANAK"
 
         when (position) {
             0 -> {

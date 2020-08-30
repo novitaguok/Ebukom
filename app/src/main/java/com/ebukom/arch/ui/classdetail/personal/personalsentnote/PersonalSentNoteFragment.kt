@@ -31,7 +31,7 @@ class PersonalSentNoteFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         // Note List
-        mNoteAdapter = PersonalNoteAdapter(mNoteList, 1, callback)
+        mNoteAdapter = PersonalNoteAdapter(mNoteList, 1, callback, PersonalSentNoteFragment())
         rvPersonalSentNote.apply {
             layoutManager =
                 LinearLayoutManager(

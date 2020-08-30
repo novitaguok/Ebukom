@@ -1,5 +1,7 @@
 package com.ebukom.arch.ui.admin
 
+import android.content.Context
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -7,6 +9,7 @@ import com.ebukom.R
 import com.ebukom.arch.ui.admin.adminclassmember.AdminClassMemberFragment
 import com.ebukom.arch.ui.admin.adminschoolfeeinfo.AdminSchoolFeeInfoFragment
 import com.ebukom.arch.ui.classdetail.OnMoreCallback
+import com.ebukom.arch.ui.login.LoginActivity
 import kotlinx.android.synthetic.main.activity_main_admin.*
 
 class MainAdminActivity : AppCompatActivity(), OnMoreCallback {
@@ -24,6 +27,16 @@ class MainAdminActivity : AppCompatActivity(), OnMoreCallback {
                 R.id.admindClassMember -> makeCurrentFragment(classMemberFragment)
             }
             true
+        }
+
+        ivAdminHeaderProfilePicture.setOnClickListener {
+            var sharePref = getSharedPreferences("EBUKOM", Context.MODE_PRIVATE)
+            sharePref.edit().remove("level").apply()
+            sharePref.edit().apply {
+                putBoolean("isLogin", false)
+            }.apply()
+            startActivity(Intent(this, LoginActivity::class.java))
+            finish()
         }
     }
 

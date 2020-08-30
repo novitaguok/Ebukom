@@ -22,8 +22,8 @@ import kotlinx.android.synthetic.main.fragment_school_schedule.*
 import kotlinx.android.synthetic.main.fragment_school_schedule.view.*
 
 class PersonalParentSchoolFeeInfoFragment : Fragment() {
-    var objectList = ArrayList<ClassDetailPersonalParentSchoolFeeDao>()
-    lateinit var personalParentSchoolFeeInfoAdapter: PersonalParentSchoolFeeInfoAdapter
+    private val mSchoolFeeList: ArrayList<ClassDetailPersonalParentSchoolFeeDao> = arrayListOf()
+    private lateinit var mSchoolFeeAdapter: PersonalParentSchoolFeeInfoAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -35,12 +35,22 @@ class PersonalParentSchoolFeeInfoFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         addData()
-        personalParentSchoolFeeInfoAdapter =
-            PersonalParentSchoolFeeInfoAdapter(objectList, callback)
-        rvPersonalParentSchoolFeeInfo.layoutManager = LinearLayoutManager(this.context)
-        rvPersonalParentSchoolFeeInfo.adapter = personalParentSchoolFeeInfoAdapter
+        mSchoolFeeAdapter = PersonalParentSchoolFeeInfoAdapter(mSchoolFeeList, callback, activity!!)
+        rvPersonalParentSchoolFeeInfo.apply {
+            layoutManager =
+                LinearLayoutManager(
+                    this.context,
+                    LinearLayoutManager.VERTICAL,
+                    false
+                )
+            adapter = mSchoolFeeAdapter
+        }
 
-        if (!objectList.isEmpty()) {
+        checkSchoolFeeEmpty(view)
+    }
+
+    private fun checkSchoolFeeEmpty(view: View) {
+        if (!mSchoolFeeList.isEmpty()) {
             view.ivPersonalParentSchoolFeeInfoEmpty.visibility = View.INVISIBLE
             view.tvPersonalParentSchoolFeeInfoEmpty.visibility = View.INVISIBLE
         } else {
@@ -50,38 +60,21 @@ class PersonalParentSchoolFeeInfoFragment : Fragment() {
     }
 
     private fun addData() {
-        objectList.add(
+        mSchoolFeeList.add(
             ClassDetailPersonalParentSchoolFeeDao(
                 "Info Pembayaran SPP",
-                "28 Maret 2020",
-                0
+                "28 Maret 2020"
             )
         )
-        objectList.add(
+        mSchoolFeeList.add(
             ClassDetailPersonalParentSchoolFeeDao(
                 "Info Pembayaran SPP",
-                "18 Februari 2020",
-                1
-            )
-        )
-        objectList.add(
-            ClassDetailPersonalParentSchoolFeeDao(
-                "Info Pembayaran SPP",
-                "28 Maret 2020",
-                0
-            )
-        )
-        objectList.add(
-            ClassDetailPersonalParentSchoolFeeDao(
-                "Info Pembayaran SPP",
-                "18 Februari 2020",
-                1
+                "18 Februari 2020"
             )
         )
     }
 
     lateinit var callback: OnMoreCallback
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
         try {

@@ -1,16 +1,22 @@
 package com.ebukom.arch.ui.classdetail.personal.personalparent.personalparentnote
 
 import android.content.Context
+import android.content.Intent
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.viewpager.widget.ViewPager
 import com.ebukom.R
 import com.ebukom.arch.ui.classdetail.OnMoreCallback
 import com.ebukom.arch.ui.classdetail.personal.PersonalPageAdapter
+import com.ebukom.arch.ui.classdetail.personal.personalnotenew.PersonalNoteNewActivity
 import com.google.android.material.tabs.TabLayout
+import kotlinx.android.synthetic.main.fragment_personal.*
+import kotlinx.android.synthetic.main.fragment_personal.view.*
 
 class PersonalParentNoteFragment : Fragment() {
     private var tabLayout: TabLayout? = null
@@ -29,7 +35,19 @@ class PersonalParentNoteFragment : Fragment() {
         viewPager?.adapter = PersonalPageAdapter(childFragmentManager)
         tabLayout?.setupWithViewPager(viewPager)
         viewPager?.currentItem = 0
+
+        view.btnPersonalNew.setOnClickListener {
+            activity?.startActivity(Intent(activity, PersonalNoteNewActivity::class.java))
+        }
+
         return view
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        val sharePref: SharedPreferences = activity!!.getSharedPreferences("EBUKOM", Context.MODE_PRIVATE)
+        if(sharePref.getInt("level", 0) == 1){
+            view.btnPersonalNew.text = "Buat Catatan untuk Guru"
+        }
     }
 
     override fun onAttach(context: Context) {

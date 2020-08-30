@@ -25,9 +25,8 @@ class MaterialSubjectNewAdapter(val list: ArrayList<ClassDetailTemplateTextDao>,
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.view.tvItemSubject.text = list?.get(position)?.title
-
         holder.view.ibItemSubject.setOnClickListener {
-            (context as MaterialSubjectNewActivity).popUpMenu()
+            (context as MaterialSubjectNewActivity).popUpMenu(list?.get(position), position)
         }
     }
 

@@ -19,7 +19,6 @@ import java.lang.ClassCastException
 class PersonalParentFragment : Fragment() {
     private var tabLayout: TabLayout? = null
     private var viewPager: ViewPager? = null
-
     lateinit var callback : OnMoreCallback
 
     override fun onCreateView(
@@ -30,16 +29,16 @@ class PersonalParentFragment : Fragment() {
         val view = inflater.inflate(R.layout.fragment_material, container, false)
         tabLayout = view.findViewById(R.id.mainClassMaterialTabLayout) as TabLayout
         viewPager = view.findViewById(R.id.mainClassMaterialViewPager) as ViewPager
-        viewPager?.adapter = MaterialPageAdapter(childFragmentManager, context!!)
+        viewPager?.adapter = PersonalParentPageAdapter(childFragmentManager, context!!)
         tabLayout?.setupWithViewPager(viewPager)
         viewPager?.currentItem = 0
         return view
     }
-
+//
 //    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 //        val sharePref: SharedPreferences = activity!!.getSharedPreferences("EBUKOM", Context.MODE_PRIVATE)
 //        if(sharePref.getInt("level", 0) == 1){
-//            btnPersonalNew.text = "Buat Catatan untuk Guru"
+//            view.btnPersonalNew.text = "Buat Catatan untuk Guru"
 //        }
 //    }
 

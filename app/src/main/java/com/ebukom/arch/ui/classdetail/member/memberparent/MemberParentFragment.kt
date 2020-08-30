@@ -8,17 +8,20 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ebukom.R
+import com.ebukom.arch.dao.ClassDetailAnnouncementDao
 import com.ebukom.arch.dao.ClassDetailMemberContactDao
 import com.ebukom.arch.dao.ClassDetailPersonalNoteDao
 import com.ebukom.arch.ui.classdetail.OnMoreCallback
 import com.ebukom.arch.ui.classdetail.member.MemberContactAdapter
 import com.ebukom.arch.ui.classdetail.personal.personalnotenew.PersonalNoteAdapter
+import com.ebukom.arch.ui.classdetail.school.schoolannouncement.SchoolAnnouncementAdapter
+import com.ebukom.data.DataDummy
 import kotlinx.android.synthetic.main.fragment_member_parent.*
 import kotlinx.android.synthetic.main.fragment_personal_accepted_note.*
 
 class MemberParentFragment : Fragment() {
-    var objectList = ArrayList<ClassDetailMemberContactDao>()
-    lateinit var memberContactAdapter: MemberContactAdapter
+    private val mContactList: ArrayList<ClassDetailMemberContactDao> = arrayListOf()
+    private lateinit var mContactAdapter: MemberContactAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,27 +33,22 @@ class MemberParentFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         addData()
-        memberContactAdapter =
-            MemberContactAdapter(
-                objectList,
-                callback
-            )
-//        schoolAnnouncementAdapter.announcements = objectList
-        rvMemberParent.layoutManager = LinearLayoutManager(this.context)
-        rvMemberParent.adapter = memberContactAdapter
 
-//        if (objectList.isNotEmpty()) {
-//            view.ivPersonalEmpty.visibility = View.INVISIBLE
-//            view.tvPersonalEmpty.visibility = View.INVISIBLE
-//        } else {
-//            view.ivPersonalEmpty.visibility = View.VISIBLE
-//            view.tvPersonalEmpty.visibility = View.VISIBLE
-//        }
+        mContactAdapter = MemberContactAdapter(mContactList, callback, activity!!)
+        rvMemberParent.apply {
+            layoutManager =
+                LinearLayoutManager(
+                    this.context,
+                    LinearLayoutManager.VERTICAL,
+                    false
+                )
+            adapter = mContactAdapter
+        }
     }
 
     private fun addData() {
         for (i in 0..10) {
-            objectList.add(
+            mContactList.add(
                 ClassDetailMemberContactDao(
                     "Eni Trikuswanti",
                     "Julian Akbar",

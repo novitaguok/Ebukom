@@ -66,8 +66,7 @@ class PersonalNoteEditActivity : AppCompatActivity() {
                 )
             adapter = mAttachmentAdapter
         }
-        if (mAttachmentList.isEmpty()) tvPersonalNoteEditAttachmentTitle.visibility =
-            View.GONE
+        if (mAttachmentList.isEmpty()) tvPersonalNoteEditAttachmentTitle.visibility = View.GONE
         else tvPersonalNoteEditAttachmentTitle.visibility = View.VISIBLE
 
         // Template List
@@ -159,7 +158,8 @@ class PersonalNoteEditActivity : AppCompatActivity() {
                     val dialog: androidx.appcompat.app.AlertDialog = builder.create()
                     dialog.show()
 
-                    val positiveButton = dialog.getButton(androidx.appcompat.app.AlertDialog.BUTTON_POSITIVE)
+                    val positiveButton =
+                        dialog.getButton(androidx.appcompat.app.AlertDialog.BUTTON_POSITIVE)
                     positiveButton.setTextColor(
                         ContextCompat.getColor(
                             applicationContext,
@@ -167,7 +167,8 @@ class PersonalNoteEditActivity : AppCompatActivity() {
                         )
                     )
 
-                    val negativeButton = dialog.getButton(androidx.appcompat.app.AlertDialog.BUTTON_NEGATIVE)
+                    val negativeButton =
+                        dialog.getButton(androidx.appcompat.app.AlertDialog.BUTTON_NEGATIVE)
                     negativeButton.setTextColor(
                         ContextCompat.getColor(
                             applicationContext,

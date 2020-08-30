@@ -16,7 +16,6 @@ import java.lang.ClassCastException
 class MaterialFragment : Fragment() {
     private var tabLayout: TabLayout? = null
     private var viewPager: ViewPager? = null
-
     lateinit var callback : OnMoreCallback
 
     override fun onCreateView(

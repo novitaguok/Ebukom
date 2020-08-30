@@ -37,8 +37,6 @@ import kotlinx.android.synthetic.main.item_announcement_attachment.view.*
 class PersonalNoteNewActivity : AppCompatActivity() {
 
     private val mNoteList: ArrayList<ClassDetailPersonalNoteDao> = arrayListOf()
-
-    //    private val mNoteAdapter = PersonalNoteAdapter(mNoteList,)
     private val mAttachmentList: ArrayList<ClassDetailAttachmentDao> = arrayListOf()
     private val mAttachmentAdapter = ClassDetailAttachmentAdapter(mAttachmentList)
     private val mTemplateList: ArrayList<ClassDetailTemplateTextDao> = arrayListOf()

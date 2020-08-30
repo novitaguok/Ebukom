@@ -6,6 +6,8 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
+import android.widget.RadioButton
+import android.widget.RadioGroup
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -14,12 +16,16 @@ import androidx.fragment.app.Fragment
 import com.ebukom.R
 import com.ebukom.arch.dao.*
 import com.ebukom.arch.ui.classdetail.material.MaterialFragment
+import com.ebukom.arch.ui.classdetail.material.materialeducation.MaterialEducationFragment
+import com.ebukom.arch.ui.classdetail.material.materialeducation.materialeducationedit.MaterialEducationEditActivity
 import com.ebukom.arch.ui.classdetail.member.MemberFragment
 import com.ebukom.arch.ui.classdetail.notification.NotificationActivity
 import com.ebukom.arch.ui.classdetail.personal.PersonalFragment
+import com.ebukom.arch.ui.classdetail.personal.personalacceptednote.PersonalAcceptedNoteFragment
 import com.ebukom.arch.ui.classdetail.personal.personalnoteedit.PersonalNoteEditActivity
 import com.ebukom.arch.ui.classdetail.personal.personalnotenew.PersonalNoteAdapter
 import com.ebukom.arch.ui.classdetail.personal.personalparent.PersonalParentFragment
+import com.ebukom.arch.ui.classdetail.personal.personalsentnote.PersonalSentNoteFragment
 import com.ebukom.arch.ui.classdetail.school.SchoolFragment
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.SchoolAnnouncementAdapter
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementedit.SchoolAnnouncementEditActivity
@@ -31,21 +37,28 @@ import com.ebukom.arch.ui.editprofile.EditProfileActivity
 import com.ebukom.data.DataDummy
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.activity_main_class_detail.*
+import kotlinx.android.synthetic.main.bottom_sheet_choose_class.view.*
+import kotlinx.android.synthetic.main.bottom_sheet_class_detail_header.*
 import kotlinx.android.synthetic.main.bottom_sheet_class_detail_header.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_school_announcement.view.*
+import kotlinx.android.synthetic.main.bottom_sheet_school_announcement.view.tvEditInfo
 
 class MainClassDetailActivity : AppCompatActivity(), OnMoreCallback {
     companion object {
         var isAnnouncement = true
+        var isMaterial = true
     }
+
     private val mAnnouncementList: ArrayList<ClassDetailAnnouncementDao> = DataDummy.announcementData
-    private lateinit var mAnnouncementAdapter : SchoolAnnouncementAdapter
+    private lateinit var mAnnouncementAdapter: SchoolAnnouncementAdapter
     private val mScheduleList: ArrayList<ClassDetailScheduleDao> = DataDummy.scheduleData
-    private lateinit var mScheduleAdapter : SchoolScheduleAdapter
+    private lateinit var mScheduleAdapter: SchoolScheduleAdapter
     private val mPhotoList: ArrayList<ClassDetailPhotoDao> = DataDummy.photoData
-    lateinit var mPhotoAdapter : SchoolPhotoAdapter
+    lateinit var mPhotoAdapter: SchoolPhotoAdapter
     private val mNoteList: ArrayList<ClassDetailPersonalNoteDao> = DataDummy.noteSentData
-    lateinit var mNoteAdapter : PersonalNoteAdapter
+    lateinit var mNoteAdapter: PersonalNoteAdapter
+    private val mEducationList: ArrayList<ClassDetailAnnouncementDao> = DataDummy.educationData
+    lateinit var mEducationAdapter: SchoolAnnouncementAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -90,14 +103,19 @@ class MainClassDetailActivity : AppCompatActivity(), OnMoreCallback {
             bottomSheetDialog.show()
         }
 
-        view.llBottomSheetClassDetailHeaderKelas1.setOnClickListener {
-//            bottomSheetDialog.dismiss()
-            Toast.makeText(this, "A", Toast.LENGTH_LONG).show()
-        }
+        view.rbBottomSheetClassDetailHeaderKelas1.isChecked = true
 
-        view.llBottomSheetClassDetailHeaderKelas2.setOnClickListener {
-//            bottomSheetDialog.dismiss()
-            Toast.makeText(this, "F", Toast.LENGTH_LONG).show()
+        view.rbGroup.setOnCheckedChangeListener { _, checkedId ->
+            if (checkedId == R.id.rbBottomSheetClassDetailHeaderKelas1) {
+                bottomSheetDialog.dismiss()
+                tvClassHeaderClassNumber.text = "Kelas 1"
+                tvClassHeaderClassName.text = "Aurora"
+            }
+            else {
+                bottomSheetDialog.dismiss()
+                tvClassHeaderClassNumber.text = "Kelas 2"
+                tvClassHeaderClassName.text = "Fatamorgana"
+            }
         }
     }
 
@@ -122,6 +140,9 @@ class MainClassDetailActivity : AppCompatActivity(), OnMoreCallback {
         } else if (id == "3") { // Personal Note
             view.tvEditInfo.text = "Edit Catatan"
             view.tvDeleteInfo.text = "Hapus Catatan"
+        } else if (id == "4") { // Material Subject FRAGMENT
+            view.tvEditInfo.text = "Edit Materi"
+            view.tvDeleteInfo.text = "Hapus Materi"
         } else if (!isAnnouncement) { // Personal Note FRAGMENT
             view.tvEditInfo.text = "Edit Catatan"
             view.tvDeleteInfo.text = "Hapus Catatan"
@@ -131,18 +152,11 @@ class MainClassDetailActivity : AppCompatActivity(), OnMoreCallback {
             bottomSheetDialog.dismiss()
 
             when (id) {
-                "0" -> { // School Announcement
-                    intent = Intent(this, SchoolAnnouncementEditActivity::class.java)
-                }
-                "1" -> { // School Schedule
-                    intent = Intent(this, SchoolScheduleEditActivity::class.java)
-                }
-                "2" -> { // School Photo
-                    intent = Intent(this, SchoolPhotoEditActivity::class.java)
-                }
-                "3" -> { // Personal Note
-                    intent = Intent(this, PersonalNoteEditActivity::class.java)
-                }
+                "0" -> intent = Intent(this, SchoolAnnouncementEditActivity::class.java)
+                "1" -> intent = Intent(this, SchoolScheduleEditActivity::class.java)
+                "2" -> intent = Intent(this, SchoolPhotoEditActivity::class.java)
+                "3" -> intent = Intent(this, PersonalNoteEditActivity::class.java)
+                "4" -> intent = Intent(this, MaterialEducationEditActivity::class.java)
             }
 
             intent.putExtra("pos", pos)
@@ -203,11 +217,22 @@ class MainClassDetailActivity : AppCompatActivity(), OnMoreCallback {
                             loading_main.visibility = View.GONE
                         }, 1000)
                     }
-                    "3" -> {
+                    "3" -> { // Note
                         DataDummy.noteSentData.removeAt(pos)
 
-                        mNoteAdapter = PersonalNoteAdapter(mNoteList, 1, this)
+                        mNoteAdapter = PersonalNoteAdapter(mNoteList, 1, this, PersonalSentNoteFragment())
                         mNoteAdapter.notifyDataSetChanged()
+
+                        loading_main.visibility = View.VISIBLE
+                        Handler().postDelayed({
+                            loading_main.visibility = View.GONE
+                        }, 1000)
+                    }
+                    "4" -> { // Note
+                        DataDummy.educationData.removeAt(pos)
+
+                        mEducationAdapter = SchoolAnnouncementAdapter(mEducationList, this, MaterialEducationFragment())
+                        mEducationAdapter.notifyDataSetChanged()
 
                         loading_main.visibility = View.VISIBLE
                         Handler().postDelayed({
@@ -244,7 +269,61 @@ class MainClassDetailActivity : AppCompatActivity(), OnMoreCallback {
         bottomSheetDialog.show()
     }
 
+    fun popupMenuDelete(id: String, pos: Int) {
+        val bottomSheetDialog = BottomSheetDialog(this)
+        val view = layoutInflater.inflate(R.layout.bottom_sheet_choose_class, null)
+        bottomSheetDialog.setContentView(view)
+
+        view.tvDeleteClass.setOnClickListener {
+            val builder = AlertDialog.Builder(this@MainClassDetailActivity)
+            bottomSheetDialog.dismiss()
+
+            builder.setMessage("Apakah Anda yakin ingin menghapus catatan ini?")
+
+            builder.setNegativeButton("BATALKAN") { dialog, _ ->
+                dialog.dismiss()
+            }
+            builder.setPositiveButton("HAPUS") { _, _ ->
+                DataDummy.noteAcceptedData.removeAt(pos)
+
+                mNoteAdapter = PersonalNoteAdapter(mNoteList, 0, this, PersonalAcceptedNoteFragment())
+                mNoteAdapter.notifyDataSetChanged()
+
+                loading_main.visibility = View.VISIBLE
+                Handler().postDelayed({
+                    loading_main.visibility = View.GONE
+                }, 1000)
+            }
+
+            val dialog: AlertDialog = builder.create()
+            dialog.show()
+
+            val positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+            positiveButton.setTextColor(
+                ContextCompat.getColor(
+                    applicationContext,
+                    R.color.colorGray
+                )
+            )
+
+            val negativeButton = dialog.getButton(AlertDialog.BUTTON_NEGATIVE)
+            negativeButton.setTextColor(
+                ContextCompat.getColor(
+                    applicationContext,
+                    R.color.colorRed
+                )
+            )
+        }
+
+        view.tvCancelClass.setOnClickListener {
+            bottomSheetDialog.dismiss()
+        }
+
+        bottomSheetDialog.show()
+    }
+
     override fun onMoreClicked(id: String, pos: Int) {
-        popupMenuInfo(id, pos)
+        if (id == "5") popupMenuDelete(id, pos)
+        else popupMenuInfo(id, pos)
     }
 }

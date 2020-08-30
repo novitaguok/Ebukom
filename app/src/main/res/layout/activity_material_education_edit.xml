@@ -43,7 +43,7 @@
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tilMaterialEducationNewTitle"
+                android:id="@+id/tilMaterialEducationEditTitle"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -60,7 +60,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etMaterialEducationNewTitle"
+                    android:id="@+id/etMaterialEducationEditTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/edit_text_rectangle_selector"
@@ -68,28 +68,28 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <EditText
-                android:id="@+id/etMaterialEducationNewContent"
+                android:id="@+id/etMaterialEducationEditContent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
                 android:layout_marginTop="@dimen/size_28"
                 android:background="@android:color/transparent"
                 android:gravity="top"
-                android:hint="@string/material_content"
+                android:hint="Masukkan materi mendidik anak..."
                 android:lineHeight="@dimen/text_16"
                 android:minLines="10"
                 android:text="@string/material_content"
                 android:textColorHint="#9E9E9E"
                 android:textSize="@dimen/text_14"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tilMaterialEducationNewTitle" />
+                app:layout_constraintTop_toBottomOf="@+id/tilMaterialEducationEditTitle" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
 
     <Button
-        android:id="@+id/btnMaterialEducationNewDone"
+        android:id="@+id/btnMaterialEducationEditDone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"

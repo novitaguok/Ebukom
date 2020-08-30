@@ -15,12 +15,13 @@ import com.ebukom.arch.ui.classdetail.MainClassDetailActivity
 import com.ebukom.arch.ui.classdetail.OnMoreCallback
 import com.ebukom.arch.ui.classdetail.material.materialeducation.materialeducationnew.MaterialEducationNewActivity
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.SchoolAnnouncementAdapter
+import com.ebukom.data.DataDummy
 import kotlinx.android.synthetic.main.fragment_material_education.*
 import java.lang.ClassCastException
 
 class MaterialEducationFragment : Fragment() {
-    var objectList = ArrayList<ClassDetailAnnouncementDao>()
-    lateinit var schoolAnnouncementAdapter: SchoolAnnouncementAdapter
+    private val mPersonalEducationList: ArrayList<ClassDetailAnnouncementDao> = arrayListOf()
+    lateinit var mPersonalEducationAdapter: SchoolAnnouncementAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -37,33 +38,42 @@ class MaterialEducationFragment : Fragment() {
             btnMaterialEducationNew.visibility = View.GONE
         }
 
-        // Recycler View
-        addData()
-        schoolAnnouncementAdapter = SchoolAnnouncementAdapter(objectList, callback)
-        rvMaterialEducation.layoutManager = LinearLayoutManager(this.context)
-        rvMaterialEducation.adapter = schoolAnnouncementAdapter
+        mPersonalEducationAdapter = SchoolAnnouncementAdapter(mPersonalEducationList, callback, this)
+        mPersonalEducationList.clear()
+        mPersonalEducationList.addAll(DataDummy.educationData)
+        mPersonalEducationAdapter.notifyDataSetChanged()
+
+        // Education List
+        rvMaterialEducation.apply {
+            layoutManager =
+                LinearLayoutManager(
+                    this.context,
+                    LinearLayoutManager.VERTICAL,
+                    false
+                )
+            adapter = mPersonalEducationAdapter
+        }
+        mPersonalEducationList.addAll(DataDummy.educationData)
+        mPersonalEducationAdapter.notifyDataSetChanged()
 
         btnMaterialEducationNew.setOnClickListener {
             (context as MainClassDetailActivity).startActivity(Intent((context as MainClassDetailActivity), MaterialEducationNewActivity::class.java))
         }
+
+        checkEducationEmpty()
     }
 
-    private fun addData() {
-        for (i in 0..10) {
-
-            objectList.add(
-                ClassDetailAnnouncementDao(
-                    "Mendidik Anak Hyperaktif",
-                    "Untuk mendidk anak yang hyperaktif, diperlukan suatu kemampuan aitu kesabaran yang luar biasa. Selain itu perlu diketahui juga cara yang...",
-                    teacherName = "Eni Trikuswanti",
-                    time = "02/02/02"
-                )
-            )
+    private fun checkEducationEmpty() {
+        if (mPersonalEducationList.isEmpty()) {
+            ivMaterialEducationEmpty.visibility = View.VISIBLE
+            tvMaterialEducationEmpty.visibility = View.VISIBLE
+        } else {
+            ivMaterialEducationEmpty.visibility = View.GONE
+            tvMaterialEducationEmpty.visibility = View.GONE
         }
     }
 
     lateinit var callback: OnMoreCallback
-
     override fun onAttach(context: Context) {
         super.onAttach(context)
         try {
@@ -79,5 +89,11 @@ class MaterialEducationFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         MainClassDetailActivity.isAnnouncement = false
+
+        mPersonalEducationList.clear()
+        mPersonalEducationList.addAll(DataDummy.educationData)
+        mPersonalEducationAdapter.notifyDataSetChanged()
+
+        checkEducationEmpty()
     }
 }

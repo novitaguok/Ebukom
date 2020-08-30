@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -27,8 +27,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/etSchoolAnnouncementDetailComment"
-        android:layout_below="@+id/appbar">
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -40,6 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/size_8"
                 android:layout_marginTop="@dimen/size_12"
+                android:layout_marginBottom="@dimen/size_4"
                 android:elevation="@dimen/size_2"
                 app:cardCornerRadius="4dp">
 
@@ -156,19 +156,35 @@
         </RelativeLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <EditText
-        android:id="@+id/etSchoolAnnouncementDetailComment"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/size_52"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/edit_text_rectangle_white"
-        android:drawableRight="@drawable/ic_send_red"
-        android:gravity="center_vertical"
-        android:hint="@string/insert_comment"
-        android:padding="@dimen/size_16"
-        android:shadowColor="@color/colorGray"
-        android:textColor="@color/colorBlack"
-        android:textCursorDrawable="@null" />
+        android:layout_gravity="bottom">
 
+        <EditText
+            android:id="@+id/etMaterialEducationDetailComment"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_52"
+            android:background="@drawable/edit_text_rectangle_white"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:hint="@string/insert_comment"
+            android:padding="@dimen/size_16"
+            android:textSize="@dimen/text_14"
+            android:lineHeight="@dimen/size_20"
+            android:shadowColor="@color/colorGray"
+            android:textColor="@color/colorBlack"
+            android:textCursorDrawable="@null" />
 
-</RelativeLayout>
+        <ImageView
+            android:id="@+id/ivMaterialEducationDetailComment"
+            android:layout_width="@dimen/size_24"
+            android:layout_height="@dimen/size_24"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:src="@drawable/ic_send_red"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

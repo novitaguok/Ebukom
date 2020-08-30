@@ -121,15 +121,14 @@
             android:id="@+id/btnMaterialSubjectDone"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
+            app:layout_constraintTop_toTopOf="parent"
             android:background="#828282"
             android:enabled="false"
             android:lineHeight="@dimen/text_16"
             android:text="BAGIKAN MATERI"
             android:textColor="@color/colorWhite"
             android:textFontWeight="500"
-            android:textSize="@dimen/text_14"
-            app:layout_constraintTop_toTopOf="parent" />
+            android:textSize="@dimen/text_14" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

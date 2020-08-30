@@ -29,7 +29,7 @@ class PersonalAcceptedNoteFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        mPersonalNoteAdapter = PersonalNoteAdapter(mPersonalNoteList, 0, callback)
+        mPersonalNoteAdapter = PersonalNoteAdapter(mPersonalNoteList, 0, callback, PersonalAcceptedNoteFragment())
         rvPersonalAcceptedNote.apply {
             layoutManager =
                 LinearLayoutManager(
@@ -41,7 +41,7 @@ class PersonalAcceptedNoteFragment : Fragment() {
         }
 
         mPersonalNoteList.clear()
-        mPersonalNoteList.addAll(DataDummy.noteAcceptedData.buildParentNoteDummy(activity!!))
+        mPersonalNoteList.addAll(DataDummy.noteAcceptedData)
         mPersonalNoteAdapter.notifyDataSetChanged()
 
         checkEmptyNote(view)

@@ -18,8 +18,8 @@ import kotlinx.android.synthetic.main.fragment_member_school.*
 import kotlinx.android.synthetic.main.fragment_personal_accepted_note.*
 
 class MemberSchoolFragment : Fragment() {
-    var objectList = ArrayList<ClassDetailMemberContactDao>()
-    lateinit var memberContactAdapter: MemberContactAdapter
+    private val mContactList: ArrayList<ClassDetailMemberContactDao> = arrayListOf()
+    private lateinit var mContactAdapter: MemberContactAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,27 +31,21 @@ class MemberSchoolFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         addData()
-        memberContactAdapter =
-            MemberContactAdapter(
-                objectList,
-                callback
-            )
-//        schoolAnnouncementAdapter.announcements = objectList
-        rvMemberSchool.layoutManager = LinearLayoutManager(this.context)
-        rvMemberSchool.adapter = memberContactAdapter
-
-//        if (objectList.isNotEmpty()) {
-//            view.ivPersonalEmpty.visibility = View.INVISIBLE
-//            view.tvPersonalEmpty.visibility = View.INVISIBLE
-//        } else {
-//            view.ivPersonalEmpty.visibility = View.VISIBLE
-//            view.tvPersonalEmpty.visibility = View.VISIBLE
-//        }
+        mContactAdapter = MemberContactAdapter(mContactList, callback, activity!!)
+        rvMemberSchool.apply {
+            layoutManager =
+                LinearLayoutManager(
+                    this.context,
+                    LinearLayoutManager.VERTICAL,
+                    false
+                )
+            adapter = mContactAdapter
+        }
     }
 
     private fun addData() {
         for (i in 0..10) {
-            objectList.add(
+            mContactList.add(
                 ClassDetailMemberContactDao(
                     "Eni Trikuswanti",
                     "Guru Kelas 1 Aurora",

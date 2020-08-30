@@ -8,19 +8,39 @@ import com.ebukom.arch.dao.*
 class DataDummy {
 
     companion object {
+        // Class
         var chooseClassData = arrayListOf<ChooseClassDao>()
         var chooseClassDataMain = arrayListOf<ChooseClassDao>() // Empty
+
+        // School Nav -- Announcement
         var announcementData = arrayListOf<ClassDetailAnnouncementDao>()
         var announcementAttachmentData = arrayListOf<ClassDetailAttachmentDao>()
         var announcementTemplateData = arrayListOf<ClassDetailTemplateTextDao>()
+
+        // School Nav -- Schedule
         var scheduleData = arrayListOf<ClassDetailScheduleDao>()
+
+        // School Nav -- Photo
         var photoData = arrayListOf<ClassDetailPhotoDao>()
+
+        // Personal Nav
         var noteAcceptedData = arrayListOf<ClassDetailPersonalNoteDao>()
         var noteSentData = arrayListOf<ClassDetailPersonalNoteDao>()
         var noteAttachmentData = arrayListOf<ClassDetailAttachmentDao>()
         var noteTemplateData = arrayListOf<ClassDetailTemplateTextDao>()
         var parentNameData = arrayListOf<ClassDetailItemCheckDao>()
 
+        // Material Nav -- Subject Tab
+        var mathMaterial = arrayListOf<ClassDetailTemplateTextDao>()
+        var scienceMaterial = arrayListOf<ClassDetailTemplateTextDao>()
+        var englishMaterial = arrayListOf<ClassDetailTemplateTextDao>()
+
+        // Material Nav -- Education Tab
+        var educationData = arrayListOf<ClassDetailAnnouncementDao>()
+
+        // Admin
+        var paymentData = arrayListOf<AdminPaymentItemFormDao>()
+        var adminNoteTemplateData = arrayListOf<ClassDetailTemplateTextDao>()
     }
 }
 

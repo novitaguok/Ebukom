@@ -1,9 +1,12 @@
 package com.ebukom.arch.ui.classdetail.personal.personalparent.personalparentschoolfeeinfo
 
+import android.content.ContentProvider
 import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.ebukom.R
 import com.ebukom.arch.dao.*
@@ -25,38 +28,51 @@ private const val TYPE_PURPLE = 1
 
 class PersonalParentSchoolFeeInfoAdapter(
     var data: List<ClassDetailPersonalParentSchoolFeeDao>,
-    var callback: OnMoreCallback
+    var callback: OnMoreCallback,
+    val context: Context
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
 
-    class PersonalParentSchoolFeeInfoAdapterViewHolderRed(itemView: View, val callback: OnMoreCallback) :
+    inner class PersonalParentSchoolFeeInfoAdapterViewHolderRed(
+        itemView: View,
+        val callback: OnMoreCallback
+    ) :
         RecyclerView.ViewHolder(itemView) {
         fun bind(dataModel: ClassDetailPersonalParentSchoolFeeDao) {
             itemView.tvItemSchoolfeeRedTitle.text = dataModel.title
             itemView.tvItemSchoolfeeRedDate.text = dataModel.date
+            itemView.clItemSchoolfeeRed.setOnClickListener {
+                (context as MainClassDetailActivity).startActivity(Intent(context, PersonalParentSchoolFeeInfoActivity::class.java))
+            }
         }
     }
 
-    class PersonalParentSchoolFeeInfoAdapterViewHolderPurple(itemView: View, val callback: OnMoreCallback) :
+    inner class PersonalParentSchoolFeeInfoAdapterViewHolderPurple(
+        itemView: View,
+        val callback: OnMoreCallback
+    ) :
         RecyclerView.ViewHolder(itemView) {
         fun bind(dataModel: ClassDetailPersonalParentSchoolFeeDao) {
             itemView.tvItemSchoolfeePurpleTitle.text = dataModel.title
             itemView.tvItemSchoolfeePurpleDate.text = dataModel.date
+            itemView.clItemSchoolfeePurple.setOnClickListener {
+                (context as MainClassDetailActivity).startActivity(Intent(context, PersonalParentSchoolFeeInfoActivity::class.java))
+            }
         }
 
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
-        if (viewType == TYPE_PURPLE) {
+        return if (viewType == TYPE_PURPLE) {
             val view =
                 LayoutInflater.from(parent.context)
                     .inflate(R.layout.item_schoolfee_purple, parent, false)
-            return PersonalParentSchoolFeeInfoAdapterViewHolderPurple(view, callback)
+            PersonalParentSchoolFeeInfoAdapterViewHolderPurple(view, callback)
         } else {
             val view =
                 LayoutInflater.from(parent.context)
                     .inflate(R.layout.item_schoolfee_red, parent, false)
-            return PersonalParentSchoolFeeInfoAdapterViewHolderRed(view, callback)
+            PersonalParentSchoolFeeInfoAdapterViewHolderRed(view, callback)
         }
     }
 
@@ -73,7 +89,7 @@ class PersonalParentSchoolFeeInfoAdapter(
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (data[position].viewType == 0) {
+        return if (position % 2 == 1) {
             TYPE_RED
         } else {
             TYPE_PURPLE

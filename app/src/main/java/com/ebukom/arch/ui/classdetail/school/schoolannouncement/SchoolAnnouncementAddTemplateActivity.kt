@@ -19,9 +19,11 @@ class SchoolAnnouncementAddTemplateActivity : AppCompatActivity() {
 
         // Toolbar
         initToolbar()
+
         var layout = intent.extras?.getString("layout", "announcement")
         when (layout) {
             "note" -> tvToolbarTitle.text = "Tambah Template Catatan"
+            "payment" -> tvToolbarTitle.text = "Tambah Template Item"
         }
 
         // Text Watcher

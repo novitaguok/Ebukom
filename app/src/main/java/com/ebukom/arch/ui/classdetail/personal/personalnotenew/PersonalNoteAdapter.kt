@@ -5,6 +5,8 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.ebukom.R
 import com.ebukom.arch.dao.ClassDetailPersonalNoteDao
@@ -18,8 +20,10 @@ import kotlinx.android.synthetic.main.item_note.view.*
 class PersonalNoteAdapter(
     var data: List<ClassDetailPersonalNoteDao>,
     var tabItem: Int,
-    var callback: OnMoreCallback) :
-    RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    var callback: OnMoreCallback,
+    var fragment: Fragment
+) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+    lateinit  var id: String
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view =
@@ -39,7 +43,8 @@ class PersonalNoteAdapter(
         (holder as ViewHolder).bind(data[position])
     }
 
-    inner class ViewHolder(itemView: View, val callback : OnMoreCallback, val context: Context) : RecyclerView.ViewHolder(itemView) {
+    inner class ViewHolder(itemView: View, val callback: OnMoreCallback, val context: Context) :
+        RecyclerView.ViewHolder(itemView) {
         fun bind(note: ClassDetailPersonalNoteDao) {
             itemView.ivItemNoteProfilePicture.setImageResource(note.profilePicture)
             if (tabItem == 1) {
@@ -51,8 +56,13 @@ class PersonalNoteAdapter(
             itemView.tvItemNoteComment.text = note?.comments.size.toString() + " KOMENTAR"
             itemView.tvItemNoteTime.text = note?.time
 
+            if (fragment is PersonalAcceptedNoteFragment) {
+                id = "5"
+            } else {
+                id = "3"
+            }
             itemView.ivItemNoteMoreButton.setOnClickListener {
-                callback.onMoreClicked("3", adapterPosition)
+                callback.onMoreClicked(id, adapterPosition)
             }
 
             itemView.clItemNote.setOnClickListener {

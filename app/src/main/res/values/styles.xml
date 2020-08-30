@@ -77,4 +77,12 @@
     <style name="Theme.SwitchDateTime.Date" >
         <item name="mcv_selectionColor">#D62F42</item>
     </style>
+
+    <!-- Customize Radio Button -->
+    <style name="CustomTheme" parent="android:Theme" >
+        <item name="android:radioButtonStyle">@style/RadioButton</item>
+    </style>
+    <style name="RadioButton" parent="Widget.AppCompat.CompoundButton.RadioButton" >
+        <item name="android:button">@drawable/selector_radio_button</item>
+    </style>
 </resources>

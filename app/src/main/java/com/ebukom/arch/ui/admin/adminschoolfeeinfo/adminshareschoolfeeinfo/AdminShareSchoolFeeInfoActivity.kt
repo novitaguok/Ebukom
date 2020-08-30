@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
@@ -14,13 +15,14 @@ import com.ebukom.arch.ui.admin.adminschoolfeeinfo.AdminShareSchoolFeeInfoAdapte
 import com.ebukom.arch.ui.admin.adminschoolfeeinfo.adminshareschoolfeeinfonext.AdminShareSchoolFeeInfoNextActivity
 import com.ebukom.arch.ui.admin.adminschoolfeeinfo.adminshareschoolfeeinfoaddnote.AdminSchoolFeeInfoAddNoteActivity
 import com.ebukom.arch.ui.admin.adminschoolfeeinfo.adminshareschoolfeeinfoaddpaymentitem.AdminSchoolFeeInfoAddPaymentItemActivity
+import com.ebukom.data.DataDummy
 import kotlinx.android.synthetic.main.activity_admin_share_school_fee_info.*
 import kotlinx.android.synthetic.main.activity_admin_share_school_fee_info.toolbar
 import kotlinx.android.synthetic.main.alert_edit_payment.view.*
 
 class AdminShareSchoolFeeInfoActivity : AppCompatActivity() {
-    var objectList = ArrayList<AdminPaymentItemFormDao>()
-    lateinit var adminShareSchoolFeeInfoAdapter: AdminShareSchoolFeeInfoAdapter
+    var mPaymentList: ArrayList<AdminPaymentItemFormDao> = arrayListOf()
+    lateinit var mPaymentAdapter: AdminShareSchoolFeeInfoAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -36,52 +38,32 @@ class AdminShareSchoolFeeInfoActivity : AppCompatActivity() {
             startActivity(Intent(this, AdminSchoolFeeInfoAddNoteActivity::class.java))
         }
 
-        addData()
-        adminShareSchoolFeeInfoAdapter =
-            AdminShareSchoolFeeInfoAdapter(
-                objectList
+        mPaymentAdapter = AdminShareSchoolFeeInfoAdapter(mPaymentList)
+        rvAdminShareSchoolFeeInfo.apply {
+            layoutManager = LinearLayoutManager(
+                this@AdminShareSchoolFeeInfoActivity,
+                LinearLayoutManager.VERTICAL,
+                false
             )
-        rvAdminShareSchoolFeeInfo.layoutManager = LinearLayoutManager(this)
-        rvAdminShareSchoolFeeInfo.adapter = adminShareSchoolFeeInfoAdapter
-
-        if (objectList.isNotEmpty()) {
-            ivAdminShareSchoolFeeInfoEmpty.visibility = View.GONE
-            tvAdminShareSchoolFeeInfoEmpty.visibility = View.GONE
-            tbtnAdminShareSchoolFeeInfoDetailEdit.visibility = View.VISIBLE
-            btnAdminShareSchoolFeeInfoNext.isEnabled = true
-            btnAdminShareSchoolFeeInfoNext.setBackgroundColor(
-                ContextCompat.getColor(
-                    applicationContext,
-                    R.color.colorSuperDarkBlue
-                )
-            )
+            adapter = mPaymentAdapter
         }
+        mPaymentList.addAll(DataDummy.paymentData)
+        mPaymentAdapter.notifyDataSetChanged()
 
-        if (objectList.isEmpty()) {
-            ivAdminShareSchoolFeeInfoEmpty.visibility = View.VISIBLE
-            tvAdminShareSchoolFeeInfoEmpty.visibility = View.VISIBLE
-            tbtnAdminShareSchoolFeeInfoDetailEdit.visibility = View.GONE
-            btnAdminShareSchoolFeeInfoNext.isEnabled = false
-            btnAdminShareSchoolFeeInfoNext.setBackgroundColor(
-                ContextCompat.getColor(
-                    applicationContext,
-                    R.color.colorSuperDarkBlue
-                )
-            )
-        }
+        checkPaymentEmpty()
 
         // Toggle button
         tbtnAdminShareSchoolFeeInfoDetailEdit.setOnCheckedChangeListener { buttonView, isChecked ->
             if (isChecked) {
-                objectList.forEach {
+                mPaymentList.forEach {
                     it.itemEdit = true
                 }
-                adminShareSchoolFeeInfoAdapter.notifyDataSetChanged()
+                mPaymentAdapter.notifyDataSetChanged()
             } else {
-                objectList.forEach {
+                mPaymentList.forEach {
                     it.itemEdit = false
                 }
-                adminShareSchoolFeeInfoAdapter.notifyDataSetChanged()
+                mPaymentAdapter.notifyDataSetChanged()
             }
         }
 
@@ -103,9 +85,35 @@ class AdminShareSchoolFeeInfoActivity : AppCompatActivity() {
             }
         }
 
-        // Ubah penerima
+        // Change Recipient
         btnAdminShareSchoolFeeInfoChangeRecipient.setOnClickListener {
             startActivity(Intent(this, AdminShareSchoolFeeInfoNextActivity::class.java))
+        }
+    }
+
+    private fun checkPaymentEmpty() {
+        if (mPaymentList.isNotEmpty()) {
+            ivAdminShareSchoolFeeInfoEmpty.visibility = View.GONE
+            tvAdminShareSchoolFeeInfoEmpty.visibility = View.GONE
+            tbtnAdminShareSchoolFeeInfoDetailEdit.visibility = View.VISIBLE
+            btnAdminShareSchoolFeeInfoNext.isEnabled = true
+            btnAdminShareSchoolFeeInfoNext.setBackgroundColor(
+                ContextCompat.getColor(
+                    applicationContext,
+                    R.color.colorSuperDarkBlue
+                )
+            )
+        } else {
+            ivAdminShareSchoolFeeInfoEmpty.visibility = View.VISIBLE
+            tvAdminShareSchoolFeeInfoEmpty.visibility = View.VISIBLE
+            tbtnAdminShareSchoolFeeInfoDetailEdit.visibility = View.GONE
+            btnAdminShareSchoolFeeInfoNext.isEnabled = false
+            btnAdminShareSchoolFeeInfoNext.setBackgroundColor(
+                ContextCompat.getColor(
+                    applicationContext,
+                    R.color.colorGray
+                )
+            )
         }
     }
 
@@ -118,18 +126,7 @@ class AdminShareSchoolFeeInfoActivity : AppCompatActivity() {
         }
     }
 
-    private fun addData() {
-        for (i in 0..1) {
-            objectList.add(
-                AdminPaymentItemFormDao(
-                    "Pengembangan I/II",
-                    "880.000"
-                )
-            )
-        }
-    }
-
-    fun deleteItem(item: AdminPaymentItemFormDao) {
+    fun deleteItem(item: AdminPaymentItemFormDao, pos: Int) {
         val builder = AlertDialog.Builder(this@AdminShareSchoolFeeInfoActivity)
 
         builder.setMessage("Apakah Anda yakin ingin menghapus item ini?")
@@ -145,16 +142,11 @@ class AdminShareSchoolFeeInfoActivity : AppCompatActivity() {
         val positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
         positiveButton.setOnClickListener {
             dialog.dismiss()
-            objectList.remove(item)
-            adminShareSchoolFeeInfoAdapter.notifyDataSetChanged()
+            mPaymentList.remove(item)
+            DataDummy.paymentData.removeAt(pos)
+            mPaymentAdapter.notifyDataSetChanged()
 
-            if (objectList.isEmpty()) {
-                ivAdminShareSchoolFeeInfoEmpty.visibility = View.VISIBLE
-                tvAdminShareSchoolFeeInfoEmpty.visibility = View.VISIBLE
-                tbtnAdminShareSchoolFeeInfoDetailEdit.visibility = View.GONE
-                btnAdminShareSchoolFeeInfoNext.isEnabled = false
-                btnAdminShareSchoolFeeInfoNext.setBackgroundColor(Color.parseColor("#BDBDBD"))
-            }
+            checkPaymentEmpty()
         }
         positiveButton.setTextColor(
             ContextCompat.getColor(
@@ -172,9 +164,12 @@ class AdminShareSchoolFeeInfoActivity : AppCompatActivity() {
         )
     }
 
-    fun editItem(item: AdminPaymentItemFormDao) {
+    fun editItem(item: AdminPaymentItemFormDao, pos: Int) {
         val builder = AlertDialog.Builder(this@AdminShareSchoolFeeInfoActivity)
         val view = layoutInflater.inflate(R.layout.alert_edit_payment, null)
+
+        view.etAlertEditPaymentName.setText(DataDummy.paymentData[pos].itemName)
+        view.etAlertEditPaymentFee.setText(DataDummy.paymentData[pos].itemFee)
 
         builder.setView(view)
 
@@ -197,6 +192,13 @@ class AdminShareSchoolFeeInfoActivity : AppCompatActivity() {
                 view.tvAlertEditPaymentNameErrorMessage.visibility = View.VISIBLE
             } else if (view.etAlertEditPaymentFee.text.toString().isEmpty()) {
                 view.tvAlertEditPaymentFeeErrorMessage.visibility = View.VISIBLE
+            } else {
+                dialog.dismiss()
+                DataDummy.paymentData[pos].itemName = view.etAlertEditPaymentName.text.toString()
+                DataDummy.paymentData[pos].itemFee = view.etAlertEditPaymentFee.text.toString()
+                mPaymentList.clear()
+                mPaymentList.addAll(DataDummy.paymentData)
+                mPaymentAdapter.notifyDataSetChanged()
             }
         }
         positiveButton.setTextColor(
@@ -213,6 +215,16 @@ class AdminShareSchoolFeeInfoActivity : AppCompatActivity() {
                 R.color.colorRed
             )
         )
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        mPaymentList.clear()
+        mPaymentList.addAll(DataDummy.paymentData)
+        mPaymentAdapter.notifyDataSetChanged()
+
+        checkPaymentEmpty()
     }
 }
 

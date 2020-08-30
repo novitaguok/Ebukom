@@ -14,6 +14,7 @@ import com.ebukom.arch.ui.main.MainActivity
 import com.ebukom.data.DataDummy
 import com.ebukom.data.buildClassDummy
 import com.ebukom.data.buildParentNameDummy
+import com.ebukom.data.buildParentNoteDummy
 
 class SplashActivity : AppCompatActivity() {
 
@@ -28,6 +29,7 @@ class SplashActivity : AppCompatActivity() {
 
         DataDummy.chooseClassData.buildClassDummy()
         DataDummy.parentNameData.buildParentNameDummy()
+        DataDummy.noteAcceptedData.buildParentNoteDummy(this)
 
         val pos = Handler().postDelayed({
             if(sharePref.getBoolean("isLogin", false)){

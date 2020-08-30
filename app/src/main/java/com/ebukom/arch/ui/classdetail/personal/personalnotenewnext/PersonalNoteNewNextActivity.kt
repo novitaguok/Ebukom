@@ -45,56 +45,16 @@ class PersonalNoteNewNextActivity : AppCompatActivity(), ClassDetailCheckAdapter
 
         if (sharePref.getInt("level", 0) == 1) {
             tvToolbarTitle.text = "Buat Catatan untuk Guru"
+            tvPersonalNoteNewNextAllParent.text = "Semua Guru"
 
             // Share Personal Note Button
             btnPersonalNoteNewNextDone.setOnClickListener {
-                loading.visibility = View.VISIBLE
-                Handler().postDelayed({
-                    loading.visibility = View.GONE
-                    popUpMenu()
-                    finish()
-                }, 1000)
+                sendNote()
             }
         } else {
             // Share Personal Note Button
             btnPersonalNoteNewNextDone.setOnClickListener {
-                mParentList.forEach {
-                    if (it.isChecked) {
-                        DataDummy.noteSentData.add(
-                            ClassDetailPersonalNoteDao(
-                                R.drawable.bg_solid_gray,
-                                it.item,
-                                getString(R.string.announcement_content),
-                                arrayListOf(),
-                                dateTime,
-                                attachments
-                            )
-                        )
-                        it.isChecked = false
-                    }
-                }
-
-                val builder = AlertDialog.Builder(this@PersonalNoteNewNextActivity)
-
-                builder.setMessage("Catatan berhasil disampaikan ke Ibu Ratu Cinta")
-                builder.setPositiveButton("OK", null)
-
-                val dialog: AlertDialog = builder.create()
-                dialog.show()
-
-                val positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
-                positiveButton.setOnClickListener {
-                    dialog.dismiss()
-                    finish()
-                }
-                positiveButton.setTextColor(
-                    ContextCompat.getColor(
-                        applicationContext,
-                        R.color.colorSuperDarkBlue
-                    )
-                )
-
-                finish()
+                sendNote()
             }
 
         }
@@ -165,6 +125,44 @@ class PersonalNoteNewNextActivity : AppCompatActivity(), ClassDetailCheckAdapter
             else mParentList.forEach { it.isChecked = false }
             rvPersonalNoteNewNext.adapter?.notifyDataSetChanged()
         }
+    }
+
+    private fun sendNote() {
+        mParentList.forEach {
+            if (it.isChecked) {
+                DataDummy.noteSentData.add(
+                    ClassDetailPersonalNoteDao(
+                        R.drawable.bg_solid_gray,
+                        it.item,
+                        getString(R.string.announcement_content),
+                        arrayListOf(),
+                        dateTime,
+                        attachments
+                    )
+                )
+                it.isChecked = false
+            }
+        }
+
+        val builder = AlertDialog.Builder(this@PersonalNoteNewNextActivity)
+
+        builder.setMessage("Catatan berhasil disampaikan ke Ibu Ratu Cinta")
+        builder.setPositiveButton("OK", null)
+
+        val dialog: AlertDialog = builder.create()
+        dialog.show()
+
+        val positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+        positiveButton.setOnClickListener {
+            dialog.dismiss()
+            finish()
+        }
+        positiveButton.setTextColor(
+            ContextCompat.getColor(
+                applicationContext,
+                R.color.colorSuperDarkBlue
+            )
+        )
     }
 
     fun initToolbar() {

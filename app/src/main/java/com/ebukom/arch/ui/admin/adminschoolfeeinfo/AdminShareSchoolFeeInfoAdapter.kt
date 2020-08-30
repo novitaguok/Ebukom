@@ -26,17 +26,17 @@ class AdminShareSchoolFeeInfoAdapter(
         RecyclerView.ViewHolder(itemView) {
         fun bind(dataModel: AdminPaymentItemFormDao) {
             itemView.tvItemAdminPaymentDetailName.text = dataModel.itemName
-            itemView.tvItemAdminPaymentDetailFee.text = dataModel.itemFee
+            itemView.tvItemAdminPaymentDetailFee.text = dataModel.itemFee.toString()
             itemView.ivItemAdminPaymentDetailDelete.visibility = if (dataModel.itemEdit) {
                 View.VISIBLE
             } else {
                 View.GONE
             }
             itemView.ivItemAdminPaymentDetailDelete.setOnClickListener {
-                (context as AdminShareSchoolFeeInfoActivity).deleteItem(dataModel)
+                (context as AdminShareSchoolFeeInfoActivity).deleteItem(dataModel, adapterPosition)
             }
             itemView.trItemAdminPaymentDetail.setOnClickListener {
-                (context as AdminShareSchoolFeeInfoActivity).editItem(dataModel)
+                (context as AdminShareSchoolFeeInfoActivity).editItem(dataModel, adapterPosition)
             }
         }
     }
@@ -55,10 +55,10 @@ class AdminShareSchoolFeeInfoAdapter(
                 View.GONE
             }
             itemView.ivItemAdminPaymentDetailWhiteDelete.setOnClickListener {
-                (context as AdminShareSchoolFeeInfoActivity).deleteItem(dataModel)
+                (context as AdminShareSchoolFeeInfoActivity).deleteItem(dataModel, adapterPosition)
             }
             itemView.trItemAdminPaymentDetailWhite.setOnClickListener {
-                (context as AdminShareSchoolFeeInfoActivity).editItem(dataModel)
+                (context as AdminShareSchoolFeeInfoActivity).editItem(dataModel, adapterPosition)
             }
         }
 

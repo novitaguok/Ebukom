@@ -77,6 +77,7 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
             adapter = mAttachmentAdapter
         }
         if (mAttachmentList.isEmpty()) cvSchoolAnnouncementDetailAttachment.visibility = View.GONE
+        else cvSchoolAnnouncementDetailAttachment.visibility = View.VISIBLE
 
         // Comment List
         rvSchoolAnnouncementDetailComment.apply {
