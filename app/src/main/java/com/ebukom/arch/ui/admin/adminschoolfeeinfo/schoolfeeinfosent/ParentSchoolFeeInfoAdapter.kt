@@ -7,15 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ebukom.R
-import com.ebukom.arch.dao.AdminPaymentItemDao
 import com.ebukom.arch.dao.AdminSchoolFeeInfoSentDao
 import com.ebukom.arch.ui.admin.MainAdminActivity
 import com.ebukom.arch.ui.admin.adminschoolfeeinfo.adminshareschoolfeeinfonext.AdminShareSchoolFeeInfoNextActivity
 import com.ebukom.arch.ui.classdetail.personal.personalparent.personalparentschoolfeeinfo.PersonalParentSchoolFeeInfoActivity
 import kotlinx.android.synthetic.main.item_admin_info_sent.view.*
 
-class AdminSchoolFeeInfoSentAdapter(
-    var data: List<AdminPaymentItemDao>,
+class ParentSchoolFeeInfoAdapter(
+    var data: List<AdminSchoolFeeInfoSentDao>,
     val callback: onCheckListener?
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -39,19 +38,18 @@ class AdminSchoolFeeInfoSentAdapter(
 
     inner class ViewHolder(itemView: View, val context: Context) :
         RecyclerView.ViewHolder(itemView) {
-        fun bind(info: AdminPaymentItemDao) {
-            itemView.tvItemAdminInfoSentTitle.text = "Info Biaya Pendidikan 14 Maret 2020"
-
-            if (context is PersonalParentSchoolFeeInfoActivity) itemView.tvItemAdminInfoSentDetail.text = "Bobbi Andrean • " + info?.eskuls + " • " + info?.classes
-            else itemView.tvItemAdminInfoSentDetail.text = info?.eskuls
-
-            itemView.tvItemAdminInfoSentDate.text = "Terakhir diupdate: 20.00 - 14 Maret 2020"
+        fun bind(info: AdminSchoolFeeInfoSentDao) {
+            itemView.tvItemAdminInfoSentTitle.text = info?.title
+            itemView.tvItemAdminInfoSentDetail.text = info?.detail
+            itemView.tvItemAdminInfoSentDate.text = info?.date
+            itemView.cbItemAdminInfoSent.isChecked = info?.isChecked
 
             if (context is AdminShareSchoolFeeInfoNextActivity) {
                 itemView.cbItemAdminInfoSent.visibility = View.VISIBLE
             }
 
             itemView.cbItemAdminInfoSent.setOnCheckedChangeListener { _, isChecked ->
+                data[adapterPosition].isChecked = isChecked
                 callback?.onCheckChange()
             }
 
@@ -60,7 +58,6 @@ class AdminSchoolFeeInfoSentAdapter(
                     val intent = Intent(context, PersonalParentSchoolFeeInfoActivity::class.java)
                     intent.putExtra("role", "admin")
                     intent.putExtra("pos", adapterPosition)
-                    intent.putExtra("data", info)
                     context.startActivity(intent)
                 }
             }

@@ -5,12 +5,14 @@ import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.provider.ContactsContract
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ebukom.R
+import com.ebukom.arch.dao.AdminPaymentItemDao
 import com.ebukom.arch.dao.ClassDetailTemplateTextDao
 import com.ebukom.arch.ui.classdetail.ClassDetailTemplateTextAdapter
 import com.ebukom.arch.ui.classdetail.personal.personalnotenew.PersonalNoteAddTemplateActivity
@@ -20,6 +22,7 @@ import kotlinx.android.synthetic.main.activity_admin_school_fee_info_add_note.to
 
 class AdminSchoolFeeInfoAddNoteActivity : AppCompatActivity() {
 
+    private var pos: Int = -1
     private val mTemplateList: ArrayList<ClassDetailTemplateTextDao> = arrayListOf()
     private val mTemplateAdapter = ClassDetailTemplateTextAdapter(mTemplateList)
 
@@ -28,6 +31,30 @@ class AdminSchoolFeeInfoAddNoteActivity : AppCompatActivity() {
         setContentView(R.layout.activity_admin_school_fee_info_add_note)
 
         initToolbar()
+
+        // Get intent from AdminShareSchoolFeeInfoActivity
+        val layout = intent?.extras?.getString("layout", null)
+        when (layout) {
+            "edit" -> {
+                pos = intent?.extras?.getInt("pos", -1) ?: -1
+                val data = intent?.extras?.getSerializable("data") as AdminPaymentItemDao
+
+                DataDummy.adminNoteTemporaryData = DataDummy.paymentData[pos].note.toString()
+
+                etAdminSchoolFeeInfoAddNote.setText(data.note)
+
+                // Done
+                btnAdminSchoolFeeInfoAddNoteDone.setOnClickListener {
+                    val content = etAdminSchoolFeeInfoAddNote.text.toString()
+                    DataDummy.adminNoteTemporaryData = content
+                    loading.visibility = View.VISIBLE
+                    Handler().postDelayed({
+                        loading.visibility = View.GONE
+                        finish()
+                    }, 1000)
+                }
+            }
+        }
 
         // Template Note
         rvAdminSchoolFeeInfoAddNoteTemplate.apply {
@@ -50,6 +77,8 @@ class AdminSchoolFeeInfoAddNoteActivity : AppCompatActivity() {
 
         // Done
         btnAdminSchoolFeeInfoAddNoteDone.setOnClickListener {
+            val content = etAdminSchoolFeeInfoAddNote.text.toString()
+            DataDummy.adminNoteTemporaryData = content
             loading.visibility = View.VISIBLE
             Handler().postDelayed({
                 loading.visibility = View.GONE

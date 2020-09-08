@@ -1,16 +1,17 @@
 package com.ebukom.arch.ui.admin.adminschoolfeeinfo.adminshareschoolfeeinfo
 
 import android.content.Intent
-import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.provider.ContactsContract
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ebukom.R
+import com.ebukom.arch.dao.AdminPaymentItemDao
 import com.ebukom.arch.dao.AdminPaymentItemFormDao
+import com.ebukom.arch.dao.AdminSchoolFeeInfoSentDao
+import com.ebukom.arch.ui.admin.MainAdminActivity
 import com.ebukom.arch.ui.admin.adminschoolfeeinfo.AdminShareSchoolFeeInfoAdapter
 import com.ebukom.arch.ui.admin.adminschoolfeeinfo.adminshareschoolfeeinfonext.AdminShareSchoolFeeInfoNextActivity
 import com.ebukom.arch.ui.admin.adminschoolfeeinfo.adminshareschoolfeeinfoaddnote.AdminSchoolFeeInfoAddNoteActivity
@@ -21,8 +22,10 @@ import kotlinx.android.synthetic.main.activity_admin_share_school_fee_info.toolb
 import kotlinx.android.synthetic.main.alert_edit_payment.view.*
 
 class AdminShareSchoolFeeInfoActivity : AppCompatActivity() {
+    private var pos: Int = -1
     var mPaymentList: ArrayList<AdminPaymentItemFormDao> = arrayListOf()
     lateinit var mPaymentAdapter: AdminShareSchoolFeeInfoAdapter
+    lateinit var layout : String
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,6 +41,10 @@ class AdminShareSchoolFeeInfoActivity : AppCompatActivity() {
             startActivity(Intent(this, AdminSchoolFeeInfoAddNoteActivity::class.java))
         }
 
+        btnAdminShareSchoolFeeInfoNext.setOnClickListener {
+            startActivity(Intent(this, AdminShareSchoolFeeInfoNextActivity::class.java))
+        }
+
         mPaymentAdapter = AdminShareSchoolFeeInfoAdapter(mPaymentList)
         rvAdminShareSchoolFeeInfo.apply {
             layoutManager = LinearLayoutManager(
@@ -47,13 +54,13 @@ class AdminShareSchoolFeeInfoActivity : AppCompatActivity() {
             )
             adapter = mPaymentAdapter
         }
-        mPaymentList.addAll(DataDummy.paymentData)
+        mPaymentList.addAll(DataDummy.paymentTemporaryData)
         mPaymentAdapter.notifyDataSetChanged()
 
         checkPaymentEmpty()
 
         // Toggle button
-        tbtnAdminShareSchoolFeeInfoDetailEdit.setOnCheckedChangeListener { buttonView, isChecked ->
+        tbtnAdminShareSchoolFeeInfoDetailEdit.setOnCheckedChangeListener { _, isChecked ->
             if (isChecked) {
                 mPaymentList.forEach {
                     it.itemEdit = true
@@ -67,13 +74,8 @@ class AdminShareSchoolFeeInfoActivity : AppCompatActivity() {
             }
         }
 
-        // Next activity
-        btnAdminShareSchoolFeeInfoNext.setOnClickListener {
-            startActivity(Intent(this, AdminShareSchoolFeeInfoNextActivity::class.java))
-        }
-
         // Get intent from PersonalParentSchoolFeeInfoActivity
-        val layout = intent?.extras?.getString("layout", null)
+        layout = intent?.extras?.getString("layout")?: ""
         when (layout) {
             "edit" -> {
                 tvToolbarTitle.text = "Edit Biaya Pendidikan"
@@ -82,13 +84,48 @@ class AdminShareSchoolFeeInfoActivity : AppCompatActivity() {
                 btnAdminShareSchoolFeeInfoChangeRecipient.visibility = View.VISIBLE
                 btnAdminShareSchoolFeeInfoNext.text = "SIMPAN PERUBAHAN"
                 btnAdminShareSchoolFeeInfoAddNote.text = "UBAH CATATAN"
+
+                pos = intent?.extras?.getInt("pos", -1) ?: -1
+                val data = intent?.extras?.getSerializable("data") as AdminPaymentItemDao
+
+                mPaymentList.clear()
+                DataDummy.paymentTemporaryData.clear()
+                DataDummy.paymentTemporaryData.addAll(DataDummy.paymentData[pos].items)
+                mPaymentAdapter.notifyDataSetChanged()
+                rvAdminShareSchoolFeeInfo.adapter?.notifyDataSetChanged()
+                checkPaymentEmpty()
+
+                // Change Note
+                btnAdminShareSchoolFeeInfoAddNote.setOnClickListener {
+                    val intent = Intent(this, AdminSchoolFeeInfoAddNoteActivity::class.java)
+                    intent.putExtra("data", data)
+                    intent.putExtra("layout", "edit")
+                    intent.putExtra("pos", pos)
+                    startActivity(intent)
+                }
+
+                // Change Recipient
+                btnAdminShareSchoolFeeInfoChangeRecipient.setOnClickListener {
+                    val intent = Intent(this, AdminShareSchoolFeeInfoNextActivity::class.java)
+                    intent.putExtra("data", data)
+//                    intent.putExtra("role", "admin")
+                    intent.putExtra("layout", "edit")
+                    intent.putExtra("pos", pos)
+                    startActivity(intent)
+                }
+
+                // Done
+                btnAdminShareSchoolFeeInfoNext.setOnClickListener {
+                    DataDummy.paymentData[pos].recipients = DataDummy.recipientTemporaryData.clone() as List<AdminSchoolFeeInfoSentDao>
+                    DataDummy.paymentData[pos].note = DataDummy.adminNoteTemporaryData
+                    DataDummy.paymentData[pos].items = DataDummy.paymentTemporaryData.clone() as List<AdminPaymentItemFormDao>
+
+                    startActivity(Intent(this, MainAdminActivity::class.java))
+                    finish()
+                }
             }
         }
 
-        // Change Recipient
-        btnAdminShareSchoolFeeInfoChangeRecipient.setOnClickListener {
-            startActivity(Intent(this, AdminShareSchoolFeeInfoNextActivity::class.java))
-        }
     }
 
     private fun checkPaymentEmpty() {
@@ -103,6 +140,7 @@ class AdminShareSchoolFeeInfoActivity : AppCompatActivity() {
                     R.color.colorSuperDarkBlue
                 )
             )
+            rvAdminShareSchoolFeeInfo.visibility = View.VISIBLE
         } else {
             ivAdminShareSchoolFeeInfoEmpty.visibility = View.VISIBLE
             tvAdminShareSchoolFeeInfoEmpty.visibility = View.VISIBLE
@@ -114,6 +152,7 @@ class AdminShareSchoolFeeInfoActivity : AppCompatActivity() {
                     R.color.colorGray
                 )
             )
+            rvAdminShareSchoolFeeInfo.visibility = View.GONE
         }
     }
 
@@ -123,6 +162,10 @@ class AdminShareSchoolFeeInfoActivity : AppCompatActivity() {
         supportActionBar?.title = ""
         toolbar.setNavigationOnClickListener {
             onBackPressed()
+            DataDummy.recipientTemporaryData.clear()
+            DataDummy.adminNoteTemporaryData = ""
+            DataDummy.eskulTemporaryData.clear()
+            DataDummy.paymentTemporaryData.clear()
         }
     }
 
@@ -143,7 +186,7 @@ class AdminShareSchoolFeeInfoActivity : AppCompatActivity() {
         positiveButton.setOnClickListener {
             dialog.dismiss()
             mPaymentList.remove(item)
-            DataDummy.paymentData.removeAt(pos)
+            DataDummy.paymentTemporaryData.removeAt(pos)
             mPaymentAdapter.notifyDataSetChanged()
 
             checkPaymentEmpty()
@@ -168,8 +211,8 @@ class AdminShareSchoolFeeInfoActivity : AppCompatActivity() {
         val builder = AlertDialog.Builder(this@AdminShareSchoolFeeInfoActivity)
         val view = layoutInflater.inflate(R.layout.alert_edit_payment, null)
 
-        view.etAlertEditPaymentName.setText(DataDummy.paymentData[pos].itemName)
-        view.etAlertEditPaymentFee.setText(DataDummy.paymentData[pos].itemFee)
+        view.etAlertEditPaymentName.setText(DataDummy.paymentTemporaryData[pos].itemName)
+        view.etAlertEditPaymentFee.setText(DataDummy.paymentTemporaryData[pos].itemFee)
 
         builder.setView(view)
 
@@ -194,10 +237,10 @@ class AdminShareSchoolFeeInfoActivity : AppCompatActivity() {
                 view.tvAlertEditPaymentFeeErrorMessage.visibility = View.VISIBLE
             } else {
                 dialog.dismiss()
-                DataDummy.paymentData[pos].itemName = view.etAlertEditPaymentName.text.toString()
-                DataDummy.paymentData[pos].itemFee = view.etAlertEditPaymentFee.text.toString()
+                DataDummy.paymentTemporaryData[pos].itemName = view.etAlertEditPaymentName.text.toString()
+                DataDummy.paymentTemporaryData[pos].itemFee = view.etAlertEditPaymentFee.text.toString()
                 mPaymentList.clear()
-                mPaymentList.addAll(DataDummy.paymentData)
+                mPaymentList.addAll(DataDummy.paymentTemporaryData)
                 mPaymentAdapter.notifyDataSetChanged()
             }
         }
@@ -221,7 +264,9 @@ class AdminShareSchoolFeeInfoActivity : AppCompatActivity() {
         super.onResume()
 
         mPaymentList.clear()
-        mPaymentList.addAll(DataDummy.paymentData)
+//        if(layout == "edit") mPaymentList.addAll(DataDummy.paymentData[pos].items)
+//        else mPaymentList.addAll(DataDummy.paymentTemporaryData)
+        mPaymentList.addAll(DataDummy.paymentTemporaryData)
         mPaymentAdapter.notifyDataSetChanged()
 
         checkPaymentEmpty()

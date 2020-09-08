@@ -37,6 +37,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginBottom="50dp"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -88,11 +89,27 @@
                 app:layout_constraintTop_toBottomOf="@+id/tvPersonalParentSchoolFeeInfoDate" />
 
             <TableLayout
-                android:id="@+id/tbPersonalParentSchoolFeeInfo"
+                android:id="@+id/tbAdminSchoolFeeInfo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/size_8"
                 app:layout_constraintTop_toBottomOf="@+id/tvPersonalParentSchoolFeeInfoDetail">
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvPersonalParentSchoolFeeInfo"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/size_24"
+                    android:paddingBottom="@dimen/size_24" />
+
+            </TableLayout>
+
+            <TableLayout
+                android:id="@+id/tbPersonalParentSchoolFeeInfo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_8"
+                app:layout_constraintTop_toBottomOf="@+id/tbAdminSchoolFeeInfo">
 
                 <TableRow
                     android:layout_width="match_parent"
@@ -430,6 +447,7 @@
                 app:cardUseCompatPadding="true">
 
                 <LinearLayout
+                    android:id="@+id/llPersonalParentSchoolFeeInfoNote"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
@@ -466,10 +484,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/size_8"
+                android:layout_marginBottom="@dimen/size_8"
                 android:layout_marginHorizontal="@dimen/size_8"
+                app:layout_constraintTop_toBottomOf="@+id/cvPersonalParentSchoolFeeInfoNote"
+                app:layout_constraintBottom_toBottomOf="parent"
                 android:elevation="@dimen/size_2"
                 app:cardElevation="@dimen/size_2"
-                app:layout_constraintTop_toBottomOf="@+id/cvPersonalParentSchoolFeeInfoNote"
                 app:cardUseCompatPadding="true">
 
                 <androidx.constraintlayout.widget.ConstraintLayout
@@ -552,8 +572,7 @@
                 android:nestedScrollingEnabled="false"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tvPersonalParentSchoolFeeInfoRecipientTitle"
-                />
+                app:layout_constraintTop_toBottomOf="@+id/tvPersonalParentSchoolFeeInfoRecipientTitle" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
@@ -570,5 +589,10 @@
         android:textFontWeight="500"
         android:textSize="@dimen/text_14"
         android:visibility="gone"/>
+
+    <include
+        android:id="@+id/loading"
+        layout="@layout/layout_loading"
+        android:visibility="gone" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

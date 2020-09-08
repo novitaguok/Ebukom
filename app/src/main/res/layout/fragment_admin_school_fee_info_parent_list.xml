@@ -30,7 +30,7 @@
                 android:text="Semua Kelas"
                 android:textAlignment="textStart"
                 android:textAllCaps="false"
-                android:textColor="@color/colorGray"
+                android:textColor="#222222"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <Button
@@ -47,7 +47,7 @@
                 android:text="Semua Eskul"
                 android:textAlignment="textStart"
                 android:textAllCaps="false"
-                android:textColor="@color/colorGray"
+                android:textColor="#222222"
                 app:layout_constraintTop_toBottomOf="@+id/btnAdminSchoolFeeInfoParentListClass" />
 
             <TextView

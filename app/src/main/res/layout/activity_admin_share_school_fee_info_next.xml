@@ -155,7 +155,11 @@
         android:text="BAGIKAN INFO BIAYA PENDIDIKAN"
         android:textColor="@color/colorWhite"
         android:textFontWeight="500"
-        android:textSize="@dimen/text_14" />
+        android:textSize="@dimen/text_14"
+        android:enabled="false" />
 
-<!--    android:enabled="false"-->
+    <include
+        android:id="@+id/loading"
+        layout="@layout/layout_loading"
+        android:visibility="gone" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

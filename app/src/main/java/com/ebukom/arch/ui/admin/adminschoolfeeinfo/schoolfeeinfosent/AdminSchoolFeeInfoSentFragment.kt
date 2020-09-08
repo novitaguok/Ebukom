@@ -7,14 +7,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ebukom.R
-import com.ebukom.arch.dao.AdminSchoolFeeInfoSentDao
-import com.ebukom.arch.ui.admin.adminschoolfeeinfo.AdminSchoolFeeInfoPageAdapter
+import com.ebukom.arch.dao.AdminPaymentItemDao
+import com.ebukom.data.DataDummy
 import kotlinx.android.synthetic.main.fragment_admin_school_fee_info_sent.*
 import kotlinx.android.synthetic.main.fragment_admin_school_fee_info_sent.view.*
 
 class AdminSchoolFeeInfoSentFragment : Fragment() {
-    var objectList = ArrayList<AdminSchoolFeeInfoSentDao>()
-    lateinit var adminSchoolFeeInfoSentAdapter: AdminSchoolFeeInfoSentAdapter
+    private val mInfoSentList: ArrayList<AdminPaymentItemDao> = arrayListOf()
+    lateinit var mInfoSentAdapter: AdminSchoolFeeInfoSentAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -25,15 +25,23 @@ class AdminSchoolFeeInfoSentFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        addData()
-        adminSchoolFeeInfoSentAdapter =
-            AdminSchoolFeeInfoSentAdapter(
-                objectList, null
+        mInfoSentAdapter = AdminSchoolFeeInfoSentAdapter(mInfoSentList, null)
+        rvSchoolFeeInfoSent.apply {
+            layoutManager = LinearLayoutManager(
+                this.context,
+                LinearLayoutManager.VERTICAL,
+                false
             )
-        rvSchoolFeeInfoSent.layoutManager = LinearLayoutManager(this.context)
-        rvSchoolFeeInfoSent.adapter = adminSchoolFeeInfoSentAdapter
+            adapter = mInfoSentAdapter
+        }
+        mInfoSentList.addAll(DataDummy.paymentData)
+        mInfoSentAdapter.notifyDataSetChanged()
 
-        if (objectList.isNotEmpty()) {
+        checkInfoEmpty(view)
+    }
+
+    private fun checkInfoEmpty(view: View) {
+        if (mInfoSentList.isNotEmpty()) {
             view.ivSchoolFeeInfoSentEmpty.visibility = View.INVISIBLE
             view.tvSchoolFeeInfoSentEmpty.visibility = View.INVISIBLE
         } else {
@@ -42,16 +50,13 @@ class AdminSchoolFeeInfoSentFragment : Fragment() {
         }
     }
 
-    private fun addData() {
-        for (i in 0..10) {
-            objectList.add(
-                AdminSchoolFeeInfoSentDao(
-                    "Jumaidah Estetika",
-                    "Bobbi Andrean • Pramuka, Basket • Kelas IA Aurora",
-                    "Terakhir diupdate: 20.00 - 14 Maret 2020"
-                )
-            )
-        }
-    }
+    override fun onResume() {
+        super.onResume()
 
+        mInfoSentList.clear()
+        mInfoSentList.addAll(DataDummy.paymentData)
+        mInfoSentAdapter.notifyDataSetChanged()
+
+        checkInfoEmpty(view!!)
+    }
 }

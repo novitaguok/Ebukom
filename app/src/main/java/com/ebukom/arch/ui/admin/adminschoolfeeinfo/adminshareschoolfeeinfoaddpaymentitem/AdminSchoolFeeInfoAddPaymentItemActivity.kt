@@ -3,8 +3,6 @@ package com.ebukom.arch.ui.admin.adminschoolfeeinfo.adminshareschoolfeeinfoaddpa
 import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
-import android.text.Editable
-import android.text.TextWatcher
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -70,11 +68,11 @@ class AdminSchoolFeeInfoAddPaymentItemActivity : AppCompatActivity() {
         // Form List
         btnAdminSchoolFeeInfoAddItemForm.setOnClickListener {
             tvAdminSchoolFeeInfoAddItemDeleteForm.visibility = View.VISIBLE
+            mFormList.add(AdminPaymentItemFormDao("", ""))
             rvAdminSchoolFeeInfoAddItemForm?.adapter?.notifyDataSetChanged()
         }
 
         mFormList.add(AdminPaymentItemFormDao("", ""))
-
         rvAdminSchoolFeeInfoAddItemForm.apply {
             layoutManager =
                 LinearLayoutManager(
@@ -85,16 +83,21 @@ class AdminSchoolFeeInfoAddPaymentItemActivity : AppCompatActivity() {
             adapter = mFormAdapter
         }
 
+        checkFormSize()
+
         // Delete form
         tvAdminSchoolFeeInfoAddItemDeleteForm.setOnClickListener {
             val builder = AlertDialog.Builder(this@AdminSchoolFeeInfoAddPaymentItemActivity)
 
             builder.setMessage("Apakah Anda yakin ingin menghapus form ini?")
             builder.setNegativeButton("BATALKAN") { dialog, which ->
-                Toast.makeText(applicationContext, "Next?", Toast.LENGTH_SHORT).show()
+                dialog.dismiss()
             }
             builder.setPositiveButton("HAPUS") { dialog, which ->
-                Toast.makeText(applicationContext, "Next?", Toast.LENGTH_SHORT).show()
+                dialog.dismiss()
+                mFormList.removeAt(mFormList.size - 1)
+                mFormAdapter.notifyDataSetChanged()
+                checkFormSize()
             }
 
             val dialog: AlertDialog = builder.create()
@@ -124,11 +127,16 @@ class AdminSchoolFeeInfoAddPaymentItemActivity : AppCompatActivity() {
         // Done
         btnAdminSchoolFeeInfoAddItemDone.setOnClickListener {
             mFormList.forEach {
-                DataDummy.paymentData.add(AdminPaymentItemFormDao(it.itemName, it.itemFee))
+                DataDummy.paymentTemporaryData.add(AdminPaymentItemFormDao(it.itemName, it.itemFee))
             }
             mFormAdapter.notifyDataSetChanged()
             finish()
         }
+    }
+
+    private fun checkFormSize() {
+        if (mFormList.size == 1) tvAdminSchoolFeeInfoAddItemDeleteForm.visibility = View.GONE
+        else tvAdminSchoolFeeInfoAddItemDeleteForm.visibility = View.VISIBLE
     }
 
     fun initToolbar() {

@@ -104,7 +104,6 @@ class MainClassDetailActivity : AppCompatActivity(), OnMoreCallback {
         }
 
         view.rbBottomSheetClassDetailHeaderKelas1.isChecked = true
-
         view.rbGroup.setOnCheckedChangeListener { _, checkedId ->
             if (checkedId == R.id.rbBottomSheetClassDetailHeaderKelas1) {
                 bottomSheetDialog.dismiss()

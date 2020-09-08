@@ -49,4 +49,9 @@ class MainAdminActivity : AppCompatActivity(), OnMoreCallback {
     override fun onMoreClicked(id: String, pos: Int) {
 
     }
+
+
+    override fun onBackPressed() {
+
+    }
 }

@@ -69,6 +69,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:hint="Biaya"
+            android:digits="0123456789"
             android:textCursorDrawable="@null" />
 
     </com.google.android.material.textfield.TextInputLayout>

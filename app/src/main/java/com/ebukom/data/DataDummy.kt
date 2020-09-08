@@ -39,8 +39,13 @@ class DataDummy {
         var educationData = arrayListOf<ClassDetailAnnouncementDao>()
 
         // Admin
-        var paymentData = arrayListOf<AdminPaymentItemFormDao>()
+        var paymentTemporaryData = arrayListOf<AdminPaymentItemFormDao>()
+        var paymentData = arrayListOf<AdminPaymentItemDao>()
         var adminNoteTemplateData = arrayListOf<ClassDetailTemplateTextDao>()
+        var adminNoteTemporaryData: String = ""
+        var recipientTemporaryData = arrayListOf<AdminSchoolFeeInfoSentDao>()
+        var recipientData = arrayListOf<AdminSchoolFeeInfoSentDao>()
+        var eskulTemporaryData = arrayListOf<ClassDetailItemCheckDao>()
     }
 }
 

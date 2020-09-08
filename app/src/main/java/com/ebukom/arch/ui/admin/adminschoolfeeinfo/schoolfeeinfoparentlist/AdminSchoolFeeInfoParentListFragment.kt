@@ -8,15 +8,13 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ebukom.R
 import com.ebukom.arch.dao.AdminSchoolFeeInfoSentDao
-import com.ebukom.arch.ui.admin.adminschoolfeeinfo.schoolfeeinfosent.AdminSchoolFeeInfoSentAdapter
+import com.ebukom.arch.ui.admin.adminschoolfeeinfo.schoolfeeinfosent.ParentSchoolFeeInfoAdapter
 import kotlinx.android.synthetic.main.fragment_admin_school_fee_info_parent_list.*
-import kotlinx.android.synthetic.main.fragment_admin_school_fee_info_sent.*
-import kotlinx.android.synthetic.main.fragment_admin_school_fee_info_sent.view.*
 
 class AdminSchoolFeeInfoParentListFragment : Fragment() {
 
     var objectList = ArrayList<AdminSchoolFeeInfoSentDao>()
-    lateinit var adminSchoolFeeInfoSentAdapter: AdminSchoolFeeInfoSentAdapter
+    lateinit var adminSchoolFeeInfoSentAdapter: ParentSchoolFeeInfoAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -33,7 +31,7 @@ class AdminSchoolFeeInfoParentListFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         addData()
         adminSchoolFeeInfoSentAdapter =
-            AdminSchoolFeeInfoSentAdapter(
+            ParentSchoolFeeInfoAdapter(
                 objectList, null
             )
         rvSchoolFeeInfoParentList.layoutManager = LinearLayoutManager(this.context)
