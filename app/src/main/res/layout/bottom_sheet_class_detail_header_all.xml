@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="208dp"
+    android:background="@color/colorWhite"
+    android:orientation="vertical"
+    app:behavior_hideable="false"
+    app:behavior_peekHeight="0dp"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/llBottomSheetClassDetailHeaderTitle"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:clickable="true"
+        android:focusable="true">
+
+        <TextView
+            android:id="@+id/tvBottomSheetClassDetailHeaderTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginLeft="@dimen/size_32"
+            android:text="Daftar Kelas Anda"
+            android:textSize="@dimen/text_16"
+            android:textColor="#3F3B5C"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <RadioGroup
+        android:id="@+id/rbGroup"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/rbBottomSheetClassDetailHeaderAllClass"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            style="@style/RadioButton"
+            android:layout_marginLeft="@dimen/size_32"
+            android:layout_marginRight="@dimen/size_12"
+            android:layoutDirection="rtl"
+            android:textAlignment="textStart"
+            android:text="Semua Kelas"
+            android:textSize="@dimen/text_16"
+            android:textColor="#212121" />
+
+        <RadioButton
+            android:id="@+id/rbBottomSheetClassDetailHeaderKelas1"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            style="@style/RadioButton"
+            android:layout_marginLeft="@dimen/size_32"
+            android:layout_marginRight="@dimen/size_12"
+            android:layoutDirection="rtl"
+            android:textAlignment="textStart"
+            android:text="Kelas 1 Aurora"
+            android:textSize="@dimen/text_16"
+            android:textColor="#212121" />
+
+        <RadioButton
+            android:id="@+id/rbBottomSheetClassDetailHeaderKelas2"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            style="@style/RadioButton"
+            android:layout_marginLeft="@dimen/size_32"
+            android:layout_marginRight="@dimen/size_12"
+            android:layoutDirection="rtl"
+            android:textAlignment="textStart"
+            android:text="Kelas 2 Fatamorgana"
+            android:textSize="@dimen/text_16"
+            android:textColor="#212121" />
+
+    </RadioGroup>
+
+<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--        android:id="@+id/clBottomSheetClassDetailHeaderKelas1"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="52dp"-->
+<!--        android:clickable="true"-->
+<!--        android:focusable="true">-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/tvBottomSheetClassDetailHeaderKelas1"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:layout_constraintLeft_toLeftOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            android:layout_marginLeft="@dimen/size_32"-->
+<!--            android:text="Kelas 1 Aurora"-->
+<!--            android:textSize="@dimen/text_16"-->
+<!--            android:textColor="#212121"/>-->
+
+<!--        <ImageView-->
+<!--            android:id="@+id/ivBottomSheetClassDetailHeaderKelas1"-->
+<!--            android:layout_width="@dimen/size_24"-->
+<!--            android:layout_height="@dimen/size_24"-->
+<!--            app:layout_constraintTop_toTopOf="@+id/tvBottomSheetClassDetailHeaderKelas1"-->
+<!--            app:layout_constraintBottom_toBottomOf="@+id/tvBottomSheetClassDetailHeaderKelas1"-->
+<!--            app:layout_constraintRight_toRightOf="parent"-->
+<!--            android:layout_marginRight="@dimen/size_18"-->
+<!--            android:foregroundGravity="right"-->
+<!--            android:src="@drawable/ic_check_red"/>-->
+<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+<!--    <androidx.constraintlayout.widget.ConstraintLayout-->
+<!--        android:id="@+id/clBottomSheetClassDetailHeaderKelas2"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="52dp"-->
+<!--        android:clickable="true"-->
+<!--        android:focusable="true"-->
+<!--        android:orientation="horizontal">-->
+
+<!--        <TextView-->
+<!--            android:id="@+id/tvBottomSheetClassDetailHeaderKelas2"-->
+<!--            android:layout_width="wrap_content"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            app:layout_constraintLeft_toLeftOf="parent"-->
+<!--            app:layout_constraintTop_toTopOf="parent"-->
+<!--            app:layout_constraintBottom_toBottomOf="parent"-->
+<!--            android:layout_marginLeft="@dimen/size_32"-->
+<!--            android:text="Kelas 2 Fatamorgana"-->
+<!--            android:textSize="@dimen/text_16"-->
+<!--            android:textColor="#212121"/>-->
+
+<!--        <ImageView-->
+<!--            android:id="@+id/ivBottomSheetClassDetailHeaderKelas2"-->
+<!--            android:layout_width="@dimen/size_20"-->
+<!--            android:layout_height="@dimen/size_20"-->
+<!--            app:layout_constraintTop_toTopOf="@+id/tvBottomSheetClassDetailHeaderKelas2"-->
+<!--            app:layout_constraintBottom_toBottomOf="@+id/tvBottomSheetClassDetailHeaderKelas2"-->
+<!--            app:layout_constraintRight_toRightOf="parent"-->
+<!--            android:layout_marginRight="@dimen/size_18"-->
+<!--            android:foregroundGravity="right"-->
+<!--            android:src="@drawable/ic_check_red"-->
+<!--            android:visibility="gone"/>-->
+<!--    </androidx.constraintlayout.widget.ConstraintLayout>-->
+
+</LinearLayout>

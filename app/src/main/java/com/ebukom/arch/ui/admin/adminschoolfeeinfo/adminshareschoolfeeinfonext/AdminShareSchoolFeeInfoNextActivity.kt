@@ -17,7 +17,17 @@ import com.ebukom.data.DataDummy
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.activity_admin_share_school_fee_info_next.*
 import kotlinx.android.synthetic.main.bottom_sheet_class_detail_header.view.*
+import kotlinx.android.synthetic.main.bottom_sheet_class_detail_header.view.rbBottomSheetClassDetailHeaderKelas1
+import kotlinx.android.synthetic.main.bottom_sheet_class_detail_header.view.rbBottomSheetClassDetailHeaderKelas2
+import kotlinx.android.synthetic.main.bottom_sheet_class_detail_header.view.rbGroup
+import kotlinx.android.synthetic.main.bottom_sheet_class_detail_header_all.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_register_parent.view.*
+import kotlinx.android.synthetic.main.bottom_sheet_register_parent.view.btnRegisterParentBottomSheetDone
+import kotlinx.android.synthetic.main.bottom_sheet_register_parent.view.cbRegisterParentBottomSheetBasket
+import kotlinx.android.synthetic.main.bottom_sheet_register_parent.view.cbRegisterParentBottomSheetFutsal
+import kotlinx.android.synthetic.main.bottom_sheet_register_parent.view.cbRegisterParentBottomSheetPMR
+import kotlinx.android.synthetic.main.bottom_sheet_register_parent.view.cbRegisterParentBottomSheetPramuka
+import kotlinx.android.synthetic.main.bottom_sheet_register_parent_all.view.*
 
 class AdminShareSchoolFeeInfoNextActivity : AppCompatActivity(),
     ParentSchoolFeeInfoAdapter.onCheckListener {
@@ -25,9 +35,7 @@ class AdminShareSchoolFeeInfoNextActivity : AppCompatActivity(),
     private var pos: Int = -1
     private val mParentList: ArrayList<AdminSchoolFeeInfoSentDao> = arrayListOf()
     lateinit var mParentAdapter: ParentSchoolFeeInfoAdapter
-    private val mEskulList: ArrayList<ClassDetailItemCheckDao> = arrayListOf()
-    lateinit var mEskulAdapter: ClassDetailItemCheckDao
-    private var mClass: String = "Kelas 1 Aurora"
+    private var mClass: String = "Kelas 1 Aurora, Kelas 2 Fatamorgana"
     private var mEskul: ArrayList<String> = arrayListOf()
     private var allEskul: String? = ""
     private var isChosen: Boolean = false
@@ -38,48 +46,33 @@ class AdminShareSchoolFeeInfoNextActivity : AppCompatActivity(),
 
         initToolbar()
 
-        btnAdminSchoolFeeInfoNextClass.setOnClickListener {
-            val bottomSheetDialog = BottomSheetDialog(this)
-            val view = layoutInflater.inflate(R.layout.bottom_sheet_class_detail_header, null)
-            bottomSheetDialog.setContentView(view)
-            bottomSheetDialog.show()
-
-            view.rbBottomSheetClassDetailHeaderKelas1.isChecked = mClass.contains("Kelas 1 Aurora")
-            view.rbBottomSheetClassDetailHeaderKelas2.isChecked =
-                mClass.contains("Kelas 2 Fatamorgana")
-
-            view.rbGroup.setOnCheckedChangeListener { _, checkedId ->
-                if (checkedId == R.id.rbBottomSheetClassDetailHeaderKelas1) {
-                    bottomSheetDialog.dismiss()
-                    mClass = "Kelas 1 Aurora"
-                    btnAdminSchoolFeeInfoNextClass.text = mClass
-                } else if (checkedId == R.id.rbBottomSheetClassDetailHeaderKelas2) {
-                    bottomSheetDialog.dismiss()
-                    mClass = "Kelas 2 Fatamorgana"
-                    btnAdminSchoolFeeInfoNextClass.text = mClass
-                } else {
-                    mClass = "Kelas 1 Aurora, Kelas 2 Fatamorgana"
-                    btnAdminSchoolFeeInfoNextClass.text = "Semua Kelas"
-                }
-            }
-        }
-
         btnAdminSchoolFeeInfoNextEskul.setOnClickListener {
             val bottomSheetDialog = BottomSheetDialog(this)
-            val view = layoutInflater.inflate(R.layout.bottom_sheet_register_parent, null)
+            val view = layoutInflater.inflate(R.layout.bottom_sheet_register_parent_all, null)
             view.btnRegisterParentBottomSheetDone.setOnClickListener {
                 bottomSheetDialog.dismiss()
-                if (view.cbRegisterParentBottomSheetPramuka.isChecked) {
+                if (view.cbRegisterParentBottomSheetAll.isChecked) {
+                    view.cbRegisterParentBottomSheetPramuka.isChecked = true
+                    view.cbRegisterParentBottomSheetFutsal.isChecked = true
+                    view.cbRegisterParentBottomSheetBasket.isChecked = true
+                    view.cbRegisterParentBottomSheetPMR.isChecked = true
                     mEskul.add("Pramuka")
-                }
-                if (view.cbRegisterParentBottomSheetFutsal.isChecked) {
                     mEskul.add("Futsal")
-                }
-                if (view.cbRegisterParentBottomSheetBasket.isChecked) {
                     mEskul.add("Basket")
-                }
-                if (view.cbRegisterParentBottomSheetPMR.isChecked) {
                     mEskul.add("PMR")
+                } else {
+                    if (view.cbRegisterParentBottomSheetPramuka.isChecked) {
+                        mEskul.add("Pramuka")
+                    }
+                    if (view.cbRegisterParentBottomSheetFutsal.isChecked) {
+                        mEskul.add("Futsal")
+                    }
+                    if (view.cbRegisterParentBottomSheetBasket.isChecked) {
+                        mEskul.add("Basket")
+                    }
+                    if (view.cbRegisterParentBottomSheetPMR.isChecked) {
+                        mEskul.add("PMR")
+                    }
                 }
 
                 allEskul = mEskul.distinct().toString()
@@ -96,6 +89,48 @@ class AdminShareSchoolFeeInfoNextActivity : AppCompatActivity(),
 
             bottomSheetDialog.setContentView(view)
             bottomSheetDialog.show()
+        }
+
+        btnAdminSchoolFeeInfoNextClass.setOnClickListener {
+            val bottomSheetDialog = BottomSheetDialog(this)
+            val view = layoutInflater.inflate(R.layout.bottom_sheet_class_detail_header_all, null)
+            bottomSheetDialog.setContentView(view)
+            bottomSheetDialog.show()
+
+            view.rbBottomSheetClassDetailHeaderKelas1.isChecked = mClass.contains("Kelas 1 Aurora")
+            view.rbBottomSheetClassDetailHeaderKelas2.isChecked = mClass.contains("Kelas 2 Fatamorgana")
+            view.rbBottomSheetClassDetailHeaderAllClass.isChecked = mClass.contains("Kelas 1 Aurora, Kelas 2 Fatamorgana")
+
+            view.rbGroup.setOnCheckedChangeListener { _, checkedId ->
+                if (checkedId == R.id.rbBottomSheetClassDetailHeaderAllClass) {
+                    bottomSheetDialog.dismiss()
+                    mClass = "Kelas 1 Aurora, Kelas 2 Fatamorgana"
+                    btnAdminSchoolFeeInfoNextClass.text = "Semua Kelas"
+                    mParentList.forEach {
+                        it.detail = "Bobbi Andrean • " + allEskul + " • " + mClass
+                    }
+                    mParentAdapter.notifyDataSetChanged()
+                } else if (checkedId == R.id.rbBottomSheetClassDetailHeaderKelas1) {
+                    bottomSheetDialog.dismiss()
+                    mClass = "Kelas 1 Aurora"
+                    btnAdminSchoolFeeInfoNextClass.text = mClass
+                    mParentList.forEach {
+                        it.detail = "Bobbi Andrean • " + allEskul + " • " + mClass
+                    }
+                    mParentAdapter.notifyDataSetChanged()
+                } else if (checkedId == R.id.rbBottomSheetClassDetailHeaderKelas2) {
+                    bottomSheetDialog.dismiss()
+                    mClass = "Kelas 2 Fatamorgana"
+                    btnAdminSchoolFeeInfoNextClass.text = mClass
+                    mParentList.forEach {
+                        it.detail = "Bobbi Andrean • " + allEskul + " • " + mClass
+                    }
+                    mParentAdapter.notifyDataSetChanged()
+                } else {
+                    mClass = "Kelas 1 Aurora, Kelas 2 Fatamorgana"
+                    btnAdminSchoolFeeInfoNextClass.text = "Semua Kelas"
+                }
+            }
         }
 
         mParentAdapter =

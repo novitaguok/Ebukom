@@ -70,7 +70,7 @@
                 android:drawablePadding="@dimen/size_24"
                 android:minHeight="@dimen/size_52"
                 android:padding="@dimen/size_16"
-                android:text="Semua Eskul"
+                android:text="Pilih Eskul"
                 android:textAlignment="textStart"
                 android:textAllCaps="false"
                 android:textColor="#222222"
