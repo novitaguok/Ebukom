@@ -121,7 +121,7 @@
                 android:drawablePadding="@dimen/size_24"
                 android:layout_marginTop="@dimen/size_24"
                 android:minHeight="@dimen/size_52"
-                android:background="@drawable/btn_white_rectangle" />                >
+                android:background="@drawable/btn_transparent_rectangle_8dp" />                >
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilRegisterSchoolPhone"

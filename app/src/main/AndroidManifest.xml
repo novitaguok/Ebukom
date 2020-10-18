@@ -7,7 +7,7 @@
         android:name="android.hardware.camera"
         android:required="true" />
 
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
 
@@ -18,7 +18,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".arch.ui.admin.adminschoolfeeinfo.adminshareschoolfeeinforecheck.AdminShareSchoolFeeInfoRecheckActivity"></activity>
+        <activity android:name=".arch.ui.welcome.WelcomeActivity"></activity>
+        <activity android:name=".arch.ui.admin.adminschoolfeeinfo.adminshareschoolfeeinforecheck.AdminShareSchoolFeeInfoRecheckActivity" />
         <activity android:name=".arch.ui.admin.adminschoolfeeinfo.adminshareschoolfeeinfonext.AdminShareSchoolFeeInfoNextActivity" />
         <activity android:name=".arch.ui.admin.adminschoolfeeinfo.adminshareschoolfeeinfoaddpaymentitemtemplate.AdminSchoolFeeInfoAddPaymentItemTemplateIActivity" />
         <activity android:name=".arch.ui.classdetail.personal.personalnoteedit.PersonalNoteEditActivity" />
@@ -64,8 +65,8 @@
         <activity android:name=".arch.ui.register.parent.RegisterParentActivity" />
         <activity android:name=".arch.ui.forgotpassword.verification.VerificationActivity" />
         <activity android:name=".arch.ui.forgotpassword.sendcode.SendCodeActivity" />
-        <activity android:name=".arch.ui.login.LoginActivity"/>
-        <activity android:name=".arch.ui.splash.SplashActivity" >
+        <activity android:name=".arch.ui.login.LoginActivity" />
+        <activity android:name=".arch.ui.splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
