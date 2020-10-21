@@ -30,6 +30,19 @@
                 android:textSize="@dimen/text_16"
                 android:textStyle="bold" />
         </androidx.appcompat.widget.Toolbar>
+
+        <TextView
+            android:id="@+id/tvRegisterParentTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            android:gravity="center_horizontal"
+            android:background="@color/colorSuperDarkBlue"
+            android:padding="@dimen/size_10"
+            android:text="Sebagai wali murid"
+            android:textSize="@dimen/text_14"
+            android:textColor="@color/colorWhite"
+            android:textStyle="bold"/>
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
@@ -42,22 +55,9 @@
             android:layout_height="wrap_content"
             android:paddingBottom="@dimen/size_20">
 
-            <TextView
-                android:id="@+id/tvRegisterParentTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                android:gravity="center_horizontal"
-                android:background="@color/colorSuperDarkBlue"
-                android:padding="@dimen/size_10"
-                android:text="Sebagai wali murid"
-                android:textSize="@dimen/text_14"
-                android:textColor="@color/colorWhite"
-                android:textStyle="bold"/>
-
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/ivRegisterParentProfilePicture"
-                app:layout_constraintTop_toBottomOf="@+id/tvRegisterParentTitle"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 android:layout_marginTop="@dimen/size_32"
@@ -93,6 +93,7 @@
                 android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
                 android:layout_marginTop="@dimen/size_32"
                 android:hint="Nama lengkap"
+                app:errorEnabled="true"
                 app:boxStrokeColor="@color/colorBlack"
                 app:boxStrokeWidth="@dimen/size_1"
                 app:layout_constraintTop_toBottomOf="@id/tvRegisterParentAddPhoto">
@@ -104,6 +105,19 @@
                     android:background="@drawable/edit_text_rectangle_selector"
                     android:padding="@dimen/size_16" />
             </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tvRegisterParentNameErrorMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_32"
+                android:lineHeight="@dimen/size_16"
+                android:text="Nama lengkap tidak boleh kosong"
+                android:textColor="@color/colorRed"
+                android:textSize="@dimen/text_12"
+                android:visibility="gone"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tilRegisterParentName" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilRegisterParentChild"
@@ -120,7 +134,7 @@
                 android:hint="Nama anak"
                 app:boxStrokeColor="@color/colorBlack"
                 app:boxStrokeWidth="@dimen/size_1"
-                app:layout_constraintTop_toBottomOf="@+id/tilRegisterParentName">
+                app:layout_constraintTop_toBottomOf="@+id/tvRegisterParentNameErrorMessage">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etRegisterParentChild"
@@ -128,6 +142,19 @@
                     android:layout_height="match_parent"
                     android:padding="@dimen/size_16"/>
             </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tvRegisterParentChildErrorMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_32"
+                android:lineHeight="@dimen/size_16"
+                android:text="Nama anak tidak boleh kosong"
+                android:textColor="@color/colorRed"
+                android:textSize="@dimen/text_12"
+                android:visibility="gone"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tilRegisterParentChild" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilRegisterParentPhone"
@@ -144,7 +171,7 @@
                 android:hint="Nomor telepon"
                 app:boxStrokeColor="@color/colorBlack"
                 app:boxStrokeWidth="@dimen/size_1"
-                app:layout_constraintTop_toBottomOf="@+id/tilRegisterParentChild">
+                app:layout_constraintTop_toBottomOf="@+id/tvRegisterParentChildErrorMessage">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etRegisterParentPhone"
@@ -153,13 +180,26 @@
                     android:padding="@dimen/size_16"/>
             </com.google.android.material.textfield.TextInputLayout>
 
+            <TextView
+                android:id="@+id/tvRegisterParentPhoneErrorMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_32"
+                android:lineHeight="@dimen/size_16"
+                android:text="Nomor telepon tidak boleh kosong"
+                android:textColor="@color/colorRed"
+                android:textSize="@dimen/text_12"
+                android:visibility="gone"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tilRegisterParentPhone" />
+
             <Button
                 android:id="@+id/btnRegisterParentEskul"
                 android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_48"
                 android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-                app:layout_constraintTop_toBottomOf="@+id/tilRegisterParentPhone"
+                app:layout_constraintTop_toBottomOf="@+id/tvRegisterParentPhoneErrorMessage"
                 android:textAlignment="textStart"
                 android:text="Eskul"
                 android:textColor="@color/colorGray"
@@ -195,6 +235,19 @@
                     android:padding="@dimen/size_16" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <TextView
+                android:id="@+id/tvRegisterParentPasswordErrorMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_32"
+                android:lineHeight="@dimen/size_16"
+                android:text="Kata sandi tidak boleh kosong"
+                android:textColor="@color/colorRed"
+                android:textSize="@dimen/text_12"
+                android:visibility="gone"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tilRegisterParentPassword" />
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilRegisterParentConfirmPassword"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -210,14 +263,27 @@
                 android:hint="Konfirmasi kata sandi"
                 app:boxStrokeColor="@color/colorBlack"
                 app:boxStrokeWidth="@dimen/size_1"
-                app:layout_constraintTop_toBottomOf="@id/tilRegisterParentPassword">
+                app:layout_constraintTop_toBottomOf="@id/tvRegisterParentPasswordErrorMessage">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etLoginPassword"
+                    android:id="@+id/etRegisterParentConfirmPassword"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:padding="@dimen/size_16" />
             </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tvRegisterParentConfirmPasswordErrorMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_32"
+                android:lineHeight="@dimen/size_16"
+                android:text="Kata sandi tidak sesuai"
+                android:textColor="@color/colorRed"
+                android:textSize="@dimen/text_12"
+                android:visibility="gone"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tilRegisterParentConfirmPassword" />
 
             <Button
                 android:id="@+id/btnRegisterParentRegister"
@@ -231,7 +297,7 @@
                 android:text="DAFTAR"
                 android:textColor="@color/colorWhite"
                 android:textStyle="bold"
-                app:layout_constraintTop_toBottomOf="@id/tilRegisterParentConfirmPassword" />
+                app:layout_constraintTop_toBottomOf="@id/tvRegisterParentConfirmPasswordErrorMessage" />
 
             <TextView
                 android:id="@+id/tvRegisterParentHaveAccount"

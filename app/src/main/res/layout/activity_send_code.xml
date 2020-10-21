@@ -61,7 +61,7 @@
             app:boxCornerRadiusBottomStart="@dimen/size_8"
             app:boxCornerRadiusTopEnd="@dimen/size_8"
             app:boxCornerRadiusTopStart="@dimen/size_8"
-            android:hint="Nomor Telepon"
+            android:hint="Nomor telepon"
             android:theme="@style/LoginTextInputLayoutLabel"
             app:boxStrokeColor="@color/colorBlack"
             app:boxStrokeWidth="@dimen/size_1">

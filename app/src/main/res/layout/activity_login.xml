@@ -60,7 +60,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/edit_text_rectangle_selector"
-                android:padding="@dimen/size_16" />
+                android:textSize="@dimen/text_16"
+                android:paddingLeft="@dimen/size_16"
+                android:paddingRight="@dimen/size_16"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView
@@ -99,7 +101,9 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:inputType="textPassword"
-                android:padding="@dimen/size_16" />
+                android:textSize="@dimen/text_16"
+                android:paddingLeft="@dimen/size_16"
+                android:paddingRight="@dimen/size_16"/>
         </com.google.android.material.textfield.TextInputLayout>
 
         <TextView

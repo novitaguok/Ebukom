@@ -26,6 +26,8 @@ class LoginActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_login)
 
+        initToolbar()
+
         sharePref = getSharedPreferences("EBUKOM", Context.MODE_PRIVATE)
 
         // Register button
@@ -67,11 +69,10 @@ class LoginActivity : AppCompatActivity() {
                     }, 1000)
 
                 } else {
-                    Handler().postDelayed({
-                        loading.visibility = View.GONE
-                        tvLoginPhoneErrorMessage.visibility = View.GONE
-                        tvLoginPasswordErrorMessage.visibility = View.VISIBLE
-                    }, 1000)
+                    if (etLoginPassword.toString().isEmpty()) tvLoginPasswordErrorMessage.text =
+                        "Kata sandi tidak boleh kosong"
+                    tvLoginPhoneErrorMessage.visibility = View.GONE
+                    tvLoginPasswordErrorMessage.visibility = View.VISIBLE
                 }
             } else if (etLoginPhone.text.toString() == "123") {
                 // Parent
@@ -88,11 +89,10 @@ class LoginActivity : AppCompatActivity() {
                         finish()
                     }, 1000)
                 } else {
-                    Handler().postDelayed({
-                        loading.visibility = View.GONE
+                    if (etLoginPassword.toString().isEmpty()) tvLoginPasswordErrorMessage.text =
+                        "Kata sandi tidak boleh kosong"
                         tvLoginPhoneErrorMessage.visibility = View.GONE
                         tvLoginPasswordErrorMessage.visibility = View.VISIBLE
-                    }, 1000)
                 }
             } else if (etLoginPhone.text.toString() == "456") {
                 // Admin
@@ -109,15 +109,18 @@ class LoginActivity : AppCompatActivity() {
                         finish()
                     }, 1000)
                 } else {
-                    Handler().postDelayed({
-                        loading.visibility = View.GONE
+                    if (etLoginPassword.toString().isEmpty()) tvLoginPasswordErrorMessage.text =
+                        "Kata sandi tidak boleh kosong"
                         tvLoginPhoneErrorMessage.visibility = View.GONE
                         tvLoginPasswordErrorMessage.visibility = View.VISIBLE
-                    }, 1000)
                 }
             } else {
                 Handler().postDelayed({
                     loading.visibility = View.GONE
+                    if (etLoginPhone.toString().isEmpty() && etLoginPassword.toString().isEmpty()) {
+                        tvLoginPhoneErrorMessage.text = "Nomor telepon tidak boleh kosong"
+                        tvLoginPasswordErrorMessage.text = "Kata sandi tidak boleh kosong"
+                    }
                     tvLoginPhoneErrorMessage.visibility = View.VISIBLE
                     tvLoginPasswordErrorMessage.visibility = View.VISIBLE
                 }, 1000)
@@ -128,6 +131,15 @@ class LoginActivity : AppCompatActivity() {
         tvLoginForgetPassword.setOnClickListener {
             val intent = Intent(this, SendCodeActivity::class.java)
             startActivity(intent)
+        }
+    }
+
+    fun initToolbar() {
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = ""
+        toolbar.setNavigationOnClickListener {
+            onBackPressed()
         }
     }
 }
