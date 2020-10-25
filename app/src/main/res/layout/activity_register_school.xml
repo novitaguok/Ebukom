@@ -30,6 +30,19 @@
                 android:textSize="@dimen/text_16"
                 android:textStyle="bold" />
         </androidx.appcompat.widget.Toolbar>
+
+        <TextView
+            android:id="@+id/tvRegisterSchoolTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            android:gravity="center_horizontal"
+            android:background="@color/colorSuperDarkBlue"
+            android:padding="@dimen/size_10"
+            android:text="Sebagai pihak sekolah"
+            android:textSize="@dimen/text_14"
+            android:textColor="@color/colorWhite"
+            android:textStyle="bold"/>
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
@@ -42,28 +55,15 @@
             android:layout_height="wrap_content"
             android:paddingBottom="@dimen/size_20">
 
-            <TextView
-                android:id="@+id/tvRegisterSchoolTitle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toTopOf="parent"
-                android:gravity="center_horizontal"
-                android:background="@color/colorSuperDarkBlue"
-                android:padding="@dimen/size_10"
-                android:text="Sebagai pihak sekolah"
-                android:textSize="@dimen/text_14"
-                android:textColor="@color/colorWhite"
-                android:textStyle="bold"/>
-
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/ivRegisterSchoolProfilePicture"
-                app:layout_constraintTop_toBottomOf="@+id/tvRegisterSchoolTitle"
+                app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintRight_toRightOf="parent"
                 android:layout_marginTop="@dimen/size_32"
                 android:layout_width="@dimen/size_100"
                 android:layout_height="@dimen/size_100"
-                android:src="@drawable/bg_solid_gray"
+                android:src="@color/colorGray"
                 app:civ_border_color="#FF000000"/>
 
             <TextView
@@ -111,7 +111,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/size_32"
                 android:lineHeight="@dimen/size_16"
-                android:text="Nama tidak boleh kosong"
+                android:text="Nama lengkap tidak boleh kosong"
                 android:textColor="@color/colorRed"
                 android:textSize="@dimen/text_12"
                 android:visibility="gone"
@@ -136,6 +136,19 @@
                 android:minHeight="@dimen/size_52"
                 android:background="@drawable/btn_transparent_rectangle_8dp" />                >
 
+            <TextView
+                android:id="@+id/tvRegisterSchoolRoleErrorMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_32"
+                android:lineHeight="@dimen/size_16"
+                android:text="Peran tidak boleh kosong"
+                android:textColor="@color/colorRed"
+                android:textSize="@dimen/text_12"
+                android:visibility="gone"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnRegisterSchoolRole" />
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilRegisterSchoolPhone"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -151,7 +164,7 @@
                 android:hint="Nomor telepon"
                 app:boxStrokeColor="@color/colorBlack"
                 app:boxStrokeWidth="@dimen/size_1"
-                app:layout_constraintTop_toBottomOf="@+id/btnRegisterSchoolRole">
+                app:layout_constraintTop_toBottomOf="@+id/tvRegisterSchoolRoleErrorMessage">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etRegisterSchoolPhone"
@@ -159,6 +172,19 @@
                     android:layout_height="match_parent"
                     android:padding="@dimen/size_16"/>
             </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tvRegisterSchoolPhoneErrorMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_32"
+                android:lineHeight="@dimen/size_16"
+                android:text="Nomor telepon tidak boleh kosong"
+                android:textColor="@color/colorRed"
+                android:textSize="@dimen/text_12"
+                android:visibility="gone"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tilRegisterSchoolPhone" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilRegisterSchoolPassword"
@@ -175,7 +201,7 @@
                 android:hint="Kata Sandi"
                 app:boxStrokeColor="@color/colorBlack"
                 app:boxStrokeWidth="@dimen/size_1"
-                app:layout_constraintTop_toBottomOf="@id/tilRegisterSchoolPhone">
+                app:layout_constraintTop_toBottomOf="@id/tvRegisterSchoolPhoneErrorMessage">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etRegisterSchoolPassword"
@@ -183,6 +209,19 @@
                     android:layout_height="match_parent"
                     android:padding="@dimen/size_16" />
             </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tvRegisterSchoolPasswordErrorMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_32"
+                android:lineHeight="@dimen/size_16"
+                android:text="Kata sandi tidak boleh kosong"
+                android:textColor="@color/colorRed"
+                android:textSize="@dimen/text_12"
+                android:visibility="gone"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tilRegisterSchoolPassword" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilRegisterSchoolConfirmPassword"
@@ -199,7 +238,7 @@
                 android:hint="Konfirmasi kata sandi"
                 app:boxStrokeColor="@color/colorBlack"
                 app:boxStrokeWidth="@dimen/size_1"
-                app:layout_constraintTop_toBottomOf="@id/tilRegisterSchoolPassword">
+                app:layout_constraintTop_toBottomOf="@id/tvRegisterSchoolPasswordErrorMessage">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etLoginPassword"
@@ -207,6 +246,19 @@
                     android:layout_height="match_parent"
                     android:padding="@dimen/size_16" />
             </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tvRegisterSchoolConfirmPasswordErrorMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_32"
+                android:lineHeight="@dimen/size_16"
+                android:text="Kata sandi tidak sesuai"
+                android:textColor="@color/colorRed"
+                android:textSize="@dimen/text_12"
+                android:visibility="gone"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tilRegisterSchoolConfirmPassword" />
 
             <Button
                 android:id="@+id/btnRegisterSchoolRegister"
