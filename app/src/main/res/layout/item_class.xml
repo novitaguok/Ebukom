@@ -9,13 +9,13 @@
     app:cardCornerRadius="@dimen/size_8">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/clItemClassGreen"
+        android:id="@+id/clItemClass"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center">
 
         <ImageView
-            android:id="@+id/ivItemClassOne"
+            android:id="@+id/ivItemClass"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:scaleType="fitXY"
@@ -23,18 +23,18 @@
             app:layout_constraintTop_toTopOf="parent" />
 
         <ImageButton
-            android:id="@+id/ibItemClassOne"
+            android:id="@+id/ibItemClass"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_more_vertical"
             android:background="@android:color/transparent"
             android:layout_marginTop="@dimen/size_12"
             android:layout_marginRight="@dimen/size_8"
-            app:layout_constraintTop_toTopOf="@+id/ivItemClassOne"
-            app:layout_constraintRight_toRightOf="@+id/ivItemClassOne"/>
+            app:layout_constraintTop_toTopOf="@+id/ivItemClass"
+            app:layout_constraintRight_toRightOf="@+id/ivItemClass"/>
 
         <TextView
-            android:id="@+id/tvItemClassKelas1"
+            android:id="@+id/tvItemClassGrade"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_24"
@@ -43,24 +43,24 @@
             android:textColor="#005C39"
             android:textFontWeight="500"
             android:textSize="@dimen/text_16"
-            app:layout_constraintBottom_toTopOf="@+id/tvItemClassName1"
-            app:layout_constraintLeft_toLeftOf="@+id/tvItemClassName1" />
+            app:layout_constraintBottom_toTopOf="@+id/tvItemClassName"
+            app:layout_constraintLeft_toLeftOf="@+id/tvItemClassName" />
 
         <TextView
-            android:id="@+id/tvItemClassName1"
+            android:id="@+id/tvItemClassName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/size_20"
-            android:text="Aurora"
+            android:text="Krypton"
             android:textColor="@color/colorWhite"
             android:textSize="@dimen/text_28"
             android:textStyle="bold"
-            app:layout_constraintBottom_toBottomOf="@+id/ivItemClassOne"
-            app:layout_constraintLeft_toLeftOf="@+id/ivItemClassOne"
-            app:layout_constraintTop_toTopOf="@id/ivItemClassOne" />
+            app:layout_constraintBottom_toBottomOf="@+id/ivItemClass"
+            app:layout_constraintLeft_toLeftOf="@+id/ivItemClass"
+            app:layout_constraintTop_toTopOf="@id/ivItemClass" />
 
         <TextView
-            android:id="@+id/tvItemClassTeacher1"
+            android:id="@+id/tvItemClassTeacher"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/size_4"
@@ -70,8 +70,8 @@
             android:textColor="#005C39"
             android:textFontWeight="500"
             android:textSize="@dimen/text_14"
-            app:layout_constraintLeft_toLeftOf="@+id/tvItemClassName1"
-            app:layout_constraintTop_toBottomOf="@+id/tvItemClassName1" />
+            app:layout_constraintLeft_toLeftOf="@+id/tvItemClassName"
+            app:layout_constraintTop_toBottomOf="@+id/tvItemClassName" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

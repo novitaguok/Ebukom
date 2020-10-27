@@ -23,10 +23,7 @@ import kotlinx.android.synthetic.main.bottom_sheet_class_detail_header.view.rbGr
 import kotlinx.android.synthetic.main.bottom_sheet_class_detail_header_all.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_register_parent.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_register_parent.view.btnRegisterParentBottomSheetDone
-import kotlinx.android.synthetic.main.bottom_sheet_register_parent.view.cbRegisterParentBottomSheetBasket
 import kotlinx.android.synthetic.main.bottom_sheet_register_parent.view.cbRegisterParentBottomSheetFutsal
-import kotlinx.android.synthetic.main.bottom_sheet_register_parent.view.cbRegisterParentBottomSheetPMR
-import kotlinx.android.synthetic.main.bottom_sheet_register_parent.view.cbRegisterParentBottomSheetPramuka
 import kotlinx.android.synthetic.main.bottom_sheet_register_parent_all.view.*
 
 class AdminShareSchoolFeeInfoNextActivity : AppCompatActivity(),
@@ -52,27 +49,27 @@ class AdminShareSchoolFeeInfoNextActivity : AppCompatActivity(),
             view.btnRegisterParentBottomSheetDone.setOnClickListener {
                 bottomSheetDialog.dismiss()
                 if (view.cbRegisterParentBottomSheetAll.isChecked) {
-                    view.cbRegisterParentBottomSheetPramuka.isChecked = true
-                    view.cbRegisterParentBottomSheetFutsal.isChecked = true
-                    view.cbRegisterParentBottomSheetBasket.isChecked = true
-                    view.cbRegisterParentBottomSheetPMR.isChecked = true
+//                    view.cbRegisterParentBottomSheetPramuka.isChecked = true
+//                    view.cbRegisterParentBottomSheetFutsal.isChecked = true
+//                    view.cbRegisterParentBottomSheetBasket.isChecked = true
+//                    view.cbRegisterParentBottomSheetPMR.isChecked = true
                     mEskul.add("Pramuka")
                     mEskul.add("Futsal")
                     mEskul.add("Basket")
                     mEskul.add("PMR")
                 } else {
-                    if (view.cbRegisterParentBottomSheetPramuka.isChecked) {
-                        mEskul.add("Pramuka")
-                    }
-                    if (view.cbRegisterParentBottomSheetFutsal.isChecked) {
-                        mEskul.add("Futsal")
-                    }
-                    if (view.cbRegisterParentBottomSheetBasket.isChecked) {
-                        mEskul.add("Basket")
-                    }
-                    if (view.cbRegisterParentBottomSheetPMR.isChecked) {
-                        mEskul.add("PMR")
-                    }
+//                    if (view.cbRegisterParentBottomSheetPramuka.isChecked) {
+//                        mEskul.add("Pramuka")
+//                    }
+//                    if (view.cbRegisterParentBottomSheetFutsal.isChecked) {
+//                        mEskul.add("Futsal")
+//                    }
+//                    if (view.cbRegisterParentBottomSheetBasket.isChecked) {
+//                        mEskul.add("Basket")
+//                    }
+//                    if (view.cbRegisterParentBottomSheetPMR.isChecked) {
+//                        mEskul.add("PMR")
+//                    }
                 }
 
                 allEskul = mEskul.distinct().toString()

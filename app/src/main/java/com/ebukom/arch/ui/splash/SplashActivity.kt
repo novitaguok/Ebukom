@@ -12,7 +12,7 @@ import com.ebukom.arch.ui.chooseclass.ChooseClassActivity
 import com.ebukom.arch.ui.login.LoginActivity
 import com.ebukom.arch.ui.main.MainActivity
 import com.ebukom.data.DataDummy
-import com.ebukom.data.buildClassDummy
+//import com.ebukom.data.buildClassDummy
 import com.ebukom.data.buildParentNameDummy
 import com.ebukom.data.buildParentNoteDummy
 
@@ -27,7 +27,7 @@ class SplashActivity : AppCompatActivity() {
 
         sharePref = getSharedPreferences("EBUKOM", Context.MODE_PRIVATE)
 
-        DataDummy.chooseClassData.buildClassDummy()
+//        DataDummy.chooseClassData.buildClassDummy()
         DataDummy.parentNameData.buildParentNameDummy()
         DataDummy.noteAcceptedData.buildParentNoteDummy(this)
 

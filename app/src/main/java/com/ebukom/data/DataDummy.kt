@@ -49,17 +49,17 @@ class DataDummy {
     }
 }
 
-fun ArrayList<ChooseClassDao>.buildClassDummy(): ArrayList<ChooseClassDao> {
-    this.add(ChooseClassDao("Kelas 1", "Aurora", "Ratna Hendrawati", 0))
-    this.add(ChooseClassDao("Kelas 2", "Spectra", "Eni Trikuswanti", 1))
-    this.add(ChooseClassDao("Kelas 1", "Aurora", "Ratna Hendrawati", 0))
-    this.add(ChooseClassDao("Kelas 2", "Spectra", "Eni Trikuswanti", 1))
-    this.add(ChooseClassDao("Kelas 1", "Aurora", "Ratna Hendrawati", 0))
-    this.add(ChooseClassDao("Kelas 2", "Spectra", "Eni Trikuswanti", 1))
-    this.add(ChooseClassDao("Kelas 1", "Aurora", "Ratna Hendrawati", 0))
-    this.add(ChooseClassDao("Kelas 2", "Spectra", "Eni Trikuswanti", 1))
-    return this
-}
+//fun ArrayList<ChooseClassDao>.buildClassDummy(): ArrayList<ChooseClassDao> {
+//    this.add(ChooseClassDao("Kelas 1", "Aurora", "Ratna Hendrawati", 0))
+//    this.add(ChooseClassDao("Kelas 2", "Spectra", "Eni Trikuswanti", 1))
+//    this.add(ChooseClassDao("Kelas 1", "Aurora", "Ratna Hendrawati", 0))
+//    this.add(ChooseClassDao("Kelas 2", "Spectra", "Eni Trikuswanti", 1))
+//    this.add(ChooseClassDao("Kelas 1", "Aurora", "Ratna Hendrawati", 0))
+//    this.add(ChooseClassDao("Kelas 2", "Spectra", "Eni Trikuswanti", 1))
+//    this.add(ChooseClassDao("Kelas 1", "Aurora", "Ratna Hendrawati", 0))
+//    this.add(ChooseClassDao("Kelas 2", "Spectra", "Eni Trikuswanti", 1))
+//    return this
+//}
 
 fun ArrayList<ClassDetailPersonalNoteDao>.buildParentNoteDummy(context: Context): ArrayList<ClassDetailPersonalNoteDao> {
     val content: String = context.getString(R.string.announcement_content)
