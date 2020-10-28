@@ -38,9 +38,9 @@ class PersonalParentSchoolFeeInfoAdapter(
         val callback: OnMoreCallback
     ) :
         RecyclerView.ViewHolder(itemView) {
-        fun bind(dataModel: ClassDetailPersonalParentSchoolFeeDao) {
-            itemView.tvItemSchoolfeeRedTitle.text = dataModel.title
-            itemView.tvItemSchoolfeeRedDate.text = dataModel.date
+        fun bind(item: ClassDetailPersonalParentSchoolFeeDao) {
+            itemView.tvItemSchoolfeeRedTitle.text = item.title
+            itemView.tvItemSchoolfeeRedDate.text = item.date
             itemView.clItemSchoolfeeRed.setOnClickListener {
                 (context as MainClassDetailActivity).startActivity(Intent(context, PersonalParentSchoolFeeInfoActivity::class.java))
             }

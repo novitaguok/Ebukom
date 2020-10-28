@@ -47,8 +47,8 @@ class SchoolAnnouncementFragment : androidx.fragment.app.Fragment() {
                 )
             adapter = mAnnouncementAdapter
         }
-        mAnnouncementList.addAll(DataDummy.announcementData)
-        mAnnouncementAdapter.notifyDataSetChanged()
+//        mAnnouncementList.addAll(DataDummy.announcementData)
+//        mAnnouncementAdapter.notifyDataSetChanged()
 
         btnSchoolAnnouncementNew.setOnClickListener {
             (context as MainClassDetailActivity).startActivity(

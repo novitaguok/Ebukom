@@ -7,19 +7,27 @@
     android:layout_height="match_parent"
     tools:context=".arch.ui.classdetail.school.SchoolFragment">
 
-    <com.google.android.material.tabs.TabLayout
-        android:id="@+id/mainClassSchoolTabLayout"
+<!--    <com.google.android.material.tabs.TabLayout-->
+<!--        android:id="@+id/mainClassSchoolTabLayout"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintTop_toTopOf="parent"-->
+<!--        app:tabTextColor="@color/tab_text_color"-->
+<!--        app:tabMode="fixed" />-->
+
+<!--    <androidx.viewpager.widget.ViewPager-->
+<!--        android:id="@+id/mainClassSchoolViewPager"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="0dp"-->
+<!--        app:layout_constraintBottom_toBottomOf="parent"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/mainClassSchoolTabLayout" />-->
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvMainClassSchoolInfo"
+        android:nestedScrollingEnabled="false"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toTopOf="parent"
-        app:tabTextColor="@color/tab_text_color"
-        app:tabMode="fixed" />
-
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/mainClassSchoolViewPager"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mainClassSchoolTabLayout" />
+        android:layout_marginTop="@dimen/size_2"
+        app:layout_constraintTop_toTopOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
