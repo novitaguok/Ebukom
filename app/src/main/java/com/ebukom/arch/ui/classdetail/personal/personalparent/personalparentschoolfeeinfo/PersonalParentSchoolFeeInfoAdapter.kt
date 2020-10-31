@@ -12,14 +12,6 @@ import com.ebukom.R
 import com.ebukom.arch.dao.*
 import com.ebukom.arch.ui.classdetail.MainClassDetailActivity
 import com.ebukom.arch.ui.classdetail.OnMoreCallback
-import com.ebukom.arch.ui.classdetail.school.schoolphoto.SchoolPhotoAdapter
-import com.ebukom.base.BaseAdapter
-import kotlinx.android.synthetic.main.bottom_sheet_school_announcement.view.*
-import kotlinx.android.synthetic.main.item_photo_blue.view.*
-import kotlinx.android.synthetic.main.item_photo_red.view.*
-import kotlinx.android.synthetic.main.item_schedule_purple.view.*
-import kotlinx.android.synthetic.main.item_schedule_red.view.*
-import kotlinx.android.synthetic.main.item_schedule_yellow.view.*
 import kotlinx.android.synthetic.main.item_schoolfee_purple.view.*
 import kotlinx.android.synthetic.main.item_schoolfee_red.view.*
 

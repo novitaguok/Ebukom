@@ -10,13 +10,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginVertical="@dimen/size_10"
-        android:layout_marginHorizontal="@dimen/size_8"
+        android:layout_marginLeft="@dimen/size_8"
         android:orientation="horizontal">
 
         <LinearLayout
             android:id="@+id/llItemAnnouncementByDateTime"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/size_64"
+            android:layout_height="@dimen/size_64"
             android:orientation="vertical"
             android:gravity="center"
             android:padding="@dimen/size_8"
@@ -26,7 +26,7 @@
                 android:id="@+id/tvItemAnnouncementByDateDay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Selasa"
+                android:text="Minggu"
                 android:textSize="@dimen/text_14"
                 android:textFontWeight="700"
                 android:textColor="@color/colorWhite"/>

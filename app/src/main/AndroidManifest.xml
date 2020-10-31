@@ -18,7 +18,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".arch.ui.classdetail.school.schoolannouncement.SchoolAnnouncementActivity"></activity>
+        <activity android:name=".arch.ui.classdetail.school.schoolphoto.SchoolPhotoActivity"/>
+        <activity android:name=".arch.ui.classdetail.school.schoolschedule.SchoolScheduleActivity" />
+        <activity android:name=".arch.ui.classdetail.school.schoolannouncement.SchoolAnnouncementActivity" />
         <activity android:name=".arch.ui.welcome.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

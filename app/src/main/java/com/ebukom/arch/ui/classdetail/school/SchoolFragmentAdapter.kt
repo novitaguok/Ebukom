@@ -16,11 +16,13 @@ import com.ebukom.arch.ui.classdetail.MainClassDetailActivity
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.SchoolAnnouncementActivity
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.SchoolAnnouncementFragment
 import com.ebukom.arch.ui.classdetail.school.schoolphoto.SchoolPhotoFragment
+import com.ebukom.arch.ui.classdetail.school.schoolschedule.SchoolScheduleActivity
 import com.ebukom.arch.ui.classdetail.school.schoolschedule.SchoolScheduleFragment
+import com.ebukom.arch.ui.classdetail.school.schoolschedule.schoolschedulefile.SchoolScheduleFileActivity
 import kotlinx.android.synthetic.main.item_class.view.*
 import kotlinx.android.synthetic.main.item_school_info.view.*
 
-class SchoolPageAdapter(private val items: List<ClassDetailSchoolInfoDao>, var context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class SchoolFragmentAdapter(private val items: List<ClassDetailSchoolInfoDao>, var context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -43,14 +45,31 @@ class SchoolPageAdapter(private val items: List<ClassDetailSchoolInfoDao>, var c
             itemView.tvItemShoolInfoMore.setTextColor(items?.colorTheme)
             itemView.ivItemShoolInfo.setImageResource(items?.background)
 
-            itemView.clItemShoolInfo.setOnClickListener {
-                (context as MainClassDetailActivity).startActivity(Intent(context, SchoolAnnouncementActivity::class.java))
+            if (context is SchoolScheduleActivity) {
+                itemView.clItemShoolInfo.setOnClickListener {
+                    (context as SchoolScheduleActivity).startActivity(Intent((context as SchoolScheduleActivity), SchoolScheduleFileActivity::class.java))
+                }
+            } else {
+                val position = adapterPosition
+                if (position == 0) {
+                    itemView.clItemShoolInfo.setOnClickListener {
+                        (context as MainClassDetailActivity).startActivity(Intent(context, SchoolAnnouncementActivity::class.java))
+                    }
+                } else if (position == 1) {
+                    itemView.clItemShoolInfo.setOnClickListener {
+                        (context as MainClassDetailActivity).startActivity(Intent(context, SchoolScheduleActivity::class.java))
+                    }
+                } else {
+                    itemView.clItemShoolInfo.setOnClickListener {
+//                        (context as MainClassDetailActivity).startActivity(Intent(context, ::class.java))
+                    }
+                }
             }
         }
     }
 }
 
-//class SchoolPageAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
+//class SchoolFragmentAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {
 //    override fun getItem(position: Int): Fragment {
 //        when (position) {
 //            0 -> {return SchoolAnnouncementFragment()}

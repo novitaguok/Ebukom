@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import androidx.viewpager.widget.ViewPager
 import com.ebukom.R
 import com.ebukom.arch.ui.classdetail.OnMoreCallback
-import com.ebukom.arch.ui.classdetail.school.SchoolPageAdapter
 import com.google.android.material.tabs.TabLayout
 import java.lang.ClassCastException
 

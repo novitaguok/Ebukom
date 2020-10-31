@@ -15,9 +15,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import com.ebukom.R
 import com.ebukom.arch.dao.ClassDetailScheduleDao
-import com.ebukom.arch.dao.ClassDetailTemplateTextDao
-import com.ebukom.arch.ui.classdetail.ClassDetailTemplateTextAdapter
-import com.ebukom.arch.ui.classdetail.school.schoolschedule.SchoolScheduleAdapter
 import com.ebukom.data.DataDummy
 import kotlinx.android.synthetic.main.activity_school_schedule_new.*
 

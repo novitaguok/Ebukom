@@ -12,8 +12,8 @@ import com.ebukom.arch.dao.ClassDetailSchoolAnnouncementMonthDao
 import kotlinx.android.synthetic.main.item_announcement_by_date.view.*
 import kotlinx.android.synthetic.main.item_announcement_time_header.view.*
 
-class SchoolAnnouncementListAdapter(var announcements: List<ClassDetailSchoolAnnouncementMonthDao>) :
-    RecyclerView.Adapter<SchoolAnnouncementListAdapter.ViewHolder>() {
+class SchoolAnnouncementPageAdapter(var announcements: List<ClassDetailSchoolAnnouncementMonthDao>) :
+    RecyclerView.Adapter<SchoolAnnouncementPageAdapter.ViewHolder>() {
 
 
     lateinit var intent: Intent
