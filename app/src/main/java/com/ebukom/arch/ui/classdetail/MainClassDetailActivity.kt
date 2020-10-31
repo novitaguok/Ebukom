@@ -28,6 +28,7 @@ import com.ebukom.arch.ui.classdetail.personal.personalparent.PersonalParentFrag
 import com.ebukom.arch.ui.classdetail.personal.personalsentnote.PersonalSentNoteFragment
 import com.ebukom.arch.ui.classdetail.school.SchoolFragment
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.SchoolAnnouncementAdapter
+//import com.ebukom.arch.ui.classdetail.school.schoolannouncement.SchoolAnnouncementAdapter
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementedit.SchoolAnnouncementEditActivity
 import com.ebukom.arch.ui.classdetail.school.schoolphoto.SchoolPhotoAdapter
 import com.ebukom.arch.ui.classdetail.school.schoolphoto.schoolphotoedit.SchoolPhotoEditActivity

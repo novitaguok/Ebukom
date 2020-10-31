@@ -18,6 +18,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
+        <activity android:name=".arch.ui.classdetail.school.schoolannouncement.SchoolAnnouncementActivity"></activity>
         <activity android:name=".arch.ui.welcome.WelcomeActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -72,7 +73,7 @@
         <activity android:name=".arch.ui.forgotpassword.verification.VerificationActivity" />
         <activity android:name=".arch.ui.forgotpassword.sendcode.SendCodeActivity" />
         <activity android:name=".arch.ui.login.LoginActivity" />
-        <activity android:name=".arch.ui.splash.SplashActivity"/>
+        <activity android:name=".arch.ui.splash.SplashActivity" />
         <activity android:name=".arch.ui.main.MainActivity" />
     </application>
 

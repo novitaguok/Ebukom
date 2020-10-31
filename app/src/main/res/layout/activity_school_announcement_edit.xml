@@ -34,6 +34,17 @@
                 android:textStyle="bold" />
 
         </androidx.appcompat.widget.Toolbar>
+
+        <Button
+            android:id="@+id/tvSchoolAnnouncementEditUseTemplate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorSuperDarkBlue"
+            android:text="GUNAKAN TEMPLATE PENGUMUMAN"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_14"
+            android:textFontWeight="700"/>
+
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
@@ -71,6 +82,32 @@
                     android:padding="@dimen/size_16" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilSchoolAnnouncementEditDate"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/size_20"
+                android:hint="Tanggal"
+                android:theme="@style/LoginTextInputLayoutLabel"
+                app:boxCornerRadiusBottomEnd="@dimen/size_8"
+                app:boxCornerRadiusBottomStart="@dimen/size_8"
+                app:boxCornerRadiusTopEnd="@dimen/size_8"
+                app:boxCornerRadiusTopStart="@dimen/size_8"
+                app:boxStrokeColor="@color/colorBlack"
+                app:boxStrokeWidth="@dimen/size_1"
+                app:layout_constraintTop_toBottomOf="@+id/tilSchoolAnnouncementEditTitle">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etSchoolAnnouncementEditDate"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:drawableRight="@drawable/ic_calendar_24"
+                    android:background="@drawable/edit_text_rectangle_selector"
+                    android:padding="@dimen/size_16" />
+            </com.google.android.material.textfield.TextInputLayout>
+
             <EditText
                 android:id="@+id/etSchoolAnnouncementEditContent"
                 android:layout_width="match_parent"
@@ -86,7 +123,7 @@
                 android:textColorHint="#9E9E9E"
                 android:textSize="@dimen/text_14"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tilSchoolAnnouncementEditTitle" />
+                app:layout_constraintTop_toBottomOf="@+id/tilSchoolAnnouncementEditDate" />
 
             <TextView
                 android:id="@+id/tvSchoolAnnouncementEditAttachmentTitle"
@@ -114,6 +151,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom"
+        android:visibility="gone"
         android:elevation="@dimen/size_2">
 
         <TextView
@@ -150,24 +188,40 @@
             android:layout_marginTop="@dimen/size_16"
             android:paddingHorizontal="@dimen/size_14"
             android:paddingBottom="@dimen/size_24"
-            app:layout_constraintBottom_toTopOf="@+id/btnSchoolAnnouncementEditSave"
-            app:layout_constraintTop_toBottomOf="@id/tvSchoolAnnouncementEditTemplateAdd" />
 
-        <Button
-            android:id="@+id/btnSchoolAnnouncementEditSave"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:background="#828282"
-            android:lineHeight="@dimen/text_16"
-            android:text="SIMPAN PERUBAHAN"
-            android:textColor="@color/colorWhite"
-            android:textFontWeight="500"
-            android:textSize="@dimen/text_14"
-            app:layout_constraintTop_toBottomOf="@id/rvSchoolAnnouncementEditTemplate"
-            android:enabled="false"/>
+            app:layout_constraintTop_toBottomOf="@id/tvSchoolAnnouncementEditTemplateAdd" />
+<!--        app:layout_constraintBottom_toTopOf="@+id/btnSchoolAnnouncementEditSave"-->
+
+
+<!--        <Button-->
+<!--            android:id="@+id/btnSchoolAnnouncementEditSave"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="wrap_content"-->
+<!--            android:layout_alignParentBottom="true"-->
+<!--            android:background="#828282"-->
+<!--            android:lineHeight="@dimen/text_16"-->
+<!--            android:text="SIMPAN PERUBAHAN"-->
+<!--            android:textColor="@color/colorWhite"-->
+<!--            android:textFontWeight="500"-->
+<!--            android:textSize="@dimen/text_14"-->
+<!--            app:layout_constraintTop_toBottomOf="@id/rvSchoolAnnouncementEditTemplate"-->
+<!--            android:enabled="false"/>-->
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/btnSchoolAnnouncementEditSave"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="#828282"
+        android:lineHeight="@dimen/text_16"
+        android:text="SIMPAN PERUBAHAN"
+        android:textColor="@color/colorWhite"
+        android:textFontWeight="500"
+        android:textSize="@dimen/text_14"
+        app:layout_constraintTop_toBottomOf="@id/rvSchoolAnnouncementEditTemplate"
+        android:enabled="false"/>
 
     <include
         android:id="@+id/loading"

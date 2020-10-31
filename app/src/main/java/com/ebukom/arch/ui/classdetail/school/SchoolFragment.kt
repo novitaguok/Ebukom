@@ -27,7 +27,7 @@ class SchoolFragment : Fragment() {
     private var viewPager: ViewPager? = null
     lateinit var callback : OnMoreCallback
     private val mSchoolInfoList: ArrayList<ClassDetailSchoolInfoDao> = arrayListOf()
-    var mSchoolInfoAdapter: SchoolPageAdapter = SchoolPageAdapter(mSchoolInfoList)
+    lateinit var mSchoolInfoAdapter: SchoolPageAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -41,6 +41,8 @@ class SchoolFragment : Fragment() {
 //        tabLayout?.setupWithViewPager(viewPager)
 //        viewPager?.currentItem = 0
 //        return view
+
+        mSchoolInfoAdapter = SchoolPageAdapter(mSchoolInfoList, activity!!)
 
         mSchoolInfoList.add(ClassDetailSchoolInfoDao("Pengumuman\nSekolah", R.drawable.bg_school_announcement, Color.parseColor("#005C39"), "pengumuman"))
         mSchoolInfoList.add(ClassDetailSchoolInfoDao("Jadwal", R.drawable.bg_school_schedule, Color.parseColor("#004A61"), "jadwal"))

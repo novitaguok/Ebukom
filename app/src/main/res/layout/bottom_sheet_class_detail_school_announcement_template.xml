@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    app:behavior_hideable="false"
+    app:behavior_peekHeight="0dp"
+    app:layout_behavior="@string/bottom_sheet_behavior">
+
+    <TextView
+        android:id="@+id/tvBottomSheetSchoolAnnouncementTemplateTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginLeft="@dimen/size_16"
+        android:gravity="center_vertical"
+        android:lineHeight="@dimen/size_28"
+        android:text="Pilih template pengumuman"
+        android:textColor="#222222"
+        android:textSize="@dimen/text_14"
+        android:textFontWeight="500"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+    <TextView
+        android:id="@+id/tvBottomSheetSchoolAnnouncementTemplateAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginRight="@dimen/size_16"
+        android:gravity="center_vertical"
+        android:lineHeight="@dimen/size_28"
+        android:text="Buat template baru"
+        android:textColor="@color/colorRed"
+        android:textSize="@dimen/size_12"
+        android:textFontWeight="500"
+        app:layout_constraintTop_toTopOf="@+id/tvBottomSheetSchoolAnnouncementTemplateTitle"
+        app:layout_constraintBottom_toBottomOf="@+id/tvBottomSheetSchoolAnnouncementTemplateTitle"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <TextView
+        android:id="@+id/tvBottomSheetSchoolAnnouncementTemplateFieldTrip"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/size_16"
+        android:lineHeight="@dimen/size_28"
+        android:text="Field Trip"
+        android:paddingVertical="@dimen/size_10"
+        android:textColor="#212121"
+        android:textSize="@dimen/text_16"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvBottomSheetSchoolAnnouncementTemplateTitle" />
+
+    <TextView
+        android:id="@+id/tvBottomSheetSchoolAnnouncementTemplateUniform"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/size_16"
+        android:lineHeight="@dimen/size_28"
+        android:paddingVertical="@dimen/size_10"
+        android:text="Perubahan Seragam"
+        android:textColor="#212121"
+        android:textSize="@dimen/text_16"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/cbRegisterParentBottomSheetPMR"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvBottomSheetSchoolAnnouncementTemplateFieldTrip" />
+
+    <TextView
+        android:id="@+id/tvBottomSheetSchoolAnnouncementTemplateSchedule"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/size_16"
+        android:lineHeight="@dimen/size_28"
+        android:paddingVertical="@dimen/size_10"
+        android:text="Perubahan Jadwal"
+        android:textColor="#212121"
+        android:textSize="@dimen/text_16"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/cbRegisterParentBottomSheetPMR"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvBottomSheetSchoolAnnouncementTemplateUniform" />
+
+    <TextView
+        android:id="@+id/tvBottomSheetSchoolAnnouncementTemplateCancel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/size_16"
+        android:lineHeight="@dimen/size_28"
+        android:paddingVertical="@dimen/size_10"
+        android:text="Batalkan"
+        android:textColor="@color/colorRed"
+        android:textSize="@dimen/text_16"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/cbRegisterParentBottomSheetPMR"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvBottomSheetSchoolAnnouncementTemplateSchedule" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

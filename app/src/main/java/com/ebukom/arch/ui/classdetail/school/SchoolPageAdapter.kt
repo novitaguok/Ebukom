@@ -1,5 +1,7 @@
 package com.ebukom.arch.ui.classdetail.school
 
+import android.content.Context
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,13 +12,15 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ebukom.R
 import com.ebukom.arch.dao.ClassDetailSchoolInfoDao
 import com.ebukom.arch.ui.chooseclass.ChooseClassViewHolder
+import com.ebukom.arch.ui.classdetail.MainClassDetailActivity
+import com.ebukom.arch.ui.classdetail.school.schoolannouncement.SchoolAnnouncementActivity
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.SchoolAnnouncementFragment
 import com.ebukom.arch.ui.classdetail.school.schoolphoto.SchoolPhotoFragment
 import com.ebukom.arch.ui.classdetail.school.schoolschedule.SchoolScheduleFragment
 import kotlinx.android.synthetic.main.item_class.view.*
 import kotlinx.android.synthetic.main.item_school_info.view.*
 
-class SchoolPageAdapter(private val items: List<ClassDetailSchoolInfoDao>) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
+class SchoolPageAdapter(private val items: List<ClassDetailSchoolInfoDao>, var context: Context) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -38,6 +42,10 @@ class SchoolPageAdapter(private val items: List<ClassDetailSchoolInfoDao>) : Rec
             itemView.tvItemShoolInfoMore.text = "Lihat " + items?.type
             itemView.tvItemShoolInfoMore.setTextColor(items?.colorTheme)
             itemView.ivItemShoolInfo.setImageResource(items?.background)
+
+            itemView.clItemShoolInfo.setOnClickListener {
+                (context as MainClassDetailActivity).startActivity(Intent(context, SchoolAnnouncementActivity::class.java))
+            }
         }
     }
 }
