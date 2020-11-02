@@ -30,8 +30,8 @@
 
     <ImageView
         android:id="@+id/ivNotification"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/size_40"
+        android:layout_height="@dimen/size_40"
         android:layout_marginTop="@dimen/size_16"
         android:src="@drawable/ic_notification"
         app:layout_constraintRight_toRightOf="parent"

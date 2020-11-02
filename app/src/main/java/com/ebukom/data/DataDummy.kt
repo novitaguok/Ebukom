@@ -28,7 +28,7 @@ class DataDummy {
         var noteSentData = arrayListOf<ClassDetailPersonalNoteDao>()
         var noteAttachmentData = arrayListOf<ClassDetailAttachmentDao>()
         var noteTemplateData = arrayListOf<ClassDetailTemplateTextDao>()
-        var parentNameData = arrayListOf<ClassDetailItemCheckDao>()
+        var parentNameData = arrayListOf<ClassDetailItemCheckThumbnailDao>()
 
         // Material Nav -- Subject Tab
         var mathMaterial = arrayListOf<ClassDetailTemplateTextDao>()
@@ -78,10 +78,10 @@ fun ArrayList<ClassDetailPersonalNoteDao>.buildParentNoteDummy(context: Context)
     return this
 }
 
-fun ArrayList<ClassDetailItemCheckDao>.buildParentNameDummy(): ArrayList<ClassDetailItemCheckDao> {
-    this.add(ClassDetailItemCheckDao("Jumaidah Estetika"))
-    this.add(ClassDetailItemCheckDao("Siti Nur Mudhaya"))
-    this.add(ClassDetailItemCheckDao("Rizki Azhar"))
-    this.add(ClassDetailItemCheckDao("Putri Tryatna"))
+fun ArrayList<ClassDetailItemCheckThumbnailDao>.buildParentNameDummy(): ArrayList<ClassDetailItemCheckThumbnailDao> {
+    this.add(ClassDetailItemCheckThumbnailDao("Jumaidah Estetika", "Guru Kelas 1 Aurora", R.drawable.ic_notification))
+    this.add(ClassDetailItemCheckThumbnailDao("Siti Nur Mudhaya", "Guru Kelas 1 Aurora", R.drawable.ic_notification))
+    this.add(ClassDetailItemCheckThumbnailDao("Rizki Azhar", "Guru Kelas 1 Aurora", R.drawable.ic_notification))
+    this.add(ClassDetailItemCheckThumbnailDao("Putri Tryatna", "Guru Kelas 1 Aurora", R.drawable.ic_notification))
     return this
 }

@@ -5,19 +5,17 @@ import android.content.SharedPreferences
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
-import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ebukom.R
 import com.ebukom.arch.dao.ClassDetailAttachmentDao
-import com.ebukom.arch.dao.ClassDetailItemCheckDao
+import com.ebukom.arch.dao.ClassDetailItemCheckThumbnailDao
 import com.ebukom.arch.dao.ClassDetailPersonalNoteDao
 import com.ebukom.arch.ui.classdetail.ClassDetailCheckAdapter
+import com.ebukom.arch.ui.classdetail.ClassDetailCheckThumbnailAdapter
 import com.ebukom.data.DataDummy
-import com.ebukom.data.buildParentNameDummy
 import com.kunzisoft.switchdatetime.SwitchDateTimeDialogFragment
 import kotlinx.android.synthetic.main.activity_personal_note_new_next.*
 import java.text.SimpleDateFormat
@@ -26,8 +24,8 @@ import kotlin.collections.ArrayList
 
 class PersonalNoteNewNextActivity : AppCompatActivity(), ClassDetailCheckAdapter.OnCheckListener {
 
-    private val mParentList: ArrayList<ClassDetailItemCheckDao> = arrayListOf()
-    lateinit var mParentAdapter: ClassDetailCheckAdapter
+    private val mParentList: ArrayList<ClassDetailItemCheckThumbnailDao> = arrayListOf()
+    lateinit var mParentAdapter: ClassDetailCheckThumbnailAdapter
     lateinit var content: String
     lateinit var dateTime: String
     lateinit var attachments: List<ClassDetailAttachmentDao>
@@ -63,7 +61,7 @@ class PersonalNoteNewNextActivity : AppCompatActivity(), ClassDetailCheckAdapter
 
         // Parent Names
         mParentList.addAll(DataDummy.parentNameData)
-        mParentAdapter = ClassDetailCheckAdapter(mParentList, this@PersonalNoteNewNextActivity)
+        mParentAdapter = ClassDetailCheckThumbnailAdapter(mParentList, this@PersonalNoteNewNextActivity)
         rvPersonalNoteNewNext.apply {
             layoutManager = LinearLayoutManager(
                 this@PersonalNoteNewNextActivity,
@@ -133,7 +131,7 @@ class PersonalNoteNewNextActivity : AppCompatActivity(), ClassDetailCheckAdapter
                 DataDummy.noteSentData.add(
                     ClassDetailPersonalNoteDao(
                         R.drawable.bg_solid_gray,
-                        it.item,
+                        it.name,
                         getString(R.string.announcement_content),
                         arrayListOf(),
                         dateTime,
