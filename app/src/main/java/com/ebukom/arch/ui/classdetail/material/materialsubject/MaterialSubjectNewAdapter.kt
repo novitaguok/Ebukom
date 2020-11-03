@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ebukom.R
 import com.ebukom.arch.dao.ClassDetailTemplateTextDao
-import com.ebukom.arch.ui.chooseclass.ChooseClassActivity
 import kotlinx.android.synthetic.main.item_subject.view.*
 
 class MaterialSubjectNewAdapter(val list: ArrayList<ClassDetailTemplateTextDao>, var context: Context) :
@@ -15,7 +14,7 @@ class MaterialSubjectNewAdapter(val list: ArrayList<ClassDetailTemplateTextDao>,
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.item_subject, parent, false)
+            LayoutInflater.from(parent.context).inflate(R.layout.item_subject_material, parent, false)
         )
     }
 
@@ -24,10 +23,10 @@ class MaterialSubjectNewAdapter(val list: ArrayList<ClassDetailTemplateTextDao>,
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.view.tvItemSubject.text = list?.get(position)?.title
-        holder.view.ibItemSubject.setOnClickListener {
-            (context as MaterialSubjectNewActivity).popUpMenu(list?.get(position), position)
-        }
+//        holder.view.tvItemSubject.text = list?.get(position)?.title
+//        holder.view.ibItemSubjectMaterial.setOnClickListener {
+//            (context as MaterialSubjectNewActivity).popUpMenu(list?.get(position), position)
+//        }
     }
 
     class ViewHolder(val view: View) : RecyclerView.ViewHolder(view)

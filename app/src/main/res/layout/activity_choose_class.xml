@@ -99,7 +99,7 @@
                 android:nestedScrollingEnabled="false"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="@dimen/size_18"
                 app:layout_constraintTop_toBottomOf="@+id/cvChooseClassHeader" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

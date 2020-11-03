@@ -14,10 +14,10 @@ class ChooseClassViewHolder(var view: View, var context: Context) : RecyclerView
     fun onBind(item: ChooseClassDao) {
 
         view.tvItemClassGrade.text = item?.classNumber
-        view.tvItemClassGrade.setTextColor(item.colorTheme)
+        view.tvItemClassGrade.setTextColor(item.colorTheme!!)
         view.tvItemClassName.text = item?.className
         view.tvItemClassTeacher.text = item?.teacher
-        view.tvItemClassTeacher.setTextColor(item.colorTheme)
+        view.tvItemClassTeacher.setTextColor(item.colorTheme!!)
         view.ivItemClass.setImageResource(item?.background)
 
         if (context is ChooseClassActivity) {
