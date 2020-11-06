@@ -6,7 +6,6 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -36,56 +35,60 @@ class MaterialSubjectNewActivity : AppCompatActivity() {
             btnMaterialSubject.visibility = View.GONE
         }
 
-
-        material  = intent.extras?.getString("material", "0")?: "0"
-        // Get intent from MaterialSubjectFragment
-        when (material) {
-            "0" -> {
-                val intent = Intent(this, MaterialSubjectAddActivity::class.java)
-                tvToolbarTitle.text = "Matematika"
-                btnMaterialSubject.text = "Tambah Materi Matematika"
-
-                // Material
-                mMaterialList.addAll(DataDummy.mathMaterial)
-                mMaterialAdapter.notifyDataSetChanged()
-
-                // Intent
-                btnMaterialSubject.setOnClickListener {
-                    intent.putExtra("material", "0")
-                    startActivity(intent)
-                }
-            }
-            "1" -> {
-                val intent = Intent(this, MaterialSubjectAddActivity::class.java)
-                tvToolbarTitle.text = "Ilmu Pengetahuan Alam"
-                btnMaterialSubject.text = "Tambah Materi IPA"
-
-                // Material
-                mMaterialList.addAll(DataDummy.scienceMaterial)
-                mMaterialAdapter.notifyDataSetChanged()
-
-                // Intent
-                btnMaterialSubject.setOnClickListener {
-                    intent.putExtra("material", "1")
-                    startActivity(intent)
-                }
-            }
-            "2" -> {
-                val intent = Intent(this, MaterialSubjectAddActivity::class.java)
-                tvToolbarTitle.text = "Bahasa Inggris"
-                btnMaterialSubject.text = "Tambah Materi Bahasa Inggris"
-
-                // Material
-                mMaterialList.addAll(DataDummy.englishMaterial)
-                mMaterialAdapter.notifyDataSetChanged()
-
-                // Intent
-                btnMaterialSubject.setOnClickListener {
-                    intent.putExtra("material", "2")
-                    startActivity(intent)
-                }
-            }
+        val intent = Intent(this, MaterialSubjectAddActivity::class.java)
+        btnMaterialSubject.setOnClickListener {
+            startActivity(intent)
         }
+
+//        material  = intent.extras?.getString("material", "0")?: "0"
+//        // Get intent from MaterialSubjectFragment
+//        when (material) {
+//            "0" -> {
+//                val intent = Intent(this, MaterialSubjectRecapActivity::class.java)
+//                tvToolbarTitle.text = "Matematika"
+//                btnMaterialSubject.text = "Tambah Materi Matematika"
+//
+//                // Material
+//                mMaterialList.addAll(DataDummy.mathMaterial)
+//                mMaterialAdapter.notifyDataSetChanged()
+//
+//                // Intent
+//                btnMaterialSubject.setOnClickListener {
+//                    intent.putExtra("material", "0")
+//                    startActivity(intent)
+//                }
+//            }
+//            "1" -> {
+//                val intent = Intent(this, MaterialSubjectRecapActivity::class.java)
+//                tvToolbarTitle.text = "Ilmu Pengetahuan Alam"
+//                btnMaterialSubject.text = "Tambah Materi IPA"
+//
+//                // Material
+//                mMaterialList.addAll(DataDummy.scienceMaterial)
+//                mMaterialAdapter.notifyDataSetChanged()
+//
+//                // Intent
+//                btnMaterialSubject.setOnClickListener {
+//                    intent.putExtra("material", "1")
+//                    startActivity(intent)
+//                }
+//            }
+//            "2" -> {
+//                val intent = Intent(this, MaterialSubjectRecapActivity::class.java)
+//                tvToolbarTitle.text = "Bahasa Inggris"
+//                btnMaterialSubject.text = "Tambah Materi Bahasa Inggris"
+//
+//                // Material
+//                mMaterialList.addAll(DataDummy.englishMaterial)
+//                mMaterialAdapter.notifyDataSetChanged()
+//
+//                // Intent
+//                btnMaterialSubject.setOnClickListener {
+//                    intent.putExtra("material", "2")
+//                    startActivity(intent)
+//                }
+//            }
+//        }
 
         rvMaterialSubject.apply {
             layoutManager = LinearLayoutManager(
@@ -122,7 +125,7 @@ class MaterialSubjectNewActivity : AppCompatActivity() {
         view.tvEditInfo.setOnClickListener {
             bottomSheetDialog.dismiss()
 
-            val intent = Intent(this, MaterialSubjectAddActivity::class.java)
+            val intent = Intent(this, MaterialSubjectRecapActivity::class.java)
             intent.putExtra("page", "edit")
             intent.putExtra("material",material)
             intent.putExtra("data", item)

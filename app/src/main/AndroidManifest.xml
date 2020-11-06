@@ -18,10 +18,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".arch.ui.classdetail.school.schoolphoto.SchoolPhotoActivity"/>
+        <activity android:name=".arch.ui.classdetail.material.MaterialPreviewActivity"></activity>
+        <activity android:name=".arch.ui.classdetail.school.schoolphoto.SchoolPhotoActivity" />
         <activity android:name=".arch.ui.classdetail.school.schoolschedule.SchoolScheduleActivity" />
         <activity android:name=".arch.ui.classdetail.school.schoolannouncement.SchoolAnnouncementActivity" />
-        <activity android:name=".arch.ui.welcome.WelcomeActivity"/>
+        <activity android:name=".arch.ui.welcome.WelcomeActivity" />
         <activity android:name=".arch.ui.admin.adminschoolfeeinfo.adminshareschoolfeeinforecheck.AdminShareSchoolFeeInfoRecheckActivity" />
         <activity android:name=".arch.ui.admin.adminschoolfeeinfo.adminshareschoolfeeinfonext.AdminShareSchoolFeeInfoNextActivity" />
         <activity android:name=".arch.ui.admin.adminschoolfeeinfo.adminshareschoolfeeinfoaddpaymentitemtemplate.AdminSchoolFeeInfoAddPaymentItemTemplateIActivity" />
@@ -36,6 +37,7 @@
         <activity android:name=".arch.ui.classdetail.material.materialeducation.materialeducationedit.MaterialEducationEditActivity" />
         <activity android:name=".arch.ui.classdetail.material.materialeducation.materialeducationdetail.MaterialEducationDetailActivity" />
         <activity android:name=".arch.ui.classdetail.material.materialeducation.materialeducationnew.MaterialEducationNewActivity" />
+        <activity android:name=".arch.ui.classdetail.material.materialsubject.MaterialSubjectRecapActivity" />
         <activity android:name=".arch.ui.classdetail.material.materialsubject.MaterialSubjectAddActivity" />
         <activity android:name=".arch.ui.classdetail.material.materialsubject.MaterialSubjectNewActivity" />
         <activity android:name=".arch.ui.classdetail.personal.personalnotenewnext.PersonalNoteNewNextActivity" />
@@ -69,7 +71,7 @@
         <activity android:name=".arch.ui.forgotpassword.verification.VerificationActivity" />
         <activity android:name=".arch.ui.forgotpassword.sendcode.SendCodeActivity" />
         <activity android:name=".arch.ui.login.LoginActivity" />
-        <activity android:name=".arch.ui.splash.SplashActivity" >
+        <activity android:name=".arch.ui.splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

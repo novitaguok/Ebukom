@@ -44,7 +44,7 @@
             android:layout_marginHorizontal="@dimen/size_8"
             android:layout_marginTop="@dimen/size_14"
             android:layout_marginBottom="@dimen/size_12"
-            android:background="@drawable/btn_darkblue_rectangle"
+            android:background="@drawable/btn_blue_rectangle_8dp"
             android:lineHeight="@dimen/text_24"
             android:text="Tambahkan Materi Matematika"
             android:textAllCaps="false"

@@ -15,7 +15,6 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import com.ebukom.R
 import kotlinx.android.synthetic.main.activity_school_schedule_edit.*
-import kotlinx.android.synthetic.main.activity_school_schedule_new.*
 import kotlinx.android.synthetic.main.activity_school_schedule_new.loading
 import kotlinx.android.synthetic.main.activity_school_schedule_new.toolbar
 
@@ -136,7 +135,7 @@ class SchoolScheduleEditActivity : AppCompatActivity() {
                 btn?.background =
                     ContextCompat.getDrawable(
                         applicationContext,
-                        R.drawable.btn_darkblue_rectangle
+                        R.drawable.btn_blue_rectangle_8dp
                     )
                 tv?.visibility = View.INVISIBLE
                 iv?.visibility = View.GONE

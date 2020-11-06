@@ -59,6 +59,9 @@ class ClassDetailAttachmentAdapter(private val data: List<ClassDetailAttachmentD
                 2 -> {
                     itemView.ivItemAnnouncementAttachment.setImageResource(R.drawable.ic_file_red)
                 }
+                3 -> {
+                    itemView.ivItemAnnouncementAttachment.setImageResource(R.drawable.ic_video_red)
+                }
             }
 
             if (context is SchoolAnnouncementDetailActivity) itemView.ivItemAnnouncementAttachmentDelete.visibility = View.GONE

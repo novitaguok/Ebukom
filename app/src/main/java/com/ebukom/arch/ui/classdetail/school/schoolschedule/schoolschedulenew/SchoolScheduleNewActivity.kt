@@ -142,7 +142,7 @@ class SchoolScheduleNewActivity : AppCompatActivity() {
                 btn?.background =
                     ContextCompat.getDrawable(
                         applicationContext,
-                        R.drawable.btn_darkblue_rectangle
+                        R.drawable.btn_blue_rectangle_8dp
                     )
                 tv?.visibility = View.INVISIBLE
                 iv?.visibility = View.GONE

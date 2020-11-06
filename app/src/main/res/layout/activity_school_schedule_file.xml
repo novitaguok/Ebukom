@@ -46,7 +46,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerInParent="true"
-                android:src="@drawable/img_school_schedule_dummy_file"/>
+                android:src="@drawable/img_dummy_school_schedule"/>
 
         </RelativeLayout>
 

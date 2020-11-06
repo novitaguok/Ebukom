@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".arch.ui.classdetail.material.materialsubject.MaterialSubjectAddActivity">
+    android:background="@color/colorWhite"
+    tools:context=".arch.ui.classdetail.material.materialsubject.MaterialSubjectRecapActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -43,12 +44,12 @@
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tilMaterialSubjectAdd"
+                android:id="@+id/tilMaterialSubjectAddTitle"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-                android:layout_marginTop="@dimen/size_24"
+                android:layout_marginTop="@dimen/size_36"
                 android:hint="Nama Materi"
                 android:theme="@style/LoginTextInputLayoutLabel"
                 app:boxCornerRadiusBottomEnd="@dimen/size_8"
@@ -60,76 +61,82 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etMaterialSubjectAdd"
+                    android:id="@+id/etMaterialSubjectAddTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/edit_text_rectangle_selector"
                     android:padding="@dimen/size_16" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <Button
-                android:id="@+id/btnMaterialSubjectChooseFile"
-                android:layout_width="175dp"
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvMaterialSubjectAddAttachment"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/size_16"
-                android:layout_marginTop="@dimen/size_32"
-                android:background="@drawable/btn_darkblue_rectangle"
-                android:lineHeight="@dimen/text_16"
-                android:text="PILIH FILE MATERI"
-                android:textColor="@color/colorWhite"
-                android:textFontWeight="500"
-                android:textSize="@dimen/text_14"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tilMaterialSubjectAdd" />
+                android:layout_marginTop="@dimen/size_28"
+                app:layout_constraintTop_toBottomOf="@id/tilMaterialSubjectAddTitle" />
 
-            <TextView
-                android:id="@+id/tvMaterialSubjectFilePath"
-                android:layout_width="wrap_content"
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:id="@+id/clMaterialSubjectAddButton"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/size_16"
-                android:layout_marginTop="@dimen/size_14"
-                android:lineHeight="@dimen/size_16"
-                android:text="MateriMatematika.pdf"
-                android:textColor="#212121"
-                android:textSize="@dimen/text_12"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnMaterialSubjectChooseFile"
-                android:visibility="gone"/>
+                app:layout_constraintTop_toBottomOf="@+id/rvMaterialSubjectAddAttachment"
+                android:layout_marginTop="@dimen/size_20">
 
-            <ImageView
-                android:id="@+id/ivMaterialSubjectDelete"
-                android:layout_width="@dimen/size_24"
-                android:layout_height="@dimen/size_24"
-                android:layout_marginRight="@dimen/size_12"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/tvMaterialSubjectFilePath"
-                app:layout_constraintBottom_toBottomOf="@+id/tvMaterialSubjectFilePath"
-                android:src="@drawable/ic_close"
-                android:visibility="gone"/>
+                <TextView
+                    android:id="@+id/tvMaterialSubjectAddButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:elevation="@dimen/size_4"
+                    android:text="Tambah File Materi"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="@dimen/text_16"
+                    android:textStyle="bold"
+                    app:layout_constraintBottom_toBottomOf="@+id/btnMaterialSubjectAddButton"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintLeft_toRightOf="@+id/ivMaterialSubjectAddButton"
+                    app:layout_constraintRight_toRightOf="@+id/btnMaterialSubjectAddButton"
+                    app:layout_constraintTop_toTopOf="@+id/btnMaterialSubjectAddButton" />
 
+                <ImageView
+                    android:id="@+id/ivMaterialSubjectAddButton"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="@dimen/size_12"
+                    android:elevation="@dimen/size_4"
+                    android:src="@drawable/ic_plus_yellow"
+                    app:layout_constraintBottom_toBottomOf="@+id/tvMaterialSubjectAddButton"
+                    app:layout_constraintHorizontal_chainStyle="packed"
+                    app:layout_constraintLeft_toLeftOf="@+id/btnMaterialSubjectAddButton"
+                    app:layout_constraintRight_toLeftOf="@+id/tvMaterialSubjectAddButton"
+                    app:layout_constraintTop_toTopOf="@+id/tvMaterialSubjectAddButton" />
+
+                <Button
+                    android:id="@+id/btnMaterialSubjectAddButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/size_20"
+                    android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                    android:height="@dimen/size_64"
+                    android:background="@drawable/btn_blue_rectangle_8dp"
+                    app:layout_constraintBottom_toTopOf="@+id/btnChooseClassLogout"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintRight_toRightOf="parent" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/clMaterialSubjectAdd"
+    <Button
+        android:id="@+id/btnMaterialSubjectAddDone"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:elevation="@dimen/size_2">
-
-        <Button
-            android:id="@+id/btnMaterialSubjectDone"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            android:background="#828282"
-            android:enabled="false"
-            android:lineHeight="@dimen/text_16"
-            android:text="BAGIKAN MATERI"
-            android:textColor="@color/colorWhite"
-            android:textFontWeight="500"
-            android:textSize="@dimen/text_14" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_gravity="bottom|end"
+        android:background="#828282"
+        android:enabled="false"
+        android:lineHeight="@dimen/text_16"
+        android:text="BAGIKAN MATERI"
+        android:textColor="@color/colorWhite"
+        android:textFontWeight="500"
+        android:textSize="@dimen/text_14" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

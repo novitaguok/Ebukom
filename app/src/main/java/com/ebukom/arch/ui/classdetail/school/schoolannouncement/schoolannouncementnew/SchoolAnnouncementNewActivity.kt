@@ -24,7 +24,7 @@ import com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannounceme
 import com.ebukom.data.DataDummy
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.activity_school_anouncement_new.*
-import kotlinx.android.synthetic.main.activity_school_anouncement_new.rvSchoolAnnouncementAttachment
+import kotlinx.android.synthetic.main.activity_school_anouncement_new.rvMaterialSubjectAddAttachment
 import kotlinx.android.synthetic.main.activity_school_anouncement_new.rvSchoolAnnouncementNewTemplate
 import kotlinx.android.synthetic.main.activity_school_anouncement_new.toolbar
 import kotlinx.android.synthetic.main.alert_edit_text.view.*
@@ -47,7 +47,7 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
 
         // Attachment List
         checkAttachmentEmpty()
-        rvSchoolAnnouncementAttachment.apply {
+        rvMaterialSubjectAddAttachment.apply {
             layoutManager = LinearLayoutManager(
                 this@SchoolAnnouncementNewActivity,
                 LinearLayoutManager.VERTICAL,
