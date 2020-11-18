@@ -31,7 +31,7 @@
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <RadioGroup
-        android:id="@+id/rbGroup"
+        android:id="@+id/rbGroupClassDetailHeader"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 

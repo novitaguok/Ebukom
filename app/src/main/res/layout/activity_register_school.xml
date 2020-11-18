@@ -98,10 +98,11 @@
                 app:layout_constraintTop_toBottomOf="@id/tvRegisterSchoolAddPhoto">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etRegisterParentName"
+                    android:id="@+id/etRegisterSchoolName"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:padding="@dimen/size_16"
+                    android:paddingLeft="@dimen/size_16"
+                    android:paddingRight="@dimen/size_16"
                     android:background="@drawable/edit_text_rectangle_selector"/>
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -124,7 +125,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_48"
                 android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-                app:layout_constraintTop_toBottomOf="@+id/tilRegisterSchoolName"
+                app:layout_constraintTop_toBottomOf="@+id/tvRegisterSchoolNameErrorMessage"
                 android:textAlignment="textStart"
                 android:text="Peran"
                 android:textColor="@color/colorGray"
@@ -170,7 +171,8 @@
                     android:id="@+id/etRegisterSchoolPhone"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:padding="@dimen/size_16"/>
+                    android:paddingLeft="@dimen/size_16"
+                    android:paddingRight="@dimen/size_16"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
@@ -189,25 +191,29 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilRegisterSchoolPassword"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_52"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/size_18"
+                android:hint="Kata Sandi"
                 android:theme="@style/LoginTextInputLayoutLabel"
+                app:passwordToggleEnabled="true"
                 app:boxCornerRadiusBottomEnd="@dimen/size_8"
                 app:boxCornerRadiusBottomStart="@dimen/size_8"
                 app:boxCornerRadiusTopEnd="@dimen/size_8"
                 app:boxCornerRadiusTopStart="@dimen/size_8"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/size_52"
-                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-                android:layout_marginTop="@dimen/size_24"
-                android:hint="Kata Sandi"
                 app:boxStrokeColor="@color/colorBlack"
                 app:boxStrokeWidth="@dimen/size_1"
-                app:layout_constraintTop_toBottomOf="@id/tvRegisterSchoolPhoneErrorMessage">
+                app:layout_constraintTop_toBottomOf="@+id/tvRegisterSchoolPhoneErrorMessage">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etRegisterSchoolPassword"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:padding="@dimen/size_16" />
+                    android:inputType="textPassword"
+                    android:paddingLeft="@dimen/size_16"
+                    android:paddingRight="@dimen/size_16"
+                    android:textSize="@dimen/text_16" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
@@ -226,25 +232,29 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilRegisterSchoolConfirmPassword"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_52"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/size_18"
+                android:hint="Kata Sandi"
                 android:theme="@style/LoginTextInputLayoutLabel"
+                app:passwordToggleEnabled="true"
                 app:boxCornerRadiusBottomEnd="@dimen/size_8"
                 app:boxCornerRadiusBottomStart="@dimen/size_8"
                 app:boxCornerRadiusTopEnd="@dimen/size_8"
                 app:boxCornerRadiusTopStart="@dimen/size_8"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/size_52"
-                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-                android:layout_marginTop="@dimen/size_24"
-                android:hint="Konfirmasi kata sandi"
                 app:boxStrokeColor="@color/colorBlack"
                 app:boxStrokeWidth="@dimen/size_1"
-                app:layout_constraintTop_toBottomOf="@id/tvRegisterSchoolPasswordErrorMessage">
+                app:layout_constraintTop_toBottomOf="@+id/tvRegisterSchoolPasswordErrorMessage">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etLoginPassword"
+                    android:id="@+id/etRegisterSchoolConfirmPassword"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:padding="@dimen/size_16" />
+                    android:inputType="textPassword"
+                    android:paddingLeft="@dimen/size_16"
+                    android:paddingRight="@dimen/size_16"
+                    android:textSize="@dimen/text_16" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
@@ -272,7 +282,7 @@
                 android:text="DAFTAR"
                 android:textColor="@color/colorWhite"
                 android:textStyle="bold"
-                app:layout_constraintTop_toBottomOf="@id/tilRegisterSchoolConfirmPassword" />
+                app:layout_constraintTop_toBottomOf="@id/tvRegisterSchoolConfirmPasswordErrorMessage" />
 
             <TextView
                 android:id="@+id/tvRegisterSchoolHaveAccount"

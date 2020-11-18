@@ -23,8 +23,8 @@ class VerificationActivity : AppCompatActivity() {
 
         initToolbar()
 
-        val layout = intent.getIntExtra("Layout", 0)
-        when (layout) {
+        val role = intent.getIntExtra("role", 0)
+        when (role) {
             0 -> {
                 btnVerificationReset.setOnClickListener {
                     loading.visibility = View.VISIBLE
@@ -42,8 +42,8 @@ class VerificationActivity : AppCompatActivity() {
                 }
             }
             else -> {
-                tvToolbarTitle.setText("Verifikasi Akun")
-                tvVerificationText.setText("Sebelum akun Anda bisa digunakan, Anda harus verifikasi terlebih dahulu. Kami sudah mengirimkan kode ke nomor telepon Anda melalui SMS. Silakan memasukkan 4 digit kode tersebut")
+                tvToolbarTitle.text = "Verifikasi Akun"
+                tvVerificationText.text = "Sebelum akun Anda bisa digunakan, Anda harus verifikasi terlebih dahulu. Kami sudah mengirimkan kode ke nomor telepon Anda melalui SMS. Silakan memasukkan 4 digit kode tersebut"
                 btnVerificationReset.setText("VERIFIKASI AKUN")
 
                 btnVerificationReset.setOnClickListener {

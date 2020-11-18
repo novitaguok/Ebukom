@@ -6,9 +6,6 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
 import android.view.View
-import android.widget.RadioButton
-import android.widget.RadioGroup
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -39,7 +36,6 @@ import com.ebukom.data.DataDummy
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.activity_main_class_detail.*
 import kotlinx.android.synthetic.main.bottom_sheet_choose_class.view.*
-import kotlinx.android.synthetic.main.bottom_sheet_class_detail_header.*
 import kotlinx.android.synthetic.main.bottom_sheet_class_detail_header.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_school_announcement.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_school_announcement.view.tvEditInfo
@@ -105,7 +101,7 @@ class MainClassDetailActivity : AppCompatActivity(), OnMoreCallback {
         }
 
         view.rbBottomSheetClassDetailHeaderKelas1.isChecked = true
-        view.rbGroup.setOnCheckedChangeListener { _, checkedId ->
+        view.rbGroupClassDetailHeader.setOnCheckedChangeListener { _, checkedId ->
             if (checkedId == R.id.rbBottomSheetClassDetailHeaderKelas1) {
                 bottomSheetDialog.dismiss()
                 tvClassHeaderClassNumber.text = "Kelas 1"

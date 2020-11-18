@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -13,54 +13,134 @@
         android:id="@+id/tvRegisterSchoolBottomSheetTitle"
         android:layout_width="match_parent"
         android:layout_height="48dp"
-        android:layout_marginLeft="@dimen/size_32"
+        android:paddingLeft="@dimen/size_32"
         android:gravity="center_vertical"
         android:lineHeight="@dimen/size_28"
-        android:text="Pilih Peran Anda di SD Cendekia Muda"
+        android:text="Kelas Mengajar Anda"
         android:textColor="#3F3B5C"
         android:textSize="@dimen/text_16"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <TextView
-        android:id="@+id/tvRegisterSchoolBottomSheetTeacher"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="@dimen/size_32"
-        android:lineHeight="@dimen/size_28"
-        android:text="Guru"
-        android:paddingVertical="@dimen/size_10"
-        android:textColor="#212121"
-        android:textSize="@dimen/text_16"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvRegisterSchoolBottomSheetTitle" />
-
-    <TextView
-        android:id="@+id/tvRegisterSchoolBottomSheetAdmin"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="@dimen/size_32"
-        android:lineHeight="@dimen/size_28"
-        android:paddingVertical="@dimen/size_10"
-        android:text="Admin Keuangan"
-        android:textColor="#212121"
-        android:textSize="@dimen/text_16"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/cbRegisterParentBottomSheetPMR"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvRegisterSchoolBottomSheetTeacher" />
-
-    <Button
-        android:id="@+id/btnRegisterSchoolBottomSheetDone"
+    <RadioGroup
+        android:id="@+id/rbGroupRegisterSchool"
         android:layout_width="match_parent"
-        android:layout_height="44dp"
-        android:background="@color/colorSuperDarkBlue"
-        android:lineHeight="@dimen/text_16"
-        android:text="SELESAI"
-        android:layout_marginTop="@dimen/size_10"
-        android:textColor="@color/colorWhite"
-        android:textSize="@dimen/text_14"
-        app:layout_constraintTop_toBottomOf="@id/tvRegisterSchoolBottomSheetAdmin"/>
-</androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_height="wrap_content">
+
+        <RadioButton
+            android:id="@+id/rbRegisterSchoolBottomSheetKrypton"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_48"
+            android:layout_gravity="center_vertical"
+            android:paddingLeft="@dimen/size_32"
+            android:lineHeight="@dimen/size_28"
+            android:text="Kelas 1 Krypton"
+            android:paddingVertical="@dimen/size_10"
+            android:textColor="#212121"
+            android:textSize="@dimen/text_16"
+            android:button="@android:color/transparent"/>
+
+        <RadioButton
+            android:id="@+id/rbRegisterSchoolBottomSheetXenon"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_48"
+            android:layout_gravity="center_vertical"
+            android:paddingLeft="@dimen/size_32"
+            android:lineHeight="@dimen/size_28"
+            android:paddingVertical="@dimen/size_10"
+            android:text="Kelas 1 Xenon"
+            android:textColor="#212121"
+            android:textSize="@dimen/text_16"
+            android:button="@android:color/transparent" />
+
+        <RadioButton
+            android:id="@+id/rbRegisterSchoolBottomSheetArgon"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_48"
+            android:layout_gravity="center_vertical"
+            android:paddingLeft="@dimen/size_32"
+            android:lineHeight="@dimen/size_28"
+            android:paddingVertical="@dimen/size_10"
+            android:text="Kelas 1 Argon"
+            android:textColor="#212121"
+            android:textSize="@dimen/text_16"
+            android:button="@android:color/transparent" />
+
+        <RadioButton
+            android:id="@+id/rbRegisterSchoolBottomSheetTitanium"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_48"
+            android:layout_gravity="center_vertical"
+            android:paddingLeft="@dimen/size_32"
+            android:lineHeight="@dimen/size_28"
+            android:paddingVertical="@dimen/size_10"
+            android:text="Kelas 2 Titanium"
+            android:textColor="#212121"
+            android:textSize="@dimen/text_16"
+            android:button="@android:color/transparent"/>
+
+        <RadioButton
+            android:id="@+id/rbRegisterSchoolBottomSheetNeon"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_48"
+            android:layout_gravity="center_vertical"
+            android:paddingLeft="@dimen/size_32"
+            android:lineHeight="@dimen/size_28"
+            android:paddingVertical="@dimen/size_10"
+            android:text="Kelas 2 Neon"
+            android:textColor="#212121"
+            android:textSize="@dimen/text_16"
+            android:button="@android:color/transparent" />
+
+        <RadioButton
+            android:id="@+id/rbRegisterSchoolBottomSheetHelium"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_48"
+            android:layout_gravity="center_vertical"
+            android:paddingLeft="@dimen/size_32"
+            android:lineHeight="@dimen/size_28"
+            android:paddingVertical="@dimen/size_10"
+            android:text="Kelas 2 Helium"
+            android:textColor="#212121"
+            android:textSize="@dimen/text_16"
+            android:button="@android:color/transparent" />
+
+        <RadioButton
+            android:id="@+id/rbRegisterSchoolBottomSheetArgentum"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_48"
+            android:layout_gravity="center_vertical"
+            android:paddingLeft="@dimen/size_32"
+            android:lineHeight="@dimen/size_28"
+            android:paddingVertical="@dimen/size_10"
+            android:text="Kelas 3 Argentum"
+            android:textColor="#212121"
+            android:textSize="@dimen/text_16"
+            android:button="@android:color/transparent" />
+
+        <RadioButton
+            android:id="@+id/rbRegisterSchoolBottomSheetAurum"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_48"
+            android:layout_gravity="center_vertical"
+            android:paddingLeft="@dimen/size_32"
+            android:lineHeight="@dimen/size_28"
+            android:paddingVertical="@dimen/size_10"
+            android:text="Kelas 3 Aurum"
+            android:textColor="#212121"
+            android:textSize="@dimen/text_16"
+            android:button="@android:color/transparent" />
+
+        <RadioButton
+            android:id="@+id/rbRegisterSchoolBottomSheetSelenium"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_48"
+            android:layout_gravity="center_vertical"
+            android:paddingLeft="@dimen/size_32"
+            android:lineHeight="@dimen/size_28"
+            android:paddingVertical="@dimen/size_10"
+            android:text="Kelas 3 Selenium"
+            android:textColor="#212121"
+            android:textSize="@dimen/text_16"
+            android:button="@android:color/transparent" /> />
+    </RadioGroup>
+</LinearLayout>

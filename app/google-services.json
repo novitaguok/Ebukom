@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "212895316383",
+    "firebase_url": "https://ebukom-6d1a9.firebaseio.com",
+    "project_id": "ebukom-6d1a9",
+    "storage_bucket": "ebukom-6d1a9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:212895316383:android:e668c77141dfe90535a5aa",
+        "android_client_info": {
+          "package_name": "com.ebukom"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "212895316383-8893b1lfhl60u32v1mtkm2adcrencgoa.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBEq9V0MjG7q-FufFYt7shysoKM43Gj5HY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "212895316383-8893b1lfhl60u32v1mtkm2adcrencgoa.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

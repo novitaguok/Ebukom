@@ -10,20 +10,16 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ebukom.R
 import com.ebukom.arch.dao.*
-import com.ebukom.arch.ui.admin.MainAdminActivity
 import com.ebukom.arch.ui.admin.adminschoolfeeinfo.adminshareschoolfeeinforecheck.AdminShareSchoolFeeInfoRecheckActivity
 import com.ebukom.arch.ui.admin.adminschoolfeeinfo.schoolfeeinfosent.ParentSchoolFeeInfoAdapter
 import com.ebukom.data.DataDummy
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import kotlinx.android.synthetic.main.activity_admin_share_school_fee_info_next.*
-import kotlinx.android.synthetic.main.bottom_sheet_class_detail_header.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_class_detail_header.view.rbBottomSheetClassDetailHeaderKelas1
 import kotlinx.android.synthetic.main.bottom_sheet_class_detail_header.view.rbBottomSheetClassDetailHeaderKelas2
-import kotlinx.android.synthetic.main.bottom_sheet_class_detail_header.view.rbGroup
+import kotlinx.android.synthetic.main.bottom_sheet_class_detail_header.view.rbGroupClassDetailHeader
 import kotlinx.android.synthetic.main.bottom_sheet_class_detail_header_all.view.*
-import kotlinx.android.synthetic.main.bottom_sheet_register_parent.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_register_parent.view.btnRegisterParentBottomSheetDone
-import kotlinx.android.synthetic.main.bottom_sheet_register_parent.view.cbRegisterParentBottomSheetFutsal
 import kotlinx.android.synthetic.main.bottom_sheet_register_parent_all.view.*
 
 class AdminShareSchoolFeeInfoNextActivity : AppCompatActivity(),
@@ -98,7 +94,7 @@ class AdminShareSchoolFeeInfoNextActivity : AppCompatActivity(),
             view.rbBottomSheetClassDetailHeaderKelas2.isChecked = mClass.contains("Kelas 2 Fatamorgana")
             view.rbBottomSheetClassDetailHeaderAllClass.isChecked = mClass.contains("Kelas 1 Aurora, Kelas 2 Fatamorgana")
 
-            view.rbGroup.setOnCheckedChangeListener { _, checkedId ->
+            view.rbGroupClassDetailHeader.setOnCheckedChangeListener { _, checkedId ->
                 if (checkedId == R.id.rbBottomSheetClassDetailHeaderAllClass) {
                     bottomSheetDialog.dismiss()
                     mClass = "Kelas 1 Aurora, Kelas 2 Fatamorgana"
