@@ -96,7 +96,7 @@ class RegisterSchoolActivity : AppCompatActivity() {
         }
 
         /**
-         * Text watcher for error message to be invisibled
+         * Text watcher for error message to be invisible
          */
         etRegisterSchoolName.addTextChangedListener(textWatcher)
         etRegisterSchoolPhone.addTextChangedListener(textWatcher)
@@ -122,7 +122,7 @@ class RegisterSchoolActivity : AppCompatActivity() {
     private fun register() {
         btnRegisterSchoolRegister.setOnClickListener {
             if (isValid()) {
-                // reformat phone to email like 08xx@phone.id
+                // Reformat phone to email like 08xx@phone.id
                 var phoneMail = etRegisterSchoolPhone.text.toString() + "@phone.id"
 
                 auth.createUserWithEmailAndPassword(
@@ -158,7 +158,7 @@ class RegisterSchoolActivity : AppCompatActivity() {
         userInfo["role"] = role
         userInfo["level"] = 0 // 0 for teacher
 
-        userInfo["childNames"] = ""
+//        userInfo["childNames"] = ""
 //        userInfo["eskul"] =
 
         db.collection("users").document(user.uid).set(userInfo).addOnSuccessListener {
@@ -207,7 +207,7 @@ class RegisterSchoolActivity : AppCompatActivity() {
     }
 
     /**
-     *
+     * Error message be invisible
      */
     private val textWatcher = object : TextWatcher {
         override fun afterTextChanged(s: Editable?) {

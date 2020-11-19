@@ -18,6 +18,7 @@ import com.ebukom.arch.ui.joinclass.JoinClassActivity
 import com.ebukom.arch.ui.login.LoginActivity
 import com.ebukom.data.DataDummy
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.firebase.auth.FirebaseAuth
 import kotlinx.android.synthetic.main.activity_choose_class.*
 import kotlinx.android.synthetic.main.bottom_sheet_choose_class.view.*
 import kotlinx.android.synthetic.main.item_class.*
@@ -54,7 +55,6 @@ class ChooseClassActivity : AppCompatActivity() {
         mList.add(ChooseClassDao("Kelas 2", "Titanium", "Yulianti Puspita", R.drawable.bg_class_titanium, Color.parseColor("#229AE6")))
         mList.add(ChooseClassDao("Kelas 2", "Neon", "Putri Eka", R.drawable.bg_class_neon, Color.parseColor("#FFADAD")))
         mList.add(ChooseClassDao("Kelas 2", "Helium", "Ahmad Juliansyah", R.drawable.bg_class_helium, Color.parseColor("#645470")))
-        mList.add(ChooseClassDao("Kelas 2", "Helium", "Ahmad Juliansyah", R.drawable.bg_class_helium, Color.parseColor("#645470")))
         mList.add(ChooseClassDao("Kelas 3", "Argentum", "Gigi Rahma", R.drawable.bg_class_argentum, Color.parseColor("#313D2E")))
         mList.add(ChooseClassDao("Kelas 3", "Aurum", "Julia Isma", R.drawable.bg_class_aurum, Color.parseColor("#828127")))
         mList.add(ChooseClassDao("Kelas 3", "Selenium", "Dewi Putri", R.drawable.bg_class_selenium, Color.parseColor("#4F483B")))
@@ -69,10 +69,11 @@ class ChooseClassActivity : AppCompatActivity() {
 
             builder.setMessage("Apakah Anda yakin ingin melakukan logout?")
             builder.setPositiveButton("LOGOUT") { dialog, which ->
-                sharePref.edit().remove("level").apply()
-                sharePref.edit().apply {
-                    putBoolean("isLogin", false)
-                }.apply()
+//                sharePref.edit().remove("level").apply()
+//                sharePref.edit().apply {
+//                    putBoolean("isLogin", false)
+//                }.apply()
+                FirebaseAuth.getInstance().signOut()
                 startActivity(Intent(this, LoginActivity::class.java))
                 finish()
             }

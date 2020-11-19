@@ -6,6 +6,9 @@ import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import com.ebukom.R
@@ -18,15 +21,19 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.firestore.DocumentReference
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_login.*
 import kotlinx.android.synthetic.main.activity_login.toolbar
+import kotlinx.android.synthetic.main.activity_register_school.*
 import kotlinx.android.synthetic.main.bottom_sheet_login.view.*
 
 class LoginActivity : AppCompatActivity() {
 
     lateinit var auth: FirebaseAuth
-    var databaseReference: DatabaseReference? = null
-    var db: FirebaseDatabase? = null
+    lateinit var db: FirebaseFirestore
+
+    //    var databaseReference: DatabaseReference? = null
     lateinit var sharePref: SharedPreferences
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -38,20 +45,13 @@ class LoginActivity : AppCompatActivity() {
         /**
          * Authentication
          */
-        auth = FirebaseAuth.getInstance()
-        db = FirebaseDatabase.getInstance()
-        databaseReference = db?.reference!!.child("profile")
-
-        val currentUser = auth.currentUser
-        if (currentUser != null) {
-            startActivity(Intent(this, JoinClassActivity::class.java))
-            finish()
-        }
+        auth = FirebaseAuth.getInstance() // Firebase authentication
+        db = FirebaseFirestore.getInstance() // Firestore
 
         login()
 
         /**
-         * Tap REGISTER button
+         * Tap on REGISTER button
          */
         val bottomSheetDialog = BottomSheetDialog(this)
         val view = layoutInflater.inflate(R.layout.bottom_sheet_login, null)
@@ -68,7 +68,6 @@ class LoginActivity : AppCompatActivity() {
             bottomSheetDialog.dismiss()
             startActivity(Intent(this, RegisterParentActivity::class.java))
         }
-
 
         sharePref = getSharedPreferences("EBUKOM", Context.MODE_PRIVATE)
         // Intent to Choose Class
@@ -156,6 +155,12 @@ class LoginActivity : AppCompatActivity() {
             val intent = Intent(this, SendCodeActivity::class.java)
             startActivity(intent)
         }
+
+        /**
+         * Text watcher
+         */
+        etLoginPhone.addTextChangedListener(textWatcher)
+        etLoginPassword.addTextChangedListener(textWatcher)
     }
 
     /**
@@ -170,35 +175,96 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
+    override fun onStart() {
+        super.onStart()
+        if (FirebaseAuth.getInstance().currentUser != null) {
+            startActivity(Intent(this, ChooseClassActivity::class.java))
+        }
+    }
+
     /**
      * Login
      */
     private fun login() {
         btnLoginLogin.setOnClickListener {
-            if (etLoginPhone.text.toString().isEmpty()) {
-                tvLoginPhoneErrorMessage.visibility = View.VISIBLE
-                return@setOnClickListener
-            }
-            if (etLoginPassword.text.toString().isEmpty()) {
-                tvLoginPasswordErrorMessage.visibility = View.VISIBLE
-                return@setOnClickListener
-            }
 
-            auth.signInWithEmailAndPassword(
-                etLoginPhone.text.toString(),
-                etLoginPassword.text.toString()
-            ).addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    Toast.makeText(this, task.exception?.localizedMessage, Toast.LENGTH_SHORT)
-                        .show()
-                    startActivity(Intent(this, ChooseClassActivity::class.java))
-                } else {
-                    Toast.makeText(
-                        this@LoginActivity,
-                        "Login failed, please try again",
-                        Toast.LENGTH_LONG
-                    ).show()
+            val phoneMail = etLoginPhone.text.toString() + "@phone.id"
+
+            if (isValid()) {
+                auth.signInWithEmailAndPassword(
+                    phoneMail,
+                    etLoginPassword.text.toString()
+                ).addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+//                        startActivity(Intent(this, ChooseClassActivity::class.java))
+                        checkUserAccessLevel(task.result?.user!!.uid)
+                    } else {
+                        Toast.makeText(this, task.exception?.localizedMessage, Toast.LENGTH_LONG)
+                            .show()
+                        Toast.makeText(
+                            this@LoginActivity,
+                            "Login failed, please try again",
+                            Toast.LENGTH_LONG
+                        ).show()
+                    }
                 }
+            }
+        }
+    }
+
+    /**
+     * Check if login form is empty
+     */
+    private fun isValid(): Boolean {
+        var isValid = true
+
+        if (etLoginPhone.text.toString().isEmpty()) {
+            tvLoginPhoneErrorMessage.visibility = View.VISIBLE
+            isValid = false
+        } else tvLoginPhoneErrorMessage.visibility = View.GONE
+        if (etLoginPassword.text.toString().isEmpty()) {
+            tvLoginPasswordErrorMessage.visibility = View.VISIBLE
+            isValid = false
+        } else tvLoginPasswordErrorMessage.visibility = View.GONE
+
+        return isValid
+    }
+
+    /**
+     * Check user access level
+     */
+    fun checkUserAccessLevel(uid: String) {
+        var df: DocumentReference = db.collection("users").document(uid)
+        df.get().addOnSuccessListener {
+            Log.d("TAG", "onSuccess: " + it.data)
+
+            if (it["level"] == 0) {
+                startActivity(Intent(this, ChooseClassActivity::class.java))
+                finish()
+            } else {
+                startActivity(Intent(this, ChooseClassActivity::class.java))
+                finish()
+            }
+        }.addOnFailureListener {  }
+    }
+
+    /**
+     * Error message be invisibled
+     */
+    private val textWatcher = object : TextWatcher {
+        override fun afterTextChanged(s: Editable?) {
+        }
+
+        override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+        }
+
+        override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+            if (etLoginPhone.text.toString().isNotEmpty() || etLoginPassword.text.toString()
+                    .isNotEmpty()
+            ) {
+                tvLoginPhoneErrorMessage.visibility = View.GONE
+                tvLoginPasswordErrorMessage.visibility = View.GONE
             }
         }
     }

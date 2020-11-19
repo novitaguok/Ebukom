@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -35,14 +34,14 @@
             android:id="@+id/tvRegisterParentTitle"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:layout_constraintTop_toTopOf="parent"
-            android:gravity="center_horizontal"
             android:background="@color/colorSuperDarkBlue"
+            android:gravity="center_horizontal"
             android:padding="@dimen/size_10"
             android:text="Sebagai wali murid"
-            android:textSize="@dimen/text_14"
             android:textColor="@color/colorWhite"
-            android:textStyle="bold"/>
+            android:textSize="@dimen/text_14"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
@@ -57,14 +56,14 @@
 
             <de.hdodenhof.circleimageview.CircleImageView
                 android:id="@+id/ivRegisterParentProfilePicture"
-                app:layout_constraintTop_toTopOf="parent"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent"
-                android:layout_marginTop="@dimen/size_32"
                 android:layout_width="@dimen/size_100"
                 android:layout_height="@dimen/size_100"
+                android:layout_marginTop="@dimen/size_32"
                 android:src="@color/colorGray"
-                app:civ_border_color="#FF000000"/>
+                app:civ_border_color="#FF000000"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/tvRegisterParentAddPhoto"
@@ -76,26 +75,26 @@
                 android:textColor="#3F3B5C"
                 android:textFontWeight="500"
                 android:textSize="@dimen/text_14"
-                app:layout_constraintTop_toBottomOf="@id/ivRegisterParentProfilePicture"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent" />
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ivRegisterParentProfilePicture" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilRegisterParentName"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:theme="@style/LoginTextInputLayoutLabel"
-                app:boxCornerRadiusBottomEnd="@dimen/size_8"
-                app:boxCornerRadiusBottomStart="@dimen/size_8"
-                app:boxCornerRadiusTopEnd="@dimen/size_8"
-                app:boxCornerRadiusTopStart="@dimen/size_8"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_52"
                 android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
                 android:layout_marginTop="@dimen/size_32"
                 android:hint="Nama lengkap"
-                app:errorEnabled="true"
+                android:theme="@style/LoginTextInputLayoutLabel"
+                app:boxCornerRadiusBottomEnd="@dimen/size_8"
+                app:boxCornerRadiusBottomStart="@dimen/size_8"
+                app:boxCornerRadiusTopEnd="@dimen/size_8"
+                app:boxCornerRadiusTopStart="@dimen/size_8"
                 app:boxStrokeColor="@color/colorBlack"
                 app:boxStrokeWidth="@dimen/size_1"
+                app:errorEnabled="true"
                 app:layout_constraintTop_toBottomOf="@id/tvRegisterParentAddPhoto">
 
                 <com.google.android.material.textfield.TextInputEditText
@@ -103,7 +102,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@drawable/edit_text_rectangle_selector"
-                    android:padding="@dimen/size_16" />
+                    android:paddingHorizontal="@dimen/size_16" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
@@ -122,16 +121,16 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilRegisterParentChild"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:theme="@style/LoginTextInputLayoutLabel"
-                app:boxCornerRadiusBottomEnd="@dimen/size_8"
-                app:boxCornerRadiusBottomStart="@dimen/size_8"
-                app:boxCornerRadiusTopEnd="@dimen/size_8"
-                app:boxCornerRadiusTopStart="@dimen/size_8"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_52"
                 android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
                 android:layout_marginTop="@dimen/size_24"
                 android:hint="Nama anak"
+                android:theme="@style/LoginTextInputLayoutLabel"
+                app:boxCornerRadiusBottomEnd="@dimen/size_8"
+                app:boxCornerRadiusBottomStart="@dimen/size_8"
+                app:boxCornerRadiusTopEnd="@dimen/size_8"
+                app:boxCornerRadiusTopStart="@dimen/size_8"
                 app:boxStrokeColor="@color/colorBlack"
                 app:boxStrokeWidth="@dimen/size_1"
                 app:layout_constraintTop_toBottomOf="@+id/tvRegisterParentNameErrorMessage">
@@ -140,7 +139,7 @@
                     android:id="@+id/etRegisterParentChild"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:padding="@dimen/size_16"/>
+                    android:paddingHorizontal="@dimen/size_16" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
@@ -159,16 +158,16 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilRegisterParentPhone"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:theme="@style/LoginTextInputLayoutLabel"
-                app:boxCornerRadiusBottomEnd="@dimen/size_8"
-                app:boxCornerRadiusBottomStart="@dimen/size_8"
-                app:boxCornerRadiusTopEnd="@dimen/size_8"
-                app:boxCornerRadiusTopStart="@dimen/size_8"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_52"
                 android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
                 android:layout_marginTop="@dimen/size_24"
                 android:hint="Nomor telepon"
+                android:theme="@style/LoginTextInputLayoutLabel"
+                app:boxCornerRadiusBottomEnd="@dimen/size_8"
+                app:boxCornerRadiusBottomStart="@dimen/size_8"
+                app:boxCornerRadiusTopEnd="@dimen/size_8"
+                app:boxCornerRadiusTopStart="@dimen/size_8"
                 app:boxStrokeColor="@color/colorBlack"
                 app:boxStrokeWidth="@dimen/size_1"
                 app:layout_constraintTop_toBottomOf="@+id/tvRegisterParentChildErrorMessage">
@@ -177,7 +176,7 @@
                     android:id="@+id/etRegisterParentPhone"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:padding="@dimen/size_16"/>
+                    android:paddingHorizontal="@dimen/size_16" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
@@ -195,44 +194,49 @@
 
             <Button
                 android:id="@+id/btnRegisterParentEskul"
-                android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_48"
                 android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-                app:layout_constraintTop_toBottomOf="@+id/tvRegisterParentPhoneErrorMessage"
-                android:textAlignment="textStart"
-                android:text="Eskul"
-                android:textColor="@color/colorGray"
-                android:padding="@dimen/size_12"
-                android:textAllCaps="false"
+                android:layout_marginTop="@dimen/size_24"
+                android:background="@drawable/btn_transparent_rectangle_8dp"
                 android:drawableRight="@drawable/ic_dropdown"
                 android:drawablePadding="@dimen/size_24"
-                android:layout_marginTop="@dimen/size_24"
                 android:minHeight="@dimen/size_52"
-                android:background="@drawable/btn_transparent_rectangle_8dp" />                >
+                android:padding="@dimen/size_12"
+                android:text="Eskul"
+                android:textAlignment="textStart"
+                android:textAllCaps="false"
+                android:textColor="@color/colorGray"
+                android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:layout_constraintTop_toBottomOf="@+id/tvRegisterParentPhoneErrorMessage" />
+            >
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilRegisterParentPassword"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_52"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/size_18"
+                android:hint="Kata Sandi"
                 android:theme="@style/LoginTextInputLayoutLabel"
                 app:boxCornerRadiusBottomEnd="@dimen/size_8"
                 app:boxCornerRadiusBottomStart="@dimen/size_8"
                 app:boxCornerRadiusTopEnd="@dimen/size_8"
                 app:boxCornerRadiusTopStart="@dimen/size_8"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/size_52"
-                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-                android:layout_marginTop="@dimen/size_24"
-                android:hint="Kata Sandi"
                 app:boxStrokeColor="@color/colorBlack"
                 app:boxStrokeWidth="@dimen/size_1"
-                app:layout_constraintTop_toBottomOf="@id/btnRegisterParentEskul">
+                app:layout_constraintTop_toBottomOf="@+id/btnRegisterParentEskul"
+                app:passwordToggleEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etRegisterParentPassword"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:padding="@dimen/size_16" />
+                    android:inputType="textPassword"
+                    android:paddingLeft="@dimen/size_16"
+                    android:paddingRight="@dimen/size_16"
+                    android:textSize="@dimen/text_16" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
@@ -251,25 +255,30 @@
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilRegisterParentConfirmPassword"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_52"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/size_18"
+                android:hint="Konfirmasi kata Sandi"
                 android:theme="@style/LoginTextInputLayoutLabel"
                 app:boxCornerRadiusBottomEnd="@dimen/size_8"
                 app:boxCornerRadiusBottomStart="@dimen/size_8"
                 app:boxCornerRadiusTopEnd="@dimen/size_8"
                 app:boxCornerRadiusTopStart="@dimen/size_8"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/size_52"
-                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-                android:layout_marginTop="@dimen/size_24"
-                android:hint="Konfirmasi kata sandi"
                 app:boxStrokeColor="@color/colorBlack"
                 app:boxStrokeWidth="@dimen/size_1"
-                app:layout_constraintTop_toBottomOf="@id/tvRegisterParentPasswordErrorMessage">
+                app:layout_constraintTop_toBottomOf="@+id/tvRegisterParentPasswordErrorMessage"
+                app:passwordToggleEnabled="true">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etRegisterParentConfirmPassword"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:padding="@dimen/size_16" />
+                    android:inputType="textPassword"
+                    android:paddingLeft="@dimen/size_16"
+                    android:paddingRight="@dimen/size_16"
+                    android:textSize="@dimen/text_16" />
+
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView
@@ -309,9 +318,9 @@
                 android:textColor="@color/colorBlack"
                 android:textFontWeight="500"
                 android:textSize="@dimen/text_16"
-                app:layout_constraintTop_toBottomOf="@id/btnRegisterParentRegister"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintRight_toRightOf="parent" />
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btnRegisterParentRegister" />
 
             <Button
                 android:id="@+id/btnRegisterParentLogin"
@@ -329,9 +338,9 @@
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>
 
-<!--    <include layout="@layout/bottom_sheet_register_parent"/>-->
+    <!--    <include layout="@layout/bottom_sheet_register_parent"/>-->
     <include
         android:id="@+id/loading"
         layout="@layout/layout_loading"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

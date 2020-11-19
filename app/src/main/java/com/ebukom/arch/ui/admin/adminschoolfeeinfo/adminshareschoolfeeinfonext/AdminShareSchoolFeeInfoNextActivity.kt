@@ -45,10 +45,6 @@ class AdminShareSchoolFeeInfoNextActivity : AppCompatActivity(),
             view.btnRegisterParentBottomSheetDone.setOnClickListener {
                 bottomSheetDialog.dismiss()
                 if (view.cbRegisterParentBottomSheetAll.isChecked) {
-//                    view.cbRegisterParentBottomSheetPramuka.isChecked = true
-//                    view.cbRegisterParentBottomSheetFutsal.isChecked = true
-//                    view.cbRegisterParentBottomSheetBasket.isChecked = true
-//                    view.cbRegisterParentBottomSheetPMR.isChecked = true
                     mEskul.add("Pramuka")
                     mEskul.add("Futsal")
                     mEskul.add("Basket")
