@@ -3,30 +3,28 @@ package com.ebukom.arch.ui.login
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
+import androidx.fragment.app.FragmentActivity
 import com.ebukom.R
 import com.ebukom.arch.ui.chooseclass.ChooseClassActivity
 import com.ebukom.arch.ui.forgotpassword.sendcode.SendCodeActivity
-import com.ebukom.arch.ui.joinclass.JoinClassActivity
 import com.ebukom.arch.ui.register.parent.RegisterParentActivity
 import com.ebukom.arch.ui.register.school.RegisterSchoolActivity
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.database.DatabaseReference
-import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.firestore.Query
 import kotlinx.android.synthetic.main.activity_login.*
-import kotlinx.android.synthetic.main.activity_login.toolbar
-import kotlinx.android.synthetic.main.activity_register_school.*
 import kotlinx.android.synthetic.main.bottom_sheet_login.view.*
+
 
 class LoginActivity : AppCompatActivity() {
 
@@ -47,6 +45,9 @@ class LoginActivity : AppCompatActivity() {
          */
         auth = FirebaseAuth.getInstance() // Firebase authentication
         db = FirebaseFirestore.getInstance() // Firestore
+
+        etLoginPhone.setText("+6282219738124")
+        etLoginPassword.setText("123456")
 
         login()
 
@@ -189,6 +190,8 @@ class LoginActivity : AppCompatActivity() {
         btnLoginLogin.setOnClickListener {
 
             val phoneMail = etLoginPhone.text.toString() + "@phone.id"
+            val usersRef: CollectionReference = FirebaseFirestore.getInstance().collection("users")
+            val query: Query = usersRef.whereEqualTo("phone", phoneMail)
 
             if (isValid()) {
                 auth.signInWithEmailAndPassword(
@@ -196,7 +199,6 @@ class LoginActivity : AppCompatActivity() {
                     etLoginPassword.text.toString()
                 ).addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-//                        startActivity(Intent(this, ChooseClassActivity::class.java))
                         checkUserAccessLevel(task.result?.user!!.uid)
                     } else {
                         Toast.makeText(this, task.exception?.localizedMessage, Toast.LENGTH_LONG)
@@ -208,6 +210,29 @@ class LoginActivity : AppCompatActivity() {
                         ).show()
                     }
                 }
+
+//                query.get().addOnCompleteListener {
+//                    if (it.isSuccessful) {
+//                        for (documentSnapshot in it.result!!) {
+//                            val phone = documentSnapshot.getString("phone")
+//                            if (phone == phoneMail) {
+//                                Log.d("LoginActivity", "User Exists")
+//                                Toast.makeText(this, "Username exists", Toast.LENGTH_SHORT)
+//                                    .show()
+//                            }
+//                        }
+//                    }
+//                    if (it.result!!.size() == 0) {
+//                        Log.d("LoginActivity", "User not Exists")
+//                        tvLoginPhoneErrorMessage.text = "Nomor telepon yang Anda masukkan salah"
+//                        tvLoginPhoneErrorMessage.visibility = View.VISIBLE
+//                        tvLoginPasswordErrorMessage.text = "Kata sandi yang Anda masukkan salah"
+//                        tvLoginPasswordErrorMessage.visibility = View.VISIBLE
+//                    } else {
+//                        tvLoginPasswordErrorMessage.visibility = View.GONE
+//                        tvLoginPasswordErrorMessage.visibility = View.GONE
+//                    }
+//                }
             }
         }
     }
@@ -238,14 +263,12 @@ class LoginActivity : AppCompatActivity() {
         df.get().addOnSuccessListener {
             Log.d("TAG", "onSuccess: " + it.data)
 
-            if (it["level"] == 0) {
-                startActivity(Intent(this, ChooseClassActivity::class.java))
-                finish()
-            } else {
-                startActivity(Intent(this, ChooseClassActivity::class.java))
-                finish()
-            }
-        }.addOnFailureListener {  }
+            sharePref.edit().apply {
+                putBoolean("isLogin", true)
+                putString("uid", uid)
+            }.apply()
+
+        }.addOnFailureListener { }
     }
 
     /**

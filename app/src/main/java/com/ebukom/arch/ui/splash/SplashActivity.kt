@@ -13,9 +13,11 @@ import com.ebukom.arch.ui.login.LoginActivity
 import com.ebukom.arch.ui.main.MainActivity
 import com.ebukom.arch.ui.welcome.WelcomeActivity
 import com.ebukom.data.DataDummy
+import com.ebukom.data.Databases
 //import com.ebukom.data.buildClassDummy
 import com.ebukom.data.buildParentNameDummy
 import com.ebukom.data.buildParentNoteDummy
+import com.google.firebase.firestore.FirebaseFirestore
 
 class SplashActivity : AppCompatActivity() {
 
@@ -28,7 +30,6 @@ class SplashActivity : AppCompatActivity() {
 
         sharePref = getSharedPreferences("EBUKOM", Context.MODE_PRIVATE)
 
-//        DataDummy.chooseClassData.buildClassDummy()
         DataDummy.parentNameData.buildParentNameDummy()
         DataDummy.noteAcceptedData.buildParentNoteDummy(this)
 
@@ -44,5 +45,11 @@ class SplashActivity : AppCompatActivity() {
             }
             finish()
         }, SPLASH_TIME_OUT)
+
+        /**
+         * Generating classes database (uncomment for the first time)
+         */
+//        Databases().initClassesData()
     }
+
 }
