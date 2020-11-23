@@ -236,7 +236,7 @@
                 android:layout_height="@dimen/size_52"
                 android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
                 android:layout_marginTop="@dimen/size_18"
-                android:hint="Kata Sandi"
+                android:hint="Konfirmasi kata Sandi"
                 android:theme="@style/LoginTextInputLayoutLabel"
                 app:passwordToggleEnabled="true"
                 app:boxCornerRadiusBottomEnd="@dimen/size_8"

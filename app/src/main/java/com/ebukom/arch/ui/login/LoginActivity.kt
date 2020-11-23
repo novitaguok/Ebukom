@@ -71,87 +71,10 @@ class LoginActivity : AppCompatActivity() {
         }
 
         sharePref = getSharedPreferences("EBUKOM", Context.MODE_PRIVATE)
-        // Intent to Choose Class
-//        btnLoginLogin.setOnClickListener {
-//
-//            val phone = etLoginPhone.text.toString()
-//
-//            loading.visibility = View.VISIBLE
-//            if (etLoginPhone.text.toString() == "000") {
-//                if (etLoginPassword.text.toString() == "000") {
-//                    // Teacher
-//                    sharePref.edit().apply {
-//                        putBoolean("isLogin", true)
-//                        putString("phone", phone)
-//                        putInt("level", 0)
-//                    }.apply()
-//
-//                    Handler().postDelayed({
-//                        loading.visibility = View.GONE
-//                        startActivity(Intent(this, ChooseClassActivity::class.java))
-//                        finish()
-//                    }, 1000)
-//
-//                } else {
-//                    if (etLoginPassword.toString().isEmpty()) tvLoginPasswordErrorMessage.text =
-//                        "Kata sandi tidak boleh kosong"
-//                    tvLoginPhoneErrorMessage.visibility = View.GONE
-//                    tvLoginPasswordErrorMessage.visibility = View.VISIBLE
-//                }
-//            } else if (etLoginPhone.text.toString() == "123") {
-//                // Parent
-//                if (etLoginPassword.text.toString() == "123") {
-//                    sharePref.edit().apply {
-//                        putBoolean("isLogin", true)
-//                        putString("phone", phone)
-//                        putInt("level", 1)
-//                    }.apply()
-//
-//                    Handler().postDelayed({
-//                        loading.visibility = View.GONE
-//                        startActivity(Intent(this, ChooseClassActivity::class.java))
-//                        finish()
-//                    }, 1000)
-//                } else {
-//                    if (etLoginPassword.toString().isEmpty()) tvLoginPasswordErrorMessage.text =
-//                        "Kata sandi tidak boleh kosong"
-//                        tvLoginPhoneErrorMessage.visibility = View.GONE
-//                        tvLoginPasswordErrorMessage.visibility = View.VISIBLE
-//                }
-//            } else if (etLoginPhone.text.toString() == "456") {
-//                // Admin
-//                if (etLoginPassword.text.toString() == "456") {
-//                    sharePref.edit().apply {
-//                        putBoolean("isLogin", true)
-//                        putString("phone", phone)
-//                        putInt("level", 2)
-//                    }.apply()
-//
-//                    Handler().postDelayed({
-//                        loading.visibility = View.GONE
-//                        startActivity(Intent(this, MainAdminActivity::class.java))
-//                        finish()
-//                    }, 1000)
-//                } else {
-//                    if (etLoginPassword.toString().isEmpty()) tvLoginPasswordErrorMessage.text =
-//                        "Kata sandi tidak boleh kosong"
-//                        tvLoginPhoneErrorMessage.visibility = View.GONE
-//                        tvLoginPasswordErrorMessage.visibility = View.VISIBLE
-//                }
-//            } else {
-//                Handler().postDelayed({
-//                    loading.visibility = View.GONE
-//                    if (etLoginPhone.toString().isEmpty() && etLoginPassword.toString().isEmpty()) {
-//                        tvLoginPhoneErrorMessage.text = "Nomor telepon tidak boleh kosong"
-//                        tvLoginPasswordErrorMessage.text = "Kata sandi tidak boleh kosong"
-//                    }
-//                    tvLoginPhoneErrorMessage.visibility = View.VISIBLE
-//                    tvLoginPasswordErrorMessage.visibility = View.VISIBLE
-//                }, 1000)
-//            }
-//        }
 
-        // Intent to Forget Password Send Code page
+        /**
+         * Intent to Forget Password Send Code page
+         */
         tvLoginForgetPassword.setOnClickListener {
             val intent = Intent(this, SendCodeActivity::class.java)
             startActivity(intent)
@@ -208,31 +131,33 @@ class LoginActivity : AppCompatActivity() {
                             "Login failed, please try again",
                             Toast.LENGTH_LONG
                         ).show()
+
+                        query.get().addOnCompleteListener {
+                            if (it.isSuccessful) {
+                                for (documentSnapshot in it.result!!) {
+                                    val phone = documentSnapshot.getString("phone")
+                                    if (phone == phoneMail) {
+                                        Log.d("LoginActivity", "User Exists")
+                                        Toast.makeText(this, "Username exists", Toast.LENGTH_SHORT)
+                                            .show()
+                                    }
+                                }
+                            }
+                            if (it.result!!.size() == 0) {
+                                Log.d("LoginActivity", "User not Exists")
+                                tvLoginPhoneErrorMessage.text =
+                                    "Nomor telepon yang Anda masukkan salah"
+                                tvLoginPhoneErrorMessage.visibility = View.VISIBLE
+                                tvLoginPasswordErrorMessage.text =
+                                    "Kata sandi yang Anda masukkan salah"
+                                tvLoginPasswordErrorMessage.visibility = View.VISIBLE
+                            } else {
+                                tvLoginPasswordErrorMessage.visibility = View.GONE
+                                tvLoginPasswordErrorMessage.visibility = View.GONE
+                            }
+                        }
                     }
                 }
-
-//                query.get().addOnCompleteListener {
-//                    if (it.isSuccessful) {
-//                        for (documentSnapshot in it.result!!) {
-//                            val phone = documentSnapshot.getString("phone")
-//                            if (phone == phoneMail) {
-//                                Log.d("LoginActivity", "User Exists")
-//                                Toast.makeText(this, "Username exists", Toast.LENGTH_SHORT)
-//                                    .show()
-//                            }
-//                        }
-//                    }
-//                    if (it.result!!.size() == 0) {
-//                        Log.d("LoginActivity", "User not Exists")
-//                        tvLoginPhoneErrorMessage.text = "Nomor telepon yang Anda masukkan salah"
-//                        tvLoginPhoneErrorMessage.visibility = View.VISIBLE
-//                        tvLoginPasswordErrorMessage.text = "Kata sandi yang Anda masukkan salah"
-//                        tvLoginPasswordErrorMessage.visibility = View.VISIBLE
-//                    } else {
-//                        tvLoginPasswordErrorMessage.visibility = View.GONE
-//                        tvLoginPasswordErrorMessage.visibility = View.GONE
-//                    }
-//                }
             }
         }
     }
@@ -267,6 +192,9 @@ class LoginActivity : AppCompatActivity() {
                 putBoolean("isLogin", true)
                 putString("uid", uid)
             }.apply()
+
+            startActivity(Intent(this, ChooseClassActivity::class.java))
+            finish()
 
         }.addOnFailureListener { }
     }

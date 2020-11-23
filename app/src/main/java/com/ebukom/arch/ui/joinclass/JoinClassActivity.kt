@@ -87,7 +87,6 @@ class JoinClassActivity : AppCompatActivity() {
                 }
 
                 rvJoinClassClasses.adapter?.notifyDataSetChanged()
-//                checkEmptyList()
             }
             .addOnFailureListener {
                 Timber.tag("ChooseClassActivity")
