@@ -16,4 +16,5 @@ class ChooseClassAdapter(private val classes: List<ChooseClassDao>) : RecyclerVi
     }
 
     override fun getItemCount() = classes.size
+
 }

@@ -11,6 +11,7 @@ import com.ebukom.arch.ui.classdetail.MainClassDetailActivity
 import com.ebukom.arch.ui.joinclass.JoinClassActivity
 import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.android.synthetic.main.activity_join_class.*
 import kotlinx.android.synthetic.main.item_class.view.*
 
 class ChooseClassViewHolder(var view: View, var context: Context) : RecyclerView.ViewHolder(view) {

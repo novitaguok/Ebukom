@@ -16,8 +16,6 @@ import com.ebukom.arch.dao.ChooseClassDao
 import com.ebukom.arch.ui.chooseclass.ChooseClassAdapter
 import com.ebukom.data.DataDummy
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.android.synthetic.main.activity_choose_class.*
-//import com.ebukom.data.buildClassDummy
 import kotlinx.android.synthetic.main.activity_join_class.*
 import timber.log.Timber
 

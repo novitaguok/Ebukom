@@ -18,6 +18,7 @@ import com.ebukom.arch.ui.login.LoginActivity
 import com.ebukom.data.DataDummy
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FieldValue
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_choose_class.*
 import kotlinx.android.synthetic.main.bottom_sheet_choose_class.view.*
@@ -120,13 +121,12 @@ class ChooseClassActivity : AppCompatActivity() {
                             document["class_name"] as String,
                             document["class_teacher.name"] as String,
                             (document["class_bg"] as Long).toInt(),
-                            Color.parseColor("#005C39"),
+                            Color.parseColor(document["class_theme"] as String),
                             document.id
                         )
                     )
                     rvChooseClassClasses.adapter?.notifyDataSetChanged()
                     checkEmptyList()
-
                 }
             }
     }
@@ -238,6 +238,8 @@ class ChooseClassActivity : AppCompatActivity() {
 
         view.tvDeleteClass.setOnClickListener {
             val builder = AlertDialog.Builder(this@ChooseClassActivity)
+            val uid = sharePref.getString("uid", "") as String
+            val db = FirebaseFirestore.getInstance()
 
             bottomSheetDialog.dismiss()
 
@@ -247,9 +249,15 @@ class ChooseClassActivity : AppCompatActivity() {
                 dialog.dismiss()
             }
             builder.setPositiveButton("HAPUS") { _, _ ->
-                DataDummy.chooseClassDataMain.remove(item)
-                mList.remove(item)
+//                DataDummy.chooseClassDataMain.remove(item)
+//                mList.remove(item)
 //                mAdapter.addAll(mList)
+                db.collection("classes").document(item.classId)
+                    .update("class_teacher_ids", FieldValue.arrayRemove(uid))
+
+                mList.clear()
+                rvChooseClassClasses.adapter?.notifyDataSetChanged()
+                checkEmptyList()
             }
 
             val dialog: AlertDialog = builder.create()
