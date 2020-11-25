@@ -7,8 +7,6 @@
     app:cardCornerRadius="@dimen/size_8"
     app:cardUseCompatPadding="true">
 
-<!--    android:layout_marginTop="@dimen/size_8"-->
-
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clItemClass"
         android:layout_width="match_parent"

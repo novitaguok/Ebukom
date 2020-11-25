@@ -29,6 +29,7 @@ import kotlinx.android.synthetic.main.activity_school_anouncement_new.rvSchoolAn
 import kotlinx.android.synthetic.main.activity_school_anouncement_new.toolbar
 import kotlinx.android.synthetic.main.alert_edit_text.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_class_detail_attachment.view.*
+import kotlinx.android.synthetic.main.bottom_sheet_class_detail_school_announcement_template.view.*
 import kotlinx.android.synthetic.main.item_announcement_attachment.view.*
 import kotlin.collections.ArrayList
 
@@ -44,6 +45,32 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
         setContentView(R.layout.activity_school_anouncement_new)
 
         initToolbar()
+
+        /**
+         * "Gunakan Template" button
+         */
+        tvSchoolAnnouncementNewUseTemplate.setOnClickListener {
+            val bottomSheetDialog = BottomSheetDialog(this)
+            val view = layoutInflater.inflate(R.layout.bottom_sheet_class_detail_school_announcement_template, null)
+
+            bottomSheetDialog.setContentView(view)
+
+            view.rbSchoolAnnouncementTemplateFieldTrip.isChecked = true
+            view.rbGroupSchoolAnnouncementTemplate.setOnCheckedChangeListener { _, checkedId ->
+                if (checkedId == R.id.rbSchoolAnnouncementTemplateFieldTrip) {
+                    bottomSheetDialog.dismiss()
+
+                }
+                else if (checkedId == R.id.rbSchoolAnnouncementTemplateUniform) {
+                    bottomSheetDialog.dismiss()
+
+                } else {
+                    bottomSheetDialog.dismiss()
+
+                }
+            }
+
+        }
 
         // Attachment List
         checkAttachmentEmpty()

@@ -14,7 +14,7 @@ class SchoolPhotoActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-            setContentView(R.layout.activity_school_announcement)
+            setContentView(R.layout.activity_school_photo)
 
             initToolbar()
     }

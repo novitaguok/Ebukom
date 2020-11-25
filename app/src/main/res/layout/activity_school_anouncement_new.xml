@@ -46,6 +46,7 @@
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:fillViewport="true"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -75,7 +76,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/edit_text_rectangle_selector"
-                    android:padding="@dimen/size_16" />
+                    android:paddingHorizontal="@dimen/size_16" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -101,7 +102,7 @@
                     android:layout_height="wrap_content"
                     android:drawableRight="@drawable/ic_calendar_24"
                     android:background="@drawable/edit_text_rectangle_selector"
-                    android:padding="@dimen/size_16" />
+                    android:paddingHorizontal="@dimen/size_16" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <EditText
@@ -136,6 +137,19 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:layout_constraintTop_toBottomOf="@id/tvSchoolAnnouncementNewAttachmentTitle" />
+
+            <Button
+                android:id="@+id/btnSchoolAnnouncementNewNext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:background="#828282"
+                android:lineHeight="@dimen/text_16"
+                android:text="SELANJUTNYA"
+                android:textColor="@color/colorWhite"
+                android:textFontWeight="500"
+                android:textSize="@dimen/text_14"
+                android:enabled="false"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -188,35 +202,23 @@
 <!--        app:layout_constraintBottom_toTopOf="@+id/btnSchoolAnnouncementNewNext"-->
 
 
-<!--        <Button-->
-<!--            android:id="@+id/btnSchoolAnnouncementNewNext"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_alignParentBottom="true"-->
-<!--            android:background="#828282"-->
-<!--            android:lineHeight="@dimen/text_16"-->
-<!--            android:text="SELANJUTNYA"-->
-<!--            android:textColor="@color/colorWhite"-->
-<!--            android:textFontWeight="500"-->
-<!--            android:textSize="@dimen/text_14"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/rvSchoolAnnouncementNewTemplate"-->
-<!--            android:enabled="false"/>-->
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
-    <Button
-        android:id="@+id/btnSchoolAnnouncementNewNext"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:background="#828282"
-        android:lineHeight="@dimen/text_16"
-        android:text="SELANJUTNYA"
-        android:textColor="@color/colorWhite"
-        android:textFontWeight="500"
-        android:textSize="@dimen/text_14"
-        app:layout_constraintTop_toBottomOf="@id/rvSchoolAnnouncementNewTemplate"
-        android:enabled="false"/>
+<!--    <Button-->
+<!--        android:id="@+id/btnSchoolAnnouncementNewNext"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_gravity="bottom"-->
+<!--        android:background="#828282"-->
+<!--        android:lineHeight="@dimen/text_16"-->
+<!--        android:text="SELANJUTNYA"-->
+<!--        android:textColor="@color/colorWhite"-->
+<!--        android:textFontWeight="500"-->
+<!--        android:textSize="@dimen/text_14"-->
+<!--        app:layout_constraintTop_toBottomOf="@id/rvSchoolAnnouncementNewTemplate"-->
+<!--        android:enabled="false"/>-->
 
     <include
         android:id="@+id/loading"

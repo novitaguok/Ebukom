@@ -5,7 +5,6 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -15,7 +14,6 @@ import com.ebukom.R
 import com.ebukom.arch.dao.ChooseClassDao
 import com.ebukom.arch.ui.joinclass.JoinClassActivity
 import com.ebukom.arch.ui.login.LoginActivity
-import com.ebukom.data.DataDummy
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FieldValue

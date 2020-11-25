@@ -80,9 +80,12 @@
 
     <!-- Customize Radio Button -->
     <style name="CustomTheme" parent="android:Theme" >
-        <item name="android:radioButtonStyle">@style/RadioButton</item>
+        <item name="android:radioButtonStyle">@style/RadioButtonRed</item>
     </style>
-    <style name="RadioButton" parent="Widget.AppCompat.CompoundButton.RadioButton" >
-        <item name="android:button">@drawable/selector_radio_button</item>
+    <style name="RadioButtonRed" parent="Widget.AppCompat.CompoundButton.RadioButton" >
+        <item name="android:button">@drawable/selector_radio_button_red</item>
+    </style>
+    <style name="RadioButtonBlue" parent="Widget.AppCompat.CompoundButton.RadioButton" >
+        <item name="android:button">@drawable/selector_radio_button_blue</item>
     </style>
 </resources>

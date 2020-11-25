@@ -1,6 +1,7 @@
 package com.ebukom.arch.ui.classdetail.school.schoolannouncement
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.PointF
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
@@ -13,24 +14,230 @@ import com.ebukom.arch.dao.ClassDetailAnnouncementDao
 import com.ebukom.arch.dao.ClassDetailSchoolAnnouncementMonthDao
 import com.ebukom.arch.ui.classdetail.ClassDetailSchoolAnnouncementMonthAdapter
 import com.ebukom.arch.ui.classdetail.OnMoreCallback
+import com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementnew.SchoolAnnouncementNewActivity
 import com.ebukom.data.DataDummy
+import com.google.firebase.Timestamp
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_school_announcement.*
+import kotlinx.android.synthetic.main.activity_school_announcement.toolbar
+import timber.log.Timber
 
 
 class SchoolAnnouncementActivity : AppCompatActivity() {
 
-    private val mAnnouncementMonthList: ArrayList<ClassDetailSchoolAnnouncementMonthDao> = arrayListOf()
-    lateinit var mMonthAdapter : ClassDetailSchoolAnnouncementMonthAdapter
-    lateinit var recyclerView: RecyclerView
+    private var mAnnouncementMonthList: ArrayList<ClassDetailSchoolAnnouncementMonthDao> =
+        arrayListOf()
+    private var mAnnouncementList = arrayListOf<ClassDetailAnnouncementDao>()
+    lateinit var mMonthAdapter: ClassDetailSchoolAnnouncementMonthAdapter
     lateinit var callback: OnMoreCallback
-    lateinit var mAnnounceByDayAdapter : SchoolAnnouncementPageAdapter
+    lateinit var mAnnounceByDayAdapter: SchoolAnnouncementPageAdapter
+    var classId: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_school_announcement)
 
         initToolbar()
+        initListener()
+        initRecycler()
+//        loadDummy()
+        loadAnnouncement()
+    }
 
+    /**
+     * Load announcement data from Firestore
+     */
+    private fun loadAnnouncement() {
+        classId = intent.getStringExtra("classId")
+
+        if (classId != null) {
+            val db = FirebaseFirestore.getInstance()
+            db.collection("classes").document(classId!!).collection("announcements")
+                .addSnapshotListener { value, error ->
+                    if (error != null) {
+                        Timber.e(error)
+                        return@addSnapshotListener
+                    }
+
+                    mAnnouncementList.clear()
+                    for (document in value!!.documents) {
+                        // jika udh ada
+                        mAnnouncementList.add(
+                            ClassDetailAnnouncementDao(
+                                document["title"] as String,
+                                document["content"] as String,
+                                arrayListOf(),
+                                (document["time"] as Timestamp).toString(),
+                                arrayListOf(),
+                                document["teacher.name"] as String,
+                                document.id
+                            )
+                        )
+                    }
+
+                    filterData()
+                }
+        }
+    }
+
+    /**
+     * Filter data by month
+     */
+    private fun filterData() {
+        mAnnouncementList.sortBy {
+            it.timestamp.seconds
+        }
+        val arrayOfMonth = listOf<String>(
+            "Januari",
+            "Februari",
+            "Maret",
+            "April",
+            "Mei",
+            "Juni",
+            "Juli",
+            "Agustus",
+            "September",
+            "Oktober",
+            "November",
+            "Desember"
+        )
+        var pointerMonth = 0
+        val groupedList = mAnnouncementList.groupBy {
+            it.timestamp.toDate().month
+        }
+
+
+        mAnnouncementMonthList.clear()
+//        Create title
+        arrayOfMonth.forEach {
+            mAnnouncementMonthList.add(
+                ClassDetailSchoolAnnouncementMonthDao(
+                    it,
+                    arrayListOf(),
+                    1,
+                    pointerMonth++
+                )
+            )
+        }
+
+        /**
+         * Create data
+         */
+        for ((key, value) in groupedList) {
+            mAnnouncementMonthList.add(
+                ClassDetailSchoolAnnouncementMonthDao(
+                    arrayOfMonth[key],
+                    value,
+                    0,
+                    key
+                )
+            )
+        }
+        mAnnouncementMonthList.sortWith(compareBy<ClassDetailSchoolAnnouncementMonthDao> { it.monthId }.thenByDescending { it.viewType })
+        rvSchoolAnnouncementMonth.adapter =
+            ClassDetailSchoolAnnouncementMonthAdapter(mAnnouncementMonthList.filter {
+                it.viewType == 1
+            }, object : ClassDetailSchoolAnnouncementMonthAdapter.OnItemClickedListener {
+                override fun onItemClicked(child: ClassDetailSchoolAnnouncementMonthDao) {
+                    val pos = mAnnouncementMonthList.indexOf(child)
+                    (rvSchoolAnnouncement.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(
+                        pos,
+                        0
+                    )
+                }
+            })
+        rvSchoolAnnouncement.adapter?.notifyDataSetChanged()
+    }
+
+
+    private fun initListener() {
+        /**
+         * Tap on "Bagikan Pengumuman Baru" button
+         */
+
+        btnSchoolAnnouncementNew.setOnClickListener {
+            startActivity(Intent(this, SchoolAnnouncementNewActivity::class.java))
+        }
+    }
+
+    private fun initRecycler() {
+        /**
+         * Announcement(s) by month
+         */
+        mMonthAdapter = ClassDetailSchoolAnnouncementMonthAdapter(mAnnouncementMonthList.filter {
+            it.viewType == 1
+        }, object : ClassDetailSchoolAnnouncementMonthAdapter.OnItemClickedListener {
+            override fun onItemClicked(child: ClassDetailSchoolAnnouncementMonthDao) {
+                val pos = mAnnouncementMonthList.indexOf(child)
+                (rvSchoolAnnouncement.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(
+                    pos,
+                    0
+                )
+            }
+        })
+        rvSchoolAnnouncementMonth.apply {
+            layoutManager =
+                LinearLayoutManager(
+                    this@SchoolAnnouncementActivity,
+                    LinearLayoutManager.HORIZONTAL,
+                    false
+                )
+            adapter = mMonthAdapter
+        }
+
+        /**
+         * Announcement by day
+         */
+        mAnnounceByDayAdapter = SchoolAnnouncementPageAdapter((mAnnouncementMonthList))
+        rvSchoolAnnouncement.apply {
+            layoutManager =
+                LinearLayoutManager(
+                    this@SchoolAnnouncementActivity,
+                    LinearLayoutManager.VERTICAL,
+                    false
+                )
+            adapter = mAnnounceByDayAdapter
+        }
+    }
+
+    /**
+     * Smooth scroller
+     */
+    class LinearLayoutManagerWithSmoothScroller : LinearLayoutManager {
+        constructor(context: Context?) : super(context, VERTICAL, false) {}
+        constructor(
+            context: Context?,
+            orientation: Int,
+            reverseLayout: Boolean
+        ) : super(context, orientation, reverseLayout) {
+        }
+
+        override fun smoothScrollToPosition(
+            recyclerView: RecyclerView, state: RecyclerView.State,
+            position: Int
+        ) {
+            val smoothScroller: SmoothScroller = TopSnappedSmoothScroller(recyclerView.context)
+            smoothScroller.targetPosition = position
+            startSmoothScroll(smoothScroller)
+        }
+
+        private inner class TopSnappedSmoothScroller(context: Context?) :
+            LinearSmoothScroller(context) {
+            override fun computeScrollVectorForPosition(targetPosition: Int): PointF? {
+                return this@LinearLayoutManagerWithSmoothScroller
+                    .computeScrollVectorForPosition(targetPosition)
+            }
+
+            override fun getVerticalSnapPreference(): Int {
+                return SNAP_TO_START
+            }
+        }
+    }
+
+    /**
+     * Dummy database
+     */
+    private fun loadDummy() {
         mAnnouncementMonthList.add(
             ClassDetailSchoolAnnouncementMonthDao(
                 "Januari",
@@ -187,72 +394,6 @@ class SchoolAnnouncementActivity : AppCompatActivity() {
                 DataDummy.announcementData
             )
         )
-
-        // Smooth Scroller
-        class LinearLayoutManagerWithSmoothScroller : LinearLayoutManager {
-            constructor(context: Context?) : super(context, VERTICAL, false) {}
-            constructor(
-                context: Context?,
-                orientation: Int,
-                reverseLayout: Boolean
-            ) : super(context, orientation, reverseLayout) {
-            }
-
-            override fun smoothScrollToPosition(
-                recyclerView: RecyclerView, state: RecyclerView.State,
-                position: Int
-            ) {
-                val smoothScroller: SmoothScroller = TopSnappedSmoothScroller(recyclerView.context)
-                smoothScroller.targetPosition = position
-                startSmoothScroll(smoothScroller)
-            }
-
-            private inner class TopSnappedSmoothScroller(context: Context?) :
-                LinearSmoothScroller(context) {
-                override fun computeScrollVectorForPosition(targetPosition: Int): PointF? {
-                    return this@LinearLayoutManagerWithSmoothScroller
-                        .computeScrollVectorForPosition(targetPosition)
-                }
-
-                override fun getVerticalSnapPreference(): Int {
-                    return SNAP_TO_START
-                }
-            }
-        }
-
-        // Announcement by month
-        mMonthAdapter = ClassDetailSchoolAnnouncementMonthAdapter(mAnnouncementMonthList.filter {
-            it.viewType == 1
-        }, object : ClassDetailSchoolAnnouncementMonthAdapter.OnItemClickedListener {
-            override fun onItemClicked(child: ClassDetailSchoolAnnouncementMonthDao) {
-                val pos = mAnnouncementMonthList.indexOf(child)
-                (rvSchoolAnnouncement.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(
-                    pos,
-                    0
-                )
-            }
-        })
-        rvSchoolAnnouncementMonth.apply {
-            layoutManager =
-                LinearLayoutManager(
-                    this@SchoolAnnouncementActivity,
-                    LinearLayoutManager.HORIZONTAL,
-                    false
-                )
-            adapter = mMonthAdapter
-        }
-
-        // Announcement by day
-        mAnnounceByDayAdapter = SchoolAnnouncementPageAdapter((mAnnouncementMonthList))
-        rvSchoolAnnouncement.apply {
-            layoutManager =
-                LinearLayoutManager(
-                    this@SchoolAnnouncementActivity,
-                    LinearLayoutManager.VERTICAL,
-                    false
-                )
-            adapter = mAnnounceByDayAdapter
-        }
     }
 
     fun initToolbar() {
@@ -263,7 +404,4 @@ class SchoolAnnouncementActivity : AppCompatActivity() {
             onBackPressed()
         }
     }
-
-
-
 }

@@ -5,5 +5,6 @@ import java.io.Serializable
 data class ClassDetailSchoolAnnouncementMonthDao (
     var month: String,
     var announcement: List<ClassDetailAnnouncementDao> = arrayListOf(),
-    var viewType : Int = 0
+    var viewType : Int = 0,
+    var monthId : Int = 0
 )

@@ -22,6 +22,7 @@ import timber.log.Timber
 class JoinClassActivity : AppCompatActivity() {
 
     private val mList: ArrayList<ChooseClassDao> = arrayListOf()
+    lateinit var callback: ChooseClassAdapter.onItemClickedListener
     private val mAdapter = ChooseClassAdapter(mList)
     lateinit var sharePref: SharedPreferences
 
@@ -40,11 +41,6 @@ class JoinClassActivity : AppCompatActivity() {
         }
 
         initToolbar()
-
-//        mList.clear()
-//        mList.addAll(DataDummy.chooseClassData)
-//        mAdapter.addAll(mList)
-
     }
 
     /**
@@ -210,4 +206,8 @@ class JoinClassActivity : AppCompatActivity() {
 
         }, 1000)
     }
+
+//    override fun onItemClicked() {
+//        loading.visibility = View.VISIBLE
+//    }
 }

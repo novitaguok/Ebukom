@@ -31,6 +31,7 @@ class ClassDetailSchoolAnnouncementMonthAdapter(private val data: List<ClassDeta
 
     override fun getItemCount(): Int {
         return data.size
+        return data.size
     }
 
     inner class ViewHolder

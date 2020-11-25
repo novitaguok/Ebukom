@@ -10,6 +10,7 @@
     android:background="@drawable/btn_white_rectangle_4dp">
 
     <RelativeLayout
+        android:id="@+id/rlItemAnnouncementTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"

@@ -30,12 +30,13 @@ class ChooseClassViewHolder(var view: View, var context: Context) : RecyclerView
                 (context as ChooseClassActivity).popupMenu(item)
             }
             view.clItemClass.setOnClickListener {
-                (context as ChooseClassActivity).startActivity(
-                    Intent(
-                        (context as ChooseClassActivity),
-                        MainClassDetailActivity::class.java
-                    )
+                val intent = Intent(
+                    (context as ChooseClassActivity),
+                    MainClassDetailActivity::class.java
                 )
+
+                intent.putExtra("classId", item.classId)
+                (context as ChooseClassActivity).startActivity(intent)
             }
         } else {
             val uid = context.getSharedPreferences("EBUKOM", Context.MODE_PRIVATE)
@@ -47,6 +48,8 @@ class ChooseClassViewHolder(var view: View, var context: Context) : RecyclerView
 //                (context as JoinClassActivity).addClass(item)
                 db.collection("classes").document(item.classId)
                     .update("class_teacher_ids", FieldValue.arrayUnion(uid))
+
+
                 (context as Activity).finish()
             }
         }

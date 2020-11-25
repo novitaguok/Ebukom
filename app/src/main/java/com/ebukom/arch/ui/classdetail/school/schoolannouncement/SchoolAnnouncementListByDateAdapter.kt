@@ -45,6 +45,9 @@ class SchoolAnnouncementListByDateAdapter(var announcements: List<ClassDetailAnn
     ) : RecyclerView.ViewHolder(itemView) {
         fun bind(data: ClassDetailAnnouncementDao) {
             itemView.tvAnnouncementDetail.text = data.announcementTitle
+            itemView.rlItemAnnouncementTitle.setOnClickListener {
+                (context as SchoolAnnouncementActivity).startActivity(Intent(context, SchoolAnnouncementDetailActivity::class.java))
+            }
 //            itemView.tvAnnouncementContent.text = data.announcementContent
 //            if (data.teacherName.isNullOrEmpty())
 //                itemView.tvAnnouncementComment.text =

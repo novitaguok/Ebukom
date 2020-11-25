@@ -46,7 +46,8 @@ class MainClassDetailActivity : AppCompatActivity(), OnMoreCallback {
         var isMaterial = true
     }
 
-    private val mAnnouncementList: ArrayList<ClassDetailAnnouncementDao> = DataDummy.announcementData
+    private val mAnnouncementList: ArrayList<ClassDetailAnnouncementDao> =
+        DataDummy.announcementData
     private lateinit var mAnnouncementAdapter: SchoolAnnouncementAdapter
     private val mScheduleList: ArrayList<ClassDetailScheduleDao> = DataDummy.scheduleData
     private lateinit var mScheduleAdapter: SchoolScheduleAdapter
@@ -56,6 +57,8 @@ class MainClassDetailActivity : AppCompatActivity(), OnMoreCallback {
     lateinit var mNoteAdapter: PersonalNoteAdapter
     private val mEducationList: ArrayList<ClassDetailAnnouncementDao> = DataDummy.educationData
     lateinit var mEducationAdapter: SchoolAnnouncementAdapter
+
+    var classId: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -78,6 +81,14 @@ class MainClassDetailActivity : AppCompatActivity(), OnMoreCallback {
         }
         val materialFragment = MaterialFragment()
         val memberFragment = MemberFragment()
+
+        classId = intent.getStringExtra("classId")
+        if (classId != null) {
+            val bundle = Bundle().apply {
+                putString("classId", classId)
+            }
+            schoolFragment.arguments = bundle
+        }
 
         makeCurrentFragment(schoolFragment)
         bnClassDetail.setOnNavigationItemSelectedListener {
@@ -106,8 +117,7 @@ class MainClassDetailActivity : AppCompatActivity(), OnMoreCallback {
                 bottomSheetDialog.dismiss()
                 tvClassHeaderClassNumber.text = "Kelas 1"
                 tvClassHeaderClassName.text = "Aurora"
-            }
-            else {
+            } else {
                 bottomSheetDialog.dismiss()
                 tvClassHeaderClassNumber.text = "Kelas 2"
                 tvClassHeaderClassName.text = "Fatamorgana"
@@ -216,7 +226,8 @@ class MainClassDetailActivity : AppCompatActivity(), OnMoreCallback {
                     "3" -> { // Note
                         DataDummy.noteSentData.removeAt(pos)
 
-                        mNoteAdapter = PersonalNoteAdapter(mNoteList, 1, this, PersonalSentNoteFragment())
+                        mNoteAdapter =
+                            PersonalNoteAdapter(mNoteList, 1, this, PersonalSentNoteFragment())
                         mNoteAdapter.notifyDataSetChanged()
 
                         loading_main.visibility = View.VISIBLE
@@ -227,7 +238,11 @@ class MainClassDetailActivity : AppCompatActivity(), OnMoreCallback {
                     "4" -> { // Note
                         DataDummy.educationData.removeAt(pos)
 
-                        mEducationAdapter = SchoolAnnouncementAdapter(mEducationList, this, MaterialEducationFragment())
+                        mEducationAdapter = SchoolAnnouncementAdapter(
+                            mEducationList,
+                            this,
+                            MaterialEducationFragment()
+                        )
                         mEducationAdapter.notifyDataSetChanged()
 
                         loading_main.visibility = View.VISIBLE
@@ -282,7 +297,8 @@ class MainClassDetailActivity : AppCompatActivity(), OnMoreCallback {
             builder.setPositiveButton("HAPUS") { _, _ ->
                 DataDummy.noteAcceptedData.removeAt(pos)
 
-                mNoteAdapter = PersonalNoteAdapter(mNoteList, 0, this, PersonalAcceptedNoteFragment())
+                mNoteAdapter =
+                    PersonalNoteAdapter(mNoteList, 0, this, PersonalAcceptedNoteFragment())
                 mNoteAdapter.notifyDataSetChanged()
 
                 loading_main.visibility = View.VISIBLE

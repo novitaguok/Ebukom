@@ -38,67 +38,67 @@
         app:layout_constraintBottom_toBottomOf="@+id/tvBottomSheetSchoolAnnouncementTemplateTitle"
         app:layout_constraintRight_toRightOf="parent"/>
 
-    <TextView
-        android:id="@+id/tvBottomSheetSchoolAnnouncementTemplateFieldTrip"
-        android:layout_width="0dp"
+    <RadioGroup
+        android:id="@+id/rbGroupSchoolAnnouncementTemplate"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="@dimen/size_16"
-        android:lineHeight="@dimen/size_28"
-        android:text="Field Trip"
-        android:paddingVertical="@dimen/size_10"
-        android:textColor="#212121"
-        android:textSize="@dimen/text_16"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvBottomSheetSchoolAnnouncementTemplateTitle" />
+        app:layout_constraintTop_toBottomOf="@+id/tvBottomSheetSchoolAnnouncementTemplateTitle">
+
+        <RadioButton
+            android:id="@+id/rbSchoolAnnouncementTemplateFieldTrip"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            style="@style/RadioButtonBlue"
+            android:paddingHorizontal="@dimen/size_16"
+            android:layoutDirection="rtl"
+            android:textAlignment="textStart"
+            android:text="Field Trip"
+            android:textSize="@dimen/text_16"
+            android:textFontWeight="400"
+            android:lineHeight="@dimen/text_28"
+            android:textColor="@color/colorSuperDarkBlue" />
+
+        <RadioButton
+            android:id="@+id/rbSchoolAnnouncementTemplateUniform"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            style="@style/RadioButtonBlue"
+            android:paddingHorizontal="@dimen/size_16"
+            android:layoutDirection="rtl"
+            android:textAlignment="textStart"
+            android:text="Perubahan Seragam"
+            android:textSize="@dimen/text_16"
+            android:textFontWeight="400"
+            android:lineHeight="@dimen/text_28"
+            android:textColor="@color/colorSuperDarkBlue" />
+
+        <RadioButton
+            android:id="@+id/rbSchoolAnnouncementTemplateSchedule"
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            style="@style/RadioButtonBlue"
+            android:paddingHorizontal="@dimen/size_16"
+            android:layoutDirection="rtl"
+            android:textAlignment="textStart"
+            android:text="Perubahan Jadwal"
+            android:textSize="@dimen/text_16"
+            android:textFontWeight="400"
+            android:lineHeight="@dimen/text_28"
+            android:textColor="@color/colorSuperDarkBlue" />
+
+    </RadioGroup>
 
     <TextView
-        android:id="@+id/tvBottomSheetSchoolAnnouncementTemplateUniform"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="@dimen/size_16"
-        android:lineHeight="@dimen/size_28"
-        android:paddingVertical="@dimen/size_10"
-        android:text="Perubahan Seragam"
-        android:textColor="#212121"
-        android:textSize="@dimen/text_16"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/cbRegisterParentBottomSheetPMR"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvBottomSheetSchoolAnnouncementTemplateFieldTrip" />
-
-    <TextView
-        android:id="@+id/tvBottomSheetSchoolAnnouncementTemplateSchedule"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="@dimen/size_16"
-        android:lineHeight="@dimen/size_28"
-        android:paddingVertical="@dimen/size_10"
-        android:text="Perubahan Jadwal"
-        android:textColor="#212121"
-        android:textSize="@dimen/text_16"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/cbRegisterParentBottomSheetPMR"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvBottomSheetSchoolAnnouncementTemplateUniform" />
-
-    <TextView
-        android:id="@+id/tvBottomSheetSchoolAnnouncementTemplateCancel"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="@dimen/size_16"
-        android:lineHeight="@dimen/size_28"
-        android:paddingVertical="@dimen/size_10"
+        android:id="@+id/tvSchoolAnnouncementTemplateCancel"
+        android:layout_width="match_parent"
+        android:layout_height="52dp"
+        android:gravity="center_vertical"
+        app:layout_constraintTop_toBottomOf="@+id/rbGroupSchoolAnnouncementTemplate"
+        android:paddingHorizontal="@dimen/size_16"
         android:text="Batalkan"
-        android:textColor="@color/colorRed"
         android:textSize="@dimen/text_16"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/cbRegisterParentBottomSheetPMR"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/tvBottomSheetSchoolAnnouncementTemplateSchedule" />
+        android:textFontWeight="400"
+        android:lineHeight="@dimen/text_28"
+        android:textColor="@color/colorRed" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
