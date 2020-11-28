@@ -46,7 +46,6 @@ class ChooseClassActivity : AppCompatActivity() {
             startActivity(Intent(this, JoinClassActivity::class.java))
         }
 
-
         /**
          * Load classes data
          */
@@ -247,9 +246,6 @@ class ChooseClassActivity : AppCompatActivity() {
                 dialog.dismiss()
             }
             builder.setPositiveButton("HAPUS") { _, _ ->
-//                DataDummy.chooseClassDataMain.remove(item)
-//                mList.remove(item)
-//                mAdapter.addAll(mList)
                 db.collection("classes").document(item.classId)
                     .update("class_teacher_ids", FieldValue.arrayRemove(uid))
 

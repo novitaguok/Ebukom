@@ -30,17 +30,19 @@ class JoinClassActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_join_class)
 
+        initToolbar()
+
         sharePref = getSharedPreferences("EBUKOM", Context.MODE_PRIVATE)
 
-//        loadDummy()
+        /**
+         * Load classes data
+         */
         loadData()
-
         rvJoinClassClasses.apply {
             adapter = mAdapter
             layoutManager = LinearLayoutManager(this@JoinClassActivity)
         }
 
-        initToolbar()
     }
 
     /**

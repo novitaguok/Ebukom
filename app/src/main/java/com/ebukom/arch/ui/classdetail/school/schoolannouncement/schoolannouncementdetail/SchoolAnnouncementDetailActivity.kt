@@ -60,12 +60,13 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
         pos = intent?.extras?.getInt("pos", -1)?: -1
 
         // Get Intent from SchoolAnnouncementFragment
-        val data = intent?.extras?.getSerializable("data") as ClassDetailAnnouncementDao
-        tvSchoolAnnouncementDetailTitle.text = data.announcementTitle
-        tvSchoolAnnouncementDetailContent.text = data.announcementContent
-        tvSchoolAnnouncementDetailTeacher.text = "Eni Trikuswanti"
-        tvSchoolAnnouncementDetailDate.text = data.time
-        mAttachmentList.addAll(data.attachments)
+//        val data = intent?.extras?.getSerializable("data") as ClassDetailAnnouncementDao
+//        tvSchoolAnnouncementDetailTitle.text = data.announcementTitle
+//        tvSchoolAnnouncementDetailContent.text = data.announcementContent
+//        tvSchoolAnnouncementDetailTeacher.text = "Eni Trikuswanti"
+//        tvSchoolAnnouncementDetailDate.text = data.time
+//        mAttachmentList.addAll(data.attachments)
+
         mAttachmentAdapter.notifyDataSetChanged()
         rvSchoolAnnouncementAttachmentDetail.apply {
             layoutManager =
@@ -89,7 +90,7 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
                 )
             adapter = mCommentAdapter
         }
-        mCommentList.addAll(data.comments)
+//        mCommentList.addAll(data.comments)
         mCommentAdapter.notifyDataSetChanged()
 
         ivSchoolAnnouncementDetailComment.setOnClickListener {

@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -23,14 +24,17 @@ import com.ebukom.arch.ui.classdetail.school.schoolannouncement.SchoolAnnounceme
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementnewnext.SchoolAnnouncementNewNextActivity
 import com.ebukom.data.DataDummy
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.kunzisoft.switchdatetime.SwitchDateTimeDialogFragment
+import kotlinx.android.synthetic.main.activity_school_announcement_new_next.*
 import kotlinx.android.synthetic.main.activity_school_anouncement_new.*
 import kotlinx.android.synthetic.main.activity_school_anouncement_new.rvMaterialSubjectAddAttachment
-import kotlinx.android.synthetic.main.activity_school_anouncement_new.rvSchoolAnnouncementNewTemplate
 import kotlinx.android.synthetic.main.activity_school_anouncement_new.toolbar
 import kotlinx.android.synthetic.main.alert_edit_text.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_class_detail_attachment.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_class_detail_school_announcement_template.view.*
 import kotlinx.android.synthetic.main.item_announcement_attachment.view.*
+import java.text.SimpleDateFormat
+import java.util.*
 import kotlin.collections.ArrayList
 
 class SchoolAnnouncementNewActivity : AppCompatActivity() {
@@ -39,6 +43,7 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
     private val mAttachmentAdapter = ClassDetailAttachmentAdapter(mAttachmentList)
     private val mTemplateList: ArrayList<ClassDetailTemplateTextDao> = arrayListOf()
     private val mTemplateAdapter = ClassDetailTemplateTextAdapter(mTemplateList)
+    var classId: String? = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -46,10 +51,12 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
 
         initToolbar()
 
+        classId = intent.getStringExtra("classId")
+
         /**
          * "Gunakan Template" button
          */
-        tvSchoolAnnouncementNewUseTemplate.setOnClickListener {
+        btnSchoolAnnouncementNewUseTemplate.setOnClickListener {
             val bottomSheetDialog = BottomSheetDialog(this)
             val view = layoutInflater.inflate(R.layout.bottom_sheet_class_detail_school_announcement_template, null)
 
@@ -70,9 +77,87 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
                 }
             }
 
+            view.tvBottomSheetSchoolAnnouncementTemplateAdd.setOnClickListener {
+                startActivity(Intent(this, SchoolAnnouncementAddTemplateActivity::class.java))
+            }
+
+            bottomSheetDialog.show()
         }
 
-        // Attachment List
+        btnSchoolAnnouncementNewTime.setOnClickListener {
+            var dateTime = ""
+            val dateTimeDialogFragment = SwitchDateTimeDialogFragment.newInstance(
+                "Tanggal",
+                "SELESAI",
+                "BATALKAN"
+            )
+
+            dateTimeDialogFragment.setTimeZone(TimeZone.getDefault())
+
+            val dateFormat = SimpleDateFormat("d MMM yyyy HH:mm", Locale.getDefault())
+
+            dateTimeDialogFragment.startAtCalendarView()
+            dateTimeDialogFragment.set24HoursMode(true)
+            dateTimeDialogFragment.minimumDateTime =
+                GregorianCalendar(2020, Calendar.JANUARY, 1).time
+
+            try {
+                dateTimeDialogFragment.simpleDateMonthAndDayFormat =
+                    SimpleDateFormat("dd MMMM", Locale.getDefault())
+            } catch (e: SwitchDateTimeDialogFragment.SimpleDateMonthAndDayFormatException) {
+                Log.e("error", e.message)
+            }
+
+
+            dateTimeDialogFragment.setOnButtonClickListener(object :
+                SwitchDateTimeDialogFragment.OnButtonClickListener {
+                override fun onPositiveButtonClick(date: Date?) {
+                    tvSchoolAnnouncementNewNextAlarmContent.text = dateFormat.format(date)
+                    tvSchoolAnnouncementNewNextAlarmContent.setTextColor(
+                        ContextCompat.getColor(
+                            applicationContext,
+                            R.color.colorRed
+                        )
+                    )
+                    dateTime = dateFormat.format(date)
+                }
+
+                override fun onNegativeButtonClick(date: Date?) {}
+            })
+
+            dateTimeDialogFragment.show(supportFragmentManager, "")
+        }
+
+        initRecycler()
+
+        /**
+         * Text watcher
+         */
+        etSchoolAnnouncementNewTitle.addTextChangedListener(textWatcher)
+        etSchoolAnnouncementNewContent.addTextChangedListener(textWatcher)
+
+        /**
+         * Next page
+         */
+        btnSchoolAnnouncementNewNext.setOnClickListener {
+            val title = etSchoolAnnouncementNewTitle.text.toString()
+            val content = btnSchoolAnnouncementNewTime.text.toString()
+            val intent = Intent(this, SchoolAnnouncementNewNextActivity::class.java)
+
+            intent.putExtra("title", title)
+            intent.putExtra("content", content)
+            intent.putExtra("attachments", mAttachmentList)
+            intent.putExtra("classId", classId)
+
+            startActivity(intent)
+            finish()
+        }
+    }
+
+    private fun initRecycler() {
+        /**
+         * Attachment list
+         */
         checkAttachmentEmpty()
         rvMaterialSubjectAddAttachment.apply {
             layoutManager = LinearLayoutManager(
@@ -82,47 +167,11 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
             )
             adapter = mAttachmentAdapter
         }
-
-        // Template List
-        mTemplateList.addAll(DataDummy.announcementTemplateData)
-        mTemplateAdapter.notifyDataSetChanged()
-        rvSchoolAnnouncementNewTemplate.apply {
-            layoutManager =
-                LinearLayoutManager(
-                    this@SchoolAnnouncementNewActivity,
-                    LinearLayoutManager.HORIZONTAL,
-                    false
-                )
-            adapter = mTemplateAdapter
-        }
-
-        // Intent to Add Template Activity
-        tvSchoolAnnouncementNewTemplateAdd.setOnClickListener {
-            startActivity(Intent(this, SchoolAnnouncementAddTemplateActivity::class.java))
-        }
-
-        // Text Watcher
-        etSchoolAnnouncementNewTitle.addTextChangedListener(textWatcher)
-        etSchoolAnnouncementNewContent.addTextChangedListener(textWatcher)
-
-        // Next Page
-        btnSchoolAnnouncementNewNext.setOnClickListener {
-            val title = etSchoolAnnouncementNewTitle.text.toString()
-            val content = etSchoolAnnouncementNewContent.text.toString()
-
-            loading.visibility = View.VISIBLE
-            Handler().postDelayed({
-                loading.visibility = View.GONE
-                val intent = Intent(this, SchoolAnnouncementNewNextActivity::class.java)
-                intent.putExtra("title", title)
-                intent.putExtra("content", content)
-                intent.putExtra("attachments", mAttachmentList)
-                startActivity(intent)
-                finish()
-            }, 1000)
-        }
     }
 
+    /**
+     * Text watcher
+     */
     private val textWatcher = object : TextWatcher {
         override fun afterTextChanged(s: Editable?) {
         }

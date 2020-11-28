@@ -82,7 +82,7 @@ class MainClassDetailActivity : AppCompatActivity(), OnMoreCallback {
         val materialFragment = MaterialFragment()
         val memberFragment = MemberFragment()
 
-        classId = intent.getStringExtra("classId")
+        classId = intent?.extras?.getString("classId")
         if (classId != null) {
             val bundle = Bundle().apply {
                 putString("classId", classId)

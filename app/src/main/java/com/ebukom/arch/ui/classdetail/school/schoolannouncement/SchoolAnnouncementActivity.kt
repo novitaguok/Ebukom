@@ -37,6 +37,8 @@ class SchoolAnnouncementActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_school_announcement)
 
+        classId = intent.extras?.getString("classId")
+
         initToolbar()
         initListener()
         initRecycler()
@@ -48,7 +50,6 @@ class SchoolAnnouncementActivity : AppCompatActivity() {
      * Load announcement data from Firestore
      */
     private fun loadAnnouncement() {
-        classId = intent.getStringExtra("classId")
 
         if (classId != null) {
             val db = FirebaseFirestore.getInstance()
@@ -61,16 +62,16 @@ class SchoolAnnouncementActivity : AppCompatActivity() {
 
                     mAnnouncementList.clear()
                     for (document in value!!.documents) {
-                        // jika udh ada
                         mAnnouncementList.add(
                             ClassDetailAnnouncementDao(
                                 document["title"] as String,
                                 document["content"] as String,
                                 arrayListOf(),
-                                (document["time"] as Timestamp).toString(),
+                                (document["time"] as Timestamp).toDate().toString(),
                                 arrayListOf(),
                                 document["teacher.name"] as String,
-                                document.id
+                                document.id,
+                                (document["time"] as Timestamp)
                             )
                         )
                     }
@@ -101,14 +102,23 @@ class SchoolAnnouncementActivity : AppCompatActivity() {
             "November",
             "Desember"
         )
-        var pointerMonth = 0
+        val arrayOfDay = listOf<String>(
+            "Minggu",
+            "Senin",
+            "Selasa",
+            "Rabu",
+            "Kamis",
+            "Jumat",
+            "Sabtu"
+        )
+
         val groupedList = mAnnouncementList.groupBy {
-            it.timestamp.toDate().month
+            Triple(it.timestamp.toDate().day,it.timestamp.toDate().date,it.timestamp.toDate().month)
         }
 
 
         mAnnouncementMonthList.clear()
-//        Create title
+        var pointerMonth = 0
         arrayOfMonth.forEach {
             mAnnouncementMonthList.add(
                 ClassDetailSchoolAnnouncementMonthDao(
@@ -126,10 +136,13 @@ class SchoolAnnouncementActivity : AppCompatActivity() {
         for ((key, value) in groupedList) {
             mAnnouncementMonthList.add(
                 ClassDetailSchoolAnnouncementMonthDao(
-                    arrayOfMonth[key],
+                    key.third.toString(),
                     value,
                     0,
-                    key
+                    key.third,
+                    date = key.second,
+                    day = key.first,
+                    dayName = arrayOfDay[key.first]
                 )
             )
         }
@@ -156,7 +169,10 @@ class SchoolAnnouncementActivity : AppCompatActivity() {
          */
 
         btnSchoolAnnouncementNew.setOnClickListener {
-            startActivity(Intent(this, SchoolAnnouncementNewActivity::class.java))
+            val intent = Intent(this, SchoolAnnouncementNewActivity::class.java)
+
+            intent.putExtra("classId", classId)
+            startActivity(intent)
         }
     }
 

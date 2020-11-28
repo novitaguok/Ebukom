@@ -2,5 +2,6 @@ package com.ebukom.arch.dao
 
 data class ClassDetailItemCheckDao (
     var item: String,
-    var isChecked : Boolean = false
+    var isChecked : Boolean = false,
+    var id: String? = null
 )

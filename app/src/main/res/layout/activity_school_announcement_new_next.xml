@@ -54,12 +54,45 @@
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <TextView
+                android:id="@+id/tvSchoolAnnouncementNewNextClassAll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:lineHeight="@dimen/size_24"
+                android:paddingVertical="@dimen/size_12"
+                android:text="Semua Kelas"
+                android:textColor="#212121"
+                android:textSize="@dimen/text_16"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvSchoolAnnouncementNewNextClass" />
+
+            <CheckBox
+                android:id="@+id/cbSchoolAnnouncementNewNextClassAll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/size_18"
+                android:theme="@style/colored_checkbox"
+                app:layout_constraintBottom_toBottomOf="@id/tvSchoolAnnouncementNewNextClassAll"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/tvSchoolAnnouncementNewNextClassAll"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tvSchoolAnnouncementNewNextClassAll" />
+
+            <View
+                android:id="@+id/vSchoolAnnouncementNewNextClass"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_1"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:background="#EEEEEE"
+                app:layout_constraintTop_toBottomOf="@+id/tvSchoolAnnouncementNewNextClassAll" />
+
             <androidx.recyclerview.widget.RecyclerView
-                android:layout_marginTop="@dimen/size_8"
                 android:id="@+id/rvSchoolAnnouncementNewNext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/tvSchoolAnnouncementNewNextClass"/>
+                app:layout_constraintTop_toBottomOf="@+id/tvSchoolAnnouncementNewNextClassAll"/>
 
             <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"

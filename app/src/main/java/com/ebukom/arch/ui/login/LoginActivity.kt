@@ -191,6 +191,7 @@ class LoginActivity : AppCompatActivity() {
             sharePref.edit().apply {
                 putBoolean("isLogin", true)
                 putString("uid", uid)
+                putString("teacherName", it["name"] as String)
             }.apply()
 
             startActivity(Intent(this, ChooseClassActivity::class.java))

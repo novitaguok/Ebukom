@@ -33,14 +33,14 @@
         </androidx.appcompat.widget.Toolbar>
 
         <Button
-            android:id="@+id/tvSchoolAnnouncementNewUseTemplate"
+            android:id="@+id/btnSchoolAnnouncementNewUseTemplate"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@color/colorSuperDarkBlue"
             android:text="GUNAKAN TEMPLATE PENGUMUMAN"
             android:textColor="@color/colorWhite"
-            android:textSize="@dimen/text_14"
-            android:textFontWeight="700"/>
+            android:textFontWeight="700"
+            android:textSize="@dimen/text_14" />
     </com.google.android.material.appbar.AppBarLayout>
 
     <androidx.core.widget.NestedScrollView
@@ -58,10 +58,10 @@
                 android:id="@+id/tilSchoolAnnouncementNewTitle"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="60dp"
                 android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
                 android:layout_marginTop="@dimen/size_24"
-                android:hint="Judul Pengumuman"
+                android:hint="Judul pengumuman"
                 android:theme="@style/LoginTextInputLayoutLabel"
                 app:boxCornerRadiusBottomEnd="@dimen/size_8"
                 app:boxCornerRadiusBottomStart="@dimen/size_8"
@@ -74,63 +74,64 @@
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etSchoolAnnouncementNewTitle"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:background="@drawable/edit_text_rectangle_selector"
-                    android:paddingHorizontal="@dimen/size_16" />
+                    android:paddingHorizontal="@dimen/size_16"
+                    android:textSize="@dimen/text_16" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tilSchoolAnnouncementNewDate"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            <Button
+                android:id="@+id/btnSchoolAnnouncementNewTime"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/size_52"
+                app:layout_constraintTop_toBottomOf="@+id/tilSchoolAnnouncementNewTitle"
                 android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
                 android:layout_marginTop="@dimen/size_20"
-                android:hint="Tanggal"
-                android:theme="@style/LoginTextInputLayoutLabel"
-                app:boxCornerRadiusBottomEnd="@dimen/size_8"
-                app:boxCornerRadiusBottomStart="@dimen/size_8"
-                app:boxCornerRadiusTopEnd="@dimen/size_8"
-                app:boxCornerRadiusTopStart="@dimen/size_8"
-                app:boxStrokeColor="@color/colorBlack"
-                app:boxStrokeWidth="@dimen/size_1"
-                app:layout_constraintTop_toBottomOf="@+id/tilSchoolAnnouncementNewTitle">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etSchoolAnnouncementNewDate"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableRight="@drawable/ic_calendar_24"
-                    android:background="@drawable/edit_text_rectangle_selector"
-                    android:paddingHorizontal="@dimen/size_16" />
-            </com.google.android.material.textfield.TextInputLayout>
-
+                android:background="@drawable/edit_text_rectangle_selector"
+                android:drawableRight="@drawable/ic_calendar_24"
+                android:text="Tanggal"
+                android:textAllCaps="false"
+                android:textAlignment="textStart"
+                android:paddingHorizontal="@dimen/size_16"
+                android:textSize="@dimen/text_16" />
+            
             <EditText
                 android:id="@+id/etSchoolAnnouncementNewContent"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-                android:layout_marginTop="@dimen/size_28"
                 android:background="@android:color/transparent"
                 android:gravity="top"
-                android:hint="Masukkan pengumuman yang ingin dibagikan..."
-                android:lineHeight="@dimen/text_16"
-                android:minLines="10"
-                android:textColorHint="#9E9E9E"
-                android:textSize="@dimen/text_14"
+                android:paddingHorizontal="@dimen/size_16"
+                android:layout_marginTop="@dimen/size_28"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                app:layout_constraintTop_toBottomOf="@+id/btnSchoolAnnouncementNewTime"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tilSchoolAnnouncementNewDate" />
+                app:layout_constraintRight_toRightOf="parent"
+                android:lines="10"
+                android:hint="Masukkan pengumuman yang ingin dibagikan"
+                android:textFontWeight="400"
+                android:textSize="@dimen/text_14"/>
+
+            <View
+                android:id="@+id/vSchoolAnnouncementNew"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_1"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/size_28"
+                android:background="#EEEEEE"
+                app:layout_constraintTop_toBottomOf="@+id/etSchoolAnnouncementNewContent" />
 
             <TextView
                 android:id="@+id/tvSchoolAnnouncementNewAttachmentTitle"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/size_20"
                 android:lineHeight="@dimen/text_20"
                 android:text="Lampiran"
                 android:textColor="#222222"
                 android:textSize="@dimen/text_12"
-                app:layout_constraintTop_toBottomOf="@id/etSchoolAnnouncementNewContent" />
+                app:layout_constraintTop_toBottomOf="@id/vSchoolAnnouncementNew" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/rvMaterialSubjectAddAttachment"
@@ -142,87 +143,22 @@
                 android:id="@+id/btnSchoolAnnouncementNewNext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:layout_constraintBottom_toBottomOf="parent"
                 android:background="#828282"
+                android:enabled="false"
                 android:lineHeight="@dimen/text_16"
                 android:text="SELANJUTNYA"
                 android:textColor="@color/colorWhite"
                 android:textFontWeight="500"
                 android:textSize="@dimen/text_14"
-                android:enabled="false"/>
+                app:layout_constraintBottom_toBottomOf="parent" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.core.widget.NestedScrollView>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/clSchoolAnnouncementNewTemplate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:visibility="gone"
-        android:elevation="@dimen/size_2">
-
-        <TextView
-            android:id="@+id/tvSchoolAnnouncementNewTemplateTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="@dimen/size_16"
-            android:lineHeight="@dimen/text_20"
-            android:text="Template Pengumuman"
-            android:textColor="#222222"
-            android:textSize="@dimen/text_12"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tvSchoolAnnouncementNewTemplateAdd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/size_16"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:lineHeight="@dimen/text_20"
-            android:text="Tambah template"
-            android:textColor="@color/colorRed"
-            android:textSize="@dimen/text_12"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvSchoolAnnouncementNewTemplate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/clSchoolAnnouncementNewTemplate"
-            android:layout_marginTop="@dimen/size_16"
-            android:paddingHorizontal="@dimen/size_14"
-            android:paddingBottom="@dimen/size_24"
-
-            app:layout_constraintTop_toBottomOf="@id/tvSchoolAnnouncementNewTemplateAdd" />
-<!--        app:layout_constraintBottom_toTopOf="@+id/btnSchoolAnnouncementNewNext"-->
-
-
-
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
-
-<!--    <Button-->
-<!--        android:id="@+id/btnSchoolAnnouncementNewNext"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_gravity="bottom"-->
-<!--        android:background="#828282"-->
-<!--        android:lineHeight="@dimen/text_16"-->
-<!--        android:text="SELANJUTNYA"-->
-<!--        android:textColor="@color/colorWhite"-->
-<!--        android:textFontWeight="500"-->
-<!--        android:textSize="@dimen/text_14"-->
-<!--        app:layout_constraintTop_toBottomOf="@id/rvSchoolAnnouncementNewTemplate"-->
-<!--        android:enabled="false"/>-->
-
     <include
         android:id="@+id/loading"
         layout="@layout/layout_loading"
-        android:visibility="gone"/>
+        android:visibility="gone" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
