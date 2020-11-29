@@ -5,7 +5,6 @@ import android.graphics.Bitmap
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -44,6 +43,8 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
     private val mTemplateList: ArrayList<ClassDetailTemplateTextDao> = arrayListOf()
     private val mTemplateAdapter = ClassDetailTemplateTextAdapter(mTemplateList)
     var classId: String? = ""
+    var dateTime = ""
+    var enabled = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,7 +59,10 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
          */
         btnSchoolAnnouncementNewUseTemplate.setOnClickListener {
             val bottomSheetDialog = BottomSheetDialog(this)
-            val view = layoutInflater.inflate(R.layout.bottom_sheet_class_detail_school_announcement_template, null)
+            val view = layoutInflater.inflate(
+                R.layout.bottom_sheet_class_detail_school_announcement_template,
+                null
+            )
 
             bottomSheetDialog.setContentView(view)
 
@@ -67,8 +71,7 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
                 if (checkedId == R.id.rbSchoolAnnouncementTemplateFieldTrip) {
                     bottomSheetDialog.dismiss()
 
-                }
-                else if (checkedId == R.id.rbSchoolAnnouncementTemplateUniform) {
+                } else if (checkedId == R.id.rbSchoolAnnouncementTemplateUniform) {
                     bottomSheetDialog.dismiss()
 
                 } else {
@@ -85,7 +88,6 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
         }
 
         btnSchoolAnnouncementNewTime.setOnClickListener {
-            var dateTime = ""
             val dateTimeDialogFragment = SwitchDateTimeDialogFragment.newInstance(
                 "Tanggal",
                 "SELESAI",
@@ -112,13 +114,7 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
             dateTimeDialogFragment.setOnButtonClickListener(object :
                 SwitchDateTimeDialogFragment.OnButtonClickListener {
                 override fun onPositiveButtonClick(date: Date?) {
-                    tvSchoolAnnouncementNewNextAlarmContent.text = dateFormat.format(date)
-                    tvSchoolAnnouncementNewNextAlarmContent.setTextColor(
-                        ContextCompat.getColor(
-                            applicationContext,
-                            R.color.colorRed
-                        )
-                    )
+                    btnSchoolAnnouncementNewTime.text = dateFormat.format(date)
                     dateTime = dateFormat.format(date)
                 }
 

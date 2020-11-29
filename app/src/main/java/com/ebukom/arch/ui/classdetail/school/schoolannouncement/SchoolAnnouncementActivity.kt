@@ -15,11 +15,9 @@ import com.ebukom.arch.dao.ClassDetailSchoolAnnouncementMonthDao
 import com.ebukom.arch.ui.classdetail.ClassDetailSchoolAnnouncementMonthAdapter
 import com.ebukom.arch.ui.classdetail.OnMoreCallback
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementnew.SchoolAnnouncementNewActivity
-import com.ebukom.data.DataDummy
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_school_announcement.*
-import kotlinx.android.synthetic.main.activity_school_announcement.toolbar
 import timber.log.Timber
 
 
@@ -71,7 +69,8 @@ class SchoolAnnouncementActivity : AppCompatActivity() {
                                 arrayListOf(),
                                 document["teacher.name"] as String,
                                 document.id,
-                                (document["time"] as Timestamp)
+                                (document["time"] as Timestamp),
+                                classId!!
                             )
                         )
                     }
@@ -113,7 +112,11 @@ class SchoolAnnouncementActivity : AppCompatActivity() {
         )
 
         val groupedList = mAnnouncementList.groupBy {
-            Triple(it.timestamp.toDate().day,it.timestamp.toDate().date,it.timestamp.toDate().month)
+            Triple(
+                it.timestamp.toDate().day,
+                it.timestamp.toDate().date,
+                it.timestamp.toDate().month
+            )
         }
 
 
@@ -248,168 +251,6 @@ class SchoolAnnouncementActivity : AppCompatActivity() {
                 return SNAP_TO_START
             }
         }
-    }
-
-    /**
-     * Dummy database
-     */
-    private fun loadDummy() {
-        mAnnouncementMonthList.add(
-            ClassDetailSchoolAnnouncementMonthDao(
-                "Januari",
-                arrayListOf(),
-                1
-            )
-        )
-        mAnnouncementMonthList.add(
-            ClassDetailSchoolAnnouncementMonthDao(
-                "Januari", listOf(
-                    ClassDetailAnnouncementDao(
-                        "Tes",
-                        "Tes",
-                        arrayListOf(),
-                        "Tes",
-                        arrayListOf(),
-                        "Tes"
-                    ),
-                    ClassDetailAnnouncementDao(
-                        "Tes",
-                        "Tes",
-                        arrayListOf(),
-                        "Tes",
-                        arrayListOf(),
-                        "Tes"
-                    ),
-                    ClassDetailAnnouncementDao(
-                        "Tes",
-                        "Tes",
-                        arrayListOf(),
-                        "Tes",
-                        arrayListOf(),
-                        "Tes"
-                    )
-                )
-            )
-        )
-        mAnnouncementMonthList.add(
-            ClassDetailSchoolAnnouncementMonthDao(
-                "Februari",
-                arrayListOf(),
-                1
-            )
-        )
-        mAnnouncementMonthList.add(
-            ClassDetailSchoolAnnouncementMonthDao(
-                "Februari",
-                DataDummy.announcementData
-            )
-        )
-        mAnnouncementMonthList.add(ClassDetailSchoolAnnouncementMonthDao("Maret", arrayListOf(), 1))
-        mAnnouncementMonthList.add(
-            ClassDetailSchoolAnnouncementMonthDao(
-                "Maret",
-                DataDummy.announcementData
-            )
-        )
-        mAnnouncementMonthList.add(ClassDetailSchoolAnnouncementMonthDao("April", arrayListOf(), 1))
-        mAnnouncementMonthList.add(
-            ClassDetailSchoolAnnouncementMonthDao(
-                "April",
-                DataDummy.announcementData
-            )
-        )
-        mAnnouncementMonthList.add(ClassDetailSchoolAnnouncementMonthDao("Mei", arrayListOf(), 1))
-        mAnnouncementMonthList.add(
-            ClassDetailSchoolAnnouncementMonthDao(
-                "Mei",
-                DataDummy.announcementData
-            )
-        )
-        mAnnouncementMonthList.add(
-            ClassDetailSchoolAnnouncementMonthDao(
-                "Mei",
-                DataDummy.announcementData
-            )
-        )
-        mAnnouncementMonthList.add(ClassDetailSchoolAnnouncementMonthDao("Juni", arrayListOf(), 1))
-        mAnnouncementMonthList.add(
-            ClassDetailSchoolAnnouncementMonthDao(
-                "Juni",
-                DataDummy.announcementData
-            )
-        )
-        mAnnouncementMonthList.add(ClassDetailSchoolAnnouncementMonthDao("Juli", arrayListOf(), 1))
-        mAnnouncementMonthList.add(
-            ClassDetailSchoolAnnouncementMonthDao(
-                "Juli",
-                DataDummy.announcementData
-            )
-        )
-        mAnnouncementMonthList.add(
-            ClassDetailSchoolAnnouncementMonthDao(
-                "Agustus",
-                arrayListOf(),
-                1
-            )
-        )
-        mAnnouncementMonthList.add(
-            ClassDetailSchoolAnnouncementMonthDao(
-                "Agustus",
-                DataDummy.announcementData
-            )
-        )
-        mAnnouncementMonthList.add(
-            ClassDetailSchoolAnnouncementMonthDao(
-                "September",
-                arrayListOf(),
-                1
-            )
-        )
-        mAnnouncementMonthList.add(
-            ClassDetailSchoolAnnouncementMonthDao(
-                "September",
-                DataDummy.announcementData
-            )
-        )
-        mAnnouncementMonthList.add(
-            ClassDetailSchoolAnnouncementMonthDao(
-                "Oktober",
-                arrayListOf(),
-                1
-            )
-        )
-        mAnnouncementMonthList.add(
-            ClassDetailSchoolAnnouncementMonthDao(
-                "Oktober",
-                DataDummy.announcementData
-            )
-        )
-        mAnnouncementMonthList.add(
-            ClassDetailSchoolAnnouncementMonthDao(
-                "November",
-                arrayListOf(),
-                1
-            )
-        )
-        mAnnouncementMonthList.add(
-            ClassDetailSchoolAnnouncementMonthDao(
-                "November",
-                DataDummy.announcementData
-            )
-        )
-        mAnnouncementMonthList.add(
-            ClassDetailSchoolAnnouncementMonthDao(
-                "Desember",
-                arrayListOf(),
-                1
-            )
-        )
-        mAnnouncementMonthList.add(
-            ClassDetailSchoolAnnouncementMonthDao(
-                "Desember",
-                DataDummy.announcementData
-            )
-        )
     }
 
     fun initToolbar() {

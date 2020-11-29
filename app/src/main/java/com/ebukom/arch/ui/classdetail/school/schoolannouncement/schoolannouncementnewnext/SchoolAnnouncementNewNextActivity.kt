@@ -49,11 +49,10 @@ class SchoolAnnouncementNewNextActivity : AppCompatActivity(),
 
         sharePref = getSharedPreferences("EBUKOM", Context.MODE_PRIVATE)
 
-        classId = intent.getStringExtra("classId")
-
         /**
          * Intent from SchoolAnnouncementNewActivity
          */
+        classId = intent.getStringExtra("classId")
         title = intent?.extras?.getString("title", "") ?: ""
         content = intent?.extras?.getString("content", "") ?: ""
         attachments = intent?.getSerializableExtra("attachments") as List<ClassDetailAttachmentDao>
@@ -225,6 +224,9 @@ class SchoolAnnouncementNewNextActivity : AppCompatActivity(),
     }
 
     private fun initRecycler() {
+        /**
+         * Load classes joined data
+         */
         rvSchoolAnnouncementNewNext.apply {
             layoutManager = LinearLayoutManager(
                 this@SchoolAnnouncementNewNextActivity,

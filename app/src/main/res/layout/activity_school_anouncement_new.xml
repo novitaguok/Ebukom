@@ -89,7 +89,7 @@
                 android:layout_marginTop="@dimen/size_20"
                 android:background="@drawable/edit_text_rectangle_selector"
                 android:drawableRight="@drawable/ic_calendar_24"
-                android:text="Tanggal"
+                android:hint="Tanggal"
                 android:textAllCaps="false"
                 android:textAlignment="textStart"
                 android:paddingHorizontal="@dimen/size_16"

@@ -49,8 +49,7 @@ class SchoolAnnouncementPageAdapter(var announcements: List<ClassDetailSchoolAnn
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-//        (holder as ViewHolder).bind(announcements[position])
-        if(holder is ViewHolderAnnounce){
+        if (holder is ViewHolderAnnounce) {
             val announcementPosition = announcements[position]
             holder.itemView.tvItemAnnouncementByDateDay.text = announcementPosition.dayName
             holder.itemView.tvItemAnnouncementByDateDate.text = announcementPosition.date.toString()
@@ -59,14 +58,18 @@ class SchoolAnnouncementPageAdapter(var announcements: List<ClassDetailSchoolAnn
             val currentDay = Date().day
             val currentMonth = Date().month
 
-            if(announcementPosition.day == currentDay && announcementPosition.date == currentDate && announcementPosition.monthId == currentMonth)
-                holder.itemView.llItemAnnouncementByDateTime.setBackgroundColor(ContextCompat.getColor(context,R.color.colorRed))
+            if (announcementPosition.day == currentDay && announcementPosition.date == currentDate && announcementPosition.monthId == currentMonth)
+                holder.itemView.llItemAnnouncementByDateTime.setBackgroundResource(R.drawable.bg_square_red_4dp)
             else
-                holder.itemView.llItemAnnouncementByDateTime.setBackgroundColor(ContextCompat.getColor(context,R.color.colorSuperDarkBlue))
+                holder.itemView.llItemAnnouncementByDateTime.setBackgroundResource(R.drawable.bg_square_blue_4dp)
 
 
             val childLayoutManager =
-                LinearLayoutManager(holder.recyclerView.context, LinearLayoutManager.VERTICAL, false)
+                LinearLayoutManager(
+                    holder.recyclerView.context,
+                    LinearLayoutManager.VERTICAL,
+                    false
+                )
 
             childLayoutManager.initialPrefetchItemCount = 4
 
@@ -75,7 +78,7 @@ class SchoolAnnouncementPageAdapter(var announcements: List<ClassDetailSchoolAnn
                 adapter = SchoolAnnouncementListByDateAdapter(announcementPosition.announcement)
                 setRecycledViewPool(viewPool)
             }
-        }else if(holder is ViewHolderSeparator){
+        } else if (holder is ViewHolderSeparator) {
             holder.title.text = announcements[position].month
         }
     }

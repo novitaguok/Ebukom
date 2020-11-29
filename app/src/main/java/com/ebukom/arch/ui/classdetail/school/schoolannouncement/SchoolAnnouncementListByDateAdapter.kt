@@ -46,7 +46,10 @@ class SchoolAnnouncementListByDateAdapter(var announcements: List<ClassDetailAnn
         fun bind(data: ClassDetailAnnouncementDao) {
             itemView.tvAnnouncementDetail.text = data.announcementTitle
             itemView.rlItemAnnouncementTitle.setOnClickListener {
-                (context as SchoolAnnouncementActivity).startActivity(Intent(context, SchoolAnnouncementDetailActivity::class.java))
+                val intent = Intent(context, SchoolAnnouncementDetailActivity::class.java)
+                intent.putExtra("classId", data.classId)
+                intent.putExtra("announcementId", data.announcementId)
+                (context as SchoolAnnouncementActivity).startActivity(intent)
             }
 //            itemView.tvAnnouncementContent.text = data.announcementContent
 //            if (data.teacherName.isNullOrEmpty())
