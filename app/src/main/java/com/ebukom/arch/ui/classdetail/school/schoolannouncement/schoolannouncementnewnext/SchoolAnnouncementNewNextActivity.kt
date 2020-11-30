@@ -145,18 +145,6 @@ class SchoolAnnouncementNewNextActivity : AppCompatActivity(),
             val sharePref = getSharedPreferences("EBUKOM", Context.MODE_PRIVATE)
             val uid = sharePref.getString("uid", "") as String
             val teacherName = sharePref.getString("teacherName", "") as String
-//            var teacherName: String = ""
-
-//            val teacherName = db.collection("users").document()
-//            val announcementData = ClassDetailAnnouncementDao(
-//                title,
-//                content,
-//                arrayListOf(),
-//                dateTime,
-//                attachments,
-//                "testststetst"
-//            )
-
 
             val data = hashMapOf<String, Any>(
                 "content" to content,
@@ -210,16 +198,6 @@ class SchoolAnnouncementNewNextActivity : AppCompatActivity(),
                         }
                     }
             }
-
-//            DataDummy.announcementData.add(
-//                ClassDetailAnnouncementDao(
-//                    title,
-//                    content,
-//                    arrayListOf(),
-//                    dateTime,
-//                    attachments
-//                )
-//            )
         }
     }
 

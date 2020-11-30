@@ -52,6 +52,9 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
 
         initToolbar()
 
+        /**
+         * Intent from SchoolAnnouncementActivity
+         */
         classId = intent.getStringExtra("classId")
 
         /**

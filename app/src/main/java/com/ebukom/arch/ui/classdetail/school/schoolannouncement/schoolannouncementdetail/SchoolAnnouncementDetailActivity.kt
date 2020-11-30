@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
@@ -16,7 +17,6 @@ import com.ebukom.arch.dao.ClassDetailAnnouncementDao
 import com.ebukom.arch.dao.ClassDetailAttachmentDao
 import com.ebukom.arch.ui.classdetail.ClassDetailAttachmentAdapter
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementedit.SchoolAnnouncementEditActivity
-import com.ebukom.data.DataDummy
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
@@ -26,6 +26,8 @@ import kotlinx.android.synthetic.main.alert_edit_text.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_school_announcement.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_school_announcement_comment.view.*
 import timber.log.Timber
+import java.util.*
+import kotlin.collections.ArrayList
 
 class SchoolAnnouncementDetailActivity : AppCompatActivity() {
 
@@ -35,17 +37,16 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
     private val mAttachmentList: ArrayList<ClassDetailAttachmentDao> = arrayListOf()
     private val mAttachmentAdapter = ClassDetailAttachmentAdapter(mAttachmentList)
     private val mAnnouncementList: ArrayList<ClassDetailAnnouncementDao> = arrayListOf()
+    val db = FirebaseFirestore.getInstance()
     var announcementId: String? = null
     var classId: String? = null
+    var commentId: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_school_announcement_detail)
 
         initToolbar()
-
-        mAnnouncementList.clear()
-        mAnnouncementList.addAll(DataDummy.announcementData)
 
         /**
          * Share preference
@@ -66,53 +67,163 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
             }
         }
 
-        pos = intent?.extras?.getInt("pos", -1) ?: -1
+        initRecycler()
 
         /**
-         * Get Intent from SchoolAnnouncementFragment
+         * Get Intent from SchoolAnnouncementActivity
          */
         announcementId = intent?.extras?.getString("announcementId")
         classId = intent?.extras?.getString("classId")
 
+        /**
+         * Read announcement data
+         */
         if (classId != null) {
-            val db = FirebaseFirestore.getInstance()
             db.collection("classes").document(classId!!).collection("announcements")
                 .document(announcementId!!).get()
                 .addOnSuccessListener {
-                    tvSchoolAnnouncementDetailToolbar.text = (it["time"] as Timestamp).toDate().toString()
+
+                    val day = (it["time"] as Timestamp).toDate().day.toString()
+                    val date = (it["time"] as Timestamp).toDate().date.toString()
+                    val month = (it["time"] as Timestamp).toDate().month.toString()
+                    val year = (it["time"] as Timestamp).toDate().year.toString()
+                    var dayName = ""
+                    var monthName = ""
+
+                    when (day) {
+                        "0" -> dayName = "Minggu"
+                        "1" -> dayName = "Senin"
+                        "2" -> dayName = "Selasa"
+                        "3" -> dayName = "Rabu"
+                        "4" -> dayName = "Kamis"
+                        "5" -> dayName = "Jumat"
+                        "6" -> dayName = "Sabtu"
+                    }
+
+                    when (month) {
+                        "0" -> monthName = "Januari"
+                        "1" -> monthName = "Febuari"
+                        "2" -> monthName = "Maret"
+                        "3" -> monthName = "April"
+                        "4" -> monthName = "Mei"
+                        "5" -> monthName = "Juni"
+                        "6" -> monthName = "Juli"
+                        "7" -> monthName = "Agustus"
+                        "8" -> monthName = "September"
+                        "9" -> monthName = "Oktober"
+                        "10" -> monthName = "November"
+                        "11" -> monthName = "Desember"
+                    }
+
+                    tvSchoolAnnouncementDetailToolbar.text =
+                        dayName + ", " + date + " " + monthName + " " + year
                     tvSchoolAnnouncementDetailTitle.text = it["title"] as String
                     tvSchoolAnnouncementDetailContent.text = it["content"] as String
+                    tvSchoolAnnouncementDetailTeacher.text = it["teacher.name"] as String
 
                     db.collection("classes").document(classId!!).collection("announcements")
+                        .document(announcementId!!).collection("comments")
+                        .addSnapshotListener { value, error ->
+                            if (error != null) {
+                                Timber.e(error)
+                                return@addSnapshotListener
+                            }
+
+                            mCommentList.clear()
+//                            initRecycler()
+
+                            for (document in value!!.documents) {
+                                mCommentList.add(
+                                    ClassDetailAnnouncementCommentDao(
+                                        document["user.name"] as String,
+                                        document["comment"] as String,
+                                        R.drawable.bg_square_blue_4dp,
+                                        (document["upload_time"] as Timestamp).toDate().toString(),
+                                        document.id
+                                    )
+                                )
+
+                                mCommentList.sortBy {
+                                    it.time
+                                }
+                                checkEmpty()
+                            }
+                            mCommentList.sortBy {
+                                it.time
+                            }
+                            mCommentAdapter.notifyDataSetChanged()
+                            checkEmpty()
+                        }
                 }
+
+            mCommentList.sortBy {
+                it.time
+            }
+            mCommentAdapter.notifyDataSetChanged()
+            checkEmpty()
         }
 
-        initRecycler()
-
+        /**
+         * Send comment
+         */
         ivSchoolAnnouncementDetailComment.setOnClickListener {
-            var comment = etSchoolAnnouncementDetailComment.text.toString()
+            val uid = sharePref.getString("uid", "") as String
+            val teacherName = sharePref.getString("teacherName", "") as String
+            val comment = etSchoolAnnouncementDetailComment.text.toString()
+            val profilePic = R.drawable.bg_books
+            val data = hashMapOf<Any, Any>(
+                "comment" to comment,
+                "user" to mapOf<String, Any>(
+                    "name" to teacherName,
+                    "id" to uid,
+                    "picture" to profilePic
+                ),
+                "upload_time" to Timestamp(Date())
+            )
 
             etSchoolAnnouncementDetailComment.text.clear()
-            mCommentList.add(
-                ClassDetailAnnouncementCommentDao(
-                    "Ade Andreansyah",
-                    comment,
-                    R.drawable.bg_solid_gray
-                )
-            )
+            loading.visibility = View.VISIBLE
+            if (classId != null) {
+                db.collection("classes").document(classId!!).collection("announcements")
+                    .document(announcementId!!).collection("comments").add(data)
+                    .addOnCompleteListener {
+                        if (it.isSuccessful) {
+                            commentId = it.result?.id!!
+                            Log.d("TAG", "comment is sent")
+
+                            mCommentList.sortBy {
+                                it.time
+                            }
+                            mCommentAdapter.notifyDataSetChanged()
+                            checkEmpty()
+
+                            loading.visibility = View.GONE
+                        } else {
+                            Log.d("TAG", "comment is failed to be sent")
+                            finish()
+                        }
+                        mCommentList.sortBy {
+                            it.time
+                        }
+                        mCommentAdapter.notifyDataSetChanged()
+                        checkEmpty()
+                    }
+                mCommentList.sortBy {
+                    it.time
+                }
+                mCommentAdapter.notifyDataSetChanged()
+                checkEmpty()
+            }
+            mCommentList.sortBy {
+                it.time
+            }
             mCommentAdapter.notifyDataSetChanged()
-
-            DataDummy.announcementData[pos].comments = mCommentList
-            mAnnouncementList.clear()
-            mAnnouncementList.addAll(DataDummy.announcementData)
-
-            checkEmptyComment()
+            checkEmpty()
         }
-        mAnnouncementList.clear()
-        mAnnouncementList.addAll(DataDummy.announcementData)
-        checkEmptyComment()
 
-        // Announcement's More Button
+        /**
+         * Announcement 3 dots button
+         */
         ivAnnouncementDetailMoreButton.setOnClickListener {
             popupMenuInfo()
         }
@@ -132,12 +243,11 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
                 )
             adapter = mAttachmentAdapter
         }
-        if (mAttachmentList.isEmpty()) cvSchoolAnnouncementDetailAttachment.visibility = View.GONE
-        else cvSchoolAnnouncementDetailAttachment.visibility = View.VISIBLE
 
         /**
          * Comments list
          */
+        mCommentAdapter.notifyDataSetChanged()
         rvSchoolAnnouncementDetailComment.apply {
             layoutManager =
                 LinearLayoutManager(
@@ -147,13 +257,16 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
                 )
             adapter = mCommentAdapter
         }
-        //        mCommentList.addAll(data.comments)
-        mCommentAdapter.notifyDataSetChanged()
     }
 
-    private fun checkEmptyComment() {
-        if (mCommentList.isNotEmpty()) cvSchoolAnnouncementDetailComment.visibility = View.VISIBLE
+    private fun checkEmpty() {
+        if (mCommentList.isNotEmpty()) cvSchoolAnnouncementDetailComment.visibility =
+            View.VISIBLE
         else cvSchoolAnnouncementDetailComment.visibility = View.GONE
+
+        if (mAttachmentList.isEmpty()) cvSchoolAnnouncementDetailAttachment.visibility =
+            View.GONE
+        else cvSchoolAnnouncementDetailAttachment.visibility = View.VISIBLE
     }
 
     fun popupMenuInfo() {
@@ -168,7 +281,8 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
             bottomSheetDialog.dismiss()
 
             val intent = Intent(this, SchoolAnnouncementEditActivity::class.java)
-            intent.putExtra("pos", pos)
+            intent.putExtra("announcementId", announcementId)
+            intent.putExtra("classId", classId)
             startActivity(intent)
         }
 
@@ -181,12 +295,16 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
             bottomSheetDialog.dismiss()
 
             builder.setMessage("Apakah Anda yakin ingin menghapus pengumuman ini?")
-
             builder.setNegativeButton("BATALKAN") { dialog, which ->
                 dialog.dismiss()
             }
             builder.setPositiveButton("HAPUS") { dialog, which ->
-                DataDummy.announcementData.removeAt(pos)
+                db.collection("classes").document(classId!!).collection("announcements")
+                    .document(announcementId!!).delete().addOnSuccessListener {
+                        Log.d("TAG", "announcement deleted")
+                    }.addOnFailureListener {
+                        Log.d("TAG", "announcement is failed to be deleted")
+                    }
                 finish()
             }
 
@@ -218,9 +336,10 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
         bottomSheetDialog.show()
     }
 
-    fun popupMenuComment(comPosition: Int) {
+    fun popupMenuComment(commentId: String) {
         val bottomSheetDialog = BottomSheetDialog(this)
-        val view = layoutInflater.inflate(R.layout.bottom_sheet_school_announcement_comment, null)
+        val view =
+            layoutInflater.inflate(R.layout.bottom_sheet_school_announcement_comment, null)
         bottomSheetDialog.setContentView(view)
 
         /**
@@ -229,20 +348,32 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
         view.tvEditComment.setOnClickListener {
             val builder = AlertDialog.Builder(this@SchoolAnnouncementDetailActivity)
             val view = layoutInflater.inflate(R.layout.alert_edit_text, null)
+            var comment: String = ""
 
             bottomSheetDialog.dismiss()
-            view.etAlertEditText.setText(mCommentList[comPosition].comment)
 
             builder.setView(view)
-
             builder.setPositiveButton("SELESAI", null)
             builder.setNegativeButton("BATALKAN") { dialog, which ->
                 dialog.dismiss()
             }
 
+            /**
+             * Get comment by commentId
+             */
+            db.collection("classes").document(classId!!).collection("announcements")
+                .document(announcementId!!).collection("comments").document(commentId)
+                .get().addOnSuccessListener {
+                    comment = it["comment"] as String
+                    view.etAlertEditText.setText(comment)
+                }
+
             val dialog: AlertDialog = builder.create()
             dialog.show()
 
+            /**
+             * Update comment
+             */
             val positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
             positiveButton.setOnClickListener {
                 if (view.etAlertEditText.text.toString().isEmpty()) {
@@ -250,15 +381,26 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
                 } else {
                     dialog.dismiss()
 
-                    var comment = view.etAlertEditText.text.toString()
-                    mCommentList[comPosition].comment = comment
+                    comment = view.etAlertEditText.text.toString()
+                    db.collection("classes").document(classId!!).collection("announcements")
+                        .document(announcementId!!).collection("comments").document(commentId)
+                        .update("comment", comment).addOnSuccessListener {
+                            Log.d("TAG", "comment updated")
+
+                            mCommentList.sortBy {
+                                it.time
+                            }
+                            mCommentAdapter.notifyDataSetChanged()
+                            checkEmpty()
+                        }.addOnFailureListener {
+                            Log.d("TAG", "comment is failed to be updated")
+                        }
+
+                    mCommentList.sortBy {
+                        it.time
+                    }
                     mCommentAdapter.notifyDataSetChanged()
-
-                    DataDummy.announcementData[pos].comments = mCommentList
-                    mAnnouncementList.clear()
-                    mAnnouncementList.addAll(DataDummy.announcementData)
-
-                    checkEmptyComment()
+                    checkEmpty()
                 }
             }
             positiveButton.setTextColor(
@@ -290,14 +432,25 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
                 Toast.makeText(applicationContext, "Next?", Toast.LENGTH_SHORT).show()
             }
             builder.setPositiveButton("HAPUS") { dialog, which ->
-                mCommentList.removeAt(comPosition)
+                db.collection("classes").document(classId!!).collection("announcements")
+                    .document(announcementId!!).collection("comments").document(commentId)
+                    .delete().addOnSuccessListener {
+                        Log.d("TAG", "announcement deleted")
+
+                        mCommentList.sortBy {
+                            it.time
+                        }
+                        mCommentAdapter.notifyDataSetChanged()
+                        checkEmpty()
+                    }.addOnFailureListener {
+                        Log.d("TAG", "announcement is failed to be deleted")
+                    }
+
+                mCommentList.sortBy {
+                    it.time
+                }
                 mCommentAdapter.notifyDataSetChanged()
-
-                DataDummy.announcementData[pos].comments = mCommentList
-                mAnnouncementList.clear()
-                mAnnouncementList.addAll(DataDummy.announcementData)
-
-                checkEmptyComment()
+                checkEmpty()
             }
 
             val dialog: AlertDialog = builder.create()

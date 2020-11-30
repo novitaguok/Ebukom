@@ -38,6 +38,8 @@ class SchoolAnnouncementEditActivity : AppCompatActivity() {
     private val mTemplateList: ArrayList<ClassDetailTemplateTextDao> = arrayListOf()
     private val mTemplateAdapter = ClassDetailTemplateTextAdapter(mTemplateList)
     private val mAnnouncementList: ArrayList<ClassDetailAnnouncementDao> = arrayListOf()
+    var classId: String? = null
+    var announcementId: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -48,11 +50,15 @@ class SchoolAnnouncementEditActivity : AppCompatActivity() {
         mAnnouncementList.clear()
         mAnnouncementList.addAll(DataDummy.announcementData)
 
-        // Get Announcement Data
-        pos = intent?.extras?.getInt("pos", -1) ?: -1
+        /**
+         * Get announcement data
+         */
+        classId = intent?.extras?.getString("classId", classId)
+        announcementId = intent?.extras?.getString("announcementId", announcementId)
 
-        etSchoolAnnouncementEditTitle.setText(DataDummy.announcementData[pos].announcementTitle)
-        etSchoolAnnouncementEditContent.setText(DataDummy.announcementData[pos].announcementContent)
+//        pos = intent?.extras?.getInt("pos", -1) ?: -1
+//        etSchoolAnnouncementEditTitle.setText(DataDummy.announcementData[pos].announcementTitle)
+//        etSchoolAnnouncementEditContent.setText(DataDummy.announcementData[pos].announcementContent)
 
         // Attachment List
         mAttachmentList.addAll(DataDummy.announcementData[pos].attachments)

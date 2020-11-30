@@ -6,5 +6,7 @@ import java.io.Serializable
 data class ClassDetailAnnouncementCommentDao (
     var name: String,
     var comment : String,
-    var profilePic : Int
+    var profilePic : Int,
+    var time: String = "",
+    var commentId: String = ""
 ): Serializable
