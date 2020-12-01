@@ -46,10 +46,10 @@ class ClassDetailAttachmentAdapter(private val data: List<ClassDetailAttachmentD
         var context: Context
     ) :
         RecyclerView.ViewHolder(itemView) {
-        fun bind(dataModel: ClassDetailAttachmentDao) {
-            itemView.tvItemAnnouncementAttachment.text = dataModel.path
+        fun bind(item: ClassDetailAttachmentDao) {
+            itemView.tvItemAnnouncementAttachment.text = item.path
 
-            when (dataModel.category) {
+            when (item.category) {
                 0 -> {
                     itemView.ivItemAnnouncementAttachment.setImageResource(R.drawable.ic_link_red)
                 }
@@ -68,13 +68,13 @@ class ClassDetailAttachmentAdapter(private val data: List<ClassDetailAttachmentD
 
             itemView.ivItemAnnouncementAttachmentDelete.setOnClickListener {
                 if (context is SchoolAnnouncementNewActivity) {
-                    (context as SchoolAnnouncementNewActivity).deleteAttachment(dataModel)
+                    (context as SchoolAnnouncementNewActivity).deleteAttachment(item)
                 } else if (context is SchoolAnnouncementEditActivity) {
-                    (context as SchoolAnnouncementEditActivity).deleteAttachment(dataModel)
+                    (context as SchoolAnnouncementEditActivity).deleteAttachment(item)
                 } else if (context is PersonalNoteNewActivity) {
-                    (context as PersonalNoteNewActivity).deleteAttachment(dataModel)
+                    (context as PersonalNoteNewActivity).deleteAttachment(item)
                 } else {
-                    (context as PersonalNoteEditActivity).deleteAttachment(dataModel)
+                    (context as PersonalNoteEditActivity).deleteAttachment(item)
                 }
             }
         }

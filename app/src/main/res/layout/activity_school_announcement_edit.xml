@@ -143,71 +143,7 @@
                 app:layout_constraintTop_toBottomOf="@id/tvSchoolAnnouncementEditAttachmentTitle" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
-
     </androidx.core.widget.NestedScrollView>
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/clSchoolAnnouncementEditTemplate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom"
-        android:visibility="gone"
-        android:elevation="@dimen/size_2">
-
-        <TextView
-            android:id="@+id/tvSchoolAnnouncementEditTemplateTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/activity_horizontal_margin"
-            android:layout_marginTop="@dimen/size_16"
-            android:lineHeight="@dimen/text_20"
-            android:text="Template Pengumuman"
-            android:textColor="#222222"
-            android:textSize="@dimen/text_12"
-            app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <TextView
-            android:id="@+id/tvSchoolAnnouncementEditTemplateAdd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/size_16"
-            android:layout_marginRight="@dimen/activity_horizontal_margin"
-            android:lineHeight="@dimen/text_20"
-            android:text="Tambah template"
-            android:textColor="@color/colorRed"
-            android:textSize="@dimen/text_12"
-            app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rvSchoolAnnouncementEditTemplate"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/clSchoolAnnouncementNewTemplate"
-            android:layout_marginTop="@dimen/size_16"
-            android:paddingHorizontal="@dimen/size_14"
-            android:paddingBottom="@dimen/size_24"
-
-            app:layout_constraintTop_toBottomOf="@id/tvSchoolAnnouncementEditTemplateAdd" />
-<!--        app:layout_constraintBottom_toTopOf="@+id/btnSchoolAnnouncementEditSave"-->
-
-
-<!--        <Button-->
-<!--            android:id="@+id/btnSchoolAnnouncementEditSave"-->
-<!--            android:layout_width="match_parent"-->
-<!--            android:layout_height="wrap_content"-->
-<!--            android:layout_alignParentBottom="true"-->
-<!--            android:background="#828282"-->
-<!--            android:lineHeight="@dimen/text_16"-->
-<!--            android:text="SIMPAN PERUBAHAN"-->
-<!--            android:textColor="@color/colorWhite"-->
-<!--            android:textFontWeight="500"-->
-<!--            android:textSize="@dimen/text_14"-->
-<!--            app:layout_constraintTop_toBottomOf="@id/rvSchoolAnnouncementEditTemplate"-->
-<!--            android:enabled="false"/>-->
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
 
     <Button
         android:id="@+id/btnSchoolAnnouncementEditSave"
@@ -220,7 +156,6 @@
         android:textColor="@color/colorWhite"
         android:textFontWeight="500"
         android:textSize="@dimen/text_14"
-        app:layout_constraintTop_toBottomOf="@id/rvSchoolAnnouncementEditTemplate"
         android:enabled="false"/>
 
     <include

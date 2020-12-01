@@ -5,7 +5,6 @@ import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.os.Handler
-import android.provider.ContactsContract
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
@@ -14,7 +13,6 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.ebukom.R
 import com.ebukom.arch.dao.AdminPaymentItemDao
 import com.ebukom.arch.dao.ClassDetailTemplateTextDao
-import com.ebukom.arch.ui.classdetail.ClassDetailTemplateTextAdapter
 import com.ebukom.arch.ui.classdetail.personal.personalnotenew.PersonalNoteAddTemplateActivity
 import com.ebukom.data.DataDummy
 import kotlinx.android.synthetic.main.activity_admin_school_fee_info_add_note.*
@@ -24,7 +22,6 @@ class AdminSchoolFeeInfoAddNoteActivity : AppCompatActivity() {
 
     private var pos: Int = -1
     private val mTemplateList: ArrayList<ClassDetailTemplateTextDao> = arrayListOf()
-    private val mTemplateAdapter = ClassDetailTemplateTextAdapter(mTemplateList)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,17 +51,6 @@ class AdminSchoolFeeInfoAddNoteActivity : AppCompatActivity() {
                     }, 1000)
                 }
             }
-        }
-
-        // Template Note
-        rvAdminSchoolFeeInfoAddNoteTemplate.apply {
-            layoutManager =
-                LinearLayoutManager(
-                    this@AdminSchoolFeeInfoAddNoteActivity,
-                    LinearLayoutManager.HORIZONTAL,
-                    false
-                )
-            adapter = mTemplateAdapter
         }
 
         // Add Note Template
@@ -120,13 +106,5 @@ class AdminSchoolFeeInfoAddNoteActivity : AppCompatActivity() {
                 )
             }
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        mTemplateList.clear()
-        mTemplateList.addAll(DataDummy.adminNoteTemplateData)
-        mTemplateAdapter.notifyDataSetChanged()
     }
 }

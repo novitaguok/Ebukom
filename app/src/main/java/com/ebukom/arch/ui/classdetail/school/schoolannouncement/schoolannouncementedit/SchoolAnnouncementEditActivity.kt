@@ -9,6 +9,7 @@ import android.os.Handler
 import android.provider.MediaStore
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -16,39 +17,35 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ebukom.R
-import com.ebukom.arch.dao.ClassDetailAnnouncementDao
 import com.ebukom.arch.dao.ClassDetailAttachmentDao
-import com.ebukom.arch.dao.ClassDetailTemplateTextDao
 import com.ebukom.arch.ui.classdetail.ClassDetailAttachmentAdapter
-import com.ebukom.arch.ui.classdetail.ClassDetailTemplateTextAdapter
-import com.ebukom.arch.ui.classdetail.school.schoolannouncement.SchoolAnnouncementAddTemplateActivity
 import com.ebukom.data.DataDummy
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_school_announcement_edit.*
 import kotlinx.android.synthetic.main.activity_school_announcement_edit.toolbar
 import kotlinx.android.synthetic.main.alert_edit_text.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_class_detail_attachment.view.*
 import kotlinx.android.synthetic.main.item_announcement_attachment.view.*
+import timber.log.Timber
+import java.util.*
+import kotlin.collections.ArrayList
 
 class SchoolAnnouncementEditActivity : AppCompatActivity() {
-
-    private var pos: Int = -1
     private val mAttachmentList: ArrayList<ClassDetailAttachmentDao> = arrayListOf()
     private val mAttachmentAdapter = ClassDetailAttachmentAdapter(mAttachmentList)
-    private val mTemplateList: ArrayList<ClassDetailTemplateTextDao> = arrayListOf()
-    private val mTemplateAdapter = ClassDetailTemplateTextAdapter(mTemplateList)
-    private val mAnnouncementList: ArrayList<ClassDetailAnnouncementDao> = arrayListOf()
+    val db = FirebaseFirestore.getInstance()
     var classId: String? = null
     var announcementId: String? = null
+    var attachmentIdList = arrayListOf<String>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_school_announcement_edit)
 
         initToolbar()
-
-        mAnnouncementList.clear()
-        mAnnouncementList.addAll(DataDummy.announcementData)
+        initRecycler()
+        checkEmpty()
 
         /**
          * Get announcement data
@@ -56,13 +53,130 @@ class SchoolAnnouncementEditActivity : AppCompatActivity() {
         classId = intent?.extras?.getString("classId", classId)
         announcementId = intent?.extras?.getString("announcementId", announcementId)
 
-//        pos = intent?.extras?.getInt("pos", -1) ?: -1
-//        etSchoolAnnouncementEditTitle.setText(DataDummy.announcementData[pos].announcementTitle)
-//        etSchoolAnnouncementEditContent.setText(DataDummy.announcementData[pos].announcementContent)
+        /**
+         * Get announcement by announcementId
+         */
+        db.collection("classes").document(classId!!).collection("announcements")
+            .document(announcementId!!)
+            .get().addOnSuccessListener {
+                etSchoolAnnouncementEditTitle.setText(it["title"] as String)
+                etSchoolAnnouncementEditContent.setText(it["content"] as String)
 
-        // Attachment List
-        mAttachmentList.addAll(DataDummy.announcementData[pos].attachments)
-        mAttachmentAdapter.notifyDataSetChanged()
+                /**
+                 * Load attachment(s)
+                 */
+                db.collection("classes").document(classId!!).collection("announcements")
+                    .document(announcementId!!).collection("attachments")
+                    .addSnapshotListener { value, error ->
+                        if (error != null) {
+                            Timber.e(error)
+                            return@addSnapshotListener
+                        }
+
+                        for (document in value!!.documents) {
+                            mAttachmentList.add(
+                                ClassDetailAttachmentDao(
+                                    document["path"] as String,
+                                    (document["category"] as Long).toInt(),
+                                    document.id
+                                )
+                            )
+                            mAttachmentAdapter.notifyDataSetChanged()
+                            checkEmpty()
+
+                            attachmentIdList.add(document.id)
+                        }
+                    }
+            }.addOnFailureListener {
+                Log.d("TAG", "fail to load announcement")
+            }
+
+        /**
+         * Text watcher
+         */
+        etSchoolAnnouncementEditTitle.addTextChangedListener(textWatcher)
+        etSchoolAnnouncementEditContent.addTextChangedListener(textWatcher)
+
+        /**
+         * Update done
+         */
+        btnSchoolAnnouncementEditSave.setOnClickListener {
+            val data = hashMapOf<String, Any>(
+                "title" to etSchoolAnnouncementEditTitle.text.toString(),
+                "content" to etSchoolAnnouncementEditContent.text.toString()
+            )
+
+            loading.visibility = View.VISIBLE
+            db.collection("classes").document(classId!!).collection("announcements")
+                .document(announcementId!!)
+                .update(data).addOnSuccessListener {
+                    Log.d("TAG", "data edited successfully")
+                    loading.visibility = View.GONE
+
+                    attachmentIdList.forEach {
+                        db.collection("classes").document(classId!!).collection("announcements")
+                            .document(announcementId!!).collection("attachments").document(
+                                attachmentIdList.toString()
+                            ).delete()
+                    }
+                }.addOnFailureListener {
+                    Log.d("TAG", "data edit failed")
+                }
+
+//            /**
+//             * Delete all document in attachments collection
+//             */
+//            db.collection("classes").document(classId!!).collection("announcements")
+//                .document(announcementId!!).collection("attachments")
+//                .addSnapshotListener { value, error ->
+//                    if (error != null) {
+//                        Timber.e(error)
+//                        return@addSnapshotListener
+//                    }
+//
+//
+//                }
+
+            /**
+             * Re-insert attachment
+             */
+            mAttachmentList.clear()
+            mAttachmentList.forEach {
+                db.collection("classes").document(classId!!)
+                    .collection("announcements")
+                    .document(announcementId!!).collection("attachments").add(
+                        mapOf<String, Any>(
+                            "category" to it.category,
+                            "path" to it.path
+                        )
+                    ).addOnSuccessListener {
+                        Log.d("TAG", "announcement inserted")
+                        loading.visibility = View.GONE
+                        finish()
+                    }.addOnFailureListener {
+                        Log.d("TAG", "announcement failed")
+                        loading.visibility = View.GONE
+                        finish()
+                    }
+            }
+
+            finish()
+        }
+    }
+
+    private fun checkEmpty() {
+        /**
+         * Check if attachment list is empty
+         */
+        if (mAttachmentList.isEmpty()) tvSchoolAnnouncementEditAttachmentTitle.visibility =
+            View.GONE
+        else tvSchoolAnnouncementEditAttachmentTitle.visibility = View.VISIBLE
+    }
+
+    private fun initRecycler() {
+        /**
+         * Attachment list
+         */
         rvSchoolAnnouncementEditAttachment.apply {
             layoutManager =
                 LinearLayoutManager(
@@ -72,51 +186,7 @@ class SchoolAnnouncementEditActivity : AppCompatActivity() {
                 )
             adapter = mAttachmentAdapter
         }
-        if (mAttachmentList.isEmpty()) tvSchoolAnnouncementEditAttachmentTitle.visibility =
-            View.GONE
-        else tvSchoolAnnouncementEditAttachmentTitle.visibility = View.VISIBLE
-
-        // Template List
-        rvSchoolAnnouncementEditTemplate.apply {
-            layoutManager =
-                LinearLayoutManager(
-                    this@SchoolAnnouncementEditActivity,
-                    LinearLayoutManager.HORIZONTAL,
-                    false
-                )
-            adapter = mTemplateAdapter
-        }
-        mTemplateList.addAll(DataDummy.announcementTemplateData)
-        mTemplateAdapter.notifyDataSetChanged()
-
-        // Text watcher
-        etSchoolAnnouncementEditTitle.addTextChangedListener(textWatcher)
-        etSchoolAnnouncementEditContent.addTextChangedListener(textWatcher)
-
-        // Add Template
-        tvSchoolAnnouncementEditTemplateAdd.setOnClickListener {
-            val intent = Intent(this, SchoolAnnouncementAddTemplateActivity::class.java)
-            intent.putExtra("layout", "announcement")
-            startActivity(intent)
-        }
-
-        // Save
-        btnSchoolAnnouncementEditSave.setOnClickListener {
-            var title = etSchoolAnnouncementEditTitle.text.toString()
-            var content = etSchoolAnnouncementEditContent.text.toString()
-
-            DataDummy.announcementData[pos].announcementTitle = title
-            DataDummy.announcementData[pos].announcementContent = content
-            DataDummy.announcementData[pos].attachments = mAttachmentList
-            mAnnouncementList.clear()
-            mAnnouncementList.addAll(DataDummy.announcementData)
-
-            loading.visibility = View.VISIBLE
-            Handler().postDelayed({
-                loading.visibility = View.GONE
-                finish()
-            }, 1000)
-        }
+        mAttachmentAdapter.notifyDataSetChanged()
     }
 
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
@@ -164,7 +234,7 @@ class SchoolAnnouncementEditActivity : AppCompatActivity() {
                         DataDummy.announcementAttachmentData.add(ClassDetailAttachmentDao(link, 0))
                         insertAttachment(view, link)
 
-                        checkAttachmentEmpty()
+                        checkEmpty()
                     }
 
                     val dialog: AlertDialog = builder.create()
@@ -281,6 +351,9 @@ class SchoolAnnouncementEditActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
     }
 
+    /**
+     * Delete attachment
+     */
     fun deleteAttachment(item: ClassDetailAttachmentDao) {
         val builder = AlertDialog.Builder(this)
 
@@ -293,8 +366,7 @@ class SchoolAnnouncementEditActivity : AppCompatActivity() {
             DataDummy.announcementAttachmentData.remove(item)
             mAttachmentList.remove(item)
             mAttachmentAdapter.notifyDataSetChanged()
-
-            checkAttachmentEmpty()
+            checkEmpty()
         }
 
         val dialog: AlertDialog = builder.create()
@@ -317,13 +389,6 @@ class SchoolAnnouncementEditActivity : AppCompatActivity() {
         )
     }
 
-    private fun checkAttachmentEmpty() {
-        if (mAttachmentList.isEmpty()) {
-            tvSchoolAnnouncementEditAttachmentTitle.visibility = View.GONE
-        } else {
-            tvSchoolAnnouncementEditAttachmentTitle.visibility = View.VISIBLE
-        }
-    }
 
     private fun insertAttachment(view: View, path: String) {
         mAttachmentAdapter.notifyDataSetChanged()
@@ -331,14 +396,6 @@ class SchoolAnnouncementEditActivity : AppCompatActivity() {
         mAttachmentList.addAll(DataDummy.announcementAttachmentData)
         view.tvItemAnnouncementAttachment?.text = path
 
-        checkAttachmentEmpty()
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        mTemplateList.clear()
-        mTemplateList.addAll(DataDummy.announcementTemplateData)
-        mTemplateAdapter.notifyDataSetChanged()
+        this.checkEmpty()
     }
 }

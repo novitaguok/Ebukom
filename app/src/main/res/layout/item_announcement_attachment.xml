@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:paddingHorizontal="@dimen/size_16"
-    android:layout_marginVertical="@dimen/size_12">
+    android:layout_marginVertical="6dp">
     
     <ImageView
         android:id="@+id/ivItemAnnouncementAttachment"

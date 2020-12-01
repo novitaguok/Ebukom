@@ -3,17 +3,16 @@ package com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncem
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ebukom.R
 import com.ebukom.arch.dao.ClassDetailAnnouncementCommentDao
-import com.ebukom.arch.dao.ClassDetailAnnouncementDao
 import com.ebukom.arch.dao.ClassDetailAttachmentDao
 import com.ebukom.arch.ui.classdetail.ClassDetailAttachmentAdapter
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementedit.SchoolAnnouncementEditActivity
@@ -21,22 +20,18 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_school_announcement_detail.*
-import kotlinx.android.synthetic.main.activity_school_announcement_detail.toolbar
 import kotlinx.android.synthetic.main.alert_edit_text.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_school_announcement.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_school_announcement_comment.view.*
 import timber.log.Timber
 import java.util.*
-import kotlin.collections.ArrayList
 
 class SchoolAnnouncementDetailActivity : AppCompatActivity() {
 
-    private var pos: Int = -1
     private val mCommentList: ArrayList<ClassDetailAnnouncementCommentDao> = arrayListOf()
     private val mCommentAdapter = SchoolAnnouncementDetailAdapter(mCommentList, this)
     private val mAttachmentList: ArrayList<ClassDetailAttachmentDao> = arrayListOf()
     private val mAttachmentAdapter = ClassDetailAttachmentAdapter(mAttachmentList)
-    private val mAnnouncementList: ArrayList<ClassDetailAnnouncementDao> = arrayListOf()
     val db = FirebaseFirestore.getInstance()
     var announcementId: String? = null
     var classId: String? = null
@@ -47,6 +42,8 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
         setContentView(R.layout.activity_school_announcement_detail)
 
         initToolbar()
+        initRecycler()
+        checkEmpty()
 
         /**
          * Share preference
@@ -67,7 +64,6 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
             }
         }
 
-        initRecycler()
 
         /**
          * Get Intent from SchoolAnnouncementActivity
@@ -121,6 +117,33 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
                     tvSchoolAnnouncementDetailContent.text = it["content"] as String
                     tvSchoolAnnouncementDetailTeacher.text = it["teacher.name"] as String
 
+                    /**
+                     * Load attachment(s)
+                     */
+                    db.collection("classes").document(classId!!).collection("announcements")
+                        .document(announcementId!!).collection("attachments")
+                        .addSnapshotListener { value, error ->
+                            if (error != null) {
+                                Timber.e(error)
+                                return@addSnapshotListener
+                            }
+
+                            for (document in value!!.documents) {
+                                mAttachmentList.add(
+                                    ClassDetailAttachmentDao(
+                                        document["path"] as String,
+                                        (document["category"] as Long).toInt(),
+                                        document.id
+                                    )
+                                )
+                                mAttachmentAdapter.notifyDataSetChanged()
+                                checkEmpty()
+                            }
+                        }
+
+                    /**
+                     * Load comment(s)
+                     */
                     db.collection("classes").document(classId!!).collection("announcements")
                         .document(announcementId!!).collection("comments")
                         .addSnapshotListener { value, error ->
@@ -130,8 +153,6 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
                             }
 
                             mCommentList.clear()
-//                            initRecycler()
-
                             for (document in value!!.documents) {
                                 mCommentList.add(
                                     ClassDetailAnnouncementCommentDao(
@@ -146,21 +167,11 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
                                 mCommentList.sortBy {
                                     it.time
                                 }
+                                mCommentAdapter.notifyDataSetChanged()
                                 checkEmpty()
                             }
-                            mCommentList.sortBy {
-                                it.time
-                            }
-                            mCommentAdapter.notifyDataSetChanged()
-                            checkEmpty()
                         }
                 }
-
-            mCommentList.sortBy {
-                it.time
-            }
-            mCommentAdapter.notifyDataSetChanged()
-            checkEmpty()
         }
 
         /**
@@ -202,23 +213,8 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
                             Log.d("TAG", "comment is failed to be sent")
                             finish()
                         }
-                        mCommentList.sortBy {
-                            it.time
-                        }
-                        mCommentAdapter.notifyDataSetChanged()
-                        checkEmpty()
                     }
-                mCommentList.sortBy {
-                    it.time
-                }
-                mCommentAdapter.notifyDataSetChanged()
-                checkEmpty()
             }
-            mCommentList.sortBy {
-                it.time
-            }
-            mCommentAdapter.notifyDataSetChanged()
-            checkEmpty()
         }
 
         /**
@@ -233,21 +229,20 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
         /**
          * Attachments list
          */
-        mAttachmentAdapter.notifyDataSetChanged()
         rvSchoolAnnouncementDetailAttachment.apply {
             layoutManager =
                 LinearLayoutManager(
                     this.context,
-                    LinearLayoutManager.HORIZONTAL,
+                    LinearLayoutManager.VERTICAL,
                     false
                 )
             adapter = mAttachmentAdapter
         }
+        mAttachmentAdapter.notifyDataSetChanged()
 
         /**
          * Comments list
          */
-        mCommentAdapter.notifyDataSetChanged()
         rvSchoolAnnouncementDetailComment.apply {
             layoutManager =
                 LinearLayoutManager(
@@ -257,13 +252,20 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
                 )
             adapter = mCommentAdapter
         }
+        mCommentAdapter.notifyDataSetChanged()
     }
 
     private fun checkEmpty() {
+        /**
+         * Check empty comment
+         */
         if (mCommentList.isNotEmpty()) cvSchoolAnnouncementDetailComment.visibility =
             View.VISIBLE
         else cvSchoolAnnouncementDetailComment.visibility = View.GONE
 
+        /**
+         * Check empty attachment
+         */
         if (mAttachmentList.isEmpty()) cvSchoolAnnouncementDetailAttachment.visibility =
             View.GONE
         else cvSchoolAnnouncementDetailAttachment.visibility = View.VISIBLE
@@ -364,8 +366,7 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
             db.collection("classes").document(classId!!).collection("announcements")
                 .document(announcementId!!).collection("comments").document(commentId)
                 .get().addOnSuccessListener {
-                    comment = it["comment"] as String
-                    view.etAlertEditText.setText(comment)
+                    view.etAlertEditText.setText(it["comment"] as String)
                 }
 
             val dialog: AlertDialog = builder.create()

@@ -3,8 +3,8 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingTop="@dimen/size_8"
-    android:paddingBottom="@dimen/size_8">
+    android:layout_marginTop="@dimen/size_8"
+    android:layout_marginBottom="@dimen/size_8">
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/ivAnnouncementDetailCommentProfilePicture"
@@ -44,6 +44,7 @@
         android:layout_height="wrap_content"
         android:paddingRight="@dimen/size_10"
         android:layout_marginLeft="66dp"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
         android:lineHeight="@dimen/text_20"
         android:text="@string/comment_content"
         android:textColor="#666666"

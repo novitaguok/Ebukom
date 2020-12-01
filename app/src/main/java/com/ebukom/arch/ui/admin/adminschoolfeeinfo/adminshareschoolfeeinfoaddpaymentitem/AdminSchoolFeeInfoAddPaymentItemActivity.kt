@@ -4,7 +4,6 @@ import android.content.Intent
 import android.graphics.Color
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -12,15 +11,12 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.ebukom.R
 import com.ebukom.arch.dao.AdminPaymentItemFormDao
 import com.ebukom.arch.dao.ClassDetailTemplateTextDao
-import com.ebukom.arch.ui.classdetail.ClassDetailTemplateTextAdapter
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.SchoolAnnouncementAddTemplateActivity
 import com.ebukom.data.DataDummy
 import kotlinx.android.synthetic.main.activity_admin_school_fee_info_add_payment_item.*
 
 class AdminSchoolFeeInfoAddPaymentItemActivity : AppCompatActivity() {
 
-    private val mTemplateList: ArrayList<ClassDetailTemplateTextDao> = arrayListOf()
-    private val mTemplateAdapter = ClassDetailTemplateTextAdapter(mTemplateList)
     private val mFormList: ArrayList<AdminPaymentItemFormDao> = arrayListOf()
     private val mFormAdapter =
         AdminSchoolFeeInfoAddPaymentItemAdapter(mFormList, object : OnPaymentItemCallback {
@@ -53,17 +49,6 @@ class AdminSchoolFeeInfoAddPaymentItemActivity : AppCompatActivity() {
         setContentView(R.layout.activity_admin_school_fee_info_add_payment_item)
 
         initToolbar()
-
-        // Template List
-        rvAdminSchoolFeeInfoAddItemNewTemplate.apply {
-            layoutManager =
-                LinearLayoutManager(
-                    this@AdminSchoolFeeInfoAddPaymentItemActivity,
-                    LinearLayoutManager.HORIZONTAL,
-                    false
-                )
-            adapter = mTemplateAdapter
-        }
 
         // Form List
         btnAdminSchoolFeeInfoAddItemForm.setOnClickListener {

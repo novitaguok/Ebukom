@@ -16,9 +16,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ebukom.R
 import com.ebukom.arch.dao.ClassDetailAttachmentDao
-import com.ebukom.arch.dao.ClassDetailTemplateTextDao
 import com.ebukom.arch.ui.classdetail.ClassDetailAttachmentAdapter
-import com.ebukom.arch.ui.classdetail.ClassDetailTemplateTextAdapter
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.SchoolAnnouncementAddTemplateActivity
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementnewnext.SchoolAnnouncementNewNextActivity
 import com.ebukom.data.DataDummy
@@ -40,8 +38,6 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
 
     private val mAttachmentList: ArrayList<ClassDetailAttachmentDao> = arrayListOf()
     private val mAttachmentAdapter = ClassDetailAttachmentAdapter(mAttachmentList)
-    private val mTemplateList: ArrayList<ClassDetailTemplateTextDao> = arrayListOf()
-    private val mTemplateAdapter = ClassDetailTemplateTextAdapter(mTemplateList)
     var classId: String? = ""
     var dateTime = ""
     var enabled = false
@@ -51,6 +47,7 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
         setContentView(R.layout.activity_school_anouncement_new)
 
         initToolbar()
+        initRecycler()
 
         /**
          * Intent from SchoolAnnouncementActivity
@@ -90,6 +87,9 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
             bottomSheetDialog.show()
         }
 
+        /**
+         * Showing datetime picker dialog
+         */
         btnSchoolAnnouncementNewTime.setOnClickListener {
             val dateTimeDialogFragment = SwitchDateTimeDialogFragment.newInstance(
                 "Tanggal",
@@ -127,8 +127,6 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
             dateTimeDialogFragment.show(supportFragmentManager, "")
         }
 
-        initRecycler()
-
         /**
          * Text watcher
          */
@@ -143,12 +141,12 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
             val content = btnSchoolAnnouncementNewTime.text.toString()
             val intent = Intent(this, SchoolAnnouncementNewNextActivity::class.java)
 
+            intent.putExtra("classId", classId)
             intent.putExtra("title", title)
             intent.putExtra("content", content)
             intent.putExtra("attachments", mAttachmentList)
-            intent.putExtra("classId", classId)
-
             startActivity(intent)
+
             finish()
         }
     }
@@ -157,7 +155,6 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
         /**
          * Attachment list
          */
-        checkAttachmentEmpty()
         rvMaterialSubjectAddAttachment.apply {
             layoutManager = LinearLayoutManager(
                 this@SchoolAnnouncementNewActivity,
@@ -166,6 +163,7 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
             )
             adapter = mAttachmentAdapter
         }
+        checkAttachmentEmpty()
     }
 
     /**
@@ -242,7 +240,6 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
                         val link = view.etAlertEditText?.text.toString()
                         DataDummy.announcementAttachmentData.add(ClassDetailAttachmentDao(link, 0))
                         insertAttachment(view, link)
-
                         checkAttachmentEmpty()
                     }
 
@@ -316,9 +313,9 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
     }
 
     private fun insertAttachment(view: View, path: String) {
-        mAttachmentAdapter.notifyDataSetChanged()
         mAttachmentList.clear()
         mAttachmentList.addAll(DataDummy.announcementAttachmentData)
+        mAttachmentAdapter.notifyDataSetChanged()
         view.tvItemAnnouncementAttachment?.text = path
 
         checkAttachmentEmpty()
@@ -366,19 +363,6 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
         } else {
             tvSchoolAnnouncementNewAttachmentTitle.visibility = View.VISIBLE
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        mTemplateList.clear()
-        mTemplateList.addAll(DataDummy.announcementTemplateData)
-        mTemplateAdapter.notifyDataSetChanged()
-    }
-
-    fun onClickedTemplate(item: ClassDetailTemplateTextDao) {
-        etSchoolAnnouncementNewTitle.setText(item.title)
-        etSchoolAnnouncementNewContent.setText(item.content)
     }
 }
 

@@ -5,14 +5,11 @@ import android.content.SharedPreferences
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ebukom.R
-import com.ebukom.arch.dao.ClassDetailAnnouncementDao
 import com.ebukom.arch.dao.ClassDetailAttachmentDao
 import com.ebukom.arch.dao.ClassDetailItemCheckDao
 import com.ebukom.arch.ui.classdetail.ClassDetailCheckAdapter
@@ -26,7 +23,6 @@ import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.collections.HashMap
 
 class SchoolAnnouncementNewNextActivity : AppCompatActivity(),
     ClassDetailCheckAdapter.OnCheckListener {
@@ -36,10 +32,11 @@ class SchoolAnnouncementNewNextActivity : AppCompatActivity(),
     lateinit var title: String
     lateinit var content: String
     lateinit var dateTime: String
-    lateinit var attachments: List<ClassDetailAttachmentDao>
+    lateinit var attachmentList: List<ClassDetailAttachmentDao>
     lateinit var sharePref: SharedPreferences
     val db = FirebaseFirestore.getInstance()
     var classId: String? = ""
+    var attachmentId: String? = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -55,7 +52,8 @@ class SchoolAnnouncementNewNextActivity : AppCompatActivity(),
         classId = intent.getStringExtra("classId")
         title = intent?.extras?.getString("title", "") ?: ""
         content = intent?.extras?.getString("content", "") ?: ""
-        attachments = intent?.getSerializableExtra("attachments") as List<ClassDetailAttachmentDao>
+        attachmentList =
+            intent?.getSerializableExtra("attachments") as List<ClassDetailAttachmentDao>
         dateTime = ""
 
         /**
@@ -148,7 +146,7 @@ class SchoolAnnouncementNewNextActivity : AppCompatActivity(),
 
             val data = hashMapOf<String, Any>(
                 "content" to content,
-                "teacher" to mapOf<String,Any>(
+                "teacher" to mapOf<String, Any>(
                     "name" to teacherName,
                     "id" to uid
                 ),
@@ -157,42 +155,38 @@ class SchoolAnnouncementNewNextActivity : AppCompatActivity(),
             )
 
             loading.visibility = View.VISIBLE
-            if(classId != null){
+            if (classId != null) {
                 db.collection("classes").document(classId!!).collection("announcements")
                     .add(data).addOnCompleteListener {
                         if (it.isSuccessful) {
-                            val announceId = it.result?.id!!
+                            val announcementId = it.result?.id!!
 
-                            if(attachments.isEmpty()){
-                                Toast.makeText(this, "Pengumuman berhasil ditambahkan", Toast.LENGTH_LONG)
-                                    .show()
+                            if (attachmentList.isEmpty()) {
+                                Log.d("TAG", "announcement inserted")
                                 loading.visibility = View.GONE
                                 finish()
                             }
 
-                            attachments.forEach {
-                                db.collection("classes").document(classId!!).collection("announcements")
-                                    .document(announceId).collection("attachments").add(
-                                        mapOf<String,Any>(
+                            attachmentList.forEach {
+                                db.collection("classes").document(classId!!)
+                                    .collection("announcements")
+                                    .document(announcementId).collection("attachments").add(
+                                        mapOf<String, Any>(
                                             "category" to it.category,
                                             "path" to it.path
                                         )
                                     ).addOnSuccessListener {
-                                        Toast.makeText(this, "Pengumuman berhasil ditambahkan", Toast.LENGTH_LONG)
-                                            .show()
-
+                                        Log.d("TAG", "announcement inserted")
                                         loading.visibility = View.GONE
                                         finish()
                                     }.addOnFailureListener {
-                                        Toast.makeText(this, "Pengumuman gagal ditambahkan", Toast.LENGTH_LONG)
-                                            .show()
+                                        Log.d("TAG", "announcement failed")
                                         loading.visibility = View.GONE
                                         finish()
                                     }
                             }
                         } else {
-                            Toast.makeText(this, "Pengumuman gagal ditambahkan", Toast.LENGTH_LONG)
-                                .show()
+                            Log.d("TAG", "announcement inserted")
                             loading.visibility = View.GONE
                             finish()
                         }

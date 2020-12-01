@@ -285,8 +285,10 @@
         android:textColor="@color/colorWhite"
         android:textFontWeight="500"
         android:textSize="@dimen/text_14"
-        app:layout_constraintTop_toBottomOf="@id/rvSchoolAnnouncementEditTemplate"
+
         android:enabled="false"/>
+
+    app:layout_constraintTop_toBottomOf="@id/rvSchoolAnnouncementEditTemplate"
 
     <include
         android:id="@+id/loading"

@@ -13,7 +13,6 @@ import android.text.TextWatcher
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -22,7 +21,6 @@ import com.ebukom.arch.dao.ClassDetailAttachmentDao
 import com.ebukom.arch.dao.ClassDetailPersonalNoteDao
 import com.ebukom.arch.dao.ClassDetailTemplateTextDao
 import com.ebukom.arch.ui.classdetail.ClassDetailAttachmentAdapter
-import com.ebukom.arch.ui.classdetail.ClassDetailTemplateTextAdapter
 import com.ebukom.arch.ui.classdetail.personal.personalnotenewnext.PersonalNoteNewNextActivity
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.SchoolAnnouncementAddTemplateActivity
 import com.ebukom.data.DataDummy
@@ -40,7 +38,6 @@ class PersonalNoteNewActivity : AppCompatActivity() {
     private val mAttachmentList: ArrayList<ClassDetailAttachmentDao> = arrayListOf()
     private val mAttachmentAdapter = ClassDetailAttachmentAdapter(mAttachmentList)
     private val mTemplateList: ArrayList<ClassDetailTemplateTextDao> = arrayListOf()
-    private val mTemplateAdapter = ClassDetailTemplateTextAdapter(mTemplateList)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,19 +60,6 @@ class PersonalNoteNewActivity : AppCompatActivity() {
                 false
             )
             adapter = mAttachmentAdapter
-        }
-
-        // Template List
-        mTemplateList.addAll(DataDummy.noteTemplateData)
-        mTemplateAdapter.notifyDataSetChanged()
-        rvPersonalNoteNewTemplate.apply {
-            layoutManager =
-                LinearLayoutManager(
-                    this@PersonalNoteNewActivity,
-                    LinearLayoutManager.HORIZONTAL,
-                    false
-                )
-            adapter = mTemplateAdapter
         }
 
         // Text watcher
@@ -305,17 +289,5 @@ class PersonalNoteNewActivity : AppCompatActivity() {
                 R.color.colorRed
             )
         )
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        mTemplateList.clear()
-        mTemplateList.addAll(DataDummy.noteTemplateData)
-        mTemplateAdapter.notifyDataSetChanged()
-    }
-
-    fun onClickedTemplate(item: ClassDetailTemplateTextDao) {
-        etPersonalNoteNewContent.setText(item.content)
     }
 }

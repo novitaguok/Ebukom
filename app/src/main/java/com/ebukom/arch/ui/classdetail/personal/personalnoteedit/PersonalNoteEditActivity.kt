@@ -1,6 +1,5 @@
 package com.ebukom.arch.ui.classdetail.personal.personalnoteedit
 
-import android.app.Activity
 import android.app.AlertDialog
 import android.content.Intent
 import android.graphics.Bitmap
@@ -13,7 +12,6 @@ import android.text.TextWatcher
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ebukom.R
@@ -21,7 +19,6 @@ import com.ebukom.arch.dao.ClassDetailAttachmentDao
 import com.ebukom.arch.dao.ClassDetailPersonalNoteDao
 import com.ebukom.arch.dao.ClassDetailTemplateTextDao
 import com.ebukom.arch.ui.classdetail.ClassDetailAttachmentAdapter
-import com.ebukom.arch.ui.classdetail.ClassDetailTemplateTextAdapter
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.SchoolAnnouncementAddTemplateActivity
 import com.ebukom.data.DataDummy
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -36,7 +33,6 @@ class PersonalNoteEditActivity : AppCompatActivity() {
     private val mAttachmentList: ArrayList<ClassDetailAttachmentDao> = arrayListOf()
     private val mAttachmentAdapter = ClassDetailAttachmentAdapter(mAttachmentList)
     private val mTemplateList: ArrayList<ClassDetailTemplateTextDao> = arrayListOf()
-    private val mTemplateAdapter = ClassDetailTemplateTextAdapter(mTemplateList)
     private val mNoteList: ArrayList<ClassDetailPersonalNoteDao> = arrayListOf()
 
 
@@ -68,19 +64,6 @@ class PersonalNoteEditActivity : AppCompatActivity() {
         }
         if (mAttachmentList.isEmpty()) tvPersonalNoteEditAttachmentTitle.visibility = View.GONE
         else tvPersonalNoteEditAttachmentTitle.visibility = View.VISIBLE
-
-        // Template List
-        rvPersonalNoteEditTemplate.apply {
-            layoutManager =
-                LinearLayoutManager(
-                    this@PersonalNoteEditActivity,
-                    LinearLayoutManager.HORIZONTAL,
-                    false
-                )
-            adapter = mTemplateAdapter
-        }
-        mTemplateList.addAll(DataDummy.noteTemplateData)
-        mTemplateAdapter.notifyDataSetChanged()
 
         // Text watcher
         etPersonalNoteEditContent.addTextChangedListener(textWatcher)
@@ -305,13 +288,5 @@ class PersonalNoteEditActivity : AppCompatActivity() {
         view.tvItemAnnouncementAttachment?.text = path
 
         checkAttachmentEmpty()
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        mTemplateList.clear()
-        mTemplateList.addAll(DataDummy.noteTemplateData)
-        mTemplateAdapter.notifyDataSetChanged()
     }
 }
