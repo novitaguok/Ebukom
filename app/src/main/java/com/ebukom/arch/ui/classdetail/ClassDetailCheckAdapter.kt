@@ -22,7 +22,7 @@ class ClassDetailCheckAdapter(
     }
 
     override fun getItemCount(): Int {
-        return list?.size
+        return list.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {

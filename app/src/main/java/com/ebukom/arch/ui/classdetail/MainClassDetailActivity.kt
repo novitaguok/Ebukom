@@ -193,7 +193,7 @@ class MainClassDetailActivity : AppCompatActivity(), OnMoreCallback {
                     "0" -> { // School announcement
                         DataDummy.announcementData.removeAt(pos)
 
-                        mAnnouncementAdapter = SchoolAnnouncementAdapter(mAnnouncementList, this)
+//                        mAnnouncementAdapter = SchoolAnnouncementAdapter(mAnnouncementList, this)
                         mAnnouncementAdapter.notifyDataSetChanged()
 
                         loading_main.visibility = View.VISIBLE
@@ -226,9 +226,9 @@ class MainClassDetailActivity : AppCompatActivity(), OnMoreCallback {
                     "3" -> { // Note
                         DataDummy.noteSentData.removeAt(pos)
 
-                        mNoteAdapter =
-                            PersonalNoteAdapter(mNoteList, 1, this, PersonalSentNoteFragment())
-                        mNoteAdapter.notifyDataSetChanged()
+//                        mNoteAdapter =
+//                            PersonalNoteAdapter(mNoteList, 1, this, PersonalSentNoteFragment())
+//                        mNoteAdapter.notifyDataSetChanged()
 
                         loading_main.visibility = View.VISIBLE
                         Handler().postDelayed({
@@ -238,11 +238,11 @@ class MainClassDetailActivity : AppCompatActivity(), OnMoreCallback {
                     "4" -> { // Note
                         DataDummy.educationData.removeAt(pos)
 
-                        mEducationAdapter = SchoolAnnouncementAdapter(
-                            mEducationList,
-                            this,
-                            MaterialEducationFragment()
-                        )
+//                        mEducationAdapter = SchoolAnnouncementAdapter(
+//                            mEducationList,
+//                            this,
+//                            MaterialEducationFragment()
+//                        )
                         mEducationAdapter.notifyDataSetChanged()
 
                         loading_main.visibility = View.VISIBLE
@@ -297,9 +297,9 @@ class MainClassDetailActivity : AppCompatActivity(), OnMoreCallback {
             builder.setPositiveButton("HAPUS") { _, _ ->
                 DataDummy.noteAcceptedData.removeAt(pos)
 
-                mNoteAdapter =
-                    PersonalNoteAdapter(mNoteList, 0, this, PersonalAcceptedNoteFragment())
-                mNoteAdapter.notifyDataSetChanged()
+//                mNoteAdapter =
+//                    PersonalNoteAdapter(mNoteList, 0, this, PersonalAcceptedNoteFragment())
+//                mNoteAdapter.notifyDataSetChanged()
 
                 loading_main.visibility = View.VISIBLE
                 Handler().postDelayed({

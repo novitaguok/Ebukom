@@ -8,8 +8,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ebukom.R
 import com.ebukom.arch.dao.AdminSchoolFeeInfoSentDao
-import com.ebukom.arch.ui.admin.MainAdminActivity
-import com.ebukom.arch.ui.admin.adminschoolfeeinfo.adminshareschoolfeeinfonext.AdminShareSchoolFeeInfoNextActivity
 import com.ebukom.arch.ui.classdetail.personal.personalparent.personalparentschoolfeeinfo.PersonalParentSchoolFeeInfoActivity
 import kotlinx.android.synthetic.main.item_admin_info_sent.view.*
 
@@ -44,22 +42,13 @@ class ParentSchoolFeeInfoAdapter(
             itemView.tvItemAdminInfoSentDate.text = info?.date
             itemView.cbItemAdminInfoSent.isChecked = info?.isChecked
 
-            if (context is AdminShareSchoolFeeInfoNextActivity) {
-                itemView.cbItemAdminInfoSent.visibility = View.VISIBLE
-            }
+//            if (context is AdminShareSchoolFeeInfoNextActivity) {
+//                itemView.cbItemAdminInfoSent.visibility = View.VISIBLE
+//            }
 
             itemView.cbItemAdminInfoSent.setOnCheckedChangeListener { _, isChecked ->
                 data[adapterPosition].isChecked = isChecked
                 callback?.onCheckChange()
-            }
-
-            if (context is MainAdminActivity) {
-                itemView.clItemAdminInfoSent.setOnClickListener {
-                    val intent = Intent(context, PersonalParentSchoolFeeInfoActivity::class.java)
-                    intent.putExtra("role", "admin")
-                    intent.putExtra("pos", adapterPosition)
-                    context.startActivity(intent)
-                }
             }
         }
     }

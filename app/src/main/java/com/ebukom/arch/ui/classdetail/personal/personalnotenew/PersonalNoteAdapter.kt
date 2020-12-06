@@ -5,7 +5,6 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.ebukom.R
@@ -62,7 +61,7 @@ class PersonalNoteAdapter(
                 id = "3"
             }
             itemView.ivItemNoteMoreButton.setOnClickListener {
-                callback.onMoreClicked(id, adapterPosition)
+//                callback.onMoreClicked(id, adapterPosition)
             }
 
             itemView.clItemNote.setOnClickListener {

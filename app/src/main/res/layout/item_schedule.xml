@@ -6,7 +6,8 @@
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="@dimen/size_10"
     app:cardCornerRadius="@dimen/size_8"
-    app:cardUseCompatPadding="true">
+    app:cardUseCompatPadding="true"
+    android:layout_marginTop="6dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clItemSchedule"

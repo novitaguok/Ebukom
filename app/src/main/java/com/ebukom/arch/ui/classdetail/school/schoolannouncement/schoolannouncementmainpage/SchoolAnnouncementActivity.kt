@@ -1,4 +1,4 @@
-package com.ebukom.arch.ui.classdetail.school.schoolannouncement
+package com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementmainpage
 
 import android.content.Context
 import android.content.Intent
@@ -12,7 +12,6 @@ import androidx.recyclerview.widget.RecyclerView.SmoothScroller
 import com.ebukom.R
 import com.ebukom.arch.dao.ClassDetailAnnouncementDao
 import com.ebukom.arch.dao.ClassDetailSchoolAnnouncementMonthDao
-import com.ebukom.arch.ui.classdetail.ClassDetailSchoolAnnouncementMonthAdapter
 import com.ebukom.arch.ui.classdetail.OnMoreCallback
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementnew.SchoolAnnouncementNewActivity
 import com.google.firebase.Timestamp
@@ -26,7 +25,7 @@ class SchoolAnnouncementActivity : AppCompatActivity() {
     private var mAnnouncementMonthList: ArrayList<ClassDetailSchoolAnnouncementMonthDao> =
         arrayListOf()
     private var mAnnouncementList = arrayListOf<ClassDetailAnnouncementDao>()
-    lateinit var mMonthAdapter: ClassDetailSchoolAnnouncementMonthAdapter
+    lateinit var mMonthAdapter: SchoolAnnouncementMonthAdapter
     lateinit var callback: OnMoreCallback
     lateinit var mAnnounceByDayAdapter: SchoolAnnouncementPageAdapter
     var classId: String? = null
@@ -40,7 +39,6 @@ class SchoolAnnouncementActivity : AppCompatActivity() {
         initToolbar()
         initListener()
         initRecycler()
-//        loadDummy()
         loadAnnouncement()
     }
 
@@ -151,9 +149,9 @@ class SchoolAnnouncementActivity : AppCompatActivity() {
         }
         mAnnouncementMonthList.sortWith(compareBy<ClassDetailSchoolAnnouncementMonthDao> { it.monthId }.thenByDescending { it.viewType })
         rvSchoolAnnouncementMonth.adapter =
-            ClassDetailSchoolAnnouncementMonthAdapter(mAnnouncementMonthList.filter {
+            SchoolAnnouncementMonthAdapter(mAnnouncementMonthList.filter {
                 it.viewType == 1
-            }, object : ClassDetailSchoolAnnouncementMonthAdapter.OnItemClickedListener {
+            }, object : SchoolAnnouncementMonthAdapter.OnItemClickedListener {
                 override fun onItemClicked(child: ClassDetailSchoolAnnouncementMonthDao) {
                     val pos = mAnnouncementMonthList.indexOf(child)
                     (rvSchoolAnnouncement.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(
@@ -183,9 +181,9 @@ class SchoolAnnouncementActivity : AppCompatActivity() {
         /**
          * Announcement(s) by month
          */
-        mMonthAdapter = ClassDetailSchoolAnnouncementMonthAdapter(mAnnouncementMonthList.filter {
+        mMonthAdapter = SchoolAnnouncementMonthAdapter(mAnnouncementMonthList.filter {
             it.viewType == 1
-        }, object : ClassDetailSchoolAnnouncementMonthAdapter.OnItemClickedListener {
+        }, object : SchoolAnnouncementMonthAdapter.OnItemClickedListener {
             override fun onItemClicked(child: ClassDetailSchoolAnnouncementMonthDao) {
                 val pos = mAnnouncementMonthList.indexOf(child)
                 (rvSchoolAnnouncement.layoutManager as LinearLayoutManager).scrollToPositionWithOffset(

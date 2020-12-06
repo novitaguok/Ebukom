@@ -1,4 +1,4 @@
-package com.ebukom.arch.ui.classdetail
+package com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementmainpage
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -8,13 +8,10 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.ebukom.R
 import com.ebukom.arch.dao.ClassDetailSchoolAnnouncementMonthDao
-import com.ebukom.arch.dao.ClassDetailTemplateTextDao
-import com.ebukom.arch.ui.classdetail.personal.personalnotenew.PersonalNoteNewActivity
-import com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementnew.SchoolAnnouncementNewActivity
 import kotlinx.android.synthetic.main.item_announcement_edit_template.view.*
 
-class ClassDetailSchoolAnnouncementMonthAdapter(private val data: List<ClassDetailSchoolAnnouncementMonthDao>, var callback: OnItemClickedListener) :
-    RecyclerView.Adapter<ClassDetailSchoolAnnouncementMonthAdapter.ViewHolder>() {
+class SchoolAnnouncementMonthAdapter(private val data: List<ClassDetailSchoolAnnouncementMonthDao>, var callback: OnItemClickedListener) :
+    RecyclerView.Adapter<SchoolAnnouncementMonthAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val view = LayoutInflater.from(parent.context)

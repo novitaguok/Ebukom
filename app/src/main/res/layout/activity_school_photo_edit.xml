@@ -42,7 +42,7 @@
             android:layout_height="match_parent">
 
             <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tilSchoolPhotoEditEventName"
+                android:id="@+id/tilSchoolPhotoEditTitle"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -59,7 +59,7 @@
                 app:layout_constraintTop_toTopOf="parent">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etSchoolPhotoEditEventName"
+                    android:id="@+id/etSchoolPhotoEditTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:background="@drawable/edit_text_rectangle_selector"
@@ -81,7 +81,7 @@
                 app:boxCornerRadiusTopStart="@dimen/size_8"
                 app:boxStrokeColor="@color/colorBlack"
                 app:boxStrokeWidth="@dimen/size_1"
-                app:layout_constraintTop_toBottomOf="@+id/tilSchoolPhotoEditEventName">
+                app:layout_constraintTop_toBottomOf="@+id/tilSchoolPhotoEditTitle">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etSchoolPhotoEditLink"

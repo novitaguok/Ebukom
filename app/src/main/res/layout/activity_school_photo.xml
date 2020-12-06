@@ -35,7 +35,6 @@
                 android:textStyle="bold" />
 
         </androidx.appcompat.widget.Toolbar>
-
     </com.google.android.material.appbar.AppBarLayout>
 
     <Button
@@ -59,7 +58,7 @@
         android:id="@+id/ivSchoolPhotoEmpty"
         android:layout_width="@dimen/size_100"
         android:layout_height="@dimen/size_100"
-        android:layout_marginTop="@dimen/size_72"
+        android:layout_marginTop="128dp"
         android:layout_below="@+id/btnSchoolPhotoNew"
         android:src="@drawable/ic_camera_gray"
         android:layout_centerHorizontal="true"

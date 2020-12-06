@@ -10,16 +10,12 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.ebukom.R
 import com.ebukom.arch.dao.ClassDetailAnnouncementDao
-import com.ebukom.arch.dao.ClassDetailSchoolInfoDao
 import com.ebukom.arch.ui.classdetail.MainClassDetailActivity
 import com.ebukom.arch.ui.classdetail.OnMoreCallback
 import com.ebukom.arch.ui.classdetail.material.materialeducation.MaterialEducationFragment
 import com.ebukom.arch.ui.classdetail.material.materialeducation.materialeducationdetail.MaterialEducationDetailActivity
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementdetail.SchoolAnnouncementDetailActivity
-import kotlinx.android.synthetic.main.activity_personal_note_new.*
-import kotlinx.android.synthetic.main.fragment_school_announcement.*
 import kotlinx.android.synthetic.main.item_announcement.view.*
-import kotlinx.android.synthetic.main.item_school_info.view.*
 
 class SchoolAnnouncementAdapter(
     var announcements: List<ClassDetailAnnouncementDao>,
@@ -73,7 +69,7 @@ class SchoolAnnouncementAdapter(
                     if (fragment is SchoolAnnouncementFragment) {
                         callback.onMoreClicked("0", adapterPosition)
                     } else if (fragment is MaterialEducationFragment) {
-                        callback.onMoreClicked("4", adapterPosition)
+//                        callback.onMoreClicked("4", adapterPosition)
                     }
                 }
             }

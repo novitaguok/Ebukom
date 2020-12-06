@@ -2,26 +2,42 @@ package com.ebukom.arch.ui.classdetail.school.schoolschedule.schoolschedulenew
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
 import android.graphics.Color
-import androidx.appcompat.app.AppCompatActivity
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
+import android.provider.MediaStore
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.ebukom.R
 import com.ebukom.arch.dao.ClassDetailScheduleDao
 import com.ebukom.data.DataDummy
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.ktx.Firebase
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.ktx.storage
 import kotlinx.android.synthetic.main.activity_school_schedule_new.*
+import java.io.File
+
 
 class SchoolScheduleNewActivity : AppCompatActivity() {
-    var isSetPelajaran = false
-    var isSetEskul = false
-    var isSetCalendar = false
+    private var isSetPelajaran = false
+    private var isSetEskul = false
+    private var isSetCalendar = false
+    private var file: File? = null
+    private var path: String? = null
+    var classId: String? = null
+    val db = FirebaseFirestore.getInstance()
+    var storage = Firebase.storage
+    var storageRef = FirebaseStorage.getInstance().getReference()
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -29,7 +45,11 @@ class SchoolScheduleNewActivity : AppCompatActivity() {
 
         initToolbar()
 
-        // File chooser
+        classId = intent?.extras?.getString("classId")
+
+        /**
+         * File chooser
+         */
         btnSchoolScheduleNewSubject.setOnClickListener {
             val fileIntent = Intent(Intent.ACTION_GET_CONTENT)
             fileIntent.type = "*/*"
@@ -46,8 +66,14 @@ class SchoolScheduleNewActivity : AppCompatActivity() {
             startActivityForResult(fileIntent, 12)
         }
 
-        // "BAGIKAN JADWAL % KALENDER" button
+        /**
+         * Insert data to Firestore
+         */
         btnSchoolScheduleNewDone.setOnClickListener {
+            loading.visibility = View.VISIBLE
+
+//            db.collection("classes").document(classId!!).update("schedules", )
+
             Handler().postDelayed({
                 loading.visibility = View.GONE
                 finish()
@@ -61,8 +87,8 @@ class SchoolScheduleNewActivity : AppCompatActivity() {
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
                 10, 11, 12 -> {
-                    val path: String = data?.data?.path ?: ""
-                    newSchedule(path, requestCode)
+                    path = data?.data?.path ?: ""
+                    newSchedule(path!!, requestCode)
                 }
                 else -> {
                     btnSchoolScheduleNewDone.isEnabled = false
@@ -76,33 +102,34 @@ class SchoolScheduleNewActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
     }
 
-    fun newSchedule(path: String, section: Int = 0) {
+    private fun newSchedule(path: String, section: Int = 0) {
         var btn: Button? = findViewById(R.id.btnSchoolScheduleNewSubject)
         var tv: TextView? = findViewById(R.id.tvSchoolScheduleNewSubjectPath)
         var iv: ImageView? = findViewById(R.id.ivSchoolScheduleNewSubjectDelete)
         var alert: String? = ""
+//        var bitmap: Bitmap = MediaStore.Images.Media.getBitmap(contentResolver, Uri.parse(path))
 
         if (section == 10) {
             btn = findViewById(R.id.btnSchoolScheduleNewSubject)
             tv = findViewById(R.id.tvSchoolScheduleNewSubjectPath)
             iv = findViewById(R.id.ivSchoolScheduleNewSubjectDelete)
             alert = "jadwal"
+            DataDummy.scheduleData.add(ClassDetailScheduleDao(path))
             isSetPelajaran = true
-            DataDummy.scheduleData.add(ClassDetailScheduleDao("Jadwal", "Pelajaran", "Lihat Jadwal", path, 0))
         } else if (section == 11) {
             btn = findViewById(R.id.btnSchoolScheduleNewEskul)
             tv = findViewById(R.id.tvSchoolScheduleNewEskulPath)
             iv = findViewById(R.id.ivSchoolScheduleNewEskulDelete)
             alert = "jadwal"
+            DataDummy.scheduleData.add(ClassDetailScheduleDao("", path))
             isSetEskul = true
-            DataDummy.scheduleData.add(ClassDetailScheduleDao("Jadwal", "Eskul", "Lihat Jadwal", path, 1))
         } else if (section == 12) {
             btn = findViewById(R.id.btnSchoolScheduleNewCalendar)
             tv = findViewById(R.id.tvSchoolScheduleNewCalendarPath)
             iv = findViewById(R.id.ivSchoolScheduleNewCalendarDelete)
             alert = "kalender"
+            DataDummy.scheduleData.add(ClassDetailScheduleDao("", "", path))
             isSetCalendar = true
-            DataDummy.scheduleData.add(ClassDetailScheduleDao("Kalender", "Akademik", "Lihat Kalender", path, 2))
         }
 
         tv?.text = path
@@ -123,7 +150,9 @@ class SchoolScheduleNewActivity : AppCompatActivity() {
             )
         )
 
-        // Delete Schedule
+        /**
+         * Delete schedule
+         */
         iv?.setOnClickListener {
             val builder = AlertDialog.Builder(this@SchoolScheduleNewActivity)
 
@@ -198,5 +227,33 @@ class SchoolScheduleNewActivity : AppCompatActivity() {
         toolbar.setNavigationOnClickListener {
             onBackPressed()
         }
+    }
+
+    private fun uploadImage() {
+//        if (filePath != null) {
+//            val progressDialog = ProgressDialog(this)
+//            progressDialog.setTitle("Uploading...")
+//            progressDialog.show()
+//            val ref: StorageReference =
+//                storageReference.child("images/" + UUID.randomUUID().toString())
+//            ref.putFile(filePath)
+//                .addOnSuccessListener {
+//                    progressDialog.dismiss()
+//                    Toast.makeText(this@MainActivity, "Uploaded", Toast.LENGTH_SHORT).show()
+//                }
+//                .addOnFailureListener { e ->
+//                    progressDialog.dismiss()
+//                    Toast.makeText(this@MainActivity, "Failed " + e.message, Toast.LENGTH_SHORT)
+//                        .show()
+//                }
+//                .addOnProgressListener { taskSnapshot ->
+//                    val progress = 100.0 * taskSnapshot.bytesTransferred / taskSnapshot
+//                        .totalByteCount
+//                    progressDialog.setMessage("Uploaded " + progress.toInt() + "%")
+//                }
+//        }
+
+
+
     }
 }

@@ -22,7 +22,7 @@
         <activity android:name=".arch.ui.classdetail.material.MaterialPreviewActivity"/>
         <activity android:name=".arch.ui.classdetail.school.schoolphoto.SchoolPhotoActivity" />
         <activity android:name=".arch.ui.classdetail.school.schoolschedule.SchoolScheduleActivity" />
-        <activity android:name=".arch.ui.classdetail.school.schoolannouncement.SchoolAnnouncementActivity" />
+        <activity android:name=".arch.ui.classdetail.school.schoolannouncement.schoolannouncementmainpage.SchoolAnnouncementActivity" />
         <activity android:name=".arch.ui.welcome.WelcomeActivity" />
         <activity android:name=".arch.ui.admin.adminschoolfeeinfo.adminshareschoolfeeinforecheck.AdminShareSchoolFeeInfoRecheckActivity" />
         <activity android:name=".arch.ui.admin.adminschoolfeeinfo.adminshareschoolfeeinfonext.AdminShareSchoolFeeInfoNextActivity" />

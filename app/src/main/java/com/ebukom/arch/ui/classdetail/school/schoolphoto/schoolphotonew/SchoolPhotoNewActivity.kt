@@ -3,22 +3,21 @@ package com.ebukom.arch.ui.classdetail.school.schoolphoto.schoolphotonew
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.View
 import androidx.core.content.ContextCompat
 import com.ebukom.R
-import com.ebukom.arch.dao.ClassDetailAttachmentDao
-import com.ebukom.arch.dao.ClassDetailPhotoDao
-import com.ebukom.data.DataDummy
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_school_photo_new.*
 import kotlinx.android.synthetic.main.activity_school_photo_new.loading
 import kotlinx.android.synthetic.main.activity_school_photo_new.toolbar
 
 class SchoolPhotoNewActivity : AppCompatActivity() {
 
-    private val mPhotoList: ArrayList<ClassDetailPhotoDao> = arrayListOf()
+    var classId: String? = null
+    val db = FirebaseFirestore.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -26,28 +25,37 @@ class SchoolPhotoNewActivity : AppCompatActivity() {
 
         initToolbar()
 
-        // Text watcher
-        etSchoolPhotoNewEventName.addTextChangedListener(textWatcher)
+        /**
+         * Get intent from SchoolPhotoActivity
+         */
+        classId = intent?.extras?.getString("classId")
+
+        /**
+         * Text watcher
+         */
+        etSchoolPhotoNewTitle.addTextChangedListener(textWatcher)
         etSchoolPhotoNewLink.addTextChangedListener(textWatcher)
 
-        // Save
+        /**
+         * Save button
+         */
         btnSchoolPhotoNewDone.setOnClickListener {
-            val type = if (DataDummy.photoData.size % 2 == 0) {
-                0
-            } else {
-                1
-            }
-
-            var title = etSchoolPhotoNewEventName.text.toString()
-            var content = etSchoolPhotoNewLink.text.toString()
-
-            DataDummy.photoData.add(ClassDetailPhotoDao(title, content, type))
+            var title = etSchoolPhotoNewTitle.text.toString()
+            var link = etSchoolPhotoNewLink.text.toString()
+            val data = hashMapOf(
+                "title" to title,
+                "link" to link
+            )
 
             loading.visibility = View.VISIBLE
-            Handler().postDelayed({
+            db.collection("classes").document(classId!!).collection("photos").add(data).addOnSuccessListener {
+                Log.d("TAG", "Photo uploaded successfully")
                 loading.visibility = View.GONE
                 finish()
-            }, 1000)
+            }.addOnFailureListener {
+                Log.d("TAG", "Photo failed to be uploaded")
+            }
+
         }
     }
 
@@ -69,7 +77,7 @@ class SchoolPhotoNewActivity : AppCompatActivity() {
         }
 
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            if (etSchoolPhotoNewEventName.text.toString()
+            if (etSchoolPhotoNewTitle.text.toString()
                     .isNotEmpty() && etSchoolPhotoNewLink.text.toString()
                     .isNotEmpty()
             ) {

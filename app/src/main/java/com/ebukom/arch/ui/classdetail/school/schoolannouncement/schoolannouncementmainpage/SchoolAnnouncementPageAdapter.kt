@@ -1,4 +1,4 @@
-package com.ebukom.arch.ui.classdetail.school.schoolannouncement
+package com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementmainpage
 
 
 import android.content.Context

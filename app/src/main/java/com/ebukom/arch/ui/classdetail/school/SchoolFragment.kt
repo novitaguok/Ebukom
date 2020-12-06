@@ -9,14 +9,13 @@ import android.view.View
 import android.view.ViewGroup
 import com.ebukom.R
 import com.ebukom.arch.ui.classdetail.OnMoreCallback
-import com.ebukom.arch.ui.classdetail.school.schoolannouncement.SchoolAnnouncementActivity
+import com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementmainpage.SchoolAnnouncementActivity
 import com.ebukom.arch.ui.classdetail.school.schoolphoto.SchoolPhotoActivity
 import com.ebukom.arch.ui.classdetail.school.schoolschedule.SchoolScheduleActivity
 import kotlinx.android.synthetic.main.fragment_school.view.*
 import java.lang.ClassCastException
 
 class SchoolFragment : Fragment() {
-
     lateinit var callback: OnMoreCallback
     var classId: String? = null
 
@@ -37,10 +36,18 @@ class SchoolFragment : Fragment() {
             }
         }
         view.cvSchoolInfoSchedule.setOnClickListener {
-            startActivity(Intent(context, SchoolScheduleActivity::class.java))
+            if (classId != null) {
+                val intent = Intent(context, SchoolScheduleActivity::class.java)
+                intent.putExtra("classId", classId)
+                startActivity(intent)
+            }
         }
         view.cvSchoolInfoPhoto.setOnClickListener {
-            startActivity(Intent(context, SchoolPhotoActivity::class.java))
+            if (classId != null) {
+                val intent = Intent(context, SchoolPhotoActivity::class.java)
+                intent.putExtra("classId", classId)
+                startActivity(intent)
+            }
         }
 
         return view

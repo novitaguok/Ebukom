@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ebukom.R
 import com.ebukom.arch.dao.*
-import com.ebukom.arch.ui.admin.adminschoolfeeinfo.adminshareschoolfeeinfo.AdminShareSchoolFeeInfoActivity
 import kotlinx.android.synthetic.main.item_admin_payment_detail_color.view.*
 import kotlinx.android.synthetic.main.item_admin_payment_detail_white.view.*
 
@@ -33,10 +32,10 @@ class AdminShareSchoolFeeInfoAdapter(
                 View.GONE
             }
             itemView.ivItemAdminPaymentDetailDelete.setOnClickListener {
-                (context as AdminShareSchoolFeeInfoActivity).deleteItem(dataModel, adapterPosition)
+//                (context as AdminShareSchoolFeeInfoActivity).deleteItem(dataModel, adapterPosition)
             }
             itemView.trItemAdminPaymentDetail.setOnClickListener {
-                (context as AdminShareSchoolFeeInfoActivity).editItem(dataModel, adapterPosition)
+//                (context as AdminShareSchoolFeeInfoActivity).editItem(dataModel, adapterPosition)
             }
         }
     }
@@ -55,10 +54,10 @@ class AdminShareSchoolFeeInfoAdapter(
                 View.GONE
             }
             itemView.ivItemAdminPaymentDetailWhiteDelete.setOnClickListener {
-                (context as AdminShareSchoolFeeInfoActivity).deleteItem(dataModel, adapterPosition)
+//                (context as AdminShareSchoolFeeInfoActivity).deleteItem(dataModel, adapterPosition)
             }
             itemView.trItemAdminPaymentDetailWhite.setOnClickListener {
-                (context as AdminShareSchoolFeeInfoActivity).editItem(dataModel, adapterPosition)
+//                (context as AdminShareSchoolFeeInfoActivity).editItem(dataModel, adapterPosition)
             }
         }
 

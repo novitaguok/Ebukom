@@ -59,9 +59,9 @@
         android:id="@+id/ivSchoolScheduleEmpty"
         android:layout_width="@dimen/size_100"
         android:layout_height="@dimen/size_100"
-        android:layout_marginTop="@dimen/size_72"
+        android:layout_marginTop="@dimen/size_126"
         android:layout_below="@+id/btnSchoolScheduleNew"
-        android:src="@drawable/ic_school_gray"
+        android:src="@drawable/ic_calendar_gray"
         android:layout_centerHorizontal="true"
         android:visibility="gone"/>
 
@@ -71,17 +71,255 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/size_8"
         android:lineHeight="@dimen/text_24"
-        android:text="Pencarian tidak ditemukan"
+        android:text="Belum ada jadwal yang dibagikan"
         android:textColor="#E0E0E0"
         android:textSize="@dimen/text_14"
         android:layout_centerHorizontal="true"
         android:layout_below="@+id/ivSchoolScheduleEmpty"
         android:visibility="gone"/>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvSchoolSchedule"
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvSchoolScheduleSubject"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/btnSchoolScheduleNew" />
+        android:layout_marginHorizontal="@dimen/size_10"
+        android:layout_below="@+id/btnSchoolScheduleNew"
+        app:cardCornerRadius="@dimen/size_8"
+        app:cardUseCompatPadding="true"
+        android:layout_marginTop="6dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clSchoolScheduleSubject"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/ivSchoolScheduleSubject"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                android:src="@drawable/bg_schedule_purple"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/ibSchoolcheduleSubject"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_more_vertical"
+                android:background="@android:color/transparent"
+                android:layout_marginTop="@dimen/size_12"
+                android:layout_marginRight="@dimen/size_8"
+                app:layout_constraintTop_toTopOf="@+id/ivSchoolScheduleSubject"
+                app:layout_constraintRight_toRightOf="@+id/ivSchoolScheduleSubject"/>
+
+            <TextView
+                android:id="@+id/tvSchoolScheduleSubjectType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_24"
+                android:lineHeight="@dimen/size_20"
+                android:text="Jadwal"
+                android:textColor="#5A4569"
+                android:textFontWeight="500"
+                android:textSize="@dimen/text_16"
+                android:firstBaselineToTopHeight="@dimen/size_18"
+                app:layout_constraintBottom_toTopOf="@+id/tvSchoolScheduleSubject"
+                app:layout_constraintLeft_toLeftOf="@+id/tvSchoolScheduleSubject" />
+
+            <TextView
+                android:id="@+id/tvSchoolScheduleSubject"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_20"
+                android:text="Pelajaran"
+                android:textColor="#E4EEF9"
+                android:textSize="@dimen/text_28"
+                android:lineHeight="@dimen/size_32"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/ivSchoolScheduleSubject"
+                app:layout_constraintLeft_toLeftOf="@+id/ivSchoolScheduleSubject"
+                app:layout_constraintTop_toTopOf="@id/ivSchoolScheduleSubject" />
+
+            <TextView
+                android:id="@+id/tvSchoolScheduleSubjectOpen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_4"
+                android:layout_marginBottom="@dimen/size_24"
+                android:lineHeight="@dimen/size_16"
+                android:text="Lihat Jadwal"
+                android:textColor="#5A4569"
+                android:textFontWeight="500"
+                android:textSize="@dimen/text_14"
+                app:layout_constraintLeft_toLeftOf="@+id/tvSchoolScheduleSubject"
+                app:layout_constraintTop_toBottomOf="@+id/tvSchoolScheduleSubject" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvSchoolScheduleEskul"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size_10"
+        android:layout_below="@+id/cvSchoolScheduleSubject"
+        app:cardCornerRadius="@dimen/size_8"
+        app:cardUseCompatPadding="true"
+        android:layout_marginTop="6dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clSchoolScheduleEskul"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/ivSchoolScheduleEskul"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                android:src="@drawable/bg_schedule_red"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/ibSchoolcheduleEskul"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_more_vertical"
+                android:background="@android:color/transparent"
+                android:layout_marginTop="@dimen/size_12"
+                android:layout_marginRight="@dimen/size_8"
+                app:layout_constraintTop_toTopOf="@+id/ivSchoolScheduleEskul"
+                app:layout_constraintRight_toRightOf="@+id/ivSchoolScheduleEskul"/>
+
+            <TextView
+                android:id="@+id/tvSchoolScheduleEskulType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_24"
+                android:lineHeight="@dimen/size_20"
+                android:text="Jadwal"
+                android:textColor="#5A4569"
+                android:textFontWeight="500"
+                android:textSize="@dimen/text_16"
+                android:firstBaselineToTopHeight="@dimen/size_18"
+                app:layout_constraintBottom_toTopOf="@+id/tvSchoolScheduleEskul"
+                app:layout_constraintLeft_toLeftOf="@+id/tvSchoolScheduleEskul" />
+
+            <TextView
+                android:id="@+id/tvSchoolScheduleEskul"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_20"
+                android:text="Eskul"
+                android:textColor="#E4EEF9"
+                android:textSize="@dimen/text_28"
+                android:lineHeight="@dimen/size_32"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/ivSchoolScheduleEskul"
+                app:layout_constraintLeft_toLeftOf="@+id/ivSchoolScheduleEskul"
+                app:layout_constraintTop_toTopOf="@id/ivSchoolScheduleEskul" />
+
+            <TextView
+                android:id="@+id/tvSchoolScheduleEskulOpen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_4"
+                android:layout_marginBottom="@dimen/size_24"
+                android:lineHeight="@dimen/size_16"
+                android:text="Lihat Jadwal"
+                android:textColor="#5A4569"
+                android:textFontWeight="500"
+                android:textSize="@dimen/text_14"
+                app:layout_constraintLeft_toLeftOf="@+id/tvSchoolScheduleEskul"
+                app:layout_constraintTop_toBottomOf="@+id/tvSchoolScheduleEskul" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvSchoolScheduleAcademic"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size_10"
+        android:layout_below="@+id/cvSchoolScheduleEskul"
+        app:cardCornerRadius="@dimen/size_8"
+        app:cardUseCompatPadding="true"
+        android:layout_marginTop="6dp">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clSchoolScheduleAcademic"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/ivSchoolScheduleAcademic"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                android:src="@drawable/bg_schedule_yellow"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageButton
+                android:id="@+id/ibSchoolcheduleAcademic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/ic_more_vertical"
+                android:background="@android:color/transparent"
+                android:layout_marginTop="@dimen/size_12"
+                android:layout_marginRight="@dimen/size_8"
+                app:layout_constraintTop_toTopOf="@+id/ivSchoolScheduleAcademic"
+                app:layout_constraintRight_toRightOf="@+id/ivSchoolScheduleAcademic"/>
+
+            <TextView
+                android:id="@+id/tvSchoolScheduleAcademicType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_24"
+                android:lineHeight="@dimen/size_20"
+                android:text="Kalender"
+                android:textColor="#5A4569"
+                android:textFontWeight="500"
+                android:textSize="@dimen/text_16"
+                android:firstBaselineToTopHeight="@dimen/size_18"
+                app:layout_constraintBottom_toTopOf="@+id/tvSchoolScheduleAcademic"
+                app:layout_constraintLeft_toLeftOf="@+id/tvSchoolScheduleAcademic" />
+
+            <TextView
+                android:id="@+id/tvSchoolScheduleAcademic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_20"
+                android:text="Akademik"
+                android:textColor="#E4EEF9"
+                android:textSize="@dimen/text_28"
+                android:lineHeight="@dimen/size_32"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/ivSchoolScheduleAcademic"
+                app:layout_constraintLeft_toLeftOf="@+id/ivSchoolScheduleAcademic"
+                app:layout_constraintTop_toTopOf="@id/ivSchoolScheduleAcademic" />
+
+            <TextView
+                android:id="@+id/tvSchoolScheduleAcademicOpen"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_4"
+                android:layout_marginBottom="@dimen/size_24"
+                android:lineHeight="@dimen/size_16"
+                android:text="Lihat Kalender"
+                android:textColor="#5A4569"
+                android:textFontWeight="500"
+                android:textSize="@dimen/text_14"
+                app:layout_constraintLeft_toLeftOf="@+id/tvSchoolScheduleAcademic"
+                app:layout_constraintTop_toBottomOf="@+id/tvSchoolScheduleAcademic" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+
+<!--    <androidx.recyclerview.widget.RecyclerView-->
+<!--        android:id="@+id/rvSchoolSchedule"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_below="@+id/btnSchoolScheduleNew" />-->
 
 </RelativeLayout>

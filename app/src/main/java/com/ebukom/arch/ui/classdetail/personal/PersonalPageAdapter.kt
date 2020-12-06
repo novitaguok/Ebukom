@@ -6,7 +6,6 @@ import androidx.fragment.app.FragmentPagerAdapter
 import com.ebukom.arch.ui.classdetail.personal.personalacceptednote.PersonalAcceptedNoteFragment
 import com.ebukom.arch.ui.classdetail.personal.personalsentnote.PersonalSentNoteFragment
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.SchoolAnnouncementFragment
-import com.ebukom.arch.ui.classdetail.school.schoolphoto.SchoolPhotoFragment
 import com.ebukom.arch.ui.classdetail.school.schoolschedule.SchoolScheduleFragment
 
 class PersonalPageAdapter(fm: FragmentManager) : FragmentPagerAdapter(fm) {

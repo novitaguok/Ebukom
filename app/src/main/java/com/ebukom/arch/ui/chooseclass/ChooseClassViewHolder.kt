@@ -12,11 +12,9 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.item_class.view.*
 
 class ChooseClassViewHolder(var view: View, var context: Context) : RecyclerView.ViewHolder(view) {
-
     val db = FirebaseFirestore.getInstance()
 
     fun onBind(item: ChooseClassDao) {
-
         view.tvItemClassGrade.text = item?.classNumber
         view.tvItemClassGrade.setTextColor(item.colorTheme!!)
         view.tvItemClassName.text = item?.className

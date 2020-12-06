@@ -15,8 +15,6 @@ import com.ebukom.arch.dao.AdminPaymentItemDao
 import com.ebukom.arch.dao.AdminPaymentItemFormDao
 import com.ebukom.arch.dao.AdminSchoolFeeInfoSentDao
 import com.ebukom.arch.ui.admin.adminschoolfeeinfo.AdminShareSchoolFeeInfoAdapter
-import com.ebukom.arch.ui.admin.adminschoolfeeinfo.adminshareschoolfeeinfo.AdminShareSchoolFeeInfoActivity
-import com.ebukom.arch.ui.admin.adminschoolfeeinfo.schoolfeeinfosent.AdminSchoolFeeInfoSentAdapter
 import com.ebukom.arch.ui.admin.adminschoolfeeinfo.schoolfeeinfosent.ParentSchoolFeeInfoAdapter
 import com.ebukom.data.DataDummy
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -126,7 +124,7 @@ class PersonalParentSchoolFeeInfoActivity : AppCompatActivity() {
                 view.tvEditComment.text = "Edit Biaya Pendidikan"
                 view.tvEditComment.setOnClickListener {
                     bottomSheetDialog.dismiss()
-                    val intent = Intent(this, AdminShareSchoolFeeInfoActivity::class.java)
+//                    val intent = Intent(this, AdminShareSchoolFeeInfoActivity::class.java)
                     intent.putExtra("layout", "edit")
                     intent.putExtra("pos", pos)
                     intent.putExtra("data", data)

@@ -36,7 +36,6 @@ class SchoolAnnouncementNewNextActivity : AppCompatActivity(),
     lateinit var sharePref: SharedPreferences
     val db = FirebaseFirestore.getInstance()
     var classId: String? = ""
-    var attachmentId: String? = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
