@@ -11,22 +11,25 @@ import kotlinx.android.synthetic.main.activity_notification.*
 
 class NotificationActivity : AppCompatActivity() {
 
+    private val mNotificationList = ArrayList<ClassDetailAnnouncementCommentDao>()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_notification)
 
         initToolbar()
 
-        val list = ArrayList<ClassDetailAnnouncementCommentDao>()
-        list.add(ClassDetailAnnouncementCommentDao("Eni Trikuswanti", "Menambahkan catatan pribadi untuk Anda, silakan cek ya.", R.drawable.ic_notification))
-        list.add(ClassDetailAnnouncementCommentDao("Nisa Nisa", "Informasi biaya pendidikan Anda sudah dibagikan, silakan dicek.", R.drawable.ic_notification))
-        list.add(ClassDetailAnnouncementCommentDao("Cek Informasi Sekolah Ya", "Hari ini Anda belum cek info sekolah, silakan dicek ya.", R.drawable.ic_notification))
+        mNotificationList.add(ClassDetailAnnouncementCommentDao("Eni Trikuswanti", "Menambahkan catatan pribadi untuk Anda, silakan cek ya.", R.drawable.ic_notification))
+        mNotificationList.add(ClassDetailAnnouncementCommentDao("Nisa Nisa", "Informasi biaya pendidikan Anda sudah dibagikan, silakan dicek.", R.drawable.ic_notification))
+        mNotificationList.add(ClassDetailAnnouncementCommentDao("Cek Informasi Sekolah Ya", "Hari ini Anda belum cek info sekolah, silakan dicek ya.", R.drawable.ic_notification))
 
-        val adapter = NotificationAdapter(list)
+        toolbarNotificationClear.setOnClickListener {  }
+
+        val adapter = NotificationAdapter(mNotificationList)
         rvNotification.layoutManager = LinearLayoutManager(this)
         rvNotification.adapter = adapter
 
-        if (list.isNotEmpty()) {
+        if (mNotificationList.isNotEmpty()) {
             tvNotificationEmpty.visibility = View.INVISIBLE
             ivNotificationEmpty.visibility = View.INVISIBLE
         }

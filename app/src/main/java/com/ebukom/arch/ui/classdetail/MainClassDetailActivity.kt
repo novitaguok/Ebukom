@@ -13,16 +13,13 @@ import androidx.fragment.app.Fragment
 import com.ebukom.R
 import com.ebukom.arch.dao.*
 import com.ebukom.arch.ui.classdetail.material.MaterialFragment
-import com.ebukom.arch.ui.classdetail.material.materialeducation.MaterialEducationFragment
 import com.ebukom.arch.ui.classdetail.material.materialeducation.materialeducationedit.MaterialEducationEditActivity
 import com.ebukom.arch.ui.classdetail.member.MemberFragment
 import com.ebukom.arch.ui.classdetail.notification.NotificationActivity
 import com.ebukom.arch.ui.classdetail.personal.PersonalFragment
-import com.ebukom.arch.ui.classdetail.personal.personalacceptednote.PersonalAcceptedNoteFragment
 import com.ebukom.arch.ui.classdetail.personal.personalnoteedit.PersonalNoteEditActivity
 import com.ebukom.arch.ui.classdetail.personal.personalnotenew.PersonalNoteAdapter
 import com.ebukom.arch.ui.classdetail.personal.personalparent.PersonalParentFragment
-import com.ebukom.arch.ui.classdetail.personal.personalsentnote.PersonalSentNoteFragment
 import com.ebukom.arch.ui.classdetail.school.SchoolFragment
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.SchoolAnnouncementAdapter
 //import com.ebukom.arch.ui.classdetail.school.schoolannouncement.SchoolAnnouncementAdapter
@@ -44,6 +41,7 @@ class MainClassDetailActivity : AppCompatActivity(), OnMoreCallback {
     companion object {
         var isAnnouncement = true
         var isMaterial = true
+        var CLASS_ID = ""
     }
 
     private val mAnnouncementList: ArrayList<ClassDetailAnnouncementDao> =
@@ -84,10 +82,14 @@ class MainClassDetailActivity : AppCompatActivity(), OnMoreCallback {
 
         classId = intent?.extras?.getString("classId")
         if (classId != null) {
+
+            CLASS_ID = classId!!
+
             val bundle = Bundle().apply {
                 putString("classId", classId)
             }
             schoolFragment.arguments = bundle
+            materialFragment.arguments = bundle
         }
 
         makeCurrentFragment(schoolFragment)

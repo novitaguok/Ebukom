@@ -5,8 +5,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ebukom.R
 import com.ebukom.arch.dao.ChooseClassDao
+import com.ebukom.arch.dao.ClassDetailMaterialSubjectDao
 
-class MaterialSubjectAdapter(private val classes: List<ChooseClassDao>) : RecyclerView.Adapter<MaterialSubjectViewHolder>() {
+class MaterialSubjectAdapter(private val classes: List<ClassDetailMaterialSubjectDao>) : RecyclerView.Adapter<MaterialSubjectViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MaterialSubjectViewHolder {
         return MaterialSubjectViewHolder(LayoutInflater.from(parent.context).inflate(R.layout.item_subject, parent, false), parent.context)
     }

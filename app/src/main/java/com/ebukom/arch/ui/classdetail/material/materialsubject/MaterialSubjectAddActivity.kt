@@ -30,10 +30,10 @@ class MaterialSubjectAddActivity : AppCompatActivity() {
 
         material = intent.extras?.getString("material", "0")?: "0"
 
-        mAttachmentList.add(ClassDetailAttachmentDao("test", 1))
-        mAttachmentList.add(ClassDetailAttachmentDao("test", 2))
-        mAttachmentList.add(ClassDetailAttachmentDao("test", 3))
-        mAttachmentList.add(ClassDetailAttachmentDao("test", 4))
+//        mAttachmentList.add(ClassDetailAttachmentDao("test", 1))
+//        mAttachmentList.add(ClassDetailAttachmentDao("test", 2))
+//        mAttachmentList.add(ClassDetailAttachmentDao("test", 3))
+//        mAttachmentList.add(ClassDetailAttachmentDao("test", 4))
 
         checkAttachmentEmpty()
 

@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginHorizontal="@dimen/size_8"
-
+    android:layout_marginTop="6dp"
     app:cardCornerRadius="@dimen/size_8"
     app:cardUseCompatPadding="true">
 

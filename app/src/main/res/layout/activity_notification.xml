@@ -28,6 +28,18 @@
                 android:textColor="@color/colorSuperDarkBlue"
                 android:textSize="@dimen/text_16"
                 android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/toolbarNotificationClear"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/size_20"
+                android:layout_gravity="right"
+                android:text="Bersihkan"
+                android:textColor="@color/colorRed"
+                android:textSize="@dimen/text_12"
+                android:textFontWeight="500"
+                android:clickable="true"/>
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -39,7 +51,8 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:id="@+id/clNotification"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:background="@color/colorWhite">
 
             <ImageView
                 android:id="@+id/ivNotificationEmpty"

@@ -49,6 +49,7 @@ class SplashActivity : AppCompatActivity() {
          * Generating classes database (uncomment for the first time)
          */
 //        Databases().initClassesData()
+//        Databases().initSubjectMaterialsData()
     }
 
 }

@@ -11,11 +11,9 @@ import com.ebukom.R
 import com.ebukom.arch.dao.ClassDetailPersonalNoteDao
 import com.ebukom.arch.ui.classdetail.OnMoreCallback
 import com.ebukom.arch.ui.classdetail.personal.personalnotenew.PersonalNoteAdapter
-import com.ebukom.arch.ui.classdetail.school.schoolannouncement.SchoolAnnouncementAdapter
 import com.ebukom.data.DataDummy
 import kotlinx.android.synthetic.main.fragment_personal_sent_note.*
 import kotlinx.android.synthetic.main.fragment_personal_sent_note.view.*
-import kotlinx.android.synthetic.main.fragment_school_announcement.*
 
 class PersonalSentNoteFragment : Fragment() {
     private val mNoteList: ArrayList<ClassDetailPersonalNoteDao> = arrayListOf()
@@ -30,7 +28,9 @@ class PersonalSentNoteFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        // Note List
+        /**
+         * Note list
+         */
         mNoteAdapter = PersonalNoteAdapter(mNoteList, 1, callback, PersonalSentNoteFragment())
         rvPersonalSentNote.apply {
             layoutManager =
@@ -41,13 +41,16 @@ class PersonalSentNoteFragment : Fragment() {
                 )
             adapter = mNoteAdapter
         }
-//        mNoteList.addAll(DataDummy.noteSentData)
-//        mNoteAdapter.notifyDataSetChanged()
 
-        checkNoteEmpty(view)
+
+
+        checkEmpty(view)
     }
 
-    private fun checkNoteEmpty(view: View) {
+    private fun checkEmpty(view: View) {
+        /**
+         * Check if sent note is empty
+         */
         if (mNoteList.isNotEmpty()) {
             view.ivPersonalEmpty.visibility = View.GONE
             view.tvPersonalEmpty.visibility = View.GONE
@@ -68,16 +71,5 @@ class PersonalSentNoteFragment : Fragment() {
                         + " must implement MyInterface "
             );
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        // Announcement List
-        mNoteList.clear()
-        mNoteList.addAll(DataDummy.noteSentData)
-        mNoteAdapter.notifyDataSetChanged()
-
-        checkNoteEmpty(view!!)
     }
 }

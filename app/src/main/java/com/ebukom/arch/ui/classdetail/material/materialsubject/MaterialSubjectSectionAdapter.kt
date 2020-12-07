@@ -6,24 +6,29 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ebukom.R
-import com.ebukom.arch.dao.ClassDetailTemplateTextDao
+import com.ebukom.arch.dao.ClassDetailMaterialSubjectSectionDao
 import kotlinx.android.synthetic.main.item_subject.view.*
+import kotlinx.android.synthetic.main.item_subject_material.view.*
 
-class MaterialSubjectNewAdapter(val list: ArrayList<ClassDetailTemplateTextDao>, var context: Context) :
-    RecyclerView.Adapter<MaterialSubjectNewAdapter.ViewHolder>() {
+class MaterialSubjectSectionAdapter(
+    val sectionList: ArrayList<ClassDetailMaterialSubjectSectionDao>,
+    var context: Context
+) :
+    RecyclerView.Adapter<MaterialSubjectSectionAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
-            LayoutInflater.from(parent.context).inflate(R.layout.item_subject_material, parent, false)
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.item_subject_material, parent, false)
         )
     }
 
     override fun getItemCount(): Int {
-        return list?.size
+        return sectionList.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-//        holder.view.tvItemSubject.text = list?.get(position)?.title
+        holder.view.tvItemSubjectMaterial.text = sectionList.get(position).sectionName
 //        holder.view.ibItemSubjectMaterial.setOnClickListener {
 //            (context as MaterialSubjectNewActivity).popUpMenu(list?.get(position), position)
 //        }

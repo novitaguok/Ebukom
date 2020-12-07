@@ -10,25 +10,36 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ebukom.R
+import com.ebukom.arch.dao.ClassDetailMaterialSubjectSectionDao
 import com.ebukom.arch.dao.ClassDetailTemplateTextDao
-import com.ebukom.data.DataDummy
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_material_subject_new.*
 import kotlinx.android.synthetic.main.activity_material_subject_new.toolbar
-import kotlinx.android.synthetic.main.activity_material_subject_new.tvToolbarTitle
 import kotlinx.android.synthetic.main.bottom_sheet_school_announcement.view.*
+import timber.log.Timber
 
 class MaterialSubjectNewActivity : AppCompatActivity() {
 
-    private val mMaterialList: ArrayList<ClassDetailTemplateTextDao> = arrayListOf()
-    private val mMaterialAdapter = MaterialSubjectNewAdapter(mMaterialList, this)
-    lateinit var material : String
+    private val mMaterialList: ArrayList<ClassDetailMaterialSubjectSectionDao> = arrayListOf()
+    lateinit var mMaterialAdapter: MaterialSubjectSectionAdapter
+    lateinit var material: String
+    var classId: String? = null
+    var subjectId: String? = null
+    val db = FirebaseFirestore.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_material_subject_new)
 
         initToolbar()
+
+        /**
+         * Get intent from MainClassDetailActivity
+         */
+        classId = intent?.extras?.getString("classId")
+        subjectId = intent?.extras?.getString("subjectId")
+        checkEmpty()
 
         val sharePref: SharedPreferences = this.getSharedPreferences("EBUKOM", Context.MODE_PRIVATE)
         if (sharePref.getInt("level", 0) == 1) {
@@ -40,68 +51,54 @@ class MaterialSubjectNewActivity : AppCompatActivity() {
             startActivity(intent)
         }
 
-//        material  = intent.extras?.getString("material", "0")?: "0"
-//        // Get intent from MaterialSubjectFragment
-//        when (material) {
-//            "0" -> {
-//                val intent = Intent(this, MaterialSubjectRecapActivity::class.java)
-//                tvToolbarTitle.text = "Matematika"
-//                btnMaterialSubject.text = "Tambah Materi Matematika"
-//
-//                // Material
-//                mMaterialList.addAll(DataDummy.mathMaterial)
-//                mMaterialAdapter.notifyDataSetChanged()
-//
-//                // Intent
-//                btnMaterialSubject.setOnClickListener {
-//                    intent.putExtra("material", "0")
-//                    startActivity(intent)
-//                }
-//            }
-//            "1" -> {
-//                val intent = Intent(this, MaterialSubjectRecapActivity::class.java)
-//                tvToolbarTitle.text = "Ilmu Pengetahuan Alam"
-//                btnMaterialSubject.text = "Tambah Materi IPA"
-//
-//                // Material
-//                mMaterialList.addAll(DataDummy.scienceMaterial)
-//                mMaterialAdapter.notifyDataSetChanged()
-//
-//                // Intent
-//                btnMaterialSubject.setOnClickListener {
-//                    intent.putExtra("material", "1")
-//                    startActivity(intent)
-//                }
-//            }
-//            "2" -> {
-//                val intent = Intent(this, MaterialSubjectRecapActivity::class.java)
-//                tvToolbarTitle.text = "Bahasa Inggris"
-//                btnMaterialSubject.text = "Tambah Materi Bahasa Inggris"
-//
-//                // Material
-//                mMaterialList.addAll(DataDummy.englishMaterial)
-//                mMaterialAdapter.notifyDataSetChanged()
-//
-//                // Intent
-//                btnMaterialSubject.setOnClickListener {
-//                    intent.putExtra("material", "2")
-//                    startActivity(intent)
-//                }
-//            }
-//        }
+        if (classId != null && subjectId != null) {
+            db.collection("material_subjects").document(subjectId!!).collection("subject_section")
+                .whereArrayContains("class_ids", classId!!)
+                .addSnapshotListener { value, error ->
+                    if (error != null) {
+                        Timber.e(error)
+                        return@addSnapshotListener
+                    }
 
-        rvMaterialSubject.apply {
-            layoutManager = LinearLayoutManager(
-                this@MaterialSubjectNewActivity,
-                LinearLayoutManager.VERTICAL,
-                false
-            )
-            adapter = mMaterialAdapter
+                    initRecycler()
+
+                    for (document in value!!.documents) {
+                        mMaterialList.add(
+                            ClassDetailMaterialSubjectSectionDao(
+                                document["name"] as String,
+                                document["file"] as String,
+                                document["video"] as String,
+                                document["link"] as String,
+                                document.id,
+                                subjectId!!
+                            )
+                        )
+                    }
+
+                    checkEmpty()
+                }
         }
-        checkMaterialEmpty()
     }
 
-    private fun checkMaterialEmpty() {
+    private fun initRecycler() {
+        /**
+         * Section list
+         */
+        mMaterialList.clear()
+        mMaterialAdapter = MaterialSubjectSectionAdapter(mMaterialList, this)
+        rvMaterialSubject.apply {
+            layoutManager =
+                LinearLayoutManager(
+                    this.context,
+                    LinearLayoutManager.VERTICAL,
+                    false
+                )
+            adapter = mMaterialAdapter
+        }
+        mMaterialAdapter.notifyDataSetChanged()
+    }
+
+    private fun checkEmpty() {
         if (mMaterialList.isNotEmpty()) {
             ivMaterialSubjectEmpty.visibility = View.INVISIBLE
             tvMaterialSubjectEmpty.visibility = View.INVISIBLE
@@ -127,7 +124,7 @@ class MaterialSubjectNewActivity : AppCompatActivity() {
 
             val intent = Intent(this, MaterialSubjectRecapActivity::class.java)
             intent.putExtra("page", "edit")
-            intent.putExtra("material",material)
+            intent.putExtra("material", material)
             intent.putExtra("data", item)
             intent.putExtra("pos", pos)
             startActivity(intent)
@@ -146,26 +143,26 @@ class MaterialSubjectNewActivity : AppCompatActivity() {
             }
             builder.setPositiveButton("HAPUS") { dialog, _ ->
                 dialog.dismiss()
-                when (intent.extras?.getString("material", "0")) {
-                    "0" -> {
-                        DataDummy.mathMaterial.remove(item)
-                        mMaterialList.remove(item)
-                        mMaterialAdapter.notifyDataSetChanged()
-                        checkMaterialEmpty()
-                    }
-                    "1" -> {
-                        DataDummy.scienceMaterial.remove(item)
-                        mMaterialList.remove(item)
-                        mMaterialAdapter.notifyDataSetChanged()
-                        checkMaterialEmpty()
-                    }
-                    "2" -> {
-                        DataDummy.englishMaterial.remove(item)
-                        mMaterialList.remove(item)
-                        mMaterialAdapter.notifyDataSetChanged()
-                        checkMaterialEmpty()
-                    }
-                }
+//                when (intent.extras?.getString("material", "0")) {
+//                    "0" -> {
+//                        DataDummy.mathMaterial.remove(item)
+//                        mMaterialList.remove(item)
+//                        mMaterialAdapter.notifyDataSetChanged()
+//                        checkEmpty()
+//                    }
+//                    "1" -> {
+//                        DataDummy.scienceMaterial.remove(item)
+//                        mMaterialList.remove(item)
+//                        mMaterialAdapter.notifyDataSetChanged()
+//                        checkEmpty()
+//                    }
+//                    "2" -> {
+//                        DataDummy.englishMaterial.remove(item)
+//                        mMaterialList.remove(item)
+//                        mMaterialAdapter.notifyDataSetChanged()
+//                        checkEmpty()
+//                    }
+//                }
             }
 
             val dialog: AlertDialog = builder.create()
@@ -202,29 +199,6 @@ class MaterialSubjectNewActivity : AppCompatActivity() {
         supportActionBar?.title = ""
         toolbar.setNavigationOnClickListener {
             onBackPressed()
-        }
-    }
-
-    override fun onResume() {
-        super.onResume()
-
-        checkMaterialEmpty()
-        when (intent.extras?.getString("material", "0")) {
-            "0" -> {
-                mMaterialList.clear()
-                mMaterialList.addAll(DataDummy.mathMaterial)
-                mMaterialAdapter.notifyDataSetChanged()
-            }
-            "1" -> {
-                mMaterialList.clear()
-                mMaterialList.addAll(DataDummy.scienceMaterial)
-                mMaterialAdapter.notifyDataSetChanged()
-            }
-            "2" -> {
-                mMaterialList.clear()
-                mMaterialList.addAll(DataDummy.englishMaterial)
-                mMaterialAdapter.notifyDataSetChanged()
-            }
         }
     }
 }
