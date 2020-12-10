@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorWhite"
-    tools:context=".arch.ui.classdetail.material.materialsubject.MaterialSubjectRecapActivity">
+    tools:context=".arch.ui.classdetail.material.materialsubject.materialsubjectadd.MaterialSubjectRecapActivity">
 
     <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -43,31 +43,20 @@
             android:layout_height="match_parent"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tilMaterialSubjectRecapDate"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            <Button
+                android:id="@+id/btnMaterialSubjectRecapDate"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/size_52"
+                app:layout_constraintTop_toTopOf="parent"
                 android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-                android:layout_marginTop="@dimen/size_36"
-                android:hint="Tanggal Pembelajaran Online"
-                android:theme="@style/LoginTextInputLayoutLabel"
-                app:boxCornerRadiusBottomEnd="@dimen/size_8"
-                app:boxCornerRadiusBottomStart="@dimen/size_8"
-                app:boxCornerRadiusTopEnd="@dimen/size_8"
-                app:boxCornerRadiusTopStart="@dimen/size_8"
-                app:boxStrokeColor="@color/colorBlack"
-                app:boxStrokeWidth="@dimen/size_1"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etMaterialSubjectAddTitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableRight="@drawable/ic_calendar_24"
-                    android:background="@drawable/edit_text_rectangle_selector"
-                    android:padding="@dimen/size_16" />
-            </com.google.android.material.textfield.TextInputLayout>
+                android:layout_marginTop="@dimen/size_20"
+                android:background="@drawable/edit_text_rectangle_selector"
+                android:drawableRight="@drawable/ic_calendar_24"
+                android:hint="Tanggal"
+                android:textAllCaps="false"
+                android:textAlignment="textStart"
+                android:paddingHorizontal="@dimen/size_16"
+                android:textSize="@dimen/text_16" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilMaterialSubjectRecapLink"
@@ -84,7 +73,7 @@
                 app:boxCornerRadiusTopStart="@dimen/size_8"
                 app:boxStrokeColor="@color/colorBlack"
                 app:boxStrokeWidth="@dimen/size_1"
-                app:layout_constraintTop_toBottomOf="@+id/tilMaterialSubjectRecapDate">
+                app:layout_constraintTop_toBottomOf="@+id/btnMaterialSubjectRecapDate">
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etMaterialSubjectRecapLink"
@@ -106,47 +95,6 @@
                 android:textSize="@dimen/text_14"
                 android:textFontWeight="500"
                 android:textColor="@color/colorSuperDarkBlue"/>
-
-            <Button
-                android:id="@+id/btnMaterialSubjectChooseFile"
-                android:layout_width="175dp"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/size_16"
-                android:layout_marginTop="@dimen/size_32"
-                android:background="@drawable/btn_blue_rectangle_8dp"
-                android:lineHeight="@dimen/text_16"
-                android:text="PILIH FILE MATERI"
-                android:textColor="@color/colorWhite"
-                android:textFontWeight="500"
-                android:textSize="@dimen/text_14"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tilMaterialSubjectRecapDate"
-                android:visibility="gone"/>
-
-            <TextView
-                android:id="@+id/tvMaterialSubjectFilePath"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="@dimen/size_16"
-                android:layout_marginTop="@dimen/size_14"
-                android:lineHeight="@dimen/size_16"
-                android:text="MateriMatematika.pdf"
-                android:textColor="#212121"
-                android:textSize="@dimen/text_12"
-                app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/btnMaterialSubjectChooseFile"
-                android:visibility="gone"/>
-
-            <ImageView
-                android:id="@+id/ivMaterialSubjectDelete"
-                android:layout_width="@dimen/size_24"
-                android:layout_height="@dimen/size_24"
-                android:layout_marginRight="@dimen/size_12"
-                app:layout_constraintRight_toRightOf="parent"
-                app:layout_constraintTop_toTopOf="@+id/tvMaterialSubjectFilePath"
-                app:layout_constraintBottom_toBottomOf="@+id/tvMaterialSubjectFilePath"
-                android:src="@drawable/ic_close"
-                android:visibility="gone"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

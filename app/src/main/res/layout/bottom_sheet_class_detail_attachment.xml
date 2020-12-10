@@ -4,28 +4,28 @@
     android:id="@+id/llSchoolAnnouncementEditAttachment"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:paddingHorizontal="@dimen/size_20"
-    android:paddingVertical="@dimen/size_18"
     android:orientation="vertical">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/clBottomClassDetailAttachmentPhoto"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="horizontal">
 
         <TextView
             android:id="@+id/tvClassDetailAttachmentPhoto"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_52"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="@dimen/activity_horizontal_margin"
             android:text="Gambar"
             android:textColor="#646464"
             android:textSize="@dimen/text_16"
             android:lineHeight="@dimen/text_28"
             android:drawableLeft="@drawable/ic_photo_red"
-            android:drawablePadding="@dimen/size_28"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"/>
+            android:drawablePadding="@dimen/size_28" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -33,21 +33,22 @@
         android:id="@+id/clBottomSheetClassDetailAttachmentFile"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/size_20"
         android:orientation="horizontal">
 
         <TextView
             android:id="@+id/tvBottomSheetClassDetailAttachmentFile"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_52"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="@dimen/activity_horizontal_margin"
             android:text="File"
             android:textColor="#646464"
             android:textSize="@dimen/text_16"
             android:lineHeight="@dimen/text_28"
             android:drawableLeft="@drawable/ic_file_red"
-            android:drawablePadding="@dimen/size_28"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"/>
+            android:drawablePadding="@dimen/size_28" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -55,21 +56,22 @@
         android:id="@+id/clBottomSheetClassDetailAttachmentLink"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/size_20"
         android:orientation="horizontal">
 
         <TextView
             android:id="@+id/tvBottomSheetClassDetailAttachmentLink"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_52"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="@dimen/activity_horizontal_margin"
             android:text="Link"
             android:textColor="#646464"
             android:textSize="@dimen/text_16"
             android:lineHeight="@dimen/text_28"
             android:drawableLeft="@drawable/ic_link_red"
-            android:drawablePadding="@dimen/size_28"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"/>
+            android:drawablePadding="@dimen/size_28" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -77,21 +79,22 @@
         android:id="@+id/clBottomSheetClassDetailAttachmentUseCamera"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/size_20"
         android:orientation="horizontal">
 
         <TextView
             android:id="@+id/tvBottomSheetClassDetailAttachmentUseCamera"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Gunakan Kamera"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_52"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:gravity="center_vertical"
+            android:paddingHorizontal="@dimen/activity_horizontal_margin"
+            android:text="Gunakan kamera"
             android:textColor="#646464"
             android:textSize="@dimen/text_16"
             android:lineHeight="@dimen/text_28"
             android:drawableLeft="@drawable/ic_camera_red"
-            android:drawablePadding="@dimen/size_28"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintLeft_toLeftOf="parent"/>
+            android:drawablePadding="@dimen/size_28" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

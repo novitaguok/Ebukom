@@ -9,15 +9,13 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ebukom.R
-import com.ebukom.arch.dao.AdminSchoolFeeInfoSentDao
-import com.ebukom.arch.dao.ChooseClassDao
 import com.ebukom.arch.dao.ClassDetailMaterialSubjectDao
-import com.ebukom.arch.ui.admin.adminschoolfeeinfo.AdminShareSchoolFeeInfoAdapter
-import com.ebukom.arch.ui.admin.adminschoolfeeinfo.schoolfeeinfosent.ParentSchoolFeeInfoAdapter
-import com.ebukom.arch.ui.chooseclass.ChooseClassAdapter
 import com.ebukom.arch.ui.classdetail.MainClassDetailActivity
+import com.ebukom.arch.ui.classdetail.material.materialsubject.materialsubjectadd.MaterialSubjectRecapActivity
+import com.ebukom.arch.ui.classdetail.material.materialsubject.materialsubjectnew.MaterialSubjectNewActivity
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.ktx.Firebase
+import kotlinx.android.synthetic.main.fragment_material_subject.*
 import kotlinx.android.synthetic.main.fragment_material_subject.view.*
 import timber.log.Timber
 
@@ -41,6 +39,15 @@ class MaterialSubjectFragment : Fragment() {
         classId = MainClassDetailActivity.CLASS_ID
 
         /**
+         * Open rekap pembelajaran online card
+         */
+//        cvMaterialSubjectRecap.setOnClickListener {
+//            val intent = Intent(context, MaterialSubjectNewActivity::class.java)
+//            intent.putExtra("subject", "recap")
+//            startActivity(intent)
+//        }
+
+        /**
          * Get all subjects
          */
         db.collection("material_subjects").addSnapshotListener { value, error ->
@@ -52,6 +59,7 @@ class MaterialSubjectFragment : Fragment() {
             initRecycler(view)
 
             for (document in value!!.documents) {
+
                 mSubjectList.add(
                     ClassDetailMaterialSubjectDao(
                         document["material_name"] as String,
@@ -67,6 +75,7 @@ class MaterialSubjectFragment : Fragment() {
                 it.order
             }
         }
+        
     }
 
     private fun initRecycler(view: View) {

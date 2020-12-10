@@ -2,64 +2,65 @@
 <androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="60dp"
     android:layout_marginHorizontal="6dp"
+    android:layout_marginVertical="@dimen/size_4"
     app:cardCornerRadius="@dimen/size_4"
     app:cardUseCompatPadding="true"
     android:elevation="@dimen/size_2">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:id="@+id/clItemSubjectMaterial"
+        android:id="@+id/clItemSubjectMaterialFile"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-
+        
         <LinearLayout
-            android:id="@+id/llItemSubjectMaterial"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:id="@+id/llItemSubjectMaterialFile"
+            android:layout_width="@dimen/size_52"
+            android:layout_height="match_parent"
             app:layout_constraintLeft_toLeftOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
             android:gravity="center"
-            android:background="#155E8C"
-            android:visibility="gone">
+            android:orientation="vertical"
+            android:background="#155E8C">
 
             <ImageView
-                android:id="@+id/ivItemSubjectMaterial"
+                android:id="@+id/ivItemSubjectMaterialFile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 app:layout_constraintLeft_toLeftOf="parent"
                 app:layout_constraintTop_toTopOf="parent"
                 app:layout_constraintBottom_toBottomOf="parent"
-                android:src="@drawable/ic_file_white"/>
+                android:src="@drawable/ic_file_white" />
 
         </LinearLayout>
 
         <TextView
-            android:id="@+id/tvItemSubjectMaterial"
+            android:id="@+id/tvItemSubjectMaterialFile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintLeft_toRightOf="@+id/llItemSubjectMaterial"
+            app:layout_constraintLeft_toRightOf="@+id/llItemSubjectMaterialFile"
             app:layout_constraintTop_toTopOf="parent"
             android:layout_marginVertical="@dimen/size_18"
-            android:text="Perkalian dan Pembagian"
+            android:text="menentukanlamanyawaktu.pdf"
             android:textSize="@dimen/text_16"
             android:layout_marginLeft="@dimen/size_16"
             android:lineHeight="@dimen/size_18"
             android:textFontWeight="500"
-            android:textColor="#212121"/>
+            android:textColor="@color/colorBlack"/>
 
         <ImageButton
-            android:id="@+id/ibItemSubjectMaterial"
+            android:id="@+id/ibItemSubjectMaterialFile"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginRight="@dimen/size_10"
             android:background="@android:color/transparent"
             android:src="@drawable/ic_more_vertical"
-            app:layout_constraintBottom_toBottomOf="@+id/tvItemSubjectMaterial"
+            app:layout_constraintBottom_toBottomOf="@+id/tvItemSubjectMaterialFile"
             app:layout_constraintRight_toRightOf="parent"
-            app:layout_constraintTop_toTopOf="@+id/tvItemSubjectMaterial" />
+            app:layout_constraintTop_toTopOf="@+id/tvItemSubjectMaterialFile" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

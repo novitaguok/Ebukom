@@ -10,7 +10,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -19,7 +19,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
-        <activity android:name=".arch.ui.classdetail.material.MaterialPreviewActivity"/>
+        <activity android:name=".arch.ui.classdetail.material.materialsubject.materialsubjectfilepreview.MaterialSubjectFilePreviewActivity"></activity>
+        <activity android:name=".arch.ui.classdetail.material.materialsubject.materialsubjectfile.MaterialSubjectFileActivity" />
+        <activity android:name=".arch.ui.classdetail.material.materialsubject.materialsubjectfilepreview.MaterialPreviewActivity" />
         <activity android:name=".arch.ui.classdetail.school.schoolphoto.SchoolPhotoActivity" />
         <activity android:name=".arch.ui.classdetail.school.schoolschedule.SchoolScheduleActivity" />
         <activity android:name=".arch.ui.classdetail.school.schoolannouncement.schoolannouncementmainpage.SchoolAnnouncementActivity" />
@@ -38,9 +40,9 @@
         <activity android:name=".arch.ui.classdetail.material.materialeducation.materialeducationedit.MaterialEducationEditActivity" />
         <activity android:name=".arch.ui.classdetail.material.materialeducation.materialeducationdetail.MaterialEducationDetailActivity" />
         <activity android:name=".arch.ui.classdetail.material.materialeducation.materialeducationnew.MaterialEducationNewActivity" />
-        <activity android:name=".arch.ui.classdetail.material.materialsubject.MaterialSubjectRecapActivity" />
-        <activity android:name=".arch.ui.classdetail.material.materialsubject.MaterialSubjectAddActivity" />
-        <activity android:name=".arch.ui.classdetail.material.materialsubject.MaterialSubjectNewActivity" />
+        <activity android:name=".arch.ui.classdetail.material.materialsubject.materialsubjectadd.MaterialSubjectRecapActivity" />
+        <activity android:name=".arch.ui.classdetail.material.materialsubject.materialsubjectadd.MaterialSubjectAddActivity" />
+        <activity android:name=".arch.ui.classdetail.material.materialsubject.materialsubjectnew.MaterialSubjectNewActivity" />
         <activity android:name=".arch.ui.classdetail.personal.personalnotenewnext.PersonalNoteNewNextActivity" />
         <activity android:name=".arch.ui.classdetail.personal.personalnotenew.PersonalNoteAddTemplateActivity" />
         <activity

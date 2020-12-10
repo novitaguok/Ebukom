@@ -38,6 +38,9 @@ class DataDummy {
         // Material Nav -- Education Tab
         var educationData = arrayListOf<ClassDetailAnnouncementDao>()
 
+        // Material subject
+        var materialFileData = arrayListOf<ClassDetailAttachmentDao>()
+
         // Admin
         var paymentTemporaryData = arrayListOf<AdminPaymentItemFormDao>()
         var paymentData = arrayListOf<AdminPaymentItemDao>()

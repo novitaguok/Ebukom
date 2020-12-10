@@ -51,5 +51,4 @@ class SplashActivity : AppCompatActivity() {
 //        Databases().initClassesData()
 //        Databases().initSubjectMaterialsData()
     }
-
 }
