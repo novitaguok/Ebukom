@@ -119,12 +119,12 @@ class RegisterSchoolActivity : AppCompatActivity() {
     }
 
     /**
-     * Register as Teacher
+     * Register as teacher
      */
     private fun register() {
         btnRegisterSchoolRegister.setOnClickListener {
             if (isValid()) {
-                if(reformatPhoneNumber(etRegisterSchoolPhone.text.toString()) != null){
+                if (reformatPhoneNumber(etRegisterSchoolPhone.text.toString()) != null) {
                     val data = RegisterSchoolRequestDao(
                         etRegisterSchoolName.text.toString(),
                         RegisterRolesDao(
@@ -137,22 +137,22 @@ class RegisterSchoolActivity : AppCompatActivity() {
                         0
                     )
                     val intent = Intent(this, VerificationActivity::class.java)
-                    intent.putExtra("layout",VerificationActivity.LAYOUT_REGISTER)
-                    intent.putExtra("data",data)
+                    intent.putExtra("layout", VerificationActivity.LAYOUT_REGISTER)
+                    intent.putExtra("data", data)
                     startActivity(intent)
                 }
             }
         }
     }
 
-    fun reformatPhoneNumber(phone : String) : String? {
-        if(phone[0] == '0' && phone[1] == '8'){
-            return phone.replaceRange(0,1,"+62")
-        }else if(phone[0] == '6' && phone[1] == '2'){
-            return phone.replaceRange(0,1,"+6")
-        }else if(phone[0] == '+' && phone[1] == '6'){
+    fun reformatPhoneNumber(phone: String): String? {
+        if (phone[0] == '0' && phone[1] == '8') {
+            return phone.replaceRange(0, 1, "+62")
+        } else if (phone[0] == '6' && phone[1] == '2') {
+            return phone.replaceRange(0, 1, "+6")
+        } else if (phone[0] == '+' && phone[1] == '6') {
             return phone
-        }else {
+        } else {
             return null
         }
     }

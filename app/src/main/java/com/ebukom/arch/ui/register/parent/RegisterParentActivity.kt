@@ -8,6 +8,7 @@ import android.text.TextWatcher
 import android.view.View
 import android.widget.Toast
 import com.ebukom.R
+import com.ebukom.arch.dao.firebase.RegisterParentRequestDao
 import com.ebukom.arch.ui.forgotpassword.verification.VerificationActivity
 import com.ebukom.arch.ui.login.LoginActivity
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -18,6 +19,7 @@ import kotlinx.android.synthetic.main.activity_register_parent.*
 import kotlinx.android.synthetic.main.activity_register_parent.etRegisterParentName
 import kotlinx.android.synthetic.main.activity_register_parent.etRegisterParentPhone
 import kotlinx.android.synthetic.main.activity_register_parent.toolbar
+import kotlinx.android.synthetic.main.activity_register_school.*
 import kotlinx.android.synthetic.main.bottom_sheet_register_parent.view.*
 
 class RegisterParentActivity : AppCompatActivity() {
@@ -110,35 +112,37 @@ class RegisterParentActivity : AppCompatActivity() {
     }
 
     /**
-     * Register as Teacher
+     * Register as parent
      */
     private fun register() {
         btnRegisterParentRegister.setOnClickListener {
             if (isValid()) {
-                // reformat phone to email like 08xx@phone.id
-                var phoneMail = etRegisterParentPhone.text.toString() + "@phone.id"
+                val data = RegisterParentRequestDao(
+                    etRegisterParentName.text.toString(),
+                    etRegisterParentChild.text.toString(),
+                    reformatPhoneNumber(etRegisterParentPhone.text.toString())!!,
+                    eskul,
+                    etRegisterParentPassword.text.toString(),
+                    "",
+                    1
+                )
 
-                auth.createUserWithEmailAndPassword(
-                    phoneMail,
-                    etRegisterParentPassword.text.toString()
-                ).addOnCompleteListener(this) { task ->
-                    if (task.isSuccessful) {
-                        // insert to database
-                        task.result?.user?.let { it -> insertData(it, eskul) }
-                    } else {
-//                        Toast.makeText(
-//                            this@RegisterParentActivity,
-//                            "Registration failed, please try again",
-//                            Toast.LENGTH_LONG
-//                        ).show()
-                        Toast.makeText(
-                            this@RegisterParentActivity,
-                            task.exception?.localizedMessage,
-                            Toast.LENGTH_LONG
-                        ).show()
-                    }
-                }
+                val intent = Intent(this, VerificationActivity::class.java)
+                intent.putExtra("layout", VerificationActivity.LAYOUT_REGISTER)
+                intent.putExtra("data", data)
             }
+        }
+    }
+
+    fun reformatPhoneNumber(phone: String): String? {
+        if (phone[0] == '0' && phone[1] == '8') {
+            return phone.replaceRange(0, 1, "+62")
+        } else if (phone[0] == '6' && phone[1] == '2') {
+            return phone.replaceRange(0, 1, "+6")
+        } else if (phone[0] == '+' && phone[1] == '6') {
+            return phone
+        } else {
+            return null
         }
     }
 
@@ -147,27 +151,35 @@ class RegisterParentActivity : AppCompatActivity() {
      */
     private fun insertData(user: FirebaseUser, eskul: ArrayList<String>) {
 
-        val userInfo: MutableMap<String, Any> = HashMap()
+        if (reformatPhoneNumber(etRegisterParentPhone.text.toString()) != null) {
 
-        userInfo["name"] = etRegisterParentName.text.toString()
-        userInfo["childNames"] = etRegisterParentChild.text.toString()
-        userInfo["phone"] = etRegisterParentPhone.text.toString()
-        userInfo["eskul"] = eskul
-        userInfo["level"] = 1 // 0 for parent
+            val userInfo: MutableMap<String, Any> = HashMap()
+
+            userInfo["name"] = etRegisterParentName.text.toString()
+            userInfo["childNames"] = etRegisterParentChild.text.toString()
+            userInfo["phone"] = etRegisterParentPhone.text.toString()
+            userInfo["eskul"] = eskul
+            userInfo["level"] = 1 // 0 for parent
 
 //        userInfo["role"] = ""
 
-        db.collection("users").document(user.uid).set(userInfo).addOnSuccessListener {
-            Toast.makeText(this@RegisterParentActivity, "Registration success", Toast.LENGTH_LONG)
-                .show()
+            db.collection("users").document(user.uid).set(userInfo).addOnSuccessListener {
+                Toast.makeText(
+                    this@RegisterParentActivity,
+                    "Registration success",
+                    Toast.LENGTH_LONG
+                )
+                    .show()
 
-            val intent = Intent(this, VerificationActivity::class.java)
-            intent.putExtra("role", 1)
-            startActivity(intent)
-            finish()
-        }.addOnFailureListener {
-            // TODO if Failure
+                val intent = Intent(this, VerificationActivity::class.java)
+                intent.putExtra("role", 1)
+                startActivity(intent)
+                finish()
+            }.addOnFailureListener {
+                // TODO if Failure
+            }
         }
+
     }
 
     /**
