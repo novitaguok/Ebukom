@@ -26,7 +26,7 @@ class SendCodeActivity : AppCompatActivity() {
             if (etSendCodePhone.text.toString() == "000" || etSendCodePhone.text.toString() == "123" || etSendCodePhone.text.toString() == "456") {
                 val intent = Intent(this, VerificationActivity::class.java)
 
-                intent.putExtra("Layout", 0)
+                intent.putExtra("layout", VerificationActivity.LAYOUT_FORGOT)
                 Handler().postDelayed({
                     loading.visibility = View.GONE
                     startActivity(intent)

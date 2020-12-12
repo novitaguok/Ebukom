@@ -138,7 +138,8 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
          */
         btnSchoolAnnouncementNewNext.setOnClickListener {
             val title = etSchoolAnnouncementNewTitle.text.toString()
-            val content = btnSchoolAnnouncementNewTime.text.toString()
+            val content = etSchoolAnnouncementNewContent.text.toString()
+//            btnSchoolAnnouncementNewTime
             val intent = Intent(this, SchoolAnnouncementNewNextActivity::class.java)
 
             intent.putExtra("classId", classId)

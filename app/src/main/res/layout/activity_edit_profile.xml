@@ -40,6 +40,7 @@
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
             android:paddingBottom="@dimen/size_20">
 
             <com.google.android.material.textfield.TextInputLayout
@@ -115,7 +116,7 @@
                     android:id="@+id/etEditProfilePhone"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:padding="@dimen/size_16"/>
+                    android:paddingLeft="@dimen/size_16"/>
             </com.google.android.material.textfield.TextInputLayout>
 
             <Button
@@ -157,7 +158,7 @@
                     android:id="@+id/etEditProfilePassword"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:padding="@dimen/size_16" />
+                    android:paddingLeft="@dimen/size_16" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -171,7 +172,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/size_52"
                 android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-                android:layout_marginTop="@dimen/size_32"
+                android:layout_marginTop="@dimen/size_24"
                 android:hint="Konfirmasi kata sandi"
                 app:boxStrokeColor="@color/colorBlack"
                 app:boxStrokeWidth="@dimen/size_1"
@@ -181,7 +182,7 @@
                     android:id="@+id/etEditProfileConfirmPassword"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:padding="@dimen/size_16" />
+                    android:paddingLeft="@dimen/size_16" />
             </com.google.android.material.textfield.TextInputLayout>
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.core.widget.NestedScrollView>

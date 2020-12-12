@@ -113,6 +113,7 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
 
                     tvSchoolAnnouncementDetailToolbar.text =
                         dayName + ", " + date + " " + monthName + " " + year
+                    tvSchoolAnnouncementDetailDate.text = dayName
                     tvSchoolAnnouncementDetailTitle.text = it["title"] as String
                     tvSchoolAnnouncementDetailContent.text = it["content"] as String
                     tvSchoolAnnouncementDetailTeacher.text = it["teacher.name"] as String

@@ -46,9 +46,6 @@ class LoginActivity : AppCompatActivity() {
         auth = FirebaseAuth.getInstance() // Firebase authentication
         db = FirebaseFirestore.getInstance() // Firestore
 
-        etLoginPhone.setText("+6282219738124")
-        etLoginPassword.setText("123456")
-
         login()
 
         /**

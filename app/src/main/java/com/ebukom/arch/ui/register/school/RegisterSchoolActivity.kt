@@ -12,6 +12,8 @@ import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.ebukom.R
+import com.ebukom.arch.dao.firebase.RegisterRolesDao
+import com.ebukom.arch.dao.firebase.RegisterSchoolRequestDao
 import com.ebukom.arch.ui.forgotpassword.verification.VerificationActivity
 import com.ebukom.arch.ui.login.LoginActivity
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -122,55 +124,36 @@ class RegisterSchoolActivity : AppCompatActivity() {
     private fun register() {
         btnRegisterSchoolRegister.setOnClickListener {
             if (isValid()) {
-                // Reformat phone to email like 08xx@phone.id
-                var phoneMail = etRegisterSchoolPhone.text.toString() + "@phone.id"
-
-                auth.createUserWithEmailAndPassword(
-                    phoneMail,
-                    etRegisterSchoolPassword.text.toString()
-                ).addOnCompleteListener(this) { task ->
-                    if (task.isSuccessful) {
-                        // insert to database
-                        task.result?.user?.let { it -> insertData(it, role) }
-                    } else {
-                        Log.e("Error", task.exception?.message)
-//                        Toast.makeText(this, task.exception?.localizedMessage, Toast.LENGTH_SHORT).show()
-                        Toast.makeText(
-                            this@RegisterSchoolActivity,
-                            "Registration failed, please try again",
-                            Toast.LENGTH_LONG
-                        ).show()
-                    }
+                if(reformatPhoneNumber(etRegisterSchoolPhone.text.toString()) != null){
+                    val data = RegisterSchoolRequestDao(
+                        etRegisterSchoolName.text.toString(),
+                        RegisterRolesDao(
+                            "",
+                            role
+                        ),
+                        reformatPhoneNumber(etRegisterSchoolPhone.text.toString())!!,
+                        etRegisterSchoolPassword.text.toString(),
+                        "",
+                        0
+                    )
+                    val intent = Intent(this, VerificationActivity::class.java)
+                    intent.putExtra("layout",VerificationActivity.LAYOUT_REGISTER)
+                    intent.putExtra("data",data)
+                    startActivity(intent)
                 }
             }
         }
     }
 
-    /**
-     * Insert data to Firestore
-     */
-    private fun insertData(user: FirebaseUser, role: String) {
-
-        val userInfo: MutableMap<String, Any> = HashMap()
-
-        userInfo["name"] = etRegisterSchoolName.text.toString()
-        userInfo["phone"] = etRegisterSchoolPhone.text.toString()
-        userInfo["role"] = role
-        userInfo["level"] = 0 // 0 for teacher
-
-//        userInfo["childNames"] = ""
-//        userInfo["eskul"] =
-
-        db.collection("users").document(user.uid).set(userInfo).addOnSuccessListener {
-            Toast.makeText(this@RegisterSchoolActivity, "Registration success", Toast.LENGTH_LONG)
-                .show()
-
-            val intent = Intent(this, VerificationActivity::class.java)
-            intent.putExtra("role", 0)
-            startActivity(intent)
-            finish()
-        }.addOnFailureListener {
-            // TODO if Failure
+    fun reformatPhoneNumber(phone : String) : String? {
+        if(phone[0] == '0' && phone[1] == '8'){
+            return phone.replaceRange(0,1,"+62")
+        }else if(phone[0] == '6' && phone[1] == '2'){
+            return phone.replaceRange(0,1,"+6")
+        }else if(phone[0] == '+' && phone[1] == '6'){
+            return phone
+        }else {
+            return null
         }
     }
 
