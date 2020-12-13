@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.ebukom.R
 import com.ebukom.arch.dao.ClassDetailAttachmentDao
 import com.ebukom.arch.ui.classdetail.ClassDetailAttachmentAdapter
+import com.ebukom.arch.ui.classdetail.MainClassDetailActivity
 import com.ebukom.data.DataDummy
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.firestore.FirebaseFirestore
@@ -32,7 +33,7 @@ import kotlin.collections.ArrayList
 
 class SchoolAnnouncementEditActivity : AppCompatActivity() {
     private val mAttachmentList: ArrayList<ClassDetailAttachmentDao> = arrayListOf()
-    private val mAttachmentAdapter = ClassDetailAttachmentAdapter(mAttachmentList)
+    lateinit var mAttachmentAdapter: ClassDetailAttachmentAdapter
     val db = FirebaseFirestore.getInstance()
     var classId: String? = null
     var announcementId: String? = null
@@ -58,36 +59,25 @@ class SchoolAnnouncementEditActivity : AppCompatActivity() {
         db.collection("classes").document(classId!!).collection("announcements")
             .document(announcementId!!)
             .get().addOnSuccessListener {
+
+                initRecycler()
+
                 etSchoolAnnouncementEditTitle.setText(it["title"] as String)
                 etSchoolAnnouncementEditContent.setText(it["content"] as String)
 
-                /**
-                 * Load attachment(s)
-                 */
-                db.collection("classes").document(classId!!).collection("announcements")
-                    .document(announcementId!!).collection("attachments")
-                    .addSnapshotListener { value, error ->
-                        if (error != null) {
-                            Timber.e(error)
-                            return@addSnapshotListener
-                        }
+                for (data in it["attachments"] as List<HashMap<Any, Any>>) {
+                    mAttachmentList.add(
+                        ClassDetailAttachmentDao(
+                            data["path"] as String,
+                            (data["category"] as Long).toInt()
+                        )
+                    )
+                    mAttachmentAdapter.notifyDataSetChanged()
+                    checkEmpty()
+                }
 
-                        for (document in value!!.documents) {
-                            mAttachmentList.add(
-                                ClassDetailAttachmentDao(
-                                    document["path"] as String,
-                                    (document["category"] as Long).toInt(),
-                                    document.id
-                                )
-                            )
-                            mAttachmentAdapter.notifyDataSetChanged()
-                            checkEmpty()
+                checkEmpty()
 
-                            attachmentIdList.add(document.id)
-                        }
-                    }
-            }.addOnFailureListener {
-                Log.d("TAG", "fail to load announcement")
             }
 
         /**
@@ -102,62 +92,21 @@ class SchoolAnnouncementEditActivity : AppCompatActivity() {
         btnSchoolAnnouncementEditSave.setOnClickListener {
             val data = hashMapOf<String, Any>(
                 "title" to etSchoolAnnouncementEditTitle.text.toString(),
-                "content" to etSchoolAnnouncementEditContent.text.toString()
+                "content" to etSchoolAnnouncementEditContent.text.toString(),
+                "attachments" to mAttachmentList
             )
 
-            loading.visibility = View.VISIBLE
             db.collection("classes").document(classId!!).collection("announcements")
-                .document(announcementId!!)
-                .update(data).addOnSuccessListener {
-                    Log.d("TAG", "data edited successfully")
+                .document(announcementId!!).update(data).addOnSuccessListener {
+                    Log.d("TAG", "announcement inserted")
+                    mAttachmentAdapter.notifyDataSetChanged()
                     loading.visibility = View.GONE
-
-                    attachmentIdList.forEach {
-                        db.collection("classes").document(classId!!).collection("announcements")
-                            .document(announcementId!!).collection("attachments").document(
-                                attachmentIdList.toString()
-                            ).delete()
-                    }
+                    finish()
                 }.addOnFailureListener {
-                    Log.d("TAG", "data edit failed")
+                    Log.d("TAG", "announcement failed")
+                    loading.visibility = View.GONE
+                    finish()
                 }
-
-//            /**
-//             * Delete all document in attachments collection
-//             */
-//            db.collection("classes").document(classId!!).collection("announcements")
-//                .document(announcementId!!).collection("attachments")
-//                .addSnapshotListener { value, error ->
-//                    if (error != null) {
-//                        Timber.e(error)
-//                        return@addSnapshotListener
-//                    }
-//
-//
-//                }
-
-            /**
-             * Re-insert attachment
-             */
-            mAttachmentList.clear()
-            mAttachmentList.forEach {
-                db.collection("classes").document(classId!!)
-                    .collection("announcements")
-                    .document(announcementId!!).collection("attachments").add(
-                        mapOf<String, Any>(
-                            "category" to it.category,
-                            "path" to it.path
-                        )
-                    ).addOnSuccessListener {
-                        Log.d("TAG", "announcement inserted")
-                        loading.visibility = View.GONE
-                        finish()
-                    }.addOnFailureListener {
-                        Log.d("TAG", "announcement failed")
-                        loading.visibility = View.GONE
-                        finish()
-                    }
-            }
 
             finish()
         }
@@ -176,6 +125,7 @@ class SchoolAnnouncementEditActivity : AppCompatActivity() {
         /**
          * Attachment list
          */
+        mAttachmentAdapter = ClassDetailAttachmentAdapter(mAttachmentList)
         rvSchoolAnnouncementEditAttachment.apply {
             layoutManager =
                 LinearLayoutManager(
@@ -396,5 +346,14 @@ class SchoolAnnouncementEditActivity : AppCompatActivity() {
         view.tvItemAnnouncementAttachment?.text = path
 
         this.checkEmpty()
+    }
+
+    override fun onResume() {
+        super.onResume()
+
+        // Announcement List
+//        mAttachmentList.clear()
+//        mAttachmentList.addAll()
+        mAttachmentAdapter.notifyDataSetChanged()
     }
 }

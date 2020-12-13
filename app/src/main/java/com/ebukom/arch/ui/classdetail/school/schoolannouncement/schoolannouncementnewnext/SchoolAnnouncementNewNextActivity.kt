@@ -150,7 +150,8 @@ class SchoolAnnouncementNewNextActivity : AppCompatActivity(),
                     "id" to uid
                 ),
                 "time" to Timestamp(Date()),
-                "title" to title
+                "title" to title,
+                "attachments" to attachmentList
             )
 
             loading.visibility = View.VISIBLE
@@ -160,30 +161,33 @@ class SchoolAnnouncementNewNextActivity : AppCompatActivity(),
                         if (it.isSuccessful) {
                             val announcementId = it.result?.id!!
 
-                            if (attachmentList.isEmpty()) {
-                                Log.d("TAG", "announcement inserted")
-                                loading.visibility = View.GONE
-                                finish()
-                            }
-
-                            attachmentList.forEach {
-                                db.collection("classes").document(classId!!)
-                                    .collection("announcements")
-                                    .document(announcementId).collection("attachments").add(
-                                        mapOf<String, Any>(
-                                            "category" to it.category,
-                                            "path" to it.path
-                                        )
-                                    ).addOnSuccessListener {
-                                        Log.d("TAG", "announcement inserted")
-                                        loading.visibility = View.GONE
-                                        finish()
-                                    }.addOnFailureListener {
-                                        Log.d("TAG", "announcement failed")
-                                        loading.visibility = View.GONE
-                                        finish()
-                                    }
-                            }
+//                            if (attachmentList.isEmpty()) {
+//                                Log.d("TAG", "announcement inserted")
+//                                loading.visibility = View.GONE
+//                                finish()
+//                            }
+//
+//
+//
+//                            attachmentList.forEach {
+//                                db.collection("classes").document(classId!!)
+//                                    .collection("announcements")
+//                                    .document(announcementId).collection("attachments").add(
+//                                        mapOf<String, Any>(
+//                                            "category" to it.category,
+//                                            "path" to it.path
+//                                        )
+//                                    ).addOnSuccessListener {
+//                                        Log.d("TAG", "announcement inserted")
+//                                        loading.visibility = View.GONE
+//                                        finish()
+//                                    }.addOnFailureListener {
+//                                        Log.d("TAG", "announcement failed")
+//                                        loading.visibility = View.GONE
+//                                        finish()
+//                                    }
+//                            }
+                            loading.visibility = View.GONE
                         } else {
                             Log.d("TAG", "announcement inserted")
                             loading.visibility = View.GONE

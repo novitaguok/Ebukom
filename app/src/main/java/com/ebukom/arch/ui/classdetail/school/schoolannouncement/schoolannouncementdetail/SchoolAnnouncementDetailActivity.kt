@@ -25,6 +25,7 @@ import kotlinx.android.synthetic.main.bottom_sheet_school_announcement.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_school_announcement_comment.view.*
 import timber.log.Timber
 import java.util.*
+import kotlin.collections.HashMap
 
 class SchoolAnnouncementDetailActivity : AppCompatActivity() {
 
@@ -76,13 +77,17 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
          */
         if (classId != null) {
             db.collection("classes").document(classId!!).collection("announcements")
-                .document(announcementId!!).get()
-                .addOnSuccessListener {
+                .document(announcementId!!).addSnapshotListener { value, error ->
 
-                    val day = (it["time"] as Timestamp).toDate().day.toString()
-                    val date = (it["time"] as Timestamp).toDate().date.toString()
-                    val month = (it["time"] as Timestamp).toDate().month.toString()
-                    val year = (it["time"] as Timestamp).toDate().year.toString()
+                    if (error != null) {
+                        Timber.e(error)
+                        return@addSnapshotListener
+                    }
+
+                    val day = (value?.get("time") as Timestamp).toDate().day.toString()
+                    val date = (value["time"] as Timestamp).toDate().date.toString()
+                    val month = (value["time"] as Timestamp).toDate().month.toString()
+                    val year = (value["time"] as Timestamp).toDate().year.toString()
                     var dayName = ""
                     var monthName = ""
 
@@ -114,65 +119,56 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
                     tvSchoolAnnouncementDetailToolbar.text =
                         dayName + ", " + date + " " + monthName + " " + year
                     tvSchoolAnnouncementDetailDate.text = dayName
-                    tvSchoolAnnouncementDetailTitle.text = it["title"] as String
-                    tvSchoolAnnouncementDetailContent.text = it["content"] as String
-                    tvSchoolAnnouncementDetailTeacher.text = it["teacher.name"] as String
+                    tvSchoolAnnouncementDetailTitle.text = value?.get("title") as String
+                    tvSchoolAnnouncementDetailContent.text = value["content"] as String
+                    tvSchoolAnnouncementDetailTeacher.text = value["teacher.name"] as String
 
                     /**
                      * Load attachment(s)
                      */
-                    db.collection("classes").document(classId!!).collection("announcements")
-                        .document(announcementId!!).collection("attachments")
-                        .addSnapshotListener { value, error ->
-                            if (error != null) {
-                                Timber.e(error)
-                                return@addSnapshotListener
-                            }
-
-                            for (document in value!!.documents) {
-                                mAttachmentList.add(
-                                    ClassDetailAttachmentDao(
-                                        document["path"] as String,
-                                        (document["category"] as Long).toInt(),
-                                        document.id
-                                    )
-                                )
-                                mAttachmentAdapter.notifyDataSetChanged()
-                                checkEmpty()
-                            }
-                        }
-
-                    /**
-                     * Load comment(s)
-                     */
-                    db.collection("classes").document(classId!!).collection("announcements")
-                        .document(announcementId!!).collection("comments")
-                        .addSnapshotListener { value, error ->
-                            if (error != null) {
-                                Timber.e(error)
-                                return@addSnapshotListener
-                            }
-
-                            mCommentList.clear()
-                            for (document in value!!.documents) {
-                                mCommentList.add(
-                                    ClassDetailAnnouncementCommentDao(
-                                        document["user.name"] as String,
-                                        document["comment"] as String,
-                                        R.drawable.bg_square_blue_4dp,
-                                        (document["upload_time"] as Timestamp).toDate().toString(),
-                                        document.id
-                                    )
-                                )
-
-                                mCommentList.sortBy {
-                                    it.time
-                                }
-                                mCommentAdapter.notifyDataSetChanged()
-                                checkEmpty()
-                            }
-                        }
+                    for (data in value["attachments"] as List<HashMap<Any, Any>>) {
+                        mAttachmentList.add(
+                            ClassDetailAttachmentDao(
+                                data["path"] as String,
+                                (data["category"] as Long).toInt()
+                            )
+                        )
+                        mAttachmentAdapter.notifyDataSetChanged()
+                        checkEmpty()
+                    }
                 }
+
+            /**
+             * Load comment(s)
+             */
+            db.collection("classes").document(classId!!).collection("announcements")
+                .document(announcementId!!).collection("comments")
+                .addSnapshotListener { value, error ->
+                    if (error != null) {
+                        Timber.e(error)
+                        return@addSnapshotListener
+                    }
+
+                    mCommentList.clear()
+                    for (document in value!!.documents) {
+                        mCommentList.add(
+                            ClassDetailAnnouncementCommentDao(
+                                document["user.name"] as String,
+                                document["comment"] as String,
+                                R.drawable.bg_square_blue_4dp,
+                                (document["upload_time"] as Timestamp).toDate().toString(),
+                                document.id
+                            )
+                        )
+
+                        mCommentList.sortBy {
+                            it.time
+                        }
+                        mCommentAdapter.notifyDataSetChanged()
+                        checkEmpty()
+                    }
+                }
+
         }
 
         /**
