@@ -72,72 +72,37 @@ class MaterialSubjectAddActivity : AppCompatActivity() {
 
                     tvToolbarTitle.text = "Edit Materi " + value?.get("name") as String
                     etMaterialSubjectAddTitle.setText(value["name"] as String)
+                    for (data in value?.get("files") as List<HashMap<Any, Any>>) {
+                        mFileList.add(
+                            ClassDetailAttachmentDao(
+                                data["path"] as String,
+                                (data["category"] as Long).toInt()
+                            )
+                        )
+                    }
+
+                    mFileAdapter.notifyDataSetChanged()
+                    checkEmpty()
 
                     initRecycler()
-
-                    db.collection("material_subjects").document(subjectId!!)
-                        .collection("subject_sections")
-                        .document(sectionId!!).collection("files")
-                        .addSnapshotListener { value, error ->
-                            if (error != null) {
-                                Timber.e(error)
-                                return@addSnapshotListener
-                            }
-
-                            for (document in value!!.documents) {
-                                mFileList.add(
-                                    ClassDetailAttachmentDao(
-                                        document["path"] as String,
-                                        (document["category"] as Long).toInt(),
-                                        document.id
-                                    )
-                                )
-                            }
-
-                            mFileAdapter.notifyDataSetChanged()
-                            checkEmpty()
-                        }
                 }
 
             btnMaterialSubjectAddDone.setOnClickListener {
                 val data = hashMapOf<String, Any>(
                     "name" to etMaterialSubjectAddTitle.text.toString(),
-                    "date" to Timestamp(Date())
+                    "date" to Timestamp(Date()),
+                    "files" to mFileList
                 )
 
                 loading.visibility = View.VISIBLE
                 db.collection("material_subjects").document(subjectId!!)
                     .collection("subject_sections")
-                    .document(sectionId!!).update(data).addOnCompleteListener {
-                        if (it.isSuccessful) {
-                            if (mFileList.isEmpty()) {
-                                finish()
-                            }
-
-                            mFileList.forEach {
-                                db.collection("material_subjects").document(subjectId!!)
-                                    .collection("subject_sections").document(sectionId!!)
-                                    .collection("files")
-                                    .add(
-                                        mapOf<String, Any>(
-                                            "category" to it.category,
-                                            "path" to it.path
-                                        )
-                                    ).addOnSuccessListener {
-                                        Log.d("TAG", "Section inserted successfully")
-                                        finish()
-                                    }.addOnFailureListener {
-                                        Log.d("TAG", "Section failed to be inserted")
-                                        finish()
-                                    }
-                            }
-                            loading.visibility = View.GONE
-                        } else {
-                            loading.visibility = View.GONE
-                            finish()
-                        }
+                    .document(sectionId!!).update(data).addOnSuccessListener {
+                        loading.visibility = View.GONE
+                        this@MaterialSubjectAddActivity.finish()
                     }.addOnFailureListener {
                         Log.d("TAG", "Material failed to be inserted")
+                        this@MaterialSubjectAddActivity.finish()
                     }
             }
 
@@ -152,7 +117,8 @@ class MaterialSubjectAddActivity : AppCompatActivity() {
 
                 val data = hashMapOf<String, Any>(
                     "name" to etMaterialSubjectAddTitle.text.toString(),
-                    "date" to Timestamp(Date())
+                    "date" to Timestamp(Date()),
+                    "files" to mFileList
                 )
 
                 loading.visibility = View.VISIBLE
@@ -162,28 +128,29 @@ class MaterialSubjectAddActivity : AppCompatActivity() {
                         if (it.isSuccessful) {
                             var sectionId = it.result?.id
 
-                            if (mFileList.isEmpty()) {
-                                finish()
-                            }
+//                            if (mFileList.isEmpty()) {
+//                                finish()
+//                            }
 
-                            mFileList.forEach {
-                                db.collection("material_subjects").document(subjectId!!)
-                                    .collection("subject_sections").document(sectionId!!)
-                                    .collection("files")
-                                    .document().update(
-                                        mapOf<String, Any>(
-                                            "category" to it.category,
-                                            "path" to it.path
-                                        )
-                                    ).addOnSuccessListener {
-                                        Log.d("TAG", "Section inserted successfully")
-                                        finish()
-                                    }.addOnFailureListener {
-                                        Log.d("TAG", "Section failed to be inserted")
-                                        finish()
-                                    }
-                            }
+//                            mFileList.forEach {
+//                                db.collection("material_subjects").document(subjectId!!)
+//                                    .collection("subject_sections").document(sectionId!!)
+//                                    .collection("files")
+//                                    .document().update(
+//                                        mapOf<String, Any>(
+//                                            "category" to it.category,
+//                                            "path" to it.path
+//                                        )
+//                                    ).addOnSuccessListener {
+//                                        Log.d("TAG", "Section inserted successfully")
+//                                        finish()
+//                                    }.addOnFailureListener {
+//                                        Log.d("TAG", "Section failed to be inserted")
+//                                        finish()
+//                                    }
+//                            }
                             loading.visibility = View.GONE
+                            finish()
                         } else {
                             loading.visibility = View.GONE
                             finish()

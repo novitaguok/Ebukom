@@ -10,16 +10,14 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ebukom.R
 import com.ebukom.arch.dao.ClassDetailAttachmentDao
-import com.ebukom.arch.ui.classdetail.ClassDetailAttachmentAdapter
-import com.ebukom.data.DataDummy
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.android.synthetic.main.activity_main_class_detail.*
 import kotlinx.android.synthetic.main.activity_material_subject_file.*
-import kotlinx.android.synthetic.main.activity_reset_password.*
-import kotlinx.android.synthetic.main.activity_reset_password.toolbar
 import kotlinx.android.synthetic.main.bottom_sheet_choose_class.view.*
 import timber.log.Timber
+import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.collections.HashMap
 
 class MaterialSubjectFileActivity : AppCompatActivity() {
 
@@ -36,6 +34,7 @@ class MaterialSubjectFileActivity : AppCompatActivity() {
         setContentView(R.layout.activity_material_subject_file)
 
         initToolbar()
+        initRecycler()
 
         sectionId = intent?.extras?.getString("sectionId")
         sectionName = intent?.extras?.getString("sectionName")
@@ -44,26 +43,27 @@ class MaterialSubjectFileActivity : AppCompatActivity() {
         tvToolbarTitle.text = sectionName
 
         db.collection("material_subjects").document(subjectId!!).collection("subject_sections")
-            .document(sectionId!!).collection("files").addSnapshotListener { value, error ->
-            if (error != null) {
-                Timber.e(error)
-                return@addSnapshotListener
-            }
+            .document(sectionId!!).addSnapshotListener { value, error ->
+                if (error != null) {
+                    Timber.e(error)
+                    return@addSnapshotListener
+                }
 
-            initRecycler()
+                initRecycler()
 
-            for (document in value!!.documents) {
-                mFileList.add(
-                    ClassDetailAttachmentDao(
-                        document["path"] as String,
-                        (document["category"] as Long).toInt(),
-                        document.id,
-                        subjectId!!,
-                        sectionId!!
-                    )
-                )
+                if ((value?.get("files") as List<HashMap<Any, Any>>).isNotEmpty()) {
+                    for (data in value?.get("files") as List<HashMap<Any, Any>>) {
+                        mFileList.add(
+                            ClassDetailAttachmentDao(
+                                data["path"] as String,
+                                (data["category"] as Long).toInt()
+                            )
+                        )
+                    }
+                }
+
+                mFileAdapter.notifyDataSetChanged()
             }
-        }
 
     }
 
@@ -81,7 +81,7 @@ class MaterialSubjectFileActivity : AppCompatActivity() {
          * Attachment list
          */
         mFileList.clear()
-        mFileAdapter =  MaterialSubjectFileAdapter(mFileList)
+        mFileAdapter = MaterialSubjectFileAdapter(mFileList)
         rvMaterialSubjectFile.apply {
             layoutManager = LinearLayoutManager(
                 this@MaterialSubjectFileActivity,
@@ -94,7 +94,7 @@ class MaterialSubjectFileActivity : AppCompatActivity() {
 //        checkAttachmentEmpty()
     }
 
-    fun popUpMenu(fileId: String) {
+    fun popUpMenu(pos: Int) {
         val bottomSheetDialog = BottomSheetDialog(this)
         val view = layoutInflater.inflate(R.layout.bottom_sheet_choose_class, null)
         view.tvDeleteClass.text = "Hapus Materi"
@@ -112,9 +112,18 @@ class MaterialSubjectFileActivity : AppCompatActivity() {
             builder.setPositiveButton("HAPUS") { _, _ ->
                 loading.visibility = View.VISIBLE
 
-                db.collection("material_subjects").document(subjectId!!).collection("subject_sections")
-                    .document(sectionId!!).collection("files").document(fileId).delete().addOnSuccessListener {
-                        loading_main.visibility = View.GONE
+                mFileList.removeAt(pos)
+                mFileAdapter.notifyDataSetChanged()
+
+                val data = hashMapOf<String, Any>(
+                    "files" to mFileList
+                )
+
+                db.collection("material_subjects").document(subjectId!!)
+                    .collection("subject_sections")
+                    .document(sectionId!!).update(data)
+                    .addOnSuccessListener {
+                        loading.visibility = View.GONE
                         Log.d("TAG", "Deleted successfully")
                     }.addOnFailureListener {
                         Log.d("TAG", "Delete failed")

@@ -98,22 +98,24 @@ class MaterialSubjectNewActivity : AppCompatActivity() {
 
                     initRecycler()
 
-                    mSectionList.clear()
-                    for (document in value!!.documents) {
-                        mSectionList.add(
-                            ClassDetailMaterialSubjectSectionDao(
-                                document["name"] as String,
-                                arrayListOf(),
-                                (document["date"] as Timestamp).toDate().toString(),
-                                document.id,
-                                subjectId!!,
-                                classId!!,
-                                (document["date"] as Timestamp)
+                    if (value!!.documents != null) {
+                        mSectionList.clear()
+                        for (document in value.documents) {
+                            mSectionList.add(
+                                ClassDetailMaterialSubjectSectionDao(
+                                    document["name"] as String,
+                                    arrayListOf(),
+                                    (document["date"] as Timestamp).toDate().toString(),
+                                    document.id,
+                                    subjectId!!,
+                                    classId!!,
+                                    (document["date"] as Timestamp)
+                                )
                             )
-                        )
+                        }
+                        mMaterialSubjectAdapter.notifyDataSetChanged()
+                        checkEmpty()
                     }
-                    mMaterialSubjectAdapter.notifyDataSetChanged()
-                    checkEmpty()
                 }
         }
     }
@@ -180,25 +182,14 @@ class MaterialSubjectNewActivity : AppCompatActivity() {
 
                     sectionTitle = value!!["name"] as String
 
-                    db.collection("material_subjects").document(subjectId!!)
-                        .collection("subject_sections")
-                        .document(sectionId).collection("files")
-                        .addSnapshotListener { value, error ->
-                            if (error != null) {
-                                Timber.e(error)
-                                return@addSnapshotListener
-                            }
-
-                            for (document in value!!.documents) {
-                                mFileList.add(
-                                    ClassDetailAttachmentDao(
-                                        document["path"] as String,
-                                        (document["category"] as Long).toInt()
-                                    )
-                                )
-                            }
-                        }
-
+                    for (data in value["files"] as List<HashMap<Any, Any>>) {
+                        mFileList.add(
+                            ClassDetailAttachmentDao(
+                                data["path"] as String,
+                                (data["category"] as Long).toInt()
+                            )
+                        )
+                    }
                 }
 
             val intent = Intent(this, MaterialSubjectAddActivity::class.java)
