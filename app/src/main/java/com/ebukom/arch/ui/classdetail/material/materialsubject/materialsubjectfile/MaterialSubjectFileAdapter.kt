@@ -43,6 +43,7 @@ class MaterialSubjectFileAdapter(private val data: List<ClassDetailAttachmentDao
         RecyclerView.ViewHolder(itemView) {
         fun bind(item: ClassDetailAttachmentDao) {
             itemView.tvItemSubjectMaterialFile.text = item.path
+
             when (item.category) {
                 0 -> {
                     itemView.ivItemSubjectMaterialFile.setImageResource(R.drawable.ic_link_white)
@@ -55,6 +56,9 @@ class MaterialSubjectFileAdapter(private val data: List<ClassDetailAttachmentDao
                 2 -> {
                     itemView.ivItemSubjectMaterialFile.setImageResource(R.drawable.ic_video_white)
                     itemView.llItemSubjectMaterialFile.setBackgroundColor(Color.parseColor("#A62121"))
+                }
+                else -> {
+                    itemView.llItemSubjectMaterialFile.visibility = View.GONE
                 }
             }
 

@@ -176,7 +176,7 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
          */
         ivSchoolAnnouncementDetailComment.setOnClickListener {
             val uid = sharePref.getString("uid", "") as String
-            val teacherName = sharePref.getString("teacherName", "") as String
+            val teacherName = sharePref.getString("name", "") as String
             val comment = etSchoolAnnouncementDetailComment.text.toString()
             val profilePic = R.drawable.bg_books
             val data = hashMapOf<Any, Any>(

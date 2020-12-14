@@ -39,9 +39,9 @@ android {
         applicationVariants.all { variant ->
             variant.outputs.all {
                 if (variant.buildType.name == "release") {
-                    outputFileName = "telyoucious-${variant.versionName}.apk"
+                    outputFileName = "ebukom-${variant.versionName}.apk"
                 } else {
-                    outputFileName = "telyoucious-${variant.versionName}.apk"
+                    outputFileName = "ebukom-${variant.versionName}.apk"
                 }
             }
         }
@@ -113,4 +113,5 @@ dependencies {
 
     implementation 'androidx.browser:browser:1.2.0'
 
+    implementation 'com.appeaser.sublimepickerlibrary:sublimepickerlibrary:2.1.2'
 }

@@ -159,7 +159,7 @@ class RegisterParentActivity : AppCompatActivity() {
             userInfo["childNames"] = etRegisterParentChild.text.toString()
             userInfo["phone"] = etRegisterParentPhone.text.toString()
             userInfo["eskul"] = eskul
-            userInfo["level"] = 1 // 0 for parent
+            userInfo["level"] = 1 // 1 for parent
 
 //        userInfo["role"] = ""
 

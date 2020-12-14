@@ -45,7 +45,7 @@ class PersonalParentNoteFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val sharePref: SharedPreferences = activity!!.getSharedPreferences("EBUKOM", Context.MODE_PRIVATE)
-        if(sharePref.getInt("level", 0) == 1){
+        if(sharePref.getLong("level", 0) == 1L){
             view.btnPersonalNew.text = "Buat Catatan untuk Guru"
         }
     }

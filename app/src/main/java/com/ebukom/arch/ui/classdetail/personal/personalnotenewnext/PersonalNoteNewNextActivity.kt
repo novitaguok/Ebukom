@@ -13,11 +13,17 @@ import com.ebukom.R
 import com.ebukom.arch.dao.ClassDetailAttachmentDao
 import com.ebukom.arch.dao.ClassDetailItemCheckThumbnailDao
 import com.ebukom.arch.dao.ClassDetailPersonalNoteDao
+import com.ebukom.arch.dao.firebase.RegisterSchoolRequestDao
 import com.ebukom.arch.ui.classdetail.ClassDetailCheckAdapter
 import com.ebukom.arch.ui.classdetail.ClassDetailCheckThumbnailAdapter
 import com.ebukom.data.DataDummy
+import com.google.firebase.Timestamp
+import com.google.firebase.firestore.FirebaseFirestore
 import com.kunzisoft.switchdatetime.SwitchDateTimeDialogFragment
+import kotlinx.android.synthetic.main.activity_personal_note_new.*
 import kotlinx.android.synthetic.main.activity_personal_note_new_next.*
+import kotlinx.android.synthetic.main.activity_personal_note_new_next.toolbar
+import timber.log.Timber
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -29,6 +35,9 @@ class PersonalNoteNewNextActivity : AppCompatActivity(), ClassDetailCheckAdapter
     lateinit var content: String
     lateinit var dateTime: String
     lateinit var attachments: List<ClassDetailAttachmentDao>
+    val db = FirebaseFirestore.getInstance()
+    var nm: String? = null
+    var lev: Long = 0L
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,35 +49,74 @@ class PersonalNoteNewNextActivity : AppCompatActivity(), ClassDetailCheckAdapter
         dateTime = ""
 
         val sharePref: SharedPreferences = getSharedPreferences("EBUKOM", Context.MODE_PRIVATE)
+        val level = sharePref.getLong("level", 0)
+        val name = sharePref.getString("name", "")
+        lev = level
+        nm = name
 
-        if (sharePref.getInt("level", 0) == 1) {
+        initToolbar()
+        initRecycler()
+
+        if (level == 1L) {
             tvToolbarTitle.text = "Buat Catatan untuk Guru"
             tvPersonalNoteNewNextAllParent.text = "Semua Guru"
 
             // Share Personal Note Button
             btnPersonalNoteNewNextDone.setOnClickListener {
-                sendNote()
+                var content = etPersonalNoteNewContent.text.toString()
+                sendNote(content)
             }
         } else {
             // Share Personal Note Button
             btnPersonalNoteNewNextDone.setOnClickListener {
-                sendNote()
+                var content = etPersonalNoteNewContent.text.toString()
+                sendNote(content)
             }
 
         }
 
-        initToolbar()
+        /**
+         * Get parents data
+         */
+        db.collection("users").addSnapshotListener { value, error ->
+            if (error != null) {
+                Timber.e(error)
+                return@addSnapshotListener
+            }
 
-        // Parent Names
-        mParentList.addAll(DataDummy.parentNameData)
-        mParentAdapter = ClassDetailCheckThumbnailAdapter(mParentList, this@PersonalNoteNewNextActivity)
-        rvPersonalNoteNewNext.apply {
-            layoutManager = LinearLayoutManager(
-                this@PersonalNoteNewNextActivity,
-                LinearLayoutManager.VERTICAL,
-                false
-            )
-            adapter = mParentAdapter
+            initRecycler()
+
+            if (level == 0L) {
+                mParentList.clear()
+                for (document in value!!.documents) {
+                    if ((document["level"] as Long).toInt() == 1) {
+                        mParentList.clear()
+                        mParentList.add(
+                            ClassDetailItemCheckThumbnailDao(
+                                document["name"] as String,
+                                document["childNames"] as String,
+                                0,
+                                userId = document.id
+                            )
+                        )
+                    }
+                }
+            } else {
+                mParentList.clear()
+                for (document in value!!.documents) {
+                    if ((document["level"] as Long).toInt() == 0) {
+                        mParentList.clear()
+                        mParentList.add(
+                            ClassDetailItemCheckThumbnailDao(
+                                document["name"] as String,
+                                document["role.className"] as String,
+                                0,
+                                userId = document.id
+                            )
+                        )
+                    }
+                }
+            }
         }
 
         // Alarm Dialog Box
@@ -125,7 +173,20 @@ class PersonalNoteNewNextActivity : AppCompatActivity(), ClassDetailCheckAdapter
         }
     }
 
-    private fun sendNote() {
+    private fun initRecycler() {
+        mParentAdapter =
+            ClassDetailCheckThumbnailAdapter(mParentList, this@PersonalNoteNewNextActivity)
+        rvPersonalNoteNewNext.apply {
+            layoutManager = LinearLayoutManager(
+                this@PersonalNoteNewNextActivity,
+                LinearLayoutManager.VERTICAL,
+                false
+            )
+            adapter = mParentAdapter
+        }
+    }
+
+    private fun sendNote(content: String) {
         mParentList.forEach {
             if (it.isChecked) {
                 DataDummy.noteSentData.add(
@@ -140,6 +201,36 @@ class PersonalNoteNewNextActivity : AppCompatActivity(), ClassDetailCheckAdapter
                 )
                 it.isChecked = false
             }
+        }
+
+        var data = hashMapOf<String, Any>()
+        if (lev == 0L) {
+            data = hashMapOf(
+                "noteContent" to content,
+                "parent_ids" to mParentList,
+                "profilePicture" to 0,
+                "teacher_ids" to arrayListOf<RegisterSchoolRequestDao>(),
+                "time" to tvPersonalNoteNewNextAlarmContent.text.toString(),
+                "upload_time" to Timestamp(Date())
+            )
+        } else {
+            data = hashMapOf(
+                "noteTitle" to nm!!,
+                "noteContent" to content,
+                "parent_ids" to arrayListOf<RegisterSchoolRequestDao>(),
+                "profilePicture" to 0,
+                "teacher_ids" to mParentList,
+                "time" to tvPersonalNoteNewNextAlarmContent.text.toString(),
+                "upload_time" to Timestamp(Date())
+            )
+        }
+
+        db.collection("notes").add(
+            data
+        ).addOnSuccessListener {
+            Log.d("PersonalNoteNewActivity", "Note sent successfully")
+        }.addOnFailureListener {
+            Log.d("PersonalNoteNewActivity", "Note is failed to be sent")
         }
 
         val builder = AlertDialog.Builder(this@PersonalNoteNewNextActivity)

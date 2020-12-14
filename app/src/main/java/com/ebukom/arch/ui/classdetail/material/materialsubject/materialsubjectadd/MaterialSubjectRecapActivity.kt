@@ -5,25 +5,29 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
+import android.view.View
 import androidx.core.content.ContextCompat
 import com.ebukom.R
+import com.ebukom.arch.dao.ClassDetailAttachmentDao
+import com.ebukom.arch.ui.classdetail.material.materialsubject.materialsubjectfile.MaterialSubjectFileAdapter
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 import com.kunzisoft.switchdatetime.SwitchDateTimeDialogFragment
-import kotlinx.android.synthetic.main.activity_material_subject_add.*
 import kotlinx.android.synthetic.main.activity_material_subject_recap.*
 import kotlinx.android.synthetic.main.activity_material_subject_recap.toolbar
-import kotlinx.android.synthetic.main.activity_school_photo_edit.*
 import java.text.SimpleDateFormat
 import java.util.*
 
 class MaterialSubjectRecapActivity : AppCompatActivity() {
+    private val mFileList: ArrayList<ClassDetailAttachmentDao> = arrayListOf()
+    lateinit var mFileAdapter: MaterialSubjectFileAdapter
     var isSetLink = false
     var isSetDate = false
     lateinit var material: String
     var dateTime = ""
     val db = FirebaseFirestore.getInstance()
     var classId: String? = null
+    var sectionId: String? = null
     var subjectId: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,6 +37,7 @@ class MaterialSubjectRecapActivity : AppCompatActivity() {
         initToolbar()
 
         subjectId = intent?.extras?.getString("subjectId", subjectId)
+        sectionId = intent?.extras?.getString("sectionId")
 
         btnMaterialSubjectRecapDate.setOnClickListener {
             val dateTimeDialogFragment = SwitchDateTimeDialogFragment.newInstance(
@@ -94,21 +99,39 @@ class MaterialSubjectRecapActivity : AppCompatActivity() {
 
         btnMaterialSubjectRecapDone.setOnClickListener {
 
-            val data = hashMapOf<String, Any>(
-//                "name" to etMaterialSubjectRecapLink.text.toString(),
-                "link" to etMaterialSubjectRecapLink.text.toString(),
-                "date" to Timestamp(Date())
+            mFileList.add(
+                ClassDetailAttachmentDao(
+                    etMaterialSubjectRecapLink.text.toString(),
+                    3,
+                    "",
+                    "",
+                    "",
+                    btnMaterialSubjectRecapDate.text.toString()
+                )
             )
 
-            db.collection("material_subjects").document(subjectId!!).collection("subject_sections")
-                .add(data).addOnSuccessListener {
-                    Log.d("TAG", "Material inserted successfully")
+            val data = hashMapOf<String, Any>(
+                "files" to mFileList,
+                "date" to Timestamp(Date()),
+                "name" to "Recap"
+            )
+
+            loading.visibility = View.VISIBLE
+            db.collection("material_subjects").document(subjectId!!)
+                .collection("subject_sections")
+                .add(data).addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        loading.visibility = View.GONE
+                        finish()
+                    } else {
+                        loading.visibility = View.GONE
+                        finish()
+                    }
                 }.addOnFailureListener {
                     Log.d("TAG", "Material failed to be inserted")
                 }
-//
+
 //            db.collection("material_subjects").document(subjectId!!).collection("subject_sections")
-//                .document()
 //                .add(data).addOnSuccessListener {
 //                    Log.d("TAG", "Material inserted successfully")
 //                }.addOnFailureListener {

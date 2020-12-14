@@ -2,7 +2,6 @@ package com.ebukom.arch.ui.classdetail.material.materialsubject.materialsubjectf
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.os.Handler
 import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AlertDialog

@@ -117,8 +117,9 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
             dateTimeDialogFragment.setOnButtonClickListener(object :
                 SwitchDateTimeDialogFragment.OnButtonClickListener {
                 override fun onPositiveButtonClick(date: Date?) {
-                    btnSchoolAnnouncementNewTime.text = dateFormat.format(date)
                     dateTime = dateFormat.format(date)
+                    btnSchoolAnnouncementNewTime.text = dateTime
+                    btnSchoolAnnouncementNewTime.setTextColor(Color.parseColor("#222222"))
                 }
 
                 override fun onNegativeButtonClick(date: Date?) {}
@@ -139,12 +140,12 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
         btnSchoolAnnouncementNewNext.setOnClickListener {
             val title = etSchoolAnnouncementNewTitle.text.toString()
             val content = etSchoolAnnouncementNewContent.text.toString()
-//            btnSchoolAnnouncementNewTime
             val intent = Intent(this, SchoolAnnouncementNewNextActivity::class.java)
 
             intent.putExtra("classId", classId)
             intent.putExtra("title", title)
             intent.putExtra("content", content)
+            intent.putExtra("eventTime", dateTime)
             intent.putExtra("attachments", mAttachmentList)
             startActivity(intent)
 

@@ -37,7 +37,6 @@ class PersonalNoteNewActivity : AppCompatActivity() {
     private val mNoteList: ArrayList<ClassDetailPersonalNoteDao> = arrayListOf()
     private val mAttachmentList: ArrayList<ClassDetailAttachmentDao> = arrayListOf()
     private val mAttachmentAdapter = ClassDetailAttachmentAdapter(mAttachmentList)
-    private val mTemplateList: ArrayList<ClassDetailTemplateTextDao> = arrayListOf()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -65,12 +64,6 @@ class PersonalNoteNewActivity : AppCompatActivity() {
         // Text watcher
         etPersonalNoteNewContent.addTextChangedListener(textWatcher)
 
-        // Add Template
-        tvPersonalNoteNewTemplateAdd.setOnClickListener {
-            var intent = Intent(this, SchoolAnnouncementAddTemplateActivity::class.java)
-            intent.putExtra("layout", "note")
-            startActivity(intent)
-        }
 
         // To Next Activity
         btnPersonalNoteNewNext.setOnClickListener {

@@ -39,7 +39,7 @@
             android:background="@color/colorSuperDarkBlue"
             android:text="GUNAKAN TEMPLATE PENGUMUMAN"
             android:textColor="@color/colorWhite"
-            android:textFontWeight="700"
+            android:textFontWeight="400"
             android:textSize="@dimen/text_14" />
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -89,11 +89,14 @@
                 android:layout_marginTop="@dimen/size_20"
                 android:background="@drawable/edit_text_rectangle_selector"
                 android:drawableRight="@drawable/ic_calendar_24"
-                android:hint="Tanggal"
+                android:text="Tanggal Acara (Optional)"
                 android:textAllCaps="false"
                 android:textAlignment="textStart"
                 android:paddingHorizontal="@dimen/size_16"
-                android:textSize="@dimen/text_16" />
+                android:textSize="@dimen/text_16"
+                android:textStyle="normal"
+                android:textColor="#C4C4C4"
+                android:textFontWeight="400"/>
             
             <EditText
                 android:id="@+id/etSchoolAnnouncementNewContent"

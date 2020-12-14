@@ -26,8 +26,6 @@ import kotlinx.android.synthetic.main.activity_material_subject_add.*
 import kotlinx.android.synthetic.main.activity_material_subject_add.rvMaterialSubjectAddAttachment
 import kotlinx.android.synthetic.main.activity_material_subject_add.toolbar
 import kotlinx.android.synthetic.main.activity_material_subject_add.tvToolbarTitle
-import kotlinx.android.synthetic.main.activity_material_subject_recap.*
-import kotlinx.android.synthetic.main.activity_material_subject_recap.view.*
 import kotlinx.android.synthetic.main.alert_edit_text.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_class_detail_attachment.view.*
 import kotlinx.android.synthetic.main.item_announcement_attachment.view.*
@@ -126,29 +124,7 @@ class MaterialSubjectAddActivity : AppCompatActivity() {
                     .collection("subject_sections")
                     .add(data).addOnCompleteListener {
                         if (it.isSuccessful) {
-                            var sectionId = it.result?.id
 
-//                            if (mFileList.isEmpty()) {
-//                                finish()
-//                            }
-
-//                            mFileList.forEach {
-//                                db.collection("material_subjects").document(subjectId!!)
-//                                    .collection("subject_sections").document(sectionId!!)
-//                                    .collection("files")
-//                                    .document().update(
-//                                        mapOf<String, Any>(
-//                                            "category" to it.category,
-//                                            "path" to it.path
-//                                        )
-//                                    ).addOnSuccessListener {
-//                                        Log.d("TAG", "Section inserted successfully")
-//                                        finish()
-//                                    }.addOnFailureListener {
-//                                        Log.d("TAG", "Section failed to be inserted")
-//                                        finish()
-//                                    }
-//                            }
                             loading.visibility = View.GONE
                             finish()
                         } else {

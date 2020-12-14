@@ -1,6 +1,7 @@
 package com.ebukom.arch.ui.classdetail.personal.personalsentnote
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,15 +10,22 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ebukom.R
 import com.ebukom.arch.dao.ClassDetailPersonalNoteDao
+import com.ebukom.arch.ui.classdetail.MainClassDetailActivity
 import com.ebukom.arch.ui.classdetail.OnMoreCallback
 import com.ebukom.arch.ui.classdetail.personal.personalnotenew.PersonalNoteAdapter
 import com.ebukom.data.DataDummy
+import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.android.synthetic.main.activity_personal_note_new.*
 import kotlinx.android.synthetic.main.fragment_personal_sent_note.*
 import kotlinx.android.synthetic.main.fragment_personal_sent_note.view.*
+import timber.log.Timber
 
 class PersonalSentNoteFragment : Fragment() {
     private val mNoteList: ArrayList<ClassDetailPersonalNoteDao> = arrayListOf()
     lateinit var mNoteAdapter: PersonalNoteAdapter
+    val db = FirebaseFirestore.getInstance()
+    var nm: String = ""
+    var lev: Long = 0L
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,6 +36,66 @@ class PersonalSentNoteFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        initRecycler(view)
+
+        val sharePref: SharedPreferences = (context as MainClassDetailActivity).getSharedPreferences("EBUKOM", Context.MODE_PRIVATE)
+        val level = sharePref.getLong("level", 0)
+        val uid = sharePref.getString("uid", "")
+        val name = sharePref.getString("name", "")
+        lev = level
+        if (name != null) {
+            nm = name
+        }
+
+        initRecycler(view)
+        checkEmpty(view)
+
+        if (level == 0L) {
+            db.collection("notes").whereArrayContains("parent_ids.userId", uid!!).addSnapshotListener { value, error ->
+                if (error != null) {
+                    Timber.e(error)
+                    return@addSnapshotListener
+                }
+
+                initRecycler(view)
+
+                for (document in value!!.documents) {
+                    mNoteList.add(
+                        ClassDetailPersonalNoteDao(
+                            (document["profilePicture"] as Long).toInt(),
+                            document["noteTitle"] as String,
+                            document["noteContent"] as String,
+                            arrayListOf(),
+                            document["time"] as String,
+                            arrayListOf()
+                        )
+                    )
+                }
+            }
+        } else {
+            db.collection("notes").whereArrayContains("teacher_ids.userId", uid!!).addSnapshotListener { value, error ->
+                if (error != null) {
+                    Timber.e(error)
+                    return@addSnapshotListener
+                }
+
+                for (document in value!!.documents) {
+                    mNoteList.add(
+                        ClassDetailPersonalNoteDao(
+                            (document["profilePicture"] as Long).toInt(),
+                            document["noteTitle"] as String,
+                            document["noteContent"] as String,
+                            arrayListOf(),
+                            document["time"] as String,
+                            arrayListOf()
+                        )
+                    )
+                }
+            }
+        }
+    }
+
+    private fun initRecycler(view: View) {
         /**
          * Note list
          */
@@ -41,9 +109,7 @@ class PersonalSentNoteFragment : Fragment() {
                 )
             adapter = mNoteAdapter
         }
-
-
-
+        mNoteAdapter.notifyDataSetChanged()
         checkEmpty(view)
     }
 

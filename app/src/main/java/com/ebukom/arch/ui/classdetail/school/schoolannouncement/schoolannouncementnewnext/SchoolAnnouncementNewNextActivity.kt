@@ -31,7 +31,8 @@ class SchoolAnnouncementNewNextActivity : AppCompatActivity(),
     lateinit var mClassAdapter: ClassDetailCheckAdapter
     lateinit var title: String
     lateinit var content: String
-    lateinit var dateTime: String
+    var dateTime: String? = null
+    lateinit var eventTime: String
     lateinit var attachmentList: List<ClassDetailAttachmentDao>
     lateinit var sharePref: SharedPreferences
     val db = FirebaseFirestore.getInstance()
@@ -51,6 +52,7 @@ class SchoolAnnouncementNewNextActivity : AppCompatActivity(),
         classId = intent.getStringExtra("classId")
         title = intent?.extras?.getString("title", "") ?: ""
         content = intent?.extras?.getString("content", "") ?: ""
+        eventTime = intent?.extras?.getString("eventTime", "") ?: ""
         attachmentList =
             intent?.getSerializableExtra("attachments") as List<ClassDetailAttachmentDao>
         dateTime = ""
@@ -141,9 +143,11 @@ class SchoolAnnouncementNewNextActivity : AppCompatActivity(),
 
             val sharePref = getSharedPreferences("EBUKOM", Context.MODE_PRIVATE)
             val uid = sharePref.getString("uid", "") as String
-            val teacherName = sharePref.getString("teacherName", "") as String
+            val teacherName = sharePref.getString("name", "") as String
 
-            val data = hashMapOf<String, Any>(
+            if (eventTime == null) eventTime = Timestamp(Date()).toString()
+
+            val data = hashMapOf(
                 "content" to content,
                 "teacher" to mapOf<String, Any>(
                     "name" to teacherName,
@@ -151,7 +155,8 @@ class SchoolAnnouncementNewNextActivity : AppCompatActivity(),
                 ),
                 "time" to Timestamp(Date()),
                 "title" to title,
-                "attachments" to attachmentList
+                "attachments" to attachmentList,
+                "event_time" to eventTime
             )
 
             loading.visibility = View.VISIBLE
@@ -160,33 +165,6 @@ class SchoolAnnouncementNewNextActivity : AppCompatActivity(),
                     .add(data).addOnCompleteListener {
                         if (it.isSuccessful) {
                             val announcementId = it.result?.id!!
-
-//                            if (attachmentList.isEmpty()) {
-//                                Log.d("TAG", "announcement inserted")
-//                                loading.visibility = View.GONE
-//                                finish()
-//                            }
-//
-//
-//
-//                            attachmentList.forEach {
-//                                db.collection("classes").document(classId!!)
-//                                    .collection("announcements")
-//                                    .document(announcementId).collection("attachments").add(
-//                                        mapOf<String, Any>(
-//                                            "category" to it.category,
-//                                            "path" to it.path
-//                                        )
-//                                    ).addOnSuccessListener {
-//                                        Log.d("TAG", "announcement inserted")
-//                                        loading.visibility = View.GONE
-//                                        finish()
-//                                    }.addOnFailureListener {
-//                                        Log.d("TAG", "announcement failed")
-//                                        loading.visibility = View.GONE
-//                                        finish()
-//                                    }
-//                            }
                             loading.visibility = View.GONE
                         } else {
                             Log.d("TAG", "announcement inserted")

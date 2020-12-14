@@ -12,8 +12,6 @@ import com.ebukom.arch.ui.login.LoginActivity
 import com.ebukom.arch.ui.main.MainActivity
 import com.ebukom.arch.ui.welcome.WelcomeActivity
 import com.ebukom.data.DataDummy
-import com.ebukom.data.Databases
-//import com.ebukom.data.buildClassDummy
 import com.ebukom.data.buildParentNameDummy
 import com.ebukom.data.buildParentNoteDummy
 import com.google.firebase.firestore.FirebaseFirestore

@@ -112,4 +112,9 @@
         android:textFontWeight="500"
         android:textSize="@dimen/text_14" />
 
+    <include
+        android:id="@+id/loading"
+        layout="@layout/layout_loading"
+        android:visibility="gone" />
+
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

@@ -5,6 +5,7 @@ import android.content.Context
 import android.content.Intent
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
+import com.ebukom.R
 import com.ebukom.arch.dao.ChooseClassDao
 import com.ebukom.arch.ui.classdetail.MainClassDetailActivity
 import com.google.firebase.firestore.FieldValue
@@ -13,6 +14,7 @@ import kotlinx.android.synthetic.main.item_class.view.*
 
 class ChooseClassViewHolder(var view: View, var context: Context) : RecyclerView.ViewHolder(view) {
     val db = FirebaseFirestore.getInstance()
+    var bg: Int = 0
 
     fun onBind(item: ChooseClassDao) {
         view.tvItemClassGrade.text = item?.classNumber
@@ -20,7 +22,38 @@ class ChooseClassViewHolder(var view: View, var context: Context) : RecyclerView
         view.tvItemClassName.text = item?.className
         view.tvItemClassTeacher.text = item?.teacher
         view.tvItemClassTeacher.setTextColor(item.colorTheme!!)
-        view.ivItemClass.setImageResource(item?.background)
+
+        when (item?.className) {
+            "Krypton" -> {
+                bg = R.drawable.bg_class_krypton
+            }
+            "Xenon" -> {
+                bg = R.drawable.bg_class_xenon
+            }
+            "Argon" -> {
+                bg = R.drawable.bg_class_argon
+            }
+            "Titanium" -> {
+                bg = R.drawable.bg_class_titanium
+            }
+            "Neon" -> {
+                bg = R.drawable.bg_class_neon
+            }
+            "Helium" -> {
+                bg = R.drawable.bg_class_helium
+            }
+            "Argentum" -> {
+                bg = R.drawable.bg_class_argentum
+            }
+            "Aurum" -> {
+                bg = R.drawable.bg_class_aurum
+            }
+            else -> {
+                bg = R.drawable.bg_class_selenium
+            }
+        }
+
+        view.ivItemClass.setImageResource(bg)
 
         if (context is ChooseClassActivity) {
             view.ibItemClass.setOnClickListener {
