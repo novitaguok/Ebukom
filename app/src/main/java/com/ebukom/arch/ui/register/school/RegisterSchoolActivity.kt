@@ -169,8 +169,6 @@ class RegisterSchoolActivity : AppCompatActivity() {
                             .addOnFailureListener {
                                 Timber.e(it)
                             }
-                    } else {
-                        Toast.makeText(this, "Gambar Kosong", Toast.LENGTH_SHORT).show()
                     }
                 }
             }

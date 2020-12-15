@@ -1,6 +1,8 @@
 package com.ebukom.arch.ui.register.parent
 
+import android.app.Activity
 import android.content.Intent
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
@@ -11,21 +13,28 @@ import com.ebukom.R
 import com.ebukom.arch.dao.firebase.RegisterParentRequestDao
 import com.ebukom.arch.ui.forgotpassword.verification.VerificationActivity
 import com.ebukom.arch.ui.login.LoginActivity
+import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_register_parent.*
 import kotlinx.android.synthetic.main.activity_register_parent.etRegisterParentName
 import kotlinx.android.synthetic.main.activity_register_parent.etRegisterParentPhone
 import kotlinx.android.synthetic.main.activity_register_parent.toolbar
 import kotlinx.android.synthetic.main.activity_register_school.*
 import kotlinx.android.synthetic.main.bottom_sheet_register_parent.view.*
+import pub.devrel.easypermissions.EasyPermissions
+import timber.log.Timber
+import java.io.File
 
 class RegisterParentActivity : AppCompatActivity() {
 
     lateinit var auth: FirebaseAuth
     lateinit var db: FirebaseFirestore
+    private var imagePath: String? = null
+    private var imageFile: File? = null
     var eskul: ArrayList<String> = arrayListOf()
     private var allEskul: String? = ""
 
@@ -73,13 +82,6 @@ class RegisterParentActivity : AppCompatActivity() {
             bottomSheetDialog.dismiss()
         }
 
-//        if (eskul.isNotEmpty()) {
-//            isChosen = true
-//            mParentList.clear()
-//            addData(allEskul!!, mClass)
-//            mParentAdapter.notifyDataSetChanged()
-//        }
-
         register()
 
         /**
@@ -117,19 +119,35 @@ class RegisterParentActivity : AppCompatActivity() {
     private fun register() {
         btnRegisterParentRegister.setOnClickListener {
             if (isValid()) {
-                val data = RegisterParentRequestDao(
-                    etRegisterParentName.text.toString(),
-                    etRegisterParentChild.text.toString(),
-                    reformatPhoneNumber(etRegisterParentPhone.text.toString())!!,
-                    eskul,
-                    etRegisterParentPassword.text.toString(),
-                    "",
-                    1
-                )
 
-                val intent = Intent(this, VerificationActivity::class.java)
-                intent.putExtra("layout", VerificationActivity.LAYOUT_REGISTER)
-                intent.putExtra("data", data)
+                if (reformatPhoneNumber(etRegisterSchoolPhone.text.toString()) != null) {
+                    if (imageFile != null) {
+                        FirebaseStorage.getInstance()
+                            .getReference("images/profile/")
+                            .putFile(Uri.fromFile(imageFile))
+                            .addOnSuccessListener {
+                                val data = RegisterParentRequestDao(
+                                    etRegisterParentName.text.toString(),
+                                    etRegisterParentChild.text.toString(),
+                                    reformatPhoneNumber(etRegisterParentPhone.text.toString())!!,
+                                    eskul,
+                                    etRegisterParentPassword.text.toString(),
+                                    "",
+                                    1
+                                )
+
+                                val intent = Intent(this, VerificationActivity::class.java)
+                                intent.putExtra("layout", VerificationActivity.LAYOUT_REGISTER)
+                                intent.putExtra("data", data)
+                                startActivity(intent)
+                            }
+                            .addOnFailureListener {
+                                Timber.e(it)
+                            }
+                    } else {
+                        Toast.makeText(this, "Gambar Kosong", Toast.LENGTH_SHORT).show()
+                    }
+                }
             }
         }
     }
@@ -144,42 +162,6 @@ class RegisterParentActivity : AppCompatActivity() {
         } else {
             return null
         }
-    }
-
-    /**
-     * Insert data to Firestore
-     */
-    private fun insertData(user: FirebaseUser, eskul: ArrayList<String>) {
-
-        if (reformatPhoneNumber(etRegisterParentPhone.text.toString()) != null) {
-
-            val userInfo: MutableMap<String, Any> = HashMap()
-
-            userInfo["name"] = etRegisterParentName.text.toString()
-            userInfo["childNames"] = etRegisterParentChild.text.toString()
-            userInfo["phone"] = etRegisterParentPhone.text.toString()
-            userInfo["eskul"] = eskul
-            userInfo["level"] = 1 // 1 for parent
-
-//        userInfo["role"] = ""
-
-            db.collection("users").document(user.uid).set(userInfo).addOnSuccessListener {
-                Toast.makeText(
-                    this@RegisterParentActivity,
-                    "Registration success",
-                    Toast.LENGTH_LONG
-                )
-                    .show()
-
-                val intent = Intent(this, VerificationActivity::class.java)
-                intent.putExtra("role", 1)
-                startActivity(intent)
-                finish()
-            }.addOnFailureListener {
-                // TODO if Failure
-            }
-        }
-
     }
 
     /**
@@ -239,5 +221,31 @@ class RegisterParentActivity : AppCompatActivity() {
                 tvRegisterParentConfirmPasswordErrorMessage.visibility = View.GONE
             }
         }
+    }
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == ImagePicker.REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                val fileUri = data?.data
+                imageFile = ImagePicker.getFile(data)
+                imagePath = ImagePicker.getFilePath(data)
+
+                ivRegisterSchoolProfilePicture.setImageURI(fileUri)
+            } else if (resultCode == ImagePicker.RESULT_ERROR) {
+                Timber.e(ImagePicker.getError(data))
+            } else {
+                Timber.e("Failed get Image")
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
     }
 }
