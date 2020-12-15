@@ -44,7 +44,7 @@ class PersonalNoteNewActivity : AppCompatActivity() {
 
         val sharePref: SharedPreferences = getSharedPreferences("EBUKOM", Context.MODE_PRIVATE)
 
-        if (sharePref.getInt("level", 0) == 1) {
+        if (sharePref.getLong("level", 0) == 1L) {
             tvPersonalNoteNewTitle.text = "Buat Catatan untuk Guru"
         }
 

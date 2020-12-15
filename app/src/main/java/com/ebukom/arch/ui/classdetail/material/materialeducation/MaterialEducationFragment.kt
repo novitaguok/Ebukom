@@ -34,7 +34,7 @@ class MaterialEducationFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         // Shared Preference
         val sharePref: SharedPreferences = activity!!.getSharedPreferences("EBUKOM", Context.MODE_PRIVATE)
-        if(sharePref.getInt("level", 0) == 1){
+        if(sharePref.getLong("level", 0) == 1L){
             btnMaterialEducationNew.visibility = View.GONE
         }
 

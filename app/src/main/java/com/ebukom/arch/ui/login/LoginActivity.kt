@@ -189,8 +189,12 @@ class LoginActivity : AppCompatActivity() {
                 putBoolean("isLogin", true)
                 putString("uid", uid)
                 putString("name", it["name"] as String)
-                putLong("level",it["level"] as Long)
+                putLong("level", it["level"] as Long)
             }.apply()
+
+            if (!sharePref.getString("token", null).isNullOrEmpty())
+                db.collection("users").document(uid)
+                    .update("token", sharePref.getString("token", null))
 
             startActivity(Intent(this, ChooseClassActivity::class.java))
             finish()

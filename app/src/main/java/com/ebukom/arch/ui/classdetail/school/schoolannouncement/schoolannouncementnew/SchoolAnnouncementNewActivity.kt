@@ -99,7 +99,7 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
 
             dateTimeDialogFragment.setTimeZone(TimeZone.getDefault())
 
-            val dateFormat = SimpleDateFormat("d MMM yyyy HH:mm", Locale.getDefault())
+            val dateFormat = SimpleDateFormat("EEEE, d MMM yyyy HH:mm", Locale("id"))
 
             dateTimeDialogFragment.startAtCalendarView()
             dateTimeDialogFragment.set24HoursMode(true)
@@ -108,7 +108,7 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
 
             try {
                 dateTimeDialogFragment.simpleDateMonthAndDayFormat =
-                    SimpleDateFormat("dd MMMM", Locale.getDefault())
+                    SimpleDateFormat("EEE, dd MMMM", Locale("id"))
             } catch (e: SwitchDateTimeDialogFragment.SimpleDateMonthAndDayFormatException) {
                 Log.e("error", e.message)
             }

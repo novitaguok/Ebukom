@@ -43,7 +43,7 @@ class MaterialSubjectNewActivity : AppCompatActivity() {
         setContentView(R.layout.activity_material_subject_new)
 
         val sharePref: SharedPreferences = this.getSharedPreferences("EBUKOM", Context.MODE_PRIVATE)
-        if (sharePref.getInt("level", 0) == 1) {
+        if (sharePref.getLong("level", 0) == 1L) {
             btnMaterialSubject.visibility = View.GONE
         }
 

@@ -1,12 +1,14 @@
 package com.ebukom.arch.ui.register.school
 
+import android.Manifest
+import android.app.Activity
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.Typeface
+import android.net.Uri
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.util.TypedValue
 import android.view.View
 import android.widget.Toast
@@ -16,17 +18,23 @@ import com.ebukom.arch.dao.firebase.RegisterRolesDao
 import com.ebukom.arch.dao.firebase.RegisterSchoolRequestDao
 import com.ebukom.arch.ui.forgotpassword.verification.VerificationActivity
 import com.ebukom.arch.ui.login.LoginActivity
+import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_register_school.*
-import kotlinx.android.synthetic.main.activity_register_school.toolbar
 import kotlinx.android.synthetic.main.bottom_sheet_register_school.*
 import kotlinx.android.synthetic.main.bottom_sheet_register_school.view.*
+import pub.devrel.easypermissions.EasyPermissions
+import timber.log.Timber
+import java.io.File
+
 
 class RegisterSchoolActivity : AppCompatActivity() {
 
+    private var imagePath: String? = null
+    private var imageFile: File? = null
     lateinit var auth: FirebaseAuth
     lateinit var db: FirebaseFirestore
     var role: String = ""
@@ -51,6 +59,22 @@ class RegisterSchoolActivity : AppCompatActivity() {
         bottomSheetDialog.setContentView(view)
         btnRegisterSchoolRole.setOnClickListener {
             bottomSheetDialog.show()
+        }
+        ivRegisterSchoolProfilePicture.setOnClickListener {
+            Toast.makeText(this, "Clicked", Toast.LENGTH_SHORT).show()
+            val perms = arrayOf(
+                Manifest.permission.CAMERA
+            )
+            if (EasyPermissions.hasPermissions(this, *perms)) {
+                ImagePicker.with(this)
+                    .compress(1024)
+                    .maxResultSize(1080, 1080)
+                    .start()
+            } else {
+                EasyPermissions.requestPermissions(
+                    this, "camera",
+                    611, *perms)
+            }
         }
         view.rbGroupRegisterSchool.setOnCheckedChangeListener { _, checkedId ->
             if (R.id.rbRegisterSchoolBottomSheetKrypton == checkedId)
@@ -83,16 +107,12 @@ class RegisterSchoolActivity : AppCompatActivity() {
             btnRegisterSchoolRole.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13F)
             btnRegisterSchoolRole.setTypeface(btnRegisterSchoolRole.typeface, Typeface.NORMAL)
 
+
             bottomSheetDialog.dismiss()
         }
 
         register()
 
-//        btnRegisterSchoolRegister.setOnClickListener {
-//            val intent = Intent(this, VerificationActivity::class.java)
-//            intent.putExtra("Layout", 1)
-//            startActivity(intent)
-//        }
         btnRegisterSchoolLogin.setOnClickListener {
             startActivity(Intent(this, LoginActivity::class.java))
         }
@@ -125,21 +145,33 @@ class RegisterSchoolActivity : AppCompatActivity() {
         btnRegisterSchoolRegister.setOnClickListener {
             if (isValid()) {
                 if (reformatPhoneNumber(etRegisterSchoolPhone.text.toString()) != null) {
-                    val data = RegisterSchoolRequestDao(
-                        etRegisterSchoolName.text.toString(),
-                        RegisterRolesDao(
-                            "",
-                            role
-                        ),
-                        reformatPhoneNumber(etRegisterSchoolPhone.text.toString())!!,
-                        etRegisterSchoolPassword.text.toString(),
-                        "",
-                        0
-                    )
-                    val intent = Intent(this, VerificationActivity::class.java)
-                    intent.putExtra("layout", VerificationActivity.LAYOUT_REGISTER)
-                    intent.putExtra("data", data)
-                    startActivity(intent)
+                    if (imageFile != null) {
+                        FirebaseStorage.getInstance()
+                            .getReference("images/profile/")
+                            .putFile(Uri.fromFile(imageFile))
+                            .addOnSuccessListener {
+                                val data = RegisterSchoolRequestDao(
+                                    etRegisterSchoolName.text.toString(),
+                                    RegisterRolesDao(
+                                        "",
+                                        role
+                                    ),
+                                    reformatPhoneNumber(etRegisterSchoolPhone.text.toString())!!,
+                                    etRegisterSchoolPassword.text.toString(),
+                                    it.toString(),
+                                    0
+                                )
+                                val intent = Intent(this, VerificationActivity::class.java)
+                                intent.putExtra("layout", VerificationActivity.LAYOUT_REGISTER)
+                                intent.putExtra("data", data)
+                                startActivity(intent)
+                            }
+                            .addOnFailureListener {
+                                Timber.e(it)
+                            }
+                    } else {
+                        Toast.makeText(this, "Gambar Kosong", Toast.LENGTH_SHORT).show()
+                    }
                 }
             }
         }
@@ -213,5 +245,32 @@ class RegisterSchoolActivity : AppCompatActivity() {
                 tvRegisterSchoolConfirmPasswordErrorMessage.visibility = View.GONE
             }
         }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (requestCode == ImagePicker.REQUEST_CODE) {
+            if (resultCode == Activity.RESULT_OK) {
+                val fileUri = data?.data
+                imageFile = ImagePicker.getFile(data)
+                imagePath = ImagePicker.getFilePath(data)
+
+                ivRegisterSchoolProfilePicture.setImageURI(fileUri)
+            } else if (resultCode == ImagePicker.RESULT_ERROR) {
+                Timber.e(ImagePicker.getError(data))
+            } else {
+                Timber.e("Failed get Image")
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data)
+    }
+
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<out String>,
+        grantResults: IntArray
+    ) {
+        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
+
+        EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
     }
 }

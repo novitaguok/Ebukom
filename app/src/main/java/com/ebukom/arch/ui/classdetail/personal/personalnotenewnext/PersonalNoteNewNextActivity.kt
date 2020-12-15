@@ -16,6 +16,7 @@ import com.ebukom.arch.dao.ClassDetailPersonalNoteDao
 import com.ebukom.arch.dao.firebase.RegisterSchoolRequestDao
 import com.ebukom.arch.ui.classdetail.ClassDetailCheckAdapter
 import com.ebukom.arch.ui.classdetail.ClassDetailCheckThumbnailAdapter
+import com.ebukom.arch.ui.classdetail.MainClassDetailActivity
 import com.ebukom.data.DataDummy
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
@@ -63,13 +64,11 @@ class PersonalNoteNewNextActivity : AppCompatActivity(), ClassDetailCheckAdapter
 
             // Share Personal Note Button
             btnPersonalNoteNewNextDone.setOnClickListener {
-                var content = etPersonalNoteNewContent.text.toString()
                 sendNote(content)
             }
         } else {
             // Share Personal Note Button
             btnPersonalNoteNewNextDone.setOnClickListener {
-                var content = etPersonalNoteNewContent.text.toString()
                 sendNote(content)
             }
 
@@ -203,13 +202,15 @@ class PersonalNoteNewNextActivity : AppCompatActivity(), ClassDetailCheckAdapter
             }
         }
 
+        val sharePref: SharedPreferences = getSharedPreferences("EBUKOM", Context.MODE_PRIVATE)
+        val uid = sharePref.getString("uid", "") as String
         var data = hashMapOf<String, Any>()
         if (lev == 0L) {
             data = hashMapOf(
                 "noteContent" to content,
-                "parent_ids" to mParentList,
+                "parent_ids" to mParentList.map { it.userId },
                 "profilePicture" to 0,
-                "teacher_ids" to arrayListOf<RegisterSchoolRequestDao>(),
+                "teacher_ids" to arrayListOf<String>(uid),
                 "time" to tvPersonalNoteNewNextAlarmContent.text.toString(),
                 "upload_time" to Timestamp(Date())
             )
@@ -217,9 +218,9 @@ class PersonalNoteNewNextActivity : AppCompatActivity(), ClassDetailCheckAdapter
             data = hashMapOf(
                 "noteTitle" to nm!!,
                 "noteContent" to content,
-                "parent_ids" to arrayListOf<RegisterSchoolRequestDao>(),
+                "parent_ids" to arrayListOf<String>(uid),
                 "profilePicture" to 0,
-                "teacher_ids" to mParentList,
+                "teacher_ids" to mParentList.map { it.userId },
                 "time" to tvPersonalNoteNewNextAlarmContent.text.toString(),
                 "upload_time" to Timestamp(Date())
             )
@@ -232,6 +233,21 @@ class PersonalNoteNewNextActivity : AppCompatActivity(), ClassDetailCheckAdapter
         }.addOnFailureListener {
             Log.d("PersonalNoteNewActivity", "Note is failed to be sent")
         }
+
+
+        // Send Notification
+        var notifData = hashMapOf<String, Any>(
+            "body" to content,
+            "title" to sharePref.getString("name","Teacher") as String,
+            "date" to Timestamp(Date()),
+            "pictures" to "",
+            "from" to uid,
+            "to" to mParentList.map { it.userId },
+            "isRead" to false
+        )
+
+        db.collection("notifications").add(notifData)
+
 
         val builder = AlertDialog.Builder(this@PersonalNoteNewNextActivity)
 

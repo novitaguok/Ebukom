@@ -3,6 +3,7 @@ package com.ebukom.arch.ui.classdetail.personal.personalsentnote
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -51,45 +52,73 @@ class PersonalSentNoteFragment : Fragment() {
         checkEmpty(view)
 
         if (level == 0L) {
-            db.collection("notes").whereArrayContains("parent_ids.userId", uid!!).addSnapshotListener { value, error ->
+            db.collection("notes").whereArrayContains("teacher_ids", uid!!).addSnapshotListener { value, error ->
                 if (error != null) {
                     Timber.e(error)
                     return@addSnapshotListener
                 }
 
-                initRecycler(view)
-
+                mNoteList.clear()
                 for (document in value!!.documents) {
-                    mNoteList.add(
-                        ClassDetailPersonalNoteDao(
-                            (document["profilePicture"] as Long).toInt(),
-                            document["noteTitle"] as String,
+                    val listUserIds = document["teacher_ids"] as List<String>
+                    if (listUserIds.size == 1) {
+                        val data = ClassDetailPersonalNoteDao(
+                            0,
+                            "",
                             document["noteContent"] as String,
                             arrayListOf(),
                             document["time"] as String,
                             arrayListOf()
                         )
-                    )
+
+                        db.collection("users").document(listUserIds[0]).get()
+                            .addOnSuccessListener { user ->
+                                Log.d("DEBUG", "onViewCreated: "+user["name"].toString())
+                                if(user != null) {
+                                    data.noteTitle = user.get("name") as String
+                                    data.profilePicture = 0
+                                    mNoteList.add(data)
+
+                                    mNoteAdapter.notifyDataSetChanged()
+                                    checkEmpty(view!!)
+                                }
+                            }
+                    }
                 }
             }
         } else {
-            db.collection("notes").whereArrayContains("teacher_ids.userId", uid!!).addSnapshotListener { value, error ->
+            db.collection("notes").whereArrayContains("parent_ids", uid!!).addSnapshotListener { value, error ->
                 if (error != null) {
                     Timber.e(error)
                     return@addSnapshotListener
                 }
 
+                mNoteList.clear()
                 for (document in value!!.documents) {
-                    mNoteList.add(
-                        ClassDetailPersonalNoteDao(
-                            (document["profilePicture"] as Long).toInt(),
-                            document["noteTitle"] as String,
+                    val listUserIds = document["parent_ids"] as List<String>
+                    if (listUserIds.size == 1) {
+                        val data = ClassDetailPersonalNoteDao(
+                            0,
+                            "",
                             document["noteContent"] as String,
                             arrayListOf(),
                             document["time"] as String,
                             arrayListOf()
                         )
-                    )
+
+                        db.collection("users").document(listUserIds[0]).get()
+                            .addOnSuccessListener { user ->
+                                Log.d("DEBUG", "onViewCreated: "+user["name"].toString())
+                                if(user != null) {
+                                    data.noteTitle = user.get("name") as String
+                                    data.profilePicture = 0
+                                    mNoteList.add(data)
+
+                                    mNoteAdapter.notifyDataSetChanged()
+                                    checkEmpty(view!!)
+                                }
+                            }
+                    }
                 }
             }
         }

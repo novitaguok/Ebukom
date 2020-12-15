@@ -50,7 +50,7 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
          * Share preference
          */
         val sharePref: SharedPreferences = getSharedPreferences("EBUKOM", Context.MODE_PRIVATE)
-        if (sharePref.getInt("level", 0) == 1) {
+        if (sharePref.getLong("level", 0) == 1L) {
             ivAnnouncementDetailMoreButton.visibility = View.GONE
         }
 

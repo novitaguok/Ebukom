@@ -3,6 +3,7 @@ package com.ebukom.arch.ui.classdetail.personal.personalacceptednote
 import android.content.Context
 import android.content.SharedPreferences
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -37,7 +38,11 @@ class PersonalAcceptedNoteFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
-        val sharePref: SharedPreferences = (context as MainClassDetailActivity).getSharedPreferences("EBUKOM", Context.MODE_PRIVATE)
+        val sharePref: SharedPreferences =
+            (context as MainClassDetailActivity).getSharedPreferences(
+                "EBUKOM",
+                Context.MODE_PRIVATE
+            )
         val level = sharePref.getLong("level", 0)
         val uid = sharePref.getString("uid", "")
         val name = sharePref.getString("name", "")
@@ -50,47 +55,77 @@ class PersonalAcceptedNoteFragment : Fragment() {
         checkEmpty(view)
 
         if (level == 0L) {
-            db.collection("notes").whereArrayContains("parent_ids.userId", uid!!).addSnapshotListener { value, error ->
-                if (error != null) {
-                    Timber.e(error)
-                    return@addSnapshotListener
-                }
+            db.collection("notes").whereArrayContains("parent_ids", uid!!)
+                .addSnapshotListener { value, error ->
+                    if (error != null) {
+                        Timber.e(error)
+                        return@addSnapshotListener
+                    }
 
-                initRecycler()
+                    initRecycler()
+                    mPersonalNoteList.clear()
+                    for (document in value!!.documents) {
+                        val listUserIds = document["parent_ids"] as List<String>
+                        if (listUserIds.size == 1) {
+                            val data = ClassDetailPersonalNoteDao(
+                                0,
+                                "",
+                                document["noteContent"] as String,
+                                arrayListOf(),
+                                document["time"] as String,
+                                arrayListOf()
+                            )
 
-                for (document in value!!.documents) {
-                    mPersonalNoteList.add(
-                        ClassDetailPersonalNoteDao(
-                            (document["profilePicture"] as Long).toInt(),
-                            document["noteTitle"] as String,
-                            document["noteContent"] as String,
-                            arrayListOf(),
-                            document["time"] as String,
-                            arrayListOf()
-                        )
-                    )
+                            db.collection("users").document(listUserIds[0]).get()
+                                .addOnSuccessListener { user ->
+                                    Log.d("DEBUG", "onViewCreated: " + user["name"].toString())
+                                    if (user != null) {
+                                        data.noteTitle = user.get("name") as String
+                                        data.profilePicture = 0
+                                        mPersonalNoteList.add(data)
+
+                                        mPersonalNoteAdapter.notifyDataSetChanged()
+                                        checkEmpty(view)
+                                    }
+                                }
+                        }
+                    }
                 }
-            }
         } else {
-            db.collection("notes").whereArrayContains("parent_ids.userId", uid!!).addSnapshotListener { value, error ->
-                if (error != null) {
-                    Timber.e(error)
-                    return@addSnapshotListener
-                }
+            db.collection("notes").whereArrayContains("teacher_ids", uid!!)
+                .addSnapshotListener { value, error ->
+                    if (error != null) {
+                        Timber.e(error)
+                        return@addSnapshotListener
+                    }
 
-                for (document in value!!.documents) {
-                    mPersonalNoteList.add(
-                        ClassDetailPersonalNoteDao(
-                            (document["profilePicture"] as Long).toInt(),
-                            document["noteTitle"] as String,
-                            document["noteContent"] as String,
-                            arrayListOf(),
-                            document["time"] as String,
-                            arrayListOf()
-                        )
-                    )
+                    for (document in value!!.documents) {
+                        val listUserIds = document["teacher_ids"] as List<String>
+                        if (listUserIds.size == 1) {
+                            val data = ClassDetailPersonalNoteDao(
+                                0,
+                                "",
+                                document["noteContent"] as String,
+                                arrayListOf(),
+                                document["time"] as String,
+                                arrayListOf()
+                            )
+
+                            db.collection("users").document(listUserIds[0]).get()
+                                .addOnSuccessListener { user ->
+                                    Log.d("DEBUG", "onViewCreated: " + user["name"].toString())
+                                    if (user != null) {
+                                        data.noteTitle = user.get("name") as String
+                                        data.profilePicture = 0
+                                        mPersonalNoteList.add(data)
+
+                                        mPersonalNoteAdapter.notifyDataSetChanged()
+                                        checkEmpty(view)
+                                    }
+                                }
+                        }
+                    }
                 }
-            }
         }
 
 //        mPersonalNoteList.clear()
@@ -104,7 +139,7 @@ class PersonalAcceptedNoteFragment : Fragment() {
         rvPersonalAcceptedNote.apply {
             layoutManager =
                 LinearLayoutManager(
-                    this.context,
+                    activity,
                     LinearLayoutManager.VERTICAL,
                     false
                 )
