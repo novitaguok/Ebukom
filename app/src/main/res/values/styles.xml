@@ -1,7 +1,7 @@
 <resources>
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
-        <item name="colorPrimary">@color/colorPrimary</item>
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar.Bridge">
+        <item name="colorPrimary">@color/colorSuperDarkBlue</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorRed</item>
     </style>
@@ -51,8 +51,8 @@
         <item name="colorControlActivated">@color/colorRed</item>
     </style>
 
-    <!-- Customize DateTime Picker-->
-    <style name="Theme.SwitchDateTime" parent="Theme.AppCompat.Light.DarkActionBar">
+    <!-- Customize Kunzisoft DateTime Picker-->
+    <style name="Theme.SwitchDateTime" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="colorPrimary">@color/colorRed</item>
         <item name="colorPrimaryDark">@color/colorSuperDarkBlue</item>
         <item name="android:textColorPrimaryInverse">@color/colorSuperDarkBlue</item>

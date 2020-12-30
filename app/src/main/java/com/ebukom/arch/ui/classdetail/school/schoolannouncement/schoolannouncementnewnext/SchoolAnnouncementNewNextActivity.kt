@@ -96,7 +96,7 @@ class SchoolAnnouncementNewNextActivity : AppCompatActivity(),
             if (!isChecked) dateTime = ""
             else {
                 val dateTimeDialogFragment = SwitchDateTimeDialogFragment.newInstance(
-                    "Wali murid akan diingatkan kembali pada",
+                    "Diingatkan kembali pada",
                     "SELESAI",
                     "BATALKAN"
                 )
@@ -145,7 +145,8 @@ class SchoolAnnouncementNewNextActivity : AppCompatActivity(),
             val uid = sharePref.getString("uid", "") as String
             val teacherName = sharePref.getString("name", "") as String
 
-            if (eventTime == null) eventTime = Timestamp(Date()).toString()
+            if (eventTime == "") eventTime = Timestamp(Date()).toString()
+//            else eventTime =
 
             val data = hashMapOf(
                 "content" to content,
@@ -166,6 +167,7 @@ class SchoolAnnouncementNewNextActivity : AppCompatActivity(),
                         if (it.isSuccessful) {
                             val announcementId = it.result?.id!!
                             loading.visibility = View.GONE
+                            finish()
                         } else {
                             Log.d("TAG", "announcement inserted")
                             loading.visibility = View.GONE

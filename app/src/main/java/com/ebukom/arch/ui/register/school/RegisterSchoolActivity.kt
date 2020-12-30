@@ -60,7 +60,7 @@ class RegisterSchoolActivity : AppCompatActivity() {
         btnRegisterSchoolRole.setOnClickListener {
             bottomSheetDialog.show()
         }
-        ivRegisterSchoolProfilePicture.setOnClickListener {
+        tvRegisterSchoolAddPhoto.setOnClickListener {
             Toast.makeText(this, "Clicked", Toast.LENGTH_SHORT).show()
             val perms = arrayOf(
                 Manifest.permission.CAMERA

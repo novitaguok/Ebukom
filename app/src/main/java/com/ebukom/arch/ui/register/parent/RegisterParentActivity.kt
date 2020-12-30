@@ -1,5 +1,6 @@
 package com.ebukom.arch.ui.register.parent
 
+import android.Manifest
 import android.app.Activity
 import android.content.Intent
 import android.net.Uri
@@ -49,6 +50,22 @@ class RegisterParentActivity : AppCompatActivity() {
          */
         auth = FirebaseAuth.getInstance() // Firebase authentication
         db = FirebaseFirestore.getInstance() // Firestore
+        tvRegisterParentAddPhoto.setOnClickListener {
+            Toast.makeText(this, "Clicked", Toast.LENGTH_SHORT).show()
+            val perms = arrayOf(
+                Manifest.permission.CAMERA
+            )
+            if (EasyPermissions.hasPermissions(this, *perms)) {
+                ImagePicker.with(this)
+                    .compress(1024)
+                    .maxResultSize(1080, 1080)
+                    .start()
+            } else {
+                EasyPermissions.requestPermissions(
+                    this, "camera",
+                    611, *perms)
+            }
+        }
 
         /**
          * Eskul form field
@@ -119,7 +136,6 @@ class RegisterParentActivity : AppCompatActivity() {
     private fun register() {
         btnRegisterParentRegister.setOnClickListener {
             if (isValid()) {
-
                 if (reformatPhoneNumber(etRegisterSchoolPhone.text.toString()) != null) {
                     if (imageFile != null) {
                         FirebaseStorage.getInstance()

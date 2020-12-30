@@ -68,7 +68,8 @@ class SchoolAnnouncementActivity : AppCompatActivity() {
                                 document["teacher.name"] as String,
                                 document.id,
                                 (document["time"] as Timestamp),
-                                classId!!
+                                classId!!,
+                                document["event_time"] as String?
                             )
                         )
                     }
@@ -82,9 +83,7 @@ class SchoolAnnouncementActivity : AppCompatActivity() {
      * Filter data by month
      */
     private fun filterData() {
-        mAnnouncementList.sortBy {
-            it.timestamp.seconds
-        }
+
         val arrayOfMonth = listOf<String>(
             "Januari",
             "Februari",
@@ -109,6 +108,10 @@ class SchoolAnnouncementActivity : AppCompatActivity() {
             "Sabtu"
         )
 
+        mAnnouncementList.sortBy {
+            it.timestamp.seconds
+        }
+
         val groupedList = mAnnouncementList.groupBy {
             Triple(
                 it.timestamp.toDate().day,
@@ -116,7 +119,6 @@ class SchoolAnnouncementActivity : AppCompatActivity() {
                 it.timestamp.toDate().month
             )
         }
-
 
         mAnnouncementMonthList.clear()
         var pointerMonth = 0
