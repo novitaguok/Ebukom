@@ -8,5 +8,6 @@ data class ClassDetailPersonalNoteDao(
     var noteContent: String,
     var comments : List<ClassDetailAnnouncementCommentDao> = arrayListOf(),
     var time: String,
-    var attachments: List<ClassDetailAttachmentDao> = arrayListOf()
+    var attachments: List<ClassDetailAttachmentDao> = arrayListOf(),
+    var noteId: String = ""
 ) : Serializable

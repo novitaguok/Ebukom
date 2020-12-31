@@ -9,13 +9,9 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ebukom.R
 import com.ebukom.arch.dao.ClassDetailMemberContactDao
-import com.ebukom.arch.dao.ClassDetailPersonalNoteDao
 import com.ebukom.arch.ui.classdetail.OnMoreCallback
 import com.ebukom.arch.ui.classdetail.member.MemberContactAdapter
-import com.ebukom.arch.ui.classdetail.personal.personalnotenew.PersonalNoteAdapter
-import kotlinx.android.synthetic.main.fragment_member_parent.*
 import kotlinx.android.synthetic.main.fragment_member_school.*
-import kotlinx.android.synthetic.main.fragment_personal_accepted_note.*
 
 class MemberSchoolFragment : Fragment() {
     private val mContactList: ArrayList<ClassDetailMemberContactDao> = arrayListOf()

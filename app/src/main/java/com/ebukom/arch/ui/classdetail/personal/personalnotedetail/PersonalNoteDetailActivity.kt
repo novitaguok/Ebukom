@@ -40,7 +40,7 @@ class PersonalNoteDetailActivity : AppCompatActivity() {
 
         // Shared Preference
         val sharePref: SharedPreferences = getSharedPreferences("EBUKOM", Context.MODE_PRIVATE)
-        if(sharePref.getInt("level", 0) == 1){
+        if(sharePref.getLong("level", 0) == 1L){
             ivPersonalNoteDetailMoreButton.visibility = View.GONE
         }
 
@@ -51,9 +51,10 @@ class PersonalNoteDetailActivity : AppCompatActivity() {
         tvPersonalNoteDetailTitle.text = data.noteTitle
         tvPersonalNoteDetailContent.text = data.noteContent
         tvPersonalNoteDetailTime.text = data.time
+
+        // Attachment List
         mAttachmentList.addAll(data.attachments)
         mAttachmentAdapter.notifyDataSetChanged()
-        // Attachment List
         rvPersonalNoteDetailAttachment.apply {
             layoutManager =
                 LinearLayoutManager(

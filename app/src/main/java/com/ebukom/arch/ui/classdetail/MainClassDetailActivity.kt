@@ -18,7 +18,7 @@ import com.ebukom.arch.ui.classdetail.member.MemberFragment
 import com.ebukom.arch.ui.classdetail.notification.NotificationActivity
 import com.ebukom.arch.ui.classdetail.personal.PersonalFragment
 import com.ebukom.arch.ui.classdetail.personal.personalnoteedit.PersonalNoteEditActivity
-import com.ebukom.arch.ui.classdetail.personal.personalnotenew.PersonalNoteAdapter
+import com.ebukom.arch.ui.classdetail.personal.PersonalNoteAdapter
 import com.ebukom.arch.ui.classdetail.personal.personalparent.PersonalParentFragment
 import com.ebukom.arch.ui.classdetail.school.SchoolFragment
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.SchoolAnnouncementAdapter
@@ -31,6 +31,7 @@ import com.ebukom.arch.ui.classdetail.school.schoolschedule.schoolscheduleedit.S
 import com.ebukom.arch.ui.editprofile.EditProfileActivity
 import com.ebukom.data.DataDummy
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_main_class_detail.*
 import kotlinx.android.synthetic.main.bottom_sheet_choose_class.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_class_detail_header.view.*
@@ -55,6 +56,7 @@ class MainClassDetailActivity : AppCompatActivity(), OnMoreCallback {
     lateinit var mNoteAdapter: PersonalNoteAdapter
     private val mEducationList: ArrayList<ClassDetailAnnouncementDao> = DataDummy.educationData
     lateinit var mEducationAdapter: SchoolAnnouncementAdapter
+    val db = FirebaseFirestore.getInstance()
 
     var classId: String? = null
 
@@ -226,16 +228,18 @@ class MainClassDetailActivity : AppCompatActivity(), OnMoreCallback {
                         }, 1000)
                     }
                     "3" -> { // Note
-                        DataDummy.noteSentData.removeAt(pos)
+//                        DataDummy.noteSentData.removeAt(pos)
+//
+////                        mNoteAdapter =
+////                            PersonalNoteAdapter(mNoteList, 1, this, PersonalSentNoteFragment())
+////                        mNoteAdapter.notifyDataSetChanged()
+//
+//                        loading_main.visibility = View.VISIBLE
+//                        Handler().postDelayed({
+//                            loading_main.visibility = View.GONE
+//                        }, 1000)
 
-//                        mNoteAdapter =
-//                            PersonalNoteAdapter(mNoteList, 1, this, PersonalSentNoteFragment())
-//                        mNoteAdapter.notifyDataSetChanged()
 
-                        loading_main.visibility = View.VISIBLE
-                        Handler().postDelayed({
-                            loading_main.visibility = View.GONE
-                        }, 1000)
                     }
                     "4" -> { // Note
                         DataDummy.educationData.removeAt(pos)

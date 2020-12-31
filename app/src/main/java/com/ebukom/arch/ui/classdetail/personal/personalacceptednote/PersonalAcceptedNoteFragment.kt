@@ -13,9 +13,7 @@ import com.ebukom.R
 import com.ebukom.arch.dao.ClassDetailPersonalNoteDao
 import com.ebukom.arch.ui.classdetail.MainClassDetailActivity
 import com.ebukom.arch.ui.classdetail.OnMoreCallback
-import com.ebukom.arch.ui.classdetail.personal.personalnotenew.PersonalNoteAdapter
-import com.ebukom.data.DataDummy
-import com.google.firebase.Timestamp
+import com.ebukom.arch.ui.classdetail.personal.PersonalNoteAdapter
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_personal_accepted_note.*
 import kotlinx.android.synthetic.main.fragment_personal_accepted_note.view.*

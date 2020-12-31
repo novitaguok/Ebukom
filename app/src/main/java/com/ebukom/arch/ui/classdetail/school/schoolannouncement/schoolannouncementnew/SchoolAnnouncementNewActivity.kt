@@ -100,9 +100,9 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
 //                when (start.weekDayName)
 
                 eventTime = "${start.date} ${start.monthNameShort}"
-//                btnSchoolAnnouncementNewTime.text =
-//                    "${start.date} ${start.monthNameShort} - ${end.date} ${end.monthNameShort}"
-                btnSchoolAnnouncementNewTime.text = "${start.weekDayName} ${start.month} ${start.date}"
+                btnSchoolAnnouncementNewTime.text =
+                    "${start.date} ${start.monthNameShort} - ${end.date} ${end.monthNameShort}"
+//                btnSchoolAnnouncementNewTime.text = "${start.weekDayName} ${start.month} ${start.date}"
                 btnSchoolAnnouncementNewTime.setTextColor(Color.parseColor("#222222"))
             }
 

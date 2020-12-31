@@ -1,4 +1,4 @@
-package com.ebukom.arch.ui.classdetail.personal.personalnotenew
+package com.ebukom.arch.ui.classdetail.personal
 
 import android.content.Context
 import android.content.Intent
@@ -13,7 +13,6 @@ import com.ebukom.arch.ui.classdetail.MainClassDetailActivity
 import com.ebukom.arch.ui.classdetail.OnMoreCallback
 import com.ebukom.arch.ui.classdetail.personal.personalacceptednote.PersonalAcceptedNoteFragment
 import com.ebukom.arch.ui.classdetail.personal.personalnotedetail.PersonalNoteDetailActivity
-import com.ebukom.data.DataDummy
 import kotlinx.android.synthetic.main.item_note.view.*
 
 class PersonalNoteAdapter(
@@ -61,7 +60,7 @@ class PersonalNoteAdapter(
                 id = "3"
             }
             itemView.ivItemNoteMoreButton.setOnClickListener {
-//                callback.onMoreClicked(id, adapterPosition)
+                callback.onMoreClicked(id, adapterPosition)
             }
 
             itemView.clItemNote.setOnClickListener {

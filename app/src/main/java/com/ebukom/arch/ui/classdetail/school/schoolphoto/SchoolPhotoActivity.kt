@@ -59,7 +59,8 @@ class SchoolPhotoActivity : AppCompatActivity() {
                         ClassDetailPhotoDao(
                             document["title"] as String,
                             document["link"] as String,
-                            document.id
+                            document.id,
+                            classId!!
                         )
                     )
                     mPhotoAdapater.notifyDataSetChanged()
