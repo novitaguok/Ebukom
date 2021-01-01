@@ -10,6 +10,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.ebukom.R
 import com.ebukom.arch.dao.ClassDetailAttachmentDao
 import com.ebukom.arch.ui.classdetail.material.materialsubject.materialsubjectadd.MaterialSubjectAddActivity
+import com.ebukom.arch.ui.classdetail.personal.personalnotedetail.PersonalNoteDetailActivity
 import com.ebukom.arch.ui.classdetail.personal.personalnoteedit.PersonalNoteEditActivity
 import com.ebukom.arch.ui.classdetail.personal.personalnotenew.PersonalNoteNewActivity
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementdetail.SchoolAnnouncementDetailActivity
@@ -65,7 +66,8 @@ class ClassDetailAttachmentAdapter(private val data: List<ClassDetailAttachmentD
                 }
             }
 
-            if (context is SchoolAnnouncementDetailActivity) itemView.ivItemAnnouncementAttachmentDelete.visibility = View.GONE
+            if (context is SchoolAnnouncementDetailActivity || context is PersonalNoteDetailActivity) itemView.ivItemAnnouncementAttachmentDelete.visibility =
+                View.GONE
 
             itemView.ivItemAnnouncementAttachmentDelete.setOnClickListener {
                 if (context is SchoolAnnouncementNewActivity) {

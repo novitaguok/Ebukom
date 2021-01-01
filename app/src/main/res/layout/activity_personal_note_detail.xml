@@ -28,7 +28,8 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@+id/clPersonalNoteDetailComment"
-        android:layout_below="@+id/appbar">
+        android:layout_below="@+id/appbar"
+        android:fillViewport="true">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -251,6 +252,11 @@
             android:layout_marginRight="@dimen/activity_horizontal_margin"
             android:src="@drawable/ic_send_red"/>
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <include
+        android:id="@+id/loading"
+        layout="@layout/layout_loading"
+        android:visibility="gone" />
 
 </RelativeLayout>
 

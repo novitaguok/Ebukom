@@ -5,6 +5,7 @@ import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import android.os.Handler
+import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
@@ -162,14 +163,32 @@ class MainClassDetailActivity : AppCompatActivity(), OnMoreCallback {
             bottomSheetDialog.dismiss()
 
             when (id) {
-                "0" -> intent = Intent(this, SchoolAnnouncementEditActivity::class.java)
-                "1" -> intent = Intent(this, SchoolScheduleEditActivity::class.java)
-                "2" -> intent = Intent(this, SchoolPhotoEditActivity::class.java)
-                "3" -> intent = Intent(this, PersonalNoteEditActivity::class.java)
-                "4" -> intent = Intent(this, MaterialEducationEditActivity::class.java)
+                "0" -> {
+                    intent = Intent(this, SchoolAnnouncementEditActivity::class.java)
+                    intent.putExtra("pos", pos)
+                }
+                "1" -> {
+                    intent = Intent(this, SchoolScheduleEditActivity::class.java)
+                    intent.putExtra("pos", pos)
+                }
+                "2" -> {
+                    intent = Intent(this, SchoolPhotoEditActivity::class.java)
+                    intent.putExtra("pos", pos)
+                }
+                "3" -> {
+                    intent = Intent(this, PersonalNoteEditActivity::class.java)
+                    intent.putExtra("pos", pos)
+                }
+                "4" -> {
+                    intent = Intent(this, MaterialEducationEditActivity::class.java)
+                    intent.putExtra("pos", pos)
+                }
+                else -> {
+                    intent = Intent(this, PersonalNoteEditActivity::class.java)
+                    intent.putExtra("noteId", id)
+                }
             }
 
-            intent.putExtra("pos", pos)
             startActivity(intent)
         }
 
@@ -238,8 +257,6 @@ class MainClassDetailActivity : AppCompatActivity(), OnMoreCallback {
 //                        Handler().postDelayed({
 //                            loading_main.visibility = View.GONE
 //                        }, 1000)
-
-
                     }
                     "4" -> { // Note
                         DataDummy.educationData.removeAt(pos)
@@ -255,6 +272,13 @@ class MainClassDetailActivity : AppCompatActivity(), OnMoreCallback {
                         Handler().postDelayed({
                             loading_main.visibility = View.GONE
                         }, 1000)
+                    }
+                    else -> {
+                        db.collection("notes").document(id).delete().addOnSuccessListener {
+                            Log.d("PersonalNote", "deleted successfully")
+                        }.addOnFailureListener {
+                            Log.d("PersonalNote", "fail to delete")
+                        }
                     }
                 }
             }

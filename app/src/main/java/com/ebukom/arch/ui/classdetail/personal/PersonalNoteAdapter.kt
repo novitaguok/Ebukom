@@ -60,12 +60,12 @@ class PersonalNoteAdapter(
                 id = "3"
             }
             itemView.ivItemNoteMoreButton.setOnClickListener {
-                callback.onMoreClicked(id, adapterPosition)
+                callback.onMoreClicked(note.noteId, adapterPosition)
+
             }
 
-            itemView.clItemNote.setOnClickListener {
+            itemView.tvItemNoteMore.setOnClickListener {
                 val intent = Intent(context, PersonalNoteDetailActivity::class.java)
-                intent.putExtra("pos", adapterPosition)
                 intent.putExtra("data", note)
                 (context as MainClassDetailActivity).startActivity(intent)
             }

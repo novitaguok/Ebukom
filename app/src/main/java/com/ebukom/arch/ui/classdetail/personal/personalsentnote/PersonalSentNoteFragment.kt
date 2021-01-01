@@ -64,10 +64,11 @@ class PersonalSentNoteFragment : Fragment() {
                         val data = ClassDetailPersonalNoteDao(
                             0,
                             "",
-                            document["noteContent"] as String,
+                            document["content"] as String,
                             arrayListOf(),
                             document["time"] as String,
-                            arrayListOf()
+                            arrayListOf(),
+                            document.id
                         )
 
                         db.collection("users").document(listUserIds[0]).get()
@@ -99,10 +100,11 @@ class PersonalSentNoteFragment : Fragment() {
                         val data = ClassDetailPersonalNoteDao(
                             0,
                             "",
-                            document["noteContent"] as String,
+                            document["content"] as String,
                             arrayListOf(),
                             document["time"] as String,
-                            arrayListOf()
+                            arrayListOf(),
+                            document.id
                         )
 
                         db.collection("users").document(listUserIds[0]).get()

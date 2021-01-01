@@ -40,7 +40,7 @@ class SchoolAnnouncementDetailAdapter(
 
             itemView.ivAnnouncementDetailCommentMoreButton.setOnClickListener {
                 if (context is SchoolAnnouncementDetailActivity) context.popupMenuComment(comment.commentId)
-                else if (context is PersonalNoteDetailActivity) context.popupMenuComment(adapterPosition)
+                else if (context is PersonalNoteDetailActivity) context.popupMenuComment(comment.commentId)
             }
         }
     }

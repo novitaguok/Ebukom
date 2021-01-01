@@ -65,7 +65,6 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
             }
         }
 
-
         /**
          * Get Intent from SchoolAnnouncementActivity
          */

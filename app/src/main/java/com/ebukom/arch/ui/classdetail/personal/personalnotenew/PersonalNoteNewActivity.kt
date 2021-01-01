@@ -52,6 +52,7 @@ class PersonalNoteNewActivity : AppCompatActivity() {
 
         // Attachment List
         checkAttachmentEmpty()
+        DataDummy.noteAttachmentData.clear()
         rvPersonalNoteNewAttachment.apply {
             layoutManager = LinearLayoutManager(
                 this@PersonalNoteNewActivity,
@@ -63,7 +64,6 @@ class PersonalNoteNewActivity : AppCompatActivity() {
 
         // Text watcher
         etPersonalNoteNewContent.addTextChangedListener(textWatcher)
-
 
         // To Next Activity
         btnPersonalNoteNewNext.setOnClickListener {

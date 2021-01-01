@@ -35,7 +35,7 @@ class PersonalNoteNewNextActivity : AppCompatActivity(), ClassDetailCheckAdapter
     lateinit var mParentAdapter: ClassDetailCheckThumbnailAdapter
     lateinit var content: String
     lateinit var dateTime: String
-    lateinit var attachments: List<ClassDetailAttachmentDao>
+    var attachments: List<ClassDetailAttachmentDao> = arrayListOf()
     val db = FirebaseFirestore.getInstance()
     var nm: String? = null
     var lev: Long = 0L
@@ -207,22 +207,24 @@ class PersonalNoteNewNextActivity : AppCompatActivity(), ClassDetailCheckAdapter
         var data = hashMapOf<String, Any>()
         if (lev == 0L) {
             data = hashMapOf(
-                "noteContent" to content,
+                "content" to content,
                 "parent_ids" to mParentList.map { it.userId },
                 "profilePicture" to 0,
                 "teacher_ids" to arrayListOf<String>(uid),
                 "time" to tvPersonalNoteNewNextAlarmContent.text.toString(),
-                "upload_time" to Timestamp(Date())
+                "upload_time" to Timestamp(Date()),
+                "attachments" to attachments
             )
         } else {
             data = hashMapOf(
                 "noteTitle" to nm!!,
-                "noteContent" to content,
+                "content" to content,
                 "parent_ids" to arrayListOf<String>(uid),
                 "profilePicture" to 0,
                 "teacher_ids" to mParentList.map { it.userId },
                 "time" to tvPersonalNoteNewNextAlarmContent.text.toString(),
-                "upload_time" to Timestamp(Date())
+                "upload_time" to Timestamp(Date()),
+                "attachments" to attachments
             )
         }
 

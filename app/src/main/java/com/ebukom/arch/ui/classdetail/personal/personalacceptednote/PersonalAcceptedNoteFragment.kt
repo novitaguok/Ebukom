@@ -68,7 +68,7 @@ class PersonalAcceptedNoteFragment : Fragment() {
                             val data = ClassDetailPersonalNoteDao(
                                 0,
                                 "",
-                                document["noteContent"] as String,
+                                document["content"] as String,
                                 arrayListOf(),
                                 document["time"] as String,
                                 arrayListOf()
@@ -103,7 +103,7 @@ class PersonalAcceptedNoteFragment : Fragment() {
                             val data = ClassDetailPersonalNoteDao(
                                 0,
                                 "",
-                                document["noteContent"] as String,
+                                document["content"] as String,
                                 arrayListOf(),
                                 document["time"] as String,
                                 arrayListOf()

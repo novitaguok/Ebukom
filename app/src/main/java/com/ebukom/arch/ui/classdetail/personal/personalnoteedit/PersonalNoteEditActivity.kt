@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
@@ -22,6 +23,7 @@ import com.ebukom.arch.ui.classdetail.ClassDetailAttachmentAdapter
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.SchoolAnnouncementAddTemplateActivity
 import com.ebukom.data.DataDummy
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_personal_note_edit.*
 import kotlinx.android.synthetic.main.alert_edit_text.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_class_detail_attachment.view.*
@@ -29,66 +31,70 @@ import kotlinx.android.synthetic.main.item_announcement_attachment.view.*
 
 class PersonalNoteEditActivity : AppCompatActivity() {
 
-    private var pos: Int = -1
     private val mAttachmentList: ArrayList<ClassDetailAttachmentDao> = arrayListOf()
-    private val mAttachmentAdapter = ClassDetailAttachmentAdapter(mAttachmentList)
+    lateinit var mAttachmentAdapter: ClassDetailAttachmentAdapter
     private val mTemplateList: ArrayList<ClassDetailTemplateTextDao> = arrayListOf()
     private val mNoteList: ArrayList<ClassDetailPersonalNoteDao> = arrayListOf()
-
+    var noteId: String? = null
+    val db = FirebaseFirestore.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_personal_note_edit)
 
         initToolbar()
+        initRecycler()
+        checkEmpty()
 
-        mNoteList.clear()
-        mNoteList.addAll(DataDummy.noteSentData)
+        // Get intent from MainClassDetailActivity
+        noteId = intent?.extras?.getString("noteId")
 
-        // Get Note Data
-        pos = intent?.extras?.getInt("pos", -1) ?: -1
+        /**
+         * Get announcement by announcementId
+         */
+        db.collection("notes").document(noteId!!).get().addOnSuccessListener {
 
-        etPersonalNoteEditContent.setText(DataDummy.noteSentData[pos].noteContent)
+                initRecycler()
 
-        // Attachment List
-        mAttachmentList.addAll(DataDummy.noteSentData[pos].attachments)
-        mAttachmentAdapter.notifyDataSetChanged()
-        rvPersonalNoteAttachment.apply {
-            layoutManager =
-                LinearLayoutManager(
-                    this@PersonalNoteEditActivity,
-                    LinearLayoutManager.VERTICAL,
-                    false
-                )
-            adapter = mAttachmentAdapter
-        }
-        if (mAttachmentList.isEmpty()) tvPersonalNoteEditAttachmentTitle.visibility = View.GONE
-        else tvPersonalNoteEditAttachmentTitle.visibility = View.VISIBLE
+                etPersonalNoteEditContent.setText(it["content"] as String)
+
+                for (data in it["attachments"] as List<HashMap<Any, Any>>) {
+                    mAttachmentList.add(
+                        ClassDetailAttachmentDao(
+                            data["path"] as String,
+                            (data["category"] as Long).toInt()
+                        )
+                    )
+                    mAttachmentAdapter.notifyDataSetChanged()
+                    checkEmpty()
+                }
+
+                checkEmpty()
+
+            }
 
         // Text watcher
         etPersonalNoteEditContent.addTextChangedListener(textWatcher)
 
-        // Add Template
-        tvPersonalNoteEditTemplateAdd.setOnClickListener {
-            val intent = Intent(this, SchoolAnnouncementAddTemplateActivity::class.java)
-            intent.putExtra("layout", "note")
-            startActivity(intent)
-        }
-
         // Done
         btnPersonalNoteEditSave.setOnClickListener {
-            var content = etPersonalNoteEditContent.text.toString()
+            val data = hashMapOf<String, Any>(
+                "content" to etPersonalNoteEditContent.text.toString(),
+                "attachments" to mAttachmentList
+            )
 
-            DataDummy.noteSentData[pos].noteContent = content
-            DataDummy.noteSentData[pos].attachments = mAttachmentList
-            mNoteList.clear()
-            mNoteList.addAll(DataDummy.noteSentData)
+            db.collection("notes").document(noteId!!).update(data).addOnSuccessListener {
+                    Log.d("TAG", "updated")
+                    mAttachmentAdapter.notifyDataSetChanged()
+                    loading.visibility = View.GONE
+                    finish()
+                }.addOnFailureListener {
+                    Log.d("TAG", "failed to update")
+                    loading.visibility = View.GONE
+                    finish()
+                }
 
-            loading.visibility = View.VISIBLE
-            Handler().postDelayed({
-                loading.visibility = View.GONE
-                finish()
-            }, 1000)
+            finish()
         }
     }
 
@@ -135,7 +141,7 @@ class PersonalNoteEditActivity : AppCompatActivity() {
                         DataDummy.announcementAttachmentData.add(ClassDetailAttachmentDao(link, 0))
                         insertAttachment(view, link)
 
-                        checkAttachmentEmpty()
+                        checkEmpty()
                     }
 
                     val dialog: androidx.appcompat.app.AlertDialog = builder.create()
@@ -250,7 +256,7 @@ class PersonalNoteEditActivity : AppCompatActivity() {
             mAttachmentList.remove(item)
             mAttachmentAdapter.notifyDataSetChanged()
 
-            checkAttachmentEmpty()
+            checkEmpty()
         }
 
         val dialog: AlertDialog = builder.create()
@@ -273,20 +279,39 @@ class PersonalNoteEditActivity : AppCompatActivity() {
         )
     }
 
-    private fun checkAttachmentEmpty() {
-        if (mAttachmentList.isEmpty()) {
-            tvPersonalNoteEditAttachmentTitle.visibility = View.GONE
-        } else {
-            tvPersonalNoteEditAttachmentTitle.visibility = View.VISIBLE
-        }
-    }
-
     private fun insertAttachment(view: View, path: String) {
         mAttachmentAdapter.notifyDataSetChanged()
         mAttachmentList.clear()
-        mAttachmentList.addAll(DataDummy.announcementAttachmentData)
+        mAttachmentList.addAll(DataDummy.noteAttachmentData)
         view.tvItemAnnouncementAttachment?.text = path
 
-        checkAttachmentEmpty()
+        checkEmpty()
+    }
+
+    private fun initRecycler() {
+        /**
+         * Attachment list
+         */
+        mAttachmentList.clear()
+        mAttachmentAdapter = ClassDetailAttachmentAdapter(mAttachmentList)
+        rvPersonalNoteAttachment.apply {
+            layoutManager =
+                LinearLayoutManager(
+                    this@PersonalNoteEditActivity,
+                    LinearLayoutManager.VERTICAL,
+                    false
+                )
+            adapter = mAttachmentAdapter
+        }
+        mAttachmentAdapter.notifyDataSetChanged()
+    }
+
+    private fun checkEmpty() {
+        /**
+         * Check if attachment list is empty
+         */
+        if (mAttachmentList.isEmpty()) tvPersonalNoteEditAttachmentTitle.visibility =
+            View.GONE
+        else tvPersonalNoteEditAttachmentTitle.visibility = View.VISIBLE
     }
 }
