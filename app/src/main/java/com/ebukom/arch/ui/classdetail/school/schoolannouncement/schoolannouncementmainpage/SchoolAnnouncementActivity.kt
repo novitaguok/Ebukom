@@ -69,7 +69,8 @@ class SchoolAnnouncementActivity : AppCompatActivity() {
                                 document.id,
                                 (document["time"] as Timestamp),
                                 classId!!,
-                                document["event_time"] as String?
+                                document["event_start"] as Timestamp,
+                                document["event_end"] as Timestamp
                             )
                         )
                     }
@@ -114,9 +115,9 @@ class SchoolAnnouncementActivity : AppCompatActivity() {
 
         val groupedList = mAnnouncementList.groupBy {
             Triple(
-                it.timestamp.toDate().day,
-                it.timestamp.toDate().date,
-                it.timestamp.toDate().month
+                it.eventStart.toDate().day,
+                it.eventStart.toDate().date,
+                it.eventStart.toDate().month
             )
         }
 

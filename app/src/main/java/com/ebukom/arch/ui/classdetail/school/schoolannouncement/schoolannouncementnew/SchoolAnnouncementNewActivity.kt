@@ -25,6 +25,7 @@ import com.ebukom.arch.ui.classdetail.school.schoolannouncement.SchoolAnnounceme
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementnewnext.SchoolAnnouncementNewNextActivity
 import com.ebukom.data.DataDummy
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.firebase.Timestamp
 import kotlinx.android.synthetic.main.activity_school_announcement_new_next.*
 import kotlinx.android.synthetic.main.activity_school_anouncement_new.*
 import kotlinx.android.synthetic.main.activity_school_anouncement_new.toolbar
@@ -40,8 +41,10 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
     private val mAttachmentList: ArrayList<ClassDetailAttachmentDao> = arrayListOf()
     private val mAttachmentAdapter = ClassDetailAttachmentAdapter(mAttachmentList)
     var classId: String? = ""
-    var eventTime = ""
+    var eventStart = Timestamp(Date())
+    var eventEnd = Timestamp(Date())
     var enabled = false
+    var isSetTime = false
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -95,15 +98,15 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
 
             val callback = RangeDaysPickCallback { start, end ->
                 // TODO: 12/26/20 Put after selected date
+                eventStart = Timestamp(Date(start.year, start.month, start.date))
+                eventEnd = Timestamp(Date(end.year, end.month, end.date))
 
-                var day = ""
-//                when (start.weekDayName)
-
-                eventTime = "${start.date} ${start.monthNameShort}"
                 btnSchoolAnnouncementNewTime.text =
                     "${start.date} ${start.monthNameShort} - ${end.date} ${end.monthNameShort}"
 //                btnSchoolAnnouncementNewTime.text = "${start.weekDayName} ${start.month} ${start.date}"
                 btnSchoolAnnouncementNewTime.setTextColor(Color.parseColor("#222222"))
+
+                isSetTime = true
             }
 
             val themeFactory = object : LightThemeFactory() {
@@ -177,13 +180,19 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
             val content = etSchoolAnnouncementNewContent.text.toString()
             val intent = Intent(this, SchoolAnnouncementNewNextActivity::class.java)
 
+            if (!isSetTime) {
+                eventStart = Timestamp.now()
+                eventEnd = Timestamp.now()
+            }
+
             intent.putExtra("classId", classId)
             intent.putExtra("title", title)
             intent.putExtra("content", content)
-            intent.putExtra("eventTime", eventTime)
+            intent.putExtra("eventStart", eventStart)
+            intent.putExtra("eventEnd", eventEnd)
             intent.putExtra("attachments", mAttachmentList)
-            startActivity(intent)
 
+            startActivity(intent)
             finish()
         }
     }

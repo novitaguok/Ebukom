@@ -32,7 +32,8 @@ class SchoolAnnouncementNewNextActivity : AppCompatActivity(),
     lateinit var title: String
     lateinit var content: String
     var dateTime: String? = null
-    lateinit var eventTime: String
+    lateinit var eventStart: Timestamp
+    lateinit var eventEnd: Timestamp
     lateinit var attachmentList: List<ClassDetailAttachmentDao>
     lateinit var sharePref: SharedPreferences
     val db = FirebaseFirestore.getInstance()
@@ -52,7 +53,8 @@ class SchoolAnnouncementNewNextActivity : AppCompatActivity(),
         classId = intent.getStringExtra("classId")
         title = intent?.extras?.getString("title", "") ?: ""
         content = intent?.extras?.getString("content", "") ?: ""
-        eventTime = intent?.extras?.getString("eventTime", "") ?: ""
+        eventStart = intent?.getParcelableExtra("eventStart") as Timestamp
+        eventEnd = intent?.getParcelableExtra("eventEnd") as Timestamp
         attachmentList =
             intent?.getSerializableExtra("attachments") as List<ClassDetailAttachmentDao>
         dateTime = ""
@@ -144,10 +146,6 @@ class SchoolAnnouncementNewNextActivity : AppCompatActivity(),
             val sharePref = getSharedPreferences("EBUKOM", Context.MODE_PRIVATE)
             val uid = sharePref.getString("uid", "") as String
             val teacherName = sharePref.getString("name", "") as String
-
-            if (eventTime == "") eventTime = Timestamp(Date()).toString()
-//            else eventTime =
-
             val data = hashMapOf(
                 "content" to content,
                 "teacher" to mapOf<String, Any>(
@@ -157,7 +155,8 @@ class SchoolAnnouncementNewNextActivity : AppCompatActivity(),
                 "time" to Timestamp(Date()),
                 "title" to title,
                 "attachments" to attachmentList,
-                "event_time" to eventTime
+                "event_start" to eventStart,
+                "event_end" to eventEnd
             )
 
             loading.visibility = View.VISIBLE
