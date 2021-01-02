@@ -59,6 +59,7 @@ class PersonalSentNoteFragment : Fragment() {
 
                 mNoteList.clear()
                 for (document in value!!.documents) {
+
                     val listUserIds = document["teacher_ids"] as List<String>
                     if (listUserIds.size == 1) {
                         val data = ClassDetailPersonalNoteDao(
