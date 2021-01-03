@@ -9,10 +9,10 @@
     android:paddingRight="@dimen/size_14"
     android:paddingTop="@dimen/size_4"
     android:paddingBottom="@dimen/size_4"
-    android:background="@drawable/btn_template_text">
+    android:background="@drawable/btn_gray_month">
 
     <TextView
-        android:id="@+id/tvAnnouncementEditTemplate"
+        android:id="@+id/tvAnnouncementMonth"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Field Trip"

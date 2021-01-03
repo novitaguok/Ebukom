@@ -110,7 +110,7 @@ class SchoolAnnouncementActivity : AppCompatActivity() {
         )
 
         mAnnouncementList.sortBy {
-            it.timestamp.seconds
+            it.eventStart.seconds
         }
 
         val groupedList = mAnnouncementList.groupBy {
@@ -161,6 +161,13 @@ class SchoolAnnouncementActivity : AppCompatActivity() {
                         pos,
                         0
                     )
+
+                    mAnnouncementMonthList.forEach {
+                        it.isSelected = false
+                    }
+                    mAnnouncementMonthList[pos].isSelected = true
+
+                    rvSchoolAnnouncementMonth.adapter?.notifyDataSetChanged()
                 }
             })
         rvSchoolAnnouncement.adapter?.notifyDataSetChanged()

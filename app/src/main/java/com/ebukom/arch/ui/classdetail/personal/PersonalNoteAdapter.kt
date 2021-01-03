@@ -77,7 +77,6 @@ class PersonalNoteAdapter(
                         itemView.tvItemNoteTitle.text = note?.noteTitle
                     }
                     itemView.tvItemNoteContent.text = note?.noteContent
-
                     itemView.tvItemNoteTime.text = note?.time
 
                     if (fragment is PersonalAcceptedNoteFragment) {

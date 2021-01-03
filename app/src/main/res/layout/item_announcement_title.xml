@@ -28,7 +28,7 @@
             android:textColor="@color/colorSuperDarkBlue"/>
 
         <ImageView
-            android:id="@+id/vAnnouncementDetailBadge"
+            android:id="@+id/ivAnnouncementDetailBadge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"

@@ -16,6 +16,7 @@ import com.ebukom.arch.dao.ClassDetailAnnouncementCommentDao
 import com.ebukom.arch.dao.ClassDetailAttachmentDao
 import com.ebukom.arch.ui.classdetail.ClassDetailAttachmentAdapter
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementedit.SchoolAnnouncementEditActivity
+import com.ebukom.utils.toCalendar
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
@@ -83,58 +84,78 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
                         return@addSnapshotListener
                     }
 
-                    val day = (value?.get("time") as Timestamp).toDate().day.toString()
-                    val date = (value["time"] as Timestamp).toDate().date.toString()
-                    val month = (value["time"] as Timestamp).toDate().month.toString()
-                    val year = (value["time"] as Timestamp).toDate().year.toString()
+                    val eventDate = (value?.get("event_start") as? Timestamp)?.toDate()?.toCalendar()
+
+
+                    val day = eventDate?.get(Calendar.DAY_OF_WEEK)
+                    val date = eventDate?.get(Calendar.DATE)
+                    val month = eventDate?.get(Calendar.MONTH)
+                    val year = eventDate?.get(Calendar.YEAR)
                     var dayName = ""
                     var monthName = ""
 
                     when (day) {
-                        "0" -> dayName = "Minggu"
-                        "1" -> dayName = "Senin"
-                        "2" -> dayName = "Selasa"
-                        "3" -> dayName = "Rabu"
-                        "4" -> dayName = "Kamis"
-                        "5" -> dayName = "Jumat"
-                        "6" -> dayName = "Sabtu"
+                        1 -> dayName = "Minggu"
+                        2 -> dayName = "Senin"
+                        3 -> dayName = "Selasa"
+                        4 -> dayName = "Rabu"
+                        5 -> dayName = "Kamis"
+                        6 -> dayName = "Jumat"
+                        7 -> dayName = "Sabtu"
                     }
 
                     when (month) {
-                        "0" -> monthName = "Januari"
-                        "1" -> monthName = "Febuari"
-                        "2" -> monthName = "Maret"
-                        "3" -> monthName = "April"
-                        "4" -> monthName = "Mei"
-                        "5" -> monthName = "Juni"
-                        "6" -> monthName = "Juli"
-                        "7" -> monthName = "Agustus"
-                        "8" -> monthName = "September"
-                        "9" -> monthName = "Oktober"
-                        "10" -> monthName = "November"
-                        "11" -> monthName = "Desember"
+                        0 -> monthName = "Januari"
+                        1 -> monthName = "Febuari"
+                        2 -> monthName = "Maret"
+                        3 -> monthName = "April"
+                        4 -> monthName = "Mei"
+                        5 -> monthName = "Juni"
+                        6 -> monthName = "Juli"
+                        7 -> monthName = "Agustus"
+                        8 -> monthName = "September"
+                        9 -> monthName = "Oktober"
+                        10 -> monthName = "November"
+                        11 -> monthName = "Desember"
                     }
 
                     tvSchoolAnnouncementDetailToolbar.text =
-                        dayName + ", " + date + " " + monthName + " " + year
+                        dayName + ", " + date!! + " " + monthName + " " + (year!!)
                     tvSchoolAnnouncementDetailDate.text = dayName
-                    tvSchoolAnnouncementDetailTitle.text = value?.get("title") as String
-                    tvSchoolAnnouncementDetailContent.text = value["content"] as String
-                    tvSchoolAnnouncementDetailTeacher.text = value["teacher.name"] as String
+                    tvSchoolAnnouncementDetailTitle.text = value?.get("title") as? String
+                    tvSchoolAnnouncementDetailContent.text = value?.get("content") as? String
+                    tvSchoolAnnouncementDetailTeacher.text = value?.get("teacher.name") as? String
 
                     /**
                      * Load attachment(s)
                      */
-                    for (data in value["attachments"] as List<HashMap<Any, Any>>) {
-                        mAttachmentList.add(
-                            ClassDetailAttachmentDao(
-                                data["path"] as String,
-                                (data["category"] as Long).toInt()
-                            )
-                        )
-                        mAttachmentAdapter.notifyDataSetChanged()
-                        checkEmpty()
+                    if (value != null) {
+                        val data = value.get("attachments") as List<HashMap<String, Any>?>?
+                        if (data?.isNotEmpty() == true) {
+                            data.forEach {
+                                if (!it.isNullOrEmpty())
+                                    mAttachmentList.add(
+                                        ClassDetailAttachmentDao(
+                                            it["path"] as String,
+                                            (it["category"] as Long).toInt()
+                                        )
+                                    )
+                                mAttachmentAdapter.notifyDataSetChanged()
+                                checkEmpty()
+                            }
+                        }
                     }
+//                    for (data in (value?.get("attachments") as List<HashMap<Any, Any>>)) {
+//                        mAttachmentList.add(
+//                            ClassDetailAttachmentDao(
+//                                data["path"] as String,
+//                                (data["category"] as Long).toInt()
+//                            )
+//                        )
+//                        mAttachmentAdapter.notifyDataSetChanged()
+//                        checkEmpty()
+//                    }
+
                 }
 
             /**

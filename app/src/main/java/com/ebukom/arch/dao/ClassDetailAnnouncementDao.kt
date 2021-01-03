@@ -17,6 +17,7 @@ data class ClassDetailAnnouncementDao(
     var timestamp: Timestamp = Timestamp(Date()),
     var classId: String = "",
     var eventStart: Timestamp = Timestamp(Date()),
-    var eventEnd: Timestamp = Timestamp(Date())
+    var eventEnd: Timestamp = Timestamp(Date()),
+    var isRead: Boolean = false
 ) : Serializable
 

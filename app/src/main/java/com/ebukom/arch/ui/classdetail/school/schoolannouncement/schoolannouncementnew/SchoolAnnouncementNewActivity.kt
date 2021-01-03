@@ -15,6 +15,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.aminography.primecalendar.civil.CivilCalendar
+import com.aminography.primecalendar.persian.PersianCalendar
 import com.aminography.primedatepicker.picker.PrimeDatePicker
 import com.aminography.primedatepicker.picker.callback.RangeDaysPickCallback
 import com.aminography.primedatepicker.picker.theme.LightThemeFactory
@@ -96,15 +97,21 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
          */
         btnSchoolAnnouncementNewTime.setOnClickListener {
 
+//            val calendar = CivilCalendar(TimeZone.getDefault(), Locale.ENGLISH).also {
+//                it.year = 2021                       // determines starting year
+//                it.month = 0                         // determines starting month
+//                it.firstDayOfWeek = Calendar.SUNDAY  // sets first day of week to Monday
+//            }
+
             val callback = RangeDaysPickCallback { start, end ->
                 // TODO: 12/26/20 Put after selected date
-                eventStart = Timestamp(Date(start.year, start.month, start.date))
-                eventEnd = Timestamp(Date(end.year, end.month, end.date))
+                eventStart = Timestamp(Date(start.year - 1900, start.month, start.date))
+                eventEnd = Timestamp(Date(end.year  - 1900, end.month, end.date))
 
                 btnSchoolAnnouncementNewTime.text =
                     "${start.date} ${start.monthNameShort} - ${end.date} ${end.monthNameShort}"
 //                btnSchoolAnnouncementNewTime.text = "${start.weekDayName} ${start.month} ${start.date}"
-                btnSchoolAnnouncementNewTime.setTextColor(Color.parseColor("#222222"))
+                btnSchoolAnnouncementNewTime.setTextColor(Color.parseColor("#808080"))
 
                 isSetTime = true
             }

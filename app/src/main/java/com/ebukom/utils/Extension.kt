@@ -5,6 +5,7 @@ import android.view.View
 import android.widget.ImageView
 import com.bumptech.glide.Glide
 import org.angmarch.views.NiceSpinner
+import java.util.*
 
 fun ImageView.load(context: Context,url : String){
     Glide.with(context)
@@ -21,4 +22,10 @@ fun NiceSpinner.load(context: Context, datas : List<String>){
     this.attachDataSource(datas)
     this.selectedIndex = 0
     this.setText(datas[0])
+}
+
+fun Date.toCalendar() : Calendar{
+    val cal = Calendar.getInstance()
+    cal.time = this
+    return cal
 }

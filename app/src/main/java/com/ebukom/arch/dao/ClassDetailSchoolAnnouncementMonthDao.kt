@@ -9,5 +9,6 @@ data class ClassDetailSchoolAnnouncementMonthDao (
     var monthId : Int = 0,
     var date : Int = 0,
     var day : Int = 0,
-    var dayName : String = ""
+    var dayName : String = "",
+    var isSelected : Boolean = false
 )
