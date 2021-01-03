@@ -85,8 +85,6 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
                     }
 
                     val eventDate = (value?.get("event_start") as? Timestamp)?.toDate()?.toCalendar()
-
-
                     val day = eventDate?.get(Calendar.DAY_OF_WEEK)
                     val date = eventDate?.get(Calendar.DATE)
                     val month = eventDate?.get(Calendar.MONTH)
@@ -121,7 +119,7 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
 
                     tvSchoolAnnouncementDetailToolbar.text =
                         dayName + ", " + date!! + " " + monthName + " " + (year!!)
-                    tvSchoolAnnouncementDetailDate.text = dayName
+                    tvSchoolAnnouncementDetailDate.text = dayName + ", " + date!! + " " + monthName + " " + (year!!)
                     tvSchoolAnnouncementDetailTitle.text = value?.get("title") as? String
                     tvSchoolAnnouncementDetailContent.text = value?.get("content") as? String
                     tvSchoolAnnouncementDetailTeacher.text = value?.get("teacher.name") as? String

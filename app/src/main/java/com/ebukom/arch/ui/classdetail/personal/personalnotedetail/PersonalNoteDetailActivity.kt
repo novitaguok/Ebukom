@@ -36,7 +36,10 @@ class PersonalNoteDetailActivity : AppCompatActivity() {
     private val mCommentAdapter = SchoolAnnouncementDetailAdapter(mCommentList, this)
     private val mAttachmentList: ArrayList<ClassDetailAttachmentDao> = arrayListOf()
     private val mAttachmentAdapter = ClassDetailAttachmentAdapter(mAttachmentList)
-    var noteId = ""
+    var noteId: String? = null
+    var noteTitle: String? = null
+    var noteContent: String? = null
+    var noteUploadTime = Timestamp(Date())
     var commentId: String? = null
     val db = FirebaseFirestore.getInstance()
 
@@ -55,16 +58,52 @@ class PersonalNoteDetailActivity : AppCompatActivity() {
         }
 
         // Get Intent from SchoolAnnouncementFragment
-        val data = intent?.extras?.getSerializable("data") as ClassDetailPersonalNoteDao
-        noteId = data.noteId
-        tvPersonalNoteDetailTitle.text = data.noteTitle
-        tvPersonalNoteDetailContent.text = data.noteContent
-        tvPersonalNoteDetailTime.text = data.time
+        noteId = intent?.extras?.getString("noteId")
+        noteTitle = intent?.extras?.getString("noteTitle")
+        noteContent = intent?.extras?.getString("noteContent")
+        noteUploadTime = intent?.getParcelableExtra("noteUploadTime")!!
+
+        val uploadTime = noteUploadTime.toDate().toCalendar()
+        val day = uploadTime.get(Calendar.DAY_OF_WEEK)
+        val date = uploadTime.get(Calendar.DATE)
+        val month = uploadTime.get(Calendar.MONTH)
+        val year = uploadTime.get(Calendar.YEAR)
+        var dayName = ""
+        var monthName = ""
+
+        when (day) {
+            1 -> dayName = "Minggu"
+            2 -> dayName = "Senin"
+            3 -> dayName = "Selasa"
+            4 -> dayName = "Rabu"
+            5 -> dayName = "Kamis"
+            6 -> dayName = "Jumat"
+            7 -> dayName = "Sabtu"
+        }
+
+        when (month) {
+            0 -> monthName = "Januari"
+            1 -> monthName = "Febuari"
+            2 -> monthName = "Maret"
+            3 -> monthName = "April"
+            4 -> monthName = "Mei"
+            5 -> monthName = "Juni"
+            6 -> monthName = "Juli"
+            7 -> monthName = "Agustus"
+            8 -> monthName = "September"
+            9 -> monthName = "Oktober"
+            10 -> monthName = "November"
+            11 -> monthName = "Desember"
+        }
+
+        tvPersonalNoteDetailTitle.text = noteTitle
+        tvPersonalNoteDetailContent.text = noteContent
+        tvPersonalNoteDetailTime.text = dayName + ", " + date!! + " " + monthName + " " + (year!!)
 
         /**
          * Read note data
          */
-        db.collection("notes").document(noteId).addSnapshotListener { value, error ->
+        db.collection("notes").document(noteId!!).addSnapshotListener { value, error ->
 
             if (error != null) {
                 Timber.e(error)
@@ -91,7 +130,7 @@ class PersonalNoteDetailActivity : AppCompatActivity() {
         /**
          * Load comment(s)
          */
-        db.collection("notes").document(noteId).collection("comments")
+        db.collection("notes").document(noteId!!).collection("comments")
             .addSnapshotListener { value, error ->
                 if (error != null) {
                     Timber.e(error)
@@ -138,7 +177,7 @@ class PersonalNoteDetailActivity : AppCompatActivity() {
 
             etPersonalNoteDetailComment.text.clear()
             loading.visibility = View.VISIBLE
-            db.collection("notes").document(noteId).collection("comments").add(data)
+            db.collection("notes").document(noteId!!).collection("comments").add(data)
                 .addOnCompleteListener {
                     if (it.isSuccessful) {
                         commentId = it.result?.id!!
@@ -191,7 +230,7 @@ class PersonalNoteDetailActivity : AppCompatActivity() {
                 dialog.dismiss()
             }
             builder.setPositiveButton("HAPUS") { dialog, which ->
-                db.collection("notes").document(noteId).delete().addOnSuccessListener {
+                db.collection("notes").document(noteId!!).delete().addOnSuccessListener {
                         Log.d("TAG", "announcement deleted")
                     }.addOnFailureListener {
                         Log.d("TAG", "announcement is failed to be deleted")
@@ -252,7 +291,7 @@ class PersonalNoteDetailActivity : AppCompatActivity() {
             /**
              * Get comment by commentId
              */
-            db.collection("notes").document(noteId).collection("comments").document(commentId)
+            db.collection("notes").document(noteId!!).collection("comments").document(commentId)
                 .get().addOnSuccessListener {
                     view.etAlertEditText.setText(it["comment"] as String)
                 }
@@ -271,7 +310,7 @@ class PersonalNoteDetailActivity : AppCompatActivity() {
                     dialog.dismiss()
 
                     comment = view.etAlertEditText.text.toString()
-                    db.collection("notes").document(noteId).collection("comments").document(commentId)
+                    db.collection("notes").document(noteId!!).collection("comments").document(commentId)
                         .update("comment", comment).addOnSuccessListener {
                             Log.d("TAG", "comment updated")
 
@@ -320,7 +359,7 @@ class PersonalNoteDetailActivity : AppCompatActivity() {
                 Toast.makeText(applicationContext, "Next?", Toast.LENGTH_SHORT).show()
             }
             builder.setPositiveButton("HAPUS") { dialog, which ->
-                db.collection("notes").document(noteId).collection("comments").document(commentId)
+                db.collection("notes").document(noteId!!).collection("comments").document(commentId)
                     .delete().addOnSuccessListener {
                         Log.d("TAG", "announcement deleted")
 
@@ -421,5 +460,11 @@ class PersonalNoteDetailActivity : AppCompatActivity() {
          */
         if (mAttachmentList.isNotEmpty()) cvPersonalNoteDetailAttachment.visibility = View.VISIBLE
         else cvPersonalNoteDetailAttachment.visibility = View.GONE
+    }
+
+    fun Date.toCalendar() : Calendar{
+        val cal = Calendar.getInstance()
+        cal.time = this
+        return cal
     }
 }

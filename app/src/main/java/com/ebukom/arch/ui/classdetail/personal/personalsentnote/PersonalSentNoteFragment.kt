@@ -10,10 +10,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ebukom.R
+import com.ebukom.arch.dao.ClassDetailAnnouncementCommentDao
 import com.ebukom.arch.dao.ClassDetailPersonalNoteDao
 import com.ebukom.arch.ui.classdetail.MainClassDetailActivity
 import com.ebukom.arch.ui.classdetail.OnMoreCallback
 import com.ebukom.arch.ui.classdetail.personal.PersonalNoteAdapter
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_personal_note_new.*
 import kotlinx.android.synthetic.main.fragment_personal_sent_note.*
@@ -38,7 +40,11 @@ class PersonalSentNoteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         initRecycler(view)
 
-        val sharePref: SharedPreferences = (context as MainClassDetailActivity).getSharedPreferences("EBUKOM", Context.MODE_PRIVATE)
+        val sharePref: SharedPreferences =
+            (context as MainClassDetailActivity).getSharedPreferences(
+                "EBUKOM",
+                Context.MODE_PRIVATE
+            )
         val level = sharePref.getLong("level", 0)
         val uid = sharePref.getString("uid", "")
         val name = sharePref.getString("name", "")
@@ -51,78 +57,100 @@ class PersonalSentNoteFragment : Fragment() {
         checkEmpty(view)
 
         if (level == 0L) {
-            db.collection("notes").whereArrayContains("teacher_ids", uid!!).addSnapshotListener { value, error ->
-                if (error != null) {
-                    Timber.e(error)
-                    return@addSnapshotListener
-                }
+            db.collection("notes").whereArrayContains("teacher_ids", uid!!)
+                .addSnapshotListener { value, error ->
+                    if (error != null) {
+                        Timber.e(error)
+                        return@addSnapshotListener
+                    }
 
-                mNoteList.clear()
-                for (document in value!!.documents) {
+                    mNoteList.clear()
+                    for (document in value!!.documents) {
 
-                    val listUserIds = document["teacher_ids"] as List<String>
-                    if (listUserIds.size == 1) {
-                        val data = ClassDetailPersonalNoteDao(
-                            0,
-                            "",
-                            document["content"] as String,
-                            arrayListOf(),
-                            document["time"] as String,
-                            arrayListOf(),
-                            document.id
-                        )
+                        val listUserIds = document["teacher_ids"] as List<String>
+                        if (listUserIds.size == 1) {
+                            val data = ClassDetailPersonalNoteDao(
+                                0,
+                                "",
+                                document["content"] as String,
+                                arrayListOf<ClassDetailAnnouncementCommentDao>(),
+                                document["time"] as String,
+                                arrayListOf(),
+                                document.id
+                            )
 
-                        db.collection("users").document(listUserIds[0]).get()
-                            .addOnSuccessListener { user ->
-                                Log.d("DEBUG", "onViewCreated: "+user["name"].toString())
-                                if(user != null) {
-                                    data.noteTitle = user.get("name") as String
-                                    data.profilePicture = 0
-                                    mNoteList.add(data)
-
+                            db.collection("notes").document(document.id).collection("comments")
+                                .addSnapshotListener { value, error ->
+                                    data.comments.clear()
+                                    for (document in value!!.documents) {
+                                        data.comments.add(
+                                            ClassDetailAnnouncementCommentDao(
+                                                document["user.name"] as String,
+                                                document["comment"] as String,
+                                                R.drawable.bg_square_blue_4dp,
+                                                (document["upload_time"] as Timestamp).toDate()
+                                                    .toString(),
+                                                document.id
+                                            )
+                                        )
+                                    }
                                     mNoteAdapter.notifyDataSetChanged()
-                                    checkEmpty(view!!)
                                 }
-                            }
+//                                .addOnSuccessListener {
+//                                }
+
+                            db.collection("users").document(listUserIds[0]).get()
+                                .addOnSuccessListener { user ->
+                                    Log.d("DEBUG", "onViewCreated: " + user["name"].toString())
+                                    if (user != null) {
+                                        data.noteTitle = user.get("name") as String
+                                        data.profilePicture = 0
+                                        mNoteList.add(data)
+
+                                        mNoteAdapter.notifyDataSetChanged()
+                                        checkEmpty(view!!)
+                                    }
+                                }
+                        }
                     }
                 }
-            }
         } else {
-            db.collection("notes").whereArrayContains("parent_ids", uid!!).addSnapshotListener { value, error ->
-                if (error != null) {
-                    Timber.e(error)
-                    return@addSnapshotListener
-                }
+            db.collection("notes").whereArrayContains("parent_ids", uid!!)
+                .addSnapshotListener { value, error ->
+                    if (error != null) {
+                        Timber.e(error)
+                        return@addSnapshotListener
+                    }
 
-                mNoteList.clear()
-                for (document in value!!.documents) {
-                    val listUserIds = document["parent_ids"] as List<String>
-                    if (listUserIds.size == 1) {
-                        val data = ClassDetailPersonalNoteDao(
-                            0,
-                            "",
-                            document["content"] as String,
-                            arrayListOf(),
-                            document["time"] as String,
-                            arrayListOf(),
-                            document.id
-                        )
+                    mNoteList.clear()
+                    for (document in value!!.documents) {
+                        val listUserIds = document["parent_ids"] as List<String>
+                        if (listUserIds.size == 1) {
+                            val data = ClassDetailPersonalNoteDao(
+                                0,
+                                "",
+                                document["content"] as String,
+                                arrayListOf(),
+                                document["time"] as String,
+                                arrayListOf(),
+                                document.id
+                            )
 
-                        db.collection("users").document(listUserIds[0]).get()
-                            .addOnSuccessListener { user ->
-                                Log.d("DEBUG", "onViewCreated: "+user["name"].toString())
-                                if(user != null) {
-                                    data.noteTitle = user.get("name") as String
-                                    data.profilePicture = 0
-                                    mNoteList.add(data)
+                            db.collection("users").document(listUserIds[0]).get()
+                                .addOnSuccessListener { user ->
+                                    Log.d("DEBUG", "onViewCreated: " + user["name"].toString())
+                                    if (user != null) {
+                                        data.noteTitle = user.get("name") as String
+                                        data.profilePicture = 0
+                                        mNoteList.add(data)
 
-                                    mNoteAdapter.notifyDataSetChanged()
-                                    checkEmpty(view!!)
+                                        mNoteAdapter.notifyDataSetChanged()
+                                        checkEmpty(view!!)
+                                    }
                                 }
-                            }
+                        }
                     }
                 }
-            }
         }
     }
 
