@@ -37,12 +37,11 @@ class SchoolPhotoAdapter(
                         if (!url.startsWith("http://")) {
                             url = "http://" + url
                         }
+
+                        val intent = Intent(Intent.ACTION_VIEW)
+                        intent.data = Uri.parse(url)
+                        (context as SchoolPhotoActivity).startActivity(intent)
                     }
-
-
-                val intent = Intent(Intent.ACTION_VIEW)
-                intent.data = Uri.parse("http://" + url )
-                (context as SchoolPhotoActivity).startActivity(intent)
             }
         }
     }

@@ -38,62 +38,73 @@
         app:layout_constraintBottom_toBottomOf="@+id/tvBottomSheetSchoolAnnouncementTemplateTitle"
         app:layout_constraintRight_toRightOf="parent"/>
 
-    <RadioGroup
-        android:id="@+id/rbGroupSchoolAnnouncementTemplate"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rvBottomSheetSchoolAnnouncementTemplate"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/tvBottomSheetSchoolAnnouncementTemplateTitle">
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvBottomSheetSchoolAnnouncementTemplateTitle"/>
 
-        <RadioButton
-            android:id="@+id/rbSchoolAnnouncementTemplateFieldTrip"
-            android:layout_width="match_parent"
-            android:layout_height="52dp"
-            style="@style/RadioButtonBlue"
-            android:paddingHorizontal="@dimen/size_16"
-            android:layoutDirection="rtl"
-            android:textAlignment="textStart"
-            android:text="Field Trip"
-            android:textSize="@dimen/text_16"
-            android:textFontWeight="400"
-            android:lineHeight="@dimen/text_28"
-            android:textColor="@color/colorSuperDarkBlue" />
+<!--    <RadioGroup-->
+<!--        android:id="@+id/rbGroupSchoolAnnouncementTemplate"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/tvBottomSheetSchoolAnnouncementTemplateTitle">-->
 
-        <RadioButton
-            android:id="@+id/rbSchoolAnnouncementTemplateUniform"
-            android:layout_width="match_parent"
-            android:layout_height="52dp"
-            style="@style/RadioButtonBlue"
-            android:paddingHorizontal="@dimen/size_16"
-            android:layoutDirection="rtl"
-            android:textAlignment="textStart"
-            android:text="Perubahan Seragam"
-            android:textSize="@dimen/text_16"
-            android:textFontWeight="400"
-            android:lineHeight="@dimen/text_28"
-            android:textColor="@color/colorSuperDarkBlue" />
+<!--        <RadioButton-->
+<!--            android:id="@+id/rbSchoolAnnouncementTemplateFieldTrip"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="52dp"-->
+<!--            style="@style/RadioButtonBlue"-->
+<!--            android:layout_marginRight="@dimen/size_16"-->
+<!--            android:paddingHorizontal="@dimen/size_16"-->
+<!--            android:layoutDirection="rtl"-->
+<!--            android:textAlignment="textStart"-->
+<!--            android:text="Field Trip"-->
+<!--            android:textSize="@dimen/text_16"-->
+<!--            android:textFontWeight="400"-->
+<!--            android:lineHeight="@dimen/text_28"-->
+<!--            android:textColor="@color/colorSuperDarkBlue" />-->
 
-        <RadioButton
-            android:id="@+id/rbSchoolAnnouncementTemplateSchedule"
-            android:layout_width="match_parent"
-            android:layout_height="52dp"
-            style="@style/RadioButtonBlue"
-            android:paddingHorizontal="@dimen/size_16"
-            android:layoutDirection="rtl"
-            android:textAlignment="textStart"
-            android:text="Perubahan Jadwal"
-            android:textSize="@dimen/text_16"
-            android:textFontWeight="400"
-            android:lineHeight="@dimen/text_28"
-            android:textColor="@color/colorSuperDarkBlue" />
+<!--        <RadioButton-->
+<!--            android:id="@+id/rbSchoolAnnouncementTemplateUniform"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="52dp"-->
+<!--            style="@style/RadioButtonBlue"-->
+<!--            android:layout_marginRight="@dimen/size_16"-->
+<!--            android:paddingHorizontal="@dimen/size_16"-->
+<!--            android:layoutDirection="rtl"-->
+<!--            android:textAlignment="textStart"-->
+<!--            android:text="Perubahan Seragam"-->
+<!--            android:textSize="@dimen/text_16"-->
+<!--            android:textFontWeight="400"-->
+<!--            android:lineHeight="@dimen/text_28"-->
+<!--            android:textColor="@color/colorSuperDarkBlue" />-->
 
-    </RadioGroup>
+<!--        <RadioButton-->
+<!--            android:id="@+id/rbSchoolAnnouncementTemplateSchedule"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="52dp"-->
+<!--            style="@style/RadioButtonBlue"-->
+<!--            android:layout_marginRight="@dimen/size_16"-->
+<!--            android:paddingHorizontal="@dimen/size_16"-->
+<!--            android:layoutDirection="rtl"-->
+<!--            android:textAlignment="textStart"-->
+<!--            android:text="Perubahan Jadwal"-->
+<!--            android:textSize="@dimen/text_16"-->
+<!--            android:textFontWeight="400"-->
+<!--            android:lineHeight="@dimen/text_28"-->
+<!--            android:textColor="@color/colorSuperDarkBlue" />-->
+
+<!--    </RadioGroup>-->
 
     <TextView
         android:id="@+id/tvSchoolAnnouncementTemplateCancel"
         android:layout_width="match_parent"
         android:layout_height="52dp"
         android:gravity="center_vertical"
-        app:layout_constraintTop_toBottomOf="@+id/rbGroupSchoolAnnouncementTemplate"
+        app:layout_constraintTop_toBottomOf="@+id/rvBottomSheetSchoolAnnouncementTemplate"
         android:paddingHorizontal="@dimen/size_16"
         android:text="Batalkan"
         android:textSize="@dimen/text_16"

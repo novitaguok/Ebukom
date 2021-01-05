@@ -21,14 +21,18 @@ import com.ebukom.arch.dao.ClassDetailAttachmentDao
 import com.ebukom.arch.dao.ClassDetailPersonalNoteDao
 import com.ebukom.arch.dao.ClassDetailTemplateTextDao
 import com.ebukom.arch.ui.classdetail.ClassDetailAttachmentAdapter
+import com.ebukom.arch.ui.classdetail.ClassDetailTemplateAdapter
 import com.ebukom.arch.ui.classdetail.personal.personalnotenewnext.PersonalNoteNewNextActivity
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.SchoolAnnouncementAddTemplateActivity
 import com.ebukom.data.DataDummy
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.android.synthetic.main.activity_personal_note_add_template.*
 import kotlinx.android.synthetic.main.activity_personal_note_new.*
 import kotlinx.android.synthetic.main.activity_personal_note_new.toolbar
 import kotlinx.android.synthetic.main.alert_edit_text.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_class_detail_attachment.view.*
+import kotlinx.android.synthetic.main.bottom_sheet_class_detail_school_announcement_template.view.*
 import kotlinx.android.synthetic.main.fragment_personal_sent_note.*
 import kotlinx.android.synthetic.main.item_announcement_attachment.view.*
 
@@ -37,6 +41,10 @@ class PersonalNoteNewActivity : AppCompatActivity() {
     private val mNoteList: ArrayList<ClassDetailPersonalNoteDao> = arrayListOf()
     private val mAttachmentList: ArrayList<ClassDetailAttachmentDao> = arrayListOf()
     private val mAttachmentAdapter = ClassDetailAttachmentAdapter(mAttachmentList)
+    private val mTemplateList: ArrayList<ClassDetailTemplateTextDao> = arrayListOf()
+    lateinit var mTemplateAdapter: ClassDetailTemplateAdapter
+    lateinit var bottomSheetDialog: BottomSheetDialog
+    val db = FirebaseFirestore.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,6 +57,25 @@ class PersonalNoteNewActivity : AppCompatActivity() {
         }
 
         initToolbar()
+        bottomSheetDialog = BottomSheetDialog(this)
+        val view = layoutInflater.inflate(
+            R.layout.bottom_sheet_class_detail_school_announcement_template,
+            null
+        )
+
+        mTemplateAdapter = ClassDetailTemplateAdapter(mTemplateList, this)
+        db.collection("note_templates").get().addOnSuccessListener {
+            mTemplateList.clear()
+            for (data in it.documents) {
+                mTemplateList.add(
+                    ClassDetailTemplateTextDao(
+                        data["title"] as String,
+                        data["content"] as String
+                    )
+                )
+            }
+            mAttachmentAdapter.notifyDataSetChanged()
+        }
 
         // Attachment List
         checkAttachmentEmpty()
@@ -60,6 +87,29 @@ class PersonalNoteNewActivity : AppCompatActivity() {
                 false
             )
             adapter = mAttachmentAdapter
+        }
+
+        tvSchoolPersonalNoteNewUseTemplate.setOnClickListener {
+
+            view.rvBottomSheetSchoolAnnouncementTemplate.apply {
+                layoutManager =
+                    LinearLayoutManager(
+                        this.context,
+                        LinearLayoutManager.VERTICAL,
+                        false
+                    )
+                adapter = mTemplateAdapter
+            }
+
+            view.tvBottomSheetSchoolAnnouncementTemplateAdd.setOnClickListener {
+                startActivity(Intent(this, PersonalNoteAddTemplateActivity::class.java))
+            }
+            view.tvSchoolAnnouncementTemplateCancel.setOnClickListener {
+                bottomSheetDialog.dismiss()
+            }
+
+            bottomSheetDialog.setContentView(view)
+            bottomSheetDialog.show()
         }
 
         // Text watcher
@@ -282,5 +332,11 @@ class PersonalNoteNewActivity : AppCompatActivity() {
                 R.color.colorRed
             )
         )
+    }
+
+    fun setText(announcementTitle: String, noteContent: String) {
+        etPersonalNoteNewContent.setText(noteContent)
+        bottomSheetDialog.dismiss()
+
     }
 }

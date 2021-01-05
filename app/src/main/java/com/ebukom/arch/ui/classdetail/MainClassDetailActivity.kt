@@ -70,7 +70,7 @@ class MainClassDetailActivity : AppCompatActivity(), OnMoreCallback {
         }
 
         ivClassHeaderProfilePicture.setOnClickListener {
-            startActivity(Intent(this, EditProfileActivity::class.java))
+//            startActivity(Intent(this, EditProfileActivity::class.java))
         }
 
         val sharePref: SharedPreferences = getSharedPreferences("EBUKOM", Context.MODE_PRIVATE)

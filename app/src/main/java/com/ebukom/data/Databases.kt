@@ -10,7 +10,7 @@ import timber.log.Timber
 class Databases {
     /**
      * Init class data at the first time,
-     * you don't need to run this again for the nex (run once)
+     * you don't need to run this again for the next (run once)
      */
     fun initClassesData() {
         val db = FirebaseFirestore.getInstance()
@@ -21,8 +21,32 @@ class Databases {
     }
 
     /**
+     * Init announcement template data at the first time,
+     * you don't need to run this again for the next (run once)
+     */
+    fun initAnnouncementTemplateData() {
+        val db = FirebaseFirestore.getInstance()
+
+        buildAnnouncementTemplateData().forEach {
+            db.collection("announcement_templates").add(it)
+        }
+    }
+
+    /**
+     * Init note template data at the first time,
+     * you don't need to run this again for the next (run once)
+     */
+    fun initNoteTemplateData() {
+        val db = FirebaseFirestore.getInstance()
+
+        buildNoteTemplateData().forEach {
+            db.collection("announcement_templates").add(it)
+        }
+    }
+
+    /**
      * Init subject material data at the first time,
-     * you don't need to run this again for the nex (run once)
+     * you don't need to run this again for the next (run once)
      */
     fun initSubjectMaterialsData() {
         val db = FirebaseFirestore.getInstance()
@@ -227,6 +251,72 @@ class Databases {
                 Pair("material_bg", R.drawable.bg_subject_plh),
                 Pair("material_name", "PLH"),
                 Pair("order_number", 8)
+            )
+        )
+
+        return arrayOfMap
+    }
+
+    fun buildAnnouncementTemplateData(): List<Map<String, Any>> {
+        val arrayOfMap = arrayListOf<Map<String, Any>>()
+        arrayOfMap.add(
+            mapOf(
+                Pair("title", "Field Trip"),
+                Pair(
+                    "content",
+                    "Pada hari ... akan diadakan field trip ke ... . Berikut adalah detail waktunya.\\n\\u25BA Siswa kumpul mulai pukul ... di ... .\\n\\u25BA Siswa berangkat pukul ... .\\n\\u25BA Sehubungan lokasi field trip di ... , bagi siswa yang terlambat mohon maaf tidak kami tunggu\\n\\u25BA Siswa dijemput kembali di ... pada pukul ...* (tentative)\\n\\nPerlengkapan yang dibawa:\\n\\u25BA Memakai seragam kerah, sepatu, dan kaos kaki\\n\\u25BA Jaket dan topi\\n\\u25BA Pakaian ganti\\n\\u25BA Obat pribadi\\n\\u25BA Clipboard dan alat tulis\\n\\u25BA Kantong keresek ukuran besar 1\\n\\u25BA Bekal snack dan tumblr/botol minum\\n\\nDaftar Kelompok\\nKelompok 1:\\n\\n\\nKelompok 2:\\n\\n\\nKelompok 3:\\n\\n\\nKelompok 4:\\n\\n\\nKelompok 5:\\n\\n\\nKelompok 6:\\n\\n\\nKelompok 7:\\n\\n\\nKelompok 8:\\n\\n\\nKelompok 9:\\n\\n\\nKelompok 10:\\n"
+                )
+            )
+        )
+        arrayOfMap.add(
+            mapOf(
+                Pair("title", "Penilaian Akhir Semester (PAS)"),
+                Pair(
+                    "content",
+                    "Ayah dan Bunda, Alhamdulillah pekan depan anak-anak sudah memasuki pekan Penilaian Akhir Semester (PAS) yang dimulai hari ... dan masuk pukul ... . Siswa melengkapi alat tulis (pensil, penghapus, lem, pensil warna/crayon). Adapun jadwal PAS Austeum dapat dilihat pada lampiran."
+                )
+            )
+        )
+        arrayOfMap.add(
+            mapOf(
+                Pair("title", "Market Day"),
+                Pair(
+                    "content",
+                    "Ayah dan Bunda, Alhamdulillah pekan depan anak-anak memasuki pekan market day yang dimulai hari ... . Siswa diharapkan membawa perlengkapan seperti uang sebesar ... dan peralatan lainnya seperti ... ."
+                )
+            )
+        )
+
+        return arrayOfMap
+    }
+
+    fun buildNoteTemplateData(): List<Map<String, Any>> {
+        val arrayOfMap = arrayListOf<Map<String, Any>>()
+        arrayOfMap.add(
+            mapOf(
+                Pair("title", "Anak Kesulitan Belajar"),
+                Pair(
+                    "content",
+                    "Diberitahukan bahwa anak Bapak/Ibu mengalami kesulitan belajar. Kami dari pihak sekolah memohon bantuannya untuk memberikan materi tambahan terkait mata pelajaran tersebut di rumah."
+                )
+            )
+        )
+        arrayOfMap.add(
+            mapOf(
+                Pair("title", "Anak Bertengkar"),
+                Pair(
+                    "content",
+                    "Diberitahukan bahwa anak Ibu bertengkar dengan siswa lain. Kami dari pihak sekolah memohon bantuannya untuk menjemputnya di sekolah."
+                )
+            )
+        )
+        arrayOfMap.add(
+            mapOf(
+                Pair("title", "Anak Sakit"),
+                Pair(
+                    "content",
+                    "Diberitahukan bahwa anak Bapak/Ibu sedang sakit di sekolah, kami dari pihak sekolah memohon bantuannya untuk menjemputnya di sekolah."
+                )
             )
         )
 

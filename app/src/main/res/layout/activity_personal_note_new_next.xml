@@ -141,7 +141,8 @@
             android:textColor="@color/colorRed"
             android:textSize="@dimen/text_12"
             app:layout_constraintLeft_toLeftOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tvPersonalNoteNewNextAlarmTitle" />
+            app:layout_constraintTop_toBottomOf="@+id/tvPersonalNoteNewNextAlarmTitle"
+            android:visibility="invisible"/>
 
         <Button
             android:id="@+id/btnPersonalNoteNewNextDone"

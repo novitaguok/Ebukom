@@ -84,41 +84,31 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
                         return@addSnapshotListener
                     }
 
-                    val eventDate = (value?.get("event_start") as? Timestamp)?.toDate()?.toCalendar()
-                    val day = eventDate?.get(Calendar.DAY_OF_WEEK)
-                    val date = eventDate?.get(Calendar.DATE)
-                    val month = eventDate?.get(Calendar.MONTH)
-                    val year = eventDate?.get(Calendar.YEAR)
+                    // Toolbar title
+                    var time = (value?.get("event_start") as? Timestamp)?.toDate()?.toCalendar()
+                    var day = time?.get(Calendar.DAY_OF_WEEK)
+                    var date = time?.get(Calendar.DATE)
+                    var month = time?.get(Calendar.MONTH)
+                    var year = time?.get(Calendar.YEAR)
                     var dayName = ""
                     var monthName = ""
-
-                    when (day) {
-                        1 -> dayName = "Minggu"
-                        2 -> dayName = "Senin"
-                        3 -> dayName = "Selasa"
-                        4 -> dayName = "Rabu"
-                        5 -> dayName = "Kamis"
-                        6 -> dayName = "Jumat"
-                        7 -> dayName = "Sabtu"
-                    }
-
-                    when (month) {
-                        0 -> monthName = "Januari"
-                        1 -> monthName = "Febuari"
-                        2 -> monthName = "Maret"
-                        3 -> monthName = "April"
-                        4 -> monthName = "Mei"
-                        5 -> monthName = "Juni"
-                        6 -> monthName = "Juli"
-                        7 -> monthName = "Agustus"
-                        8 -> monthName = "September"
-                        9 -> monthName = "Oktober"
-                        10 -> monthName = "November"
-                        11 -> monthName = "Desember"
-                    }
-
+                    var pair = initTime(day, dayName, month, monthName)
+                    dayName = pair.first
+                    monthName = pair.second
                     tvSchoolAnnouncementDetailToolbar.text =
                         dayName + ", " + date!! + " " + monthName + " " + (year!!)
+
+                    // Announcement time
+                    time = (value?.get("time") as? Timestamp)?.toDate()?.toCalendar()
+                    day = time?.get(Calendar.DAY_OF_WEEK)
+                    date = time?.get(Calendar.DATE)
+                    month = time?.get(Calendar.MONTH)
+                    year = time?.get(Calendar.YEAR)
+                    dayName = ""
+                    monthName = ""
+                    pair = initTime(day, dayName, month, monthName)
+                    dayName = pair.first
+                    monthName = pair.second
                     tvSchoolAnnouncementDetailDate.text = dayName + ", " + date!! + " " + monthName + " " + (year!!)
                     tvSchoolAnnouncementDetailTitle.text = value?.get("title") as? String
                     tvSchoolAnnouncementDetailContent.text = value?.get("content") as? String
@@ -238,6 +228,41 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
         ivAnnouncementDetailMoreButton.setOnClickListener {
             popupMenuInfo()
         }
+    }
+
+    private fun initTime(
+        day: Int?,
+        dayName: String,
+        month: Int?,
+        monthName: String
+    ): Pair<String, String> {
+        var dayName1 = dayName
+        var monthName1 = monthName
+        when (day) {
+            1 -> dayName1 = "Minggu"
+            2 -> dayName1 = "Senin"
+            3 -> dayName1 = "Selasa"
+            4 -> dayName1 = "Rabu"
+            5 -> dayName1 = "Kamis"
+            6 -> dayName1 = "Jumat"
+            7 -> dayName1 = "Sabtu"
+        }
+
+        when (month) {
+            0 -> monthName1 = "Januari"
+            1 -> monthName1 = "Febuari"
+            2 -> monthName1 = "Maret"
+            3 -> monthName1 = "April"
+            4 -> monthName1 = "Mei"
+            5 -> monthName1 = "Juni"
+            6 -> monthName1 = "Juli"
+            7 -> monthName1 = "Agustus"
+            8 -> monthName1 = "September"
+            9 -> monthName1 = "Oktober"
+            10 -> monthName1 = "November"
+            11 -> monthName1 = "Desember"
+        }
+        return Pair(dayName1, monthName1)
     }
 
     private fun initRecycler() {

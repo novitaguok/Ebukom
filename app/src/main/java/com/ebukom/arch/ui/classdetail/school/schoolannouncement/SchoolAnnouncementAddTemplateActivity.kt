@@ -5,13 +5,16 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.util.Log
 import androidx.core.content.ContextCompat
 import com.ebukom.R
 import com.ebukom.arch.dao.ClassDetailTemplateTextDao
-import com.ebukom.data.DataDummy
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_school_announcement_add_template.*
 
 class SchoolAnnouncementAddTemplateActivity : AppCompatActivity() {
+
+    val db = FirebaseFirestore.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,41 +23,24 @@ class SchoolAnnouncementAddTemplateActivity : AppCompatActivity() {
         // Toolbar
         initToolbar()
 
-        var layout = intent.extras?.getString("layout", "announcement")
-        when (layout) {
-            "note" -> tvToolbarTitle.text = "Tambah Template Catatan"
-            "payment" -> tvToolbarTitle.text = "Tambah Template Item"
-        }
-
         // Text Watcher
-        etSchoolAnnouncementAddTemplate.addTextChangedListener(textWatcher)
+        etSchoolAnnouncementAddTemplateTitle.addTextChangedListener(textWatcher)
         etSchoolAnnouncementAddTemplateContent.addTextChangedListener(textWatcher)
 
         // Add Template to Database
         btnSchoolAnnouncementAddTemplate.setOnClickListener {
-            val title = etSchoolAnnouncementAddTemplate?.text.toString()
-            val content = etSchoolAnnouncementAddTemplateContent?.text.toString()
+            val data = ClassDetailTemplateTextDao(
+                etSchoolAnnouncementAddTemplateTitle?.text.toString(),
+                etSchoolAnnouncementAddTemplateContent?.text.toString()
+            )
 
-            when (layout) {
-                "note" -> {
-                    DataDummy.noteTemplateData.add(
-                        ClassDetailTemplateTextDao(
-                            title,
-                            content
-                        )
-                    )
-                    finish()
-                }
-                else -> {
-                    DataDummy.announcementTemplateData.add(
-                        ClassDetailTemplateTextDao(
-                            title,
-                            content
-                        )
-                    )
-                    finish()
-                }
+            db.collection("note_templates").add(data).addOnSuccessListener {
+                Log.d("AnnouncementAddTemplateActivity", "template added successfully")
+            }.addOnFailureListener {
+                Log.d("AnnouncementAddTemplateActivity", "template added fail")
             }
+
+            finish()
         }
     }
 
@@ -67,7 +53,7 @@ class SchoolAnnouncementAddTemplateActivity : AppCompatActivity() {
         }
 
         override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
-            if (etSchoolAnnouncementAddTemplate.text.toString()
+            if (etSchoolAnnouncementAddTemplateTitle.text.toString()
                     .isNotEmpty() && etSchoolAnnouncementAddTemplateContent.text.toString()
                     .isNotEmpty()
             ) {

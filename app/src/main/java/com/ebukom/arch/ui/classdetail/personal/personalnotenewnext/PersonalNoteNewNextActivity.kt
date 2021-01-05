@@ -6,6 +6,7 @@ import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
+import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -148,6 +149,7 @@ class PersonalNoteNewNextActivity : AppCompatActivity(), ClassDetailCheckAdapter
                 dateTimeDialogFragment.setOnButtonClickListener(object :
                     SwitchDateTimeDialogFragment.OnButtonClickListener {
                     override fun onPositiveButtonClick(date: Date?) {
+                        tvPersonalNoteNewNextAlarmContent.visibility = View.VISIBLE
                         tvPersonalNoteNewNextAlarmContent.text = dateFormat.format(date)
                         tvPersonalNoteNewNextAlarmContent.setTextColor(
                             ContextCompat.getColor(

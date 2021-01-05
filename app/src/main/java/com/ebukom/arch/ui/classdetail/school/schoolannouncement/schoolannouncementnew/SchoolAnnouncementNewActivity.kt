@@ -3,13 +3,16 @@ package com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncem
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.os.Build
 import android.os.Bundle
 import android.text.Editable
+import android.text.Html
 import android.text.TextWatcher
 import android.util.SparseIntArray
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -21,12 +24,15 @@ import com.aminography.primedatepicker.picker.callback.RangeDaysPickCallback
 import com.aminography.primedatepicker.picker.theme.LightThemeFactory
 import com.ebukom.R
 import com.ebukom.arch.dao.ClassDetailAttachmentDao
+import com.ebukom.arch.dao.ClassDetailTemplateTextDao
 import com.ebukom.arch.ui.classdetail.ClassDetailAttachmentAdapter
+import com.ebukom.arch.ui.classdetail.ClassDetailTemplateAdapter
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.SchoolAnnouncementAddTemplateActivity
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementnewnext.SchoolAnnouncementNewNextActivity
 import com.ebukom.data.DataDummy
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.Timestamp
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_school_announcement_new_next.*
 import kotlinx.android.synthetic.main.activity_school_anouncement_new.*
 import kotlinx.android.synthetic.main.activity_school_anouncement_new.toolbar
@@ -41,18 +47,43 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
 
     private val mAttachmentList: ArrayList<ClassDetailAttachmentDao> = arrayListOf()
     private val mAttachmentAdapter = ClassDetailAttachmentAdapter(mAttachmentList)
+    private val mTemplateList: ArrayList<ClassDetailTemplateTextDao> = arrayListOf()
+    lateinit var mTemplateAdapter: ClassDetailTemplateAdapter
     var classId: String? = ""
     var eventStart = Timestamp(Date())
     var eventEnd = Timestamp(Date())
     var enabled = false
     var isSetTime = false
+    lateinit var bottomSheetDialog: BottomSheetDialog
+    val db = FirebaseFirestore.getInstance()
 
+    @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_school_anouncement_new)
 
         initToolbar()
         initRecycler()
+
+        bottomSheetDialog = BottomSheetDialog(this)
+        val view = layoutInflater.inflate(
+            R.layout.bottom_sheet_class_detail_school_announcement_template,
+            null
+        )
+
+        mTemplateAdapter = ClassDetailTemplateAdapter(mTemplateList, this)
+        db.collection("announcement_templates").get().addOnSuccessListener {
+            mTemplateList.clear()
+            for (data in it.documents) {
+                mTemplateList.add(
+                    ClassDetailTemplateTextDao(
+                        data["title"] as String,
+                        data["content"] as String
+                    )
+                )
+            }
+            mAttachmentAdapter.notifyDataSetChanged()
+        }
 
         /**
          * Intent from SchoolAnnouncementActivity
@@ -63,33 +94,28 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
          * "Gunakan Template" button
          */
         btnSchoolAnnouncementNewUseTemplate.setOnClickListener {
-            val bottomSheetDialog = BottomSheetDialog(this)
-            val view = layoutInflater.inflate(
-                R.layout.bottom_sheet_class_detail_school_announcement_template,
-                null
-            )
 
-            bottomSheetDialog.setContentView(view)
 
-            view.rbSchoolAnnouncementTemplateFieldTrip.isChecked = true
-            view.rbGroupSchoolAnnouncementTemplate.setOnCheckedChangeListener { _, checkedId ->
-                if (checkedId == R.id.rbSchoolAnnouncementTemplateFieldTrip) {
-                    bottomSheetDialog.dismiss()
-
-                } else if (checkedId == R.id.rbSchoolAnnouncementTemplateUniform) {
-                    bottomSheetDialog.dismiss()
-
-                } else {
-                    bottomSheetDialog.dismiss()
-
-                }
+            view.rvBottomSheetSchoolAnnouncementTemplate.apply {
+                layoutManager =
+                    LinearLayoutManager(
+                        this.context,
+                        LinearLayoutManager.VERTICAL,
+                        false
+                    )
+                adapter = mTemplateAdapter
             }
 
             view.tvBottomSheetSchoolAnnouncementTemplateAdd.setOnClickListener {
                 startActivity(Intent(this, SchoolAnnouncementAddTemplateActivity::class.java))
             }
+            view.tvSchoolAnnouncementTemplateCancel.setOnClickListener {
+                bottomSheetDialog.dismiss()
+            }
 
+            bottomSheetDialog.setContentView(view)
             bottomSheetDialog.show()
+
         }
 
         /**
@@ -106,7 +132,7 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
             val callback = RangeDaysPickCallback { start, end ->
                 // TODO: 12/26/20 Put after selected date
                 eventStart = Timestamp(Date(start.year - 1900, start.month, start.date))
-                eventEnd = Timestamp(Date(end.year  - 1900, end.month, end.date))
+                eventEnd = Timestamp(Date(end.year - 1900, end.month, end.date))
 
                 btnSchoolAnnouncementNewTime.text =
                     "${start.date} ${start.monthNameShort} - ${end.date} ${end.monthNameShort}"
@@ -418,6 +444,11 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
         }
     }
 
+    fun setText(announcementTitle: String, announcementContent: String) {
+        etSchoolAnnouncementNewTitle.setText(announcementTitle)
+        etSchoolAnnouncementNewContent.setText(announcementContent)
+        bottomSheetDialog.dismiss()
 
+    }
 }
 
