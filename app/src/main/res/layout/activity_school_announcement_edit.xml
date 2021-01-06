@@ -78,35 +78,27 @@
                     android:id="@+id/etSchoolAnnouncementEditTitle"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/edit_text_rectangle_selector"
                     android:padding="@dimen/size_16" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tilSchoolAnnouncementEditDate"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            <Button
+                android:id="@+id/btnSchoolAnnouncementEditTime"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/size_52"
+                android:stateListAnimator="@null"
+                app:layout_constraintTop_toBottomOf="@+id/tilSchoolAnnouncementEditTitle"
                 android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
                 android:layout_marginTop="@dimen/size_20"
-                android:hint="Tanggal"
-                android:theme="@style/LoginTextInputLayoutLabel"
-                app:boxCornerRadiusBottomEnd="@dimen/size_8"
-                app:boxCornerRadiusBottomStart="@dimen/size_8"
-                app:boxCornerRadiusTopEnd="@dimen/size_8"
-                app:boxCornerRadiusTopStart="@dimen/size_8"
-                app:boxStrokeColor="@color/colorBlack"
-                app:boxStrokeWidth="@dimen/size_1"
-                app:layout_constraintTop_toBottomOf="@+id/tilSchoolAnnouncementEditTitle">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etSchoolAnnouncementEditDate"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:drawableRight="@drawable/ic_calendar_24"
-                    android:background="@drawable/edit_text_rectangle_selector"
-                    android:padding="@dimen/size_16" />
-            </com.google.android.material.textfield.TextInputLayout>
+                android:background="@drawable/edit_text_rectangle_selector"
+                android:drawableRight="@drawable/ic_calendar_24"
+                android:text="Tanggal Acara (Optional)"
+                android:textAllCaps="false"
+                android:textAlignment="textStart"
+                android:paddingHorizontal="@dimen/size_16"
+                android:textSize="@dimen/text_16"
+                android:textStyle="normal"
+                android:textColor="@color/colorGray"
+                android:textFontWeight="400"/>
 
             <EditText
                 android:id="@+id/etSchoolAnnouncementEditContent"
@@ -123,7 +115,7 @@
                 android:textColorHint="#9E9E9E"
                 android:textSize="@dimen/text_14"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tilSchoolAnnouncementEditDate" />
+                app:layout_constraintTop_toBottomOf="@+id/btnSchoolAnnouncementEditTime" />
 
             <TextView
                 android:id="@+id/tvSchoolAnnouncementEditAttachmentTitle"

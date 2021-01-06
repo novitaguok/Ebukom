@@ -107,7 +107,6 @@ class RegisterSchoolActivity : AppCompatActivity() {
             btnRegisterSchoolRole.setTextSize(TypedValue.COMPLEX_UNIT_SP, 13F)
             btnRegisterSchoolRole.setTypeface(btnRegisterSchoolRole.typeface, Typeface.NORMAL)
 
-
             bottomSheetDialog.dismiss()
         }
 
@@ -161,6 +160,7 @@ class RegisterSchoolActivity : AppCompatActivity() {
                                     it.toString(),
                                     0
                                 )
+
                                 val intent = Intent(this, VerificationActivity::class.java)
                                 intent.putExtra("layout", VerificationActivity.LAYOUT_REGISTER)
                                 intent.putExtra("data", data)
@@ -169,6 +169,23 @@ class RegisterSchoolActivity : AppCompatActivity() {
                             .addOnFailureListener {
                                 Timber.e(it)
                             }
+                    } else {
+                        val data = RegisterSchoolRequestDao(
+                            etRegisterSchoolName.text.toString(),
+                            RegisterRolesDao(
+                                "",
+                                role
+                            ),
+                            reformatPhoneNumber(etRegisterSchoolPhone.text.toString())!!,
+                            etRegisterSchoolPassword.text.toString(),
+                            it.toString(),
+                            0
+                        )
+
+                        val intent = Intent(this, VerificationActivity::class.java)
+                        intent.putExtra("layout", VerificationActivity.LAYOUT_REGISTER)
+                        intent.putExtra("data", data)
+                        startActivity(intent)
                     }
                 }
             }
@@ -268,7 +285,6 @@ class RegisterSchoolActivity : AppCompatActivity() {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
     }
 }

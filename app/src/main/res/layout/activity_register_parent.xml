@@ -101,7 +101,6 @@
                     android:id="@+id/etRegisterParentName"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/edit_text_rectangle_selector"
                     android:paddingHorizontal="@dimen/size_16" />
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -190,7 +189,11 @@
                 android:textSize="@dimen/text_12"
                 android:visibility="gone"
                 app:layout_constraintLeft_toLeftOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/tilRegisterParentPhone" />
+                app:layout_constraintTop_toBottomOf="@+id/tilRegisterParentPhone" /><![CDATA[
+
+            >
+
+            ]]>
 
             <Button
                 android:id="@+id/btnRegisterParentEskul"
@@ -207,9 +210,10 @@
                 android:textAlignment="textStart"
                 android:textAllCaps="false"
                 android:textColor="@color/colorGray"
+                android:textSize="@dimen/text_16"
                 android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                app:layout_constraintTop_toBottomOf="@+id/tvRegisterParentPhoneErrorMessage" />
-            >
+                app:layout_constraintTop_toBottomOf="@+id/tvRegisterParentPhoneErrorMessage"
+                tools:layout_editor_absoluteX="-83dp" />
 
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tilRegisterParentPassword"

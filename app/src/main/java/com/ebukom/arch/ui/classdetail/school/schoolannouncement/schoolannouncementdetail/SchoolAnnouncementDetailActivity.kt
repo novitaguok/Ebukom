@@ -16,6 +16,7 @@ import com.ebukom.arch.dao.ClassDetailAnnouncementCommentDao
 import com.ebukom.arch.dao.ClassDetailAttachmentDao
 import com.ebukom.arch.ui.classdetail.ClassDetailAttachmentAdapter
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementedit.SchoolAnnouncementEditActivity
+import com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementnew.SchoolAnnouncementNewActivity
 import com.ebukom.utils.toCalendar
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.Timestamp
@@ -86,30 +87,30 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
 
                     // Toolbar title
                     var time = (value?.get("event_start") as? Timestamp)?.toDate()?.toCalendar()
-                    var day = time?.get(Calendar.DAY_OF_WEEK)
-                    var date = time?.get(Calendar.DATE)
-                    var month = time?.get(Calendar.MONTH)
-                    var year = time?.get(Calendar.YEAR)
+                    var day = time?.get(Calendar.DAY_OF_WEEK)?: 1
+                    var date = time?.get(Calendar.DATE)?: 1
+                    var month = time?.get(Calendar.MONTH)?: 1
+                    var year = time?.get(Calendar.YEAR)?: 1990
                     var dayName = ""
                     var monthName = ""
                     var pair = initTime(day, dayName, month, monthName)
                     dayName = pair.first
                     monthName = pair.second
                     tvSchoolAnnouncementDetailToolbar.text =
-                        dayName + ", " + date!! + " " + monthName + " " + (year!!)
+                        dayName + ", " + date + " " + monthName + " " + (year)
 
                     // Announcement time
                     time = (value?.get("time") as? Timestamp)?.toDate()?.toCalendar()
-                    day = time?.get(Calendar.DAY_OF_WEEK)
-                    date = time?.get(Calendar.DATE)
-                    month = time?.get(Calendar.MONTH)
-                    year = time?.get(Calendar.YEAR)
+                    day = time?.get(Calendar.DAY_OF_WEEK)?: 1
+                    date = time?.get(Calendar.DATE)?: 1
+                    month = time?.get(Calendar.MONTH)?: 1
+                    year = time?.get(Calendar.YEAR)?: 1990
                     dayName = ""
                     monthName = ""
                     pair = initTime(day, dayName, month, monthName)
                     dayName = pair.first
                     monthName = pair.second
-                    tvSchoolAnnouncementDetailDate.text = dayName + ", " + date!! + " " + monthName + " " + (year!!)
+                    tvSchoolAnnouncementDetailDate.text = dayName + ", " + date + " " + monthName + " " + (year)
                     tvSchoolAnnouncementDetailTitle.text = value?.get("title") as? String
                     tvSchoolAnnouncementDetailContent.text = value?.get("content") as? String
                     tvSchoolAnnouncementDetailTeacher.text = value?.get("teacher.name") as? String
@@ -322,9 +323,10 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
         view.tvEditInfo.setOnClickListener {
             bottomSheetDialog.dismiss()
 
-            val intent = Intent(this, SchoolAnnouncementEditActivity::class.java)
+            val intent = Intent(this, SchoolAnnouncementNewActivity::class.java)
             intent.putExtra("announcementId", announcementId)
             intent.putExtra("classId", classId)
+            intent.putExtra("layout", "edit")
             startActivity(intent)
         }
 

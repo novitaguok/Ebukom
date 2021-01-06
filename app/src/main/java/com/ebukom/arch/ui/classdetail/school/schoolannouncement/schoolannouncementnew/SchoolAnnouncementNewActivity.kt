@@ -65,12 +65,16 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
         initToolbar()
         initRecycler()
 
+        // Intent from SchoolAnnouncementActivity
+        val layout = intent?.extras?.getString("layout")
+        classId = intent.getStringExtra("classId")
+
+        // Announcement template
         bottomSheetDialog = BottomSheetDialog(this)
         val view = layoutInflater.inflate(
             R.layout.bottom_sheet_class_detail_school_announcement_template,
             null
         )
-
         mTemplateAdapter = ClassDetailTemplateAdapter(mTemplateList, this)
         db.collection("announcement_templates").get().addOnSuccessListener {
             mTemplateList.clear()
@@ -84,18 +88,7 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
             }
             mAttachmentAdapter.notifyDataSetChanged()
         }
-
-        /**
-         * Intent from SchoolAnnouncementActivity
-         */
-        classId = intent.getStringExtra("classId")
-
-        /**
-         * "Gunakan Template" button
-         */
         btnSchoolAnnouncementNewUseTemplate.setOnClickListener {
-
-
             view.rvBottomSheetSchoolAnnouncementTemplate.apply {
                 layoutManager =
                     LinearLayoutManager(
@@ -115,119 +108,121 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
 
             bottomSheetDialog.setContentView(view)
             bottomSheetDialog.show()
-
         }
 
-        /**
-         * Showing datetime picker dialog
-         */
+        // Showing datetime picker dialog
         btnSchoolAnnouncementNewTime.setOnClickListener {
-
-//            val calendar = CivilCalendar(TimeZone.getDefault(), Locale.ENGLISH).also {
-//                it.year = 2021                       // determines starting year
-//                it.month = 0                         // determines starting month
-//                it.firstDayOfWeek = Calendar.SUNDAY  // sets first day of week to Monday
-//            }
-
-            val callback = RangeDaysPickCallback { start, end ->
-                // TODO: 12/26/20 Put after selected date
-                eventStart = Timestamp(Date(start.year - 1900, start.month, start.date))
-                eventEnd = Timestamp(Date(end.year - 1900, end.month, end.date))
-
-                btnSchoolAnnouncementNewTime.text =
-                    "${start.date} ${start.monthNameShort} - ${end.date} ${end.monthNameShort}"
-//                btnSchoolAnnouncementNewTime.text = "${start.weekDayName} ${start.month} ${start.date}"
-                btnSchoolAnnouncementNewTime.setTextColor(Color.parseColor("#808080"))
-
-                isSetTime = true
-            }
-
-            val themeFactory = object : LightThemeFactory() {
-
-                override val calendarViewPickedDayInRangeBackgroundColor: Int
-                    get() = getColor(R.color.red300)
-
-                override val calendarViewPickedDayBackgroundColor: Int
-                    get() = getColor(R.color.colorRed)
-
-                override val calendarViewPickedDayInRangeLabelTextColor: Int
-                    get() = getColor(R.color.gray900)
-
-                override val calendarViewWeekLabelTextColors: SparseIntArray
-                    get() = SparseIntArray(7).apply {
-                        val red = getColor(R.color.colorRed)
-                        val blue = getColor(R.color.colorSuperDarkBlue)
-                        put(Calendar.SUNDAY, red)
-                        put(Calendar.MONDAY, blue)
-                        put(Calendar.TUESDAY, blue)
-                        put(Calendar.WEDNESDAY, blue)
-                        put(Calendar.THURSDAY, blue)
-                        put(Calendar.FRIDAY, blue)
-                        put(Calendar.SATURDAY, blue)
-                    }
-
-                override val actionBarTodayTextColor: Int
-                    get() = getColor(R.color.transparent)
-
-                override val actionBarPositiveTextColor: Int
-                    get() = getColor(R.color.colorRed)
-
-                override val actionBarNegativeTextColor: Int
-                    get() = getColor(R.color.colorGray)
-
-                override val selectionBarRangeDaysItemBackgroundColor: Int
-                    get() = getColor(R.color.red300)
-
-                override val gotoViewTextColor: Int
-                    get() = getColor(R.color.black)
-
-                override val selectionBarBackgroundColor: Int
-                    get() = getColor(R.color.colorRed)
-
-                override val calendarViewMonthLabelTextColor: Int
-                    get() = getColor(R.color.black)
-            }
-
-            val today =
-                CivilCalendar()  // Causes a Civil date picker, also today as the starting date
-
-            val datePicker = PrimeDatePicker.dialogWith(today)  // or dialogWith(today)
-                .pickRangeDays(callback)        // Passing callback is optional, can be set later using setDayPickCallback()
-                .applyTheme(themeFactory)          // Optional
-                .build()
-
-            datePicker.show(supportFragmentManager, "SchoolAnnouncementNewActivity")
+            pickTime()
         }
 
-        /**
-         * Text watcher
-         */
+        if (layout == "edit") {
+            tvToolbarTitle.text = "Edit Pengumuman"
+
+//            db.collection()
+        } else {
+            // Go to next page
+            btnSchoolAnnouncementNewNext.setOnClickListener {
+                val title = etSchoolAnnouncementNewTitle.text.toString()
+                val content = etSchoolAnnouncementNewContent.text.toString()
+                val intent = Intent(this, SchoolAnnouncementNewNextActivity::class.java)
+
+                if (!isSetTime) {
+                    eventStart = Timestamp.now()
+                    eventEnd = Timestamp.now()
+                }
+
+                intent.putExtra("classId", classId)
+                intent.putExtra("title", title)
+                intent.putExtra("content", content)
+                intent.putExtra("eventStart", eventStart)
+                intent.putExtra("eventEnd", eventEnd)
+                intent.putExtra("attachments", mAttachmentList)
+
+                startActivity(intent)
+                finish()
+            }
+        }
+
+        // Text watcher
         etSchoolAnnouncementNewTitle.addTextChangedListener(textWatcher)
         etSchoolAnnouncementNewContent.addTextChangedListener(textWatcher)
+    }
 
-        /**
-         * Next page
-         */
-        btnSchoolAnnouncementNewNext.setOnClickListener {
-            val title = etSchoolAnnouncementNewTitle.text.toString()
-            val content = etSchoolAnnouncementNewContent.text.toString()
-            val intent = Intent(this, SchoolAnnouncementNewNextActivity::class.java)
+    private fun pickTime() {
+        //            val calendar = CivilCalendar(TimeZone.getDefault(), Locale.ENGLISH).also {
+        //                it.year = 2021                       // determines starting year
+        //                it.month = 0                         // determines starting month
+        //                it.firstDayOfWeek = Calendar.SUNDAY  // sets first day of week to Monday
+        //            }
 
-            if (!isSetTime) {
-                eventStart = Timestamp.now()
-                eventEnd = Timestamp.now()
-            }
+        val callback = RangeDaysPickCallback { start, end ->
+            // TODO: 12/26/20 Put after selected date
+            eventStart = Timestamp(Date(start.year - 1900, start.month, start.date))
+            eventEnd = Timestamp(Date(end.year - 1900, end.month, end.date))
 
-            intent.putExtra("classId", classId)
-            intent.putExtra("title", title)
-            intent.putExtra("content", content)
-            intent.putExtra("eventStart", eventStart)
-            intent.putExtra("eventEnd", eventEnd)
-            intent.putExtra("attachments", mAttachmentList)
+            btnSchoolAnnouncementNewTime.text =
+                "${start.date} ${start.monthNameShort} - ${end.date} ${end.monthNameShort}"
+    //                btnSchoolAnnouncementNewTime.text = "${start.weekDayName} ${start.month} ${start.date}"
+            btnSchoolAnnouncementNewTime.setTextColor(Color.parseColor("#808080"))
 
-            startActivity(intent)
-            finish()
+            isSetTime = true
         }
+
+        val themeFactory = object : LightThemeFactory() {
+
+            override val calendarViewPickedDayInRangeBackgroundColor: Int
+                get() = getColor(R.color.red300)
+
+            override val calendarViewPickedDayBackgroundColor: Int
+                get() = getColor(R.color.colorRed)
+
+            override val calendarViewPickedDayInRangeLabelTextColor: Int
+                get() = getColor(R.color.gray900)
+
+            override val calendarViewWeekLabelTextColors: SparseIntArray
+                get() = SparseIntArray(7).apply {
+                    val red = getColor(R.color.colorRed)
+                    val blue = getColor(R.color.colorSuperDarkBlue)
+                    put(Calendar.SUNDAY, red)
+                    put(Calendar.MONDAY, blue)
+                    put(Calendar.TUESDAY, blue)
+                    put(Calendar.WEDNESDAY, blue)
+                    put(Calendar.THURSDAY, blue)
+                    put(Calendar.FRIDAY, blue)
+                    put(Calendar.SATURDAY, blue)
+                }
+
+            override val actionBarTodayTextColor: Int
+                get() = getColor(R.color.transparent)
+
+            override val actionBarPositiveTextColor: Int
+                get() = getColor(R.color.colorRed)
+
+            override val actionBarNegativeTextColor: Int
+                get() = getColor(R.color.colorGray)
+
+            override val selectionBarRangeDaysItemBackgroundColor: Int
+                get() = getColor(R.color.red300)
+
+            override val gotoViewTextColor: Int
+                get() = getColor(R.color.black)
+
+            override val selectionBarBackgroundColor: Int
+                get() = getColor(R.color.colorRed)
+
+            override val calendarViewMonthLabelTextColor: Int
+                get() = getColor(R.color.black)
+        }
+
+        val today =
+            CivilCalendar()  // Causes a Civil date picker, also today as the starting date
+
+        val datePicker = PrimeDatePicker.dialogWith(today)  // or dialogWith(today)
+            .pickRangeDays(callback)        // Passing callback is optional, can be set later using setDayPickCallback()
+            .applyTheme(themeFactory)          // Optional
+            .build()
+
+        datePicker.show(supportFragmentManager, "SchoolAnnouncementNewActivity")
     }
 
     private fun initRecycler() {

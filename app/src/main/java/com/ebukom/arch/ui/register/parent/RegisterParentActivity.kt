@@ -3,13 +3,13 @@ package com.ebukom.arch.ui.register.parent
 import android.Manifest
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Color
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
 import android.view.View
-import android.widget.Toast
 import com.ebukom.R
 import com.ebukom.arch.dao.firebase.RegisterParentRequestDao
 import com.ebukom.arch.ui.forgotpassword.verification.VerificationActivity
@@ -17,14 +17,12 @@ import com.ebukom.arch.ui.login.LoginActivity
 import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.auth.FirebaseAuth
-import com.google.firebase.auth.FirebaseUser
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_register_parent.*
 import kotlinx.android.synthetic.main.activity_register_parent.etRegisterParentName
 import kotlinx.android.synthetic.main.activity_register_parent.etRegisterParentPhone
 import kotlinx.android.synthetic.main.activity_register_parent.toolbar
-import kotlinx.android.synthetic.main.activity_register_school.*
 import kotlinx.android.synthetic.main.bottom_sheet_register_parent.view.*
 import pub.devrel.easypermissions.EasyPermissions
 import timber.log.Timber
@@ -50,8 +48,8 @@ class RegisterParentActivity : AppCompatActivity() {
          */
         auth = FirebaseAuth.getInstance() // Firebase authentication
         db = FirebaseFirestore.getInstance() // Firestore
+
         tvRegisterParentAddPhoto.setOnClickListener {
-            Toast.makeText(this, "Clicked", Toast.LENGTH_SHORT).show()
             val perms = arrayOf(
                 Manifest.permission.CAMERA
             )
@@ -95,6 +93,7 @@ class RegisterParentActivity : AppCompatActivity() {
             allEskul = eskul.distinct().toString()
             allEskul = allEskul?.substring(1, allEskul!!.length - 1)
             btnRegisterParentEskul.text = allEskul
+            btnRegisterParentEskul.setTextColor(Color.parseColor("#808080"))
 
             bottomSheetDialog.dismiss()
         }
@@ -135,9 +134,13 @@ class RegisterParentActivity : AppCompatActivity() {
      */
     private fun register() {
         btnRegisterParentRegister.setOnClickListener {
+
+//            Toast.makeText(applicationContext, "Test", Toast.LENGTH_SHORT).show()
+
             if (isValid()) {
-                if (reformatPhoneNumber(etRegisterSchoolPhone.text.toString()) != null) {
+                if (reformatPhoneNumber(etRegisterParentPhone.text.toString()) != null) {
                     if (imageFile != null) {
+                        loading.visibility = View.VISIBLE
                         FirebaseStorage.getInstance()
                             .getReference("images/profile/")
                             .putFile(Uri.fromFile(imageFile))
@@ -161,7 +164,20 @@ class RegisterParentActivity : AppCompatActivity() {
                                 Timber.e(it)
                             }
                     } else {
-                        Toast.makeText(this, "Gambar Kosong", Toast.LENGTH_SHORT).show()
+                        val data = RegisterParentRequestDao(
+                            etRegisterParentName.text.toString(),
+                            etRegisterParentChild.text.toString(),
+                            reformatPhoneNumber(etRegisterParentPhone.text.toString())!!,
+                            eskul,
+                            etRegisterParentPassword.text.toString(),
+                            "",
+                            1
+                        )
+
+                        val intent = Intent(this, VerificationActivity::class.java)
+                        intent.putExtra("layout", VerificationActivity.LAYOUT_REGISTER)
+                        intent.putExtra("data", data)
+                        startActivity(intent)
                     }
                 }
             }
@@ -245,7 +261,7 @@ class RegisterParentActivity : AppCompatActivity() {
                 imageFile = ImagePicker.getFile(data)
                 imagePath = ImagePicker.getFilePath(data)
 
-                ivRegisterSchoolProfilePicture.setImageURI(fileUri)
+                ivRegisterParentProfilePicture.setImageURI(fileUri)
             } else if (resultCode == ImagePicker.RESULT_ERROR) {
                 Timber.e(ImagePicker.getError(data))
             } else {
