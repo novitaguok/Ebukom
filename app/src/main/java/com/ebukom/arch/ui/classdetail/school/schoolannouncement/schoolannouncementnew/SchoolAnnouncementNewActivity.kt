@@ -118,18 +118,18 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
             db.collection("classes").document(classId!!).collection("announcements")
                 .document(announcementId!!)
                 .get().addOnSuccessListener {
+                    var startMonthName = ""
+                    var endMonthName = ""
 
                     initRecycler()
 
                     etSchoolAnnouncementNewTitle.setText(it["title"] as String)
                     etSchoolAnnouncementNewContent.setText(it["content"] as String)
 
-                    var startMonthName = ""
-                    var endMonthName = ""
-                    val eventStartDate = (it["event_start"] as Timestamp).toDate().date.toString()
-                    val eventStartMonth = (it["event_start"] as Timestamp).toDate().month.toString()
-                    val eventEndDate = (it["event_end"] as Timestamp).toDate().date.toString()
-                    val eventEndMonth = (it["event_end"] as Timestamp).toDate().month.toString()
+                    var eventStartDate = (it["event_start"] as Timestamp).toDate().date.toString()
+                    var eventStartMonth = (it["event_start"] as Timestamp).toDate().month.toString()
+                    var eventEndDate = (it["event_end"] as Timestamp).toDate().date.toString()
+                    var eventEndMonth = (it["event_end"] as Timestamp).toDate().month.toString()
 
                     when (eventStartMonth) {
                         "0" -> startMonthName = "Januari"
@@ -161,7 +161,12 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
                         "11" -> endMonthName = "Desember"
                     }
 
-                    btnSchoolAnnouncementNewTime.text =
+                    if (it["event_start"] as Timestamp == it["event_end"] as Timestamp) {
+                        btnSchoolAnnouncementNewTime.text = "Tanggal Acara (Optional)"
+                        eventStart = Timestamp.now()
+                        eventEnd = Timestamp.now()
+                    }
+                    else btnSchoolAnnouncementNewTime.text =
                         "${eventStartDate} ${startMonthName} - ${eventEndDate} ${endMonthName}"
 
                     for (data in it["attachments"] as List<HashMap<Any, Any>>) {
@@ -177,34 +182,31 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
 
                     checkEmpty()
 
-                }
+                    btnSchoolAnnouncementNewNext.setOnClickListener {
+                        val data = hashMapOf(
+                            "content" to etSchoolAnnouncementNewTitle.text.toString(),
+                            "title" to etSchoolAnnouncementNewContent.text.toString(),
+                            "attachments" to mAttachmentList,
+                            "event_start" to eventStart,
+                            "event_end" to eventEnd
+                        )
 
-            val title = etSchoolAnnouncementNewTitle.text.toString()
-            val content = etSchoolAnnouncementNewContent.text.toString()
-            btnSchoolAnnouncementNewNext.setOnClickListener {
-                val data = hashMapOf(
-                    "content" to content,
-                    "title" to title,
-                    "attachments" to mAttachmentList,
-                    "event_start" to eventStart,
-                    "event_end" to eventEnd
-                )
-
-                loading.visibility = View.VISIBLE
-                db.collection("classes").document(classId!!).collection("announcements")
-                    .document(announcementId!!).update(data).addOnCompleteListener {
-                    if (it.isSuccessful) {
+                        loading.visibility = View.VISIBLE
+                        db.collection("classes").document(classId!!).collection("announcements")
+                            .document(announcementId!!).update(data).addOnCompleteListener {
+                                if (it.isSuccessful) {
 //                        val announcementId = it.result?.id!!
-                        loading.visibility = View.GONE
-                        finish()
-                    } else {
-                        Log.d("TAG", "announcement inserted")
-                        loading.visibility = View.GONE
-                        finish()
+                                    loading.visibility = View.GONE
+                                    finish()
+                                } else {
+                                    Log.d("TAG", "announcement inserted")
+                                    loading.visibility = View.GONE
+                                    finish()
+                                }
+                            }
+
                     }
                 }
-
-            }
         } else {
             // Go to next process/page
             btnSchoolAnnouncementNewNext.setOnClickListener {

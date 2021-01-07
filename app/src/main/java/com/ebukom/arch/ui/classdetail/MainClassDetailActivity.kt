@@ -64,10 +64,7 @@ class MainClassDetailActivity : AppCompatActivity(), OnMoreCallback {
     lateinit var mEducationAdapter: SchoolAnnouncementAdapter
     private val mClassList: ArrayList<ChooseClassDao> = arrayListOf()
     lateinit var mClassAdapter: MainClassDetailAdapter
-//    private val mClassList: ArrayList<> = arrayListOf()
-//    lateinit var mClassAdapter:
     val db = FirebaseFirestore.getInstance()
-
     var classId: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -99,9 +96,7 @@ class MainClassDetailActivity : AppCompatActivity(), OnMoreCallback {
         tvClassHeaderClassNumber.text = classNumber
 
         if (classId != null) {
-
             CLASS_ID = classId!!
-
             val bundle = Bundle().apply {
                 putString("classId", classId)
             }
@@ -175,33 +170,11 @@ class MainClassDetailActivity : AppCompatActivity(), OnMoreCallback {
                 }
             }
 
-
-
-
-
-
-
-
         bottomSheetDialog.setContentView(view)
 
         tvClassHeaderClassName.setOnClickListener {
             bottomSheetDialog.show()
         }
-
-//        view.rbBottomSheetClassDetailHeaderKelas1.isChecked = true
-//        view.rbGroupClassDetailHeader.setOnCheckedChangeListener { _, checkedId ->
-//            if (checkedId == R.id.rbBottomSheetClassDetailHeaderKelas1) {
-//                bottomSheetDialog.dismiss()
-//                tvClassHeaderClassNumber.text = "Kelas 1"
-//                tvClassHeaderClassName.text = "Aurora"
-//            } else {
-//                bottomSheetDialog.dismiss()
-//                tvClassHeaderClassNumber.text = "Kelas 2"
-//                tvClassHeaderClassName.text = "Fatamorgana"
-//            }
-//        }
-
-
     }
 
     // Move fragment
