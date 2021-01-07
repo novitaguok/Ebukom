@@ -21,6 +21,7 @@ import com.ebukom.arch.ui.classdetail.ClassDetailAttachmentAdapter
 import com.ebukom.arch.ui.classdetail.MainClassDetailActivity
 import com.ebukom.data.DataDummy
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_school_announcement_edit.*
 import kotlinx.android.synthetic.main.activity_school_announcement_edit.toolbar
@@ -64,6 +65,46 @@ class SchoolAnnouncementEditActivity : AppCompatActivity() {
 
                 etSchoolAnnouncementEditTitle.setText(it["title"] as String)
                 etSchoolAnnouncementEditContent.setText(it["content"] as String)
+
+                var startMonthName = ""
+                var endMonthName = ""
+                val eventStartDate = (it["event_start"] as Timestamp).toDate().date.toString()
+                val eventStartMonth = (it["event_start"] as Timestamp).toDate().month.toString()
+                val eventEndDate = (it["event_end"] as Timestamp).toDate().date.toString()
+                val eventEndMonth = (it["event_end"] as Timestamp).toDate().month.toString()
+
+                when (eventStartMonth) {
+                    "0" -> startMonthName = "Januari"
+                    "1" -> startMonthName = "Febuari"
+                    "2" -> startMonthName = "Maret"
+                    "3" -> startMonthName = "April"
+                    "4" -> startMonthName = "Mei"
+                    "5" -> startMonthName = "Juni"
+                    "6" -> startMonthName = "Juli"
+                    "7" -> startMonthName = "Agustus"
+                    "8" -> startMonthName = "September"
+                    "9" -> startMonthName = "Oktober"
+                    "10" -> startMonthName = "November"
+                    "11" -> startMonthName = "Desember"
+                }
+
+                when (eventEndMonth) {
+                    "0" -> endMonthName = "Januari"
+                    "1" -> endMonthName = "Febuari"
+                    "2" -> endMonthName = "Maret"
+                    "3" -> endMonthName = "April"
+                    "4" -> endMonthName = "Mei"
+                    "5" -> endMonthName = "Juni"
+                    "6" -> endMonthName = "Juli"
+                    "7" -> endMonthName = "Agustus"
+                    "8" -> endMonthName = "September"
+                    "9" -> endMonthName = "Oktober"
+                    "10" -> endMonthName = "November"
+                    "11" -> endMonthName = "Desember"
+                }
+
+                btnSchoolAnnouncementEditTime.text =
+                    "${eventStartDate} ${startMonthName} - ${eventEndDate} ${endMonthName}"
 
                 for (data in it["attachments"] as List<HashMap<Any, Any>>) {
                     mAttachmentList.add(

@@ -15,8 +15,10 @@ import com.ebukom.data.DataDummy
 import com.ebukom.data.buildParentNameDummy
 import com.ebukom.data.buildParentNoteDummy
 import com.google.android.gms.tasks.OnCompleteListener
+import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.messaging.FirebaseMessaging
+import timber.log.Timber
 
 
 class SplashActivity : AppCompatActivity() {
@@ -63,5 +65,6 @@ class SplashActivity : AppCompatActivity() {
          */
 //        Databases().initClassesData()
 //        Databases().initSubjectMaterialsData()
+
     }
 }

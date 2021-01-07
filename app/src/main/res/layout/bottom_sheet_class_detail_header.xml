@@ -35,31 +35,39 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <RadioButton
-            android:id="@+id/rbBottomSheetClassDetailHeaderKelas1"
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvBottomSheetClassDetailHeader"
             android:layout_width="match_parent"
-            android:layout_height="52dp"
-            style="@style/RadioButtonRed"
-            android:layout_marginLeft="@dimen/size_32"
-            android:layout_marginRight="@dimen/size_12"
-            android:layoutDirection="rtl"
-            android:textAlignment="textStart"
-            android:text="Kelas 1 Aurora"
-            android:textSize="@dimen/text_16"
-            android:textColor="#212121" />
+            android:layout_height="wrap_content"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/llBottomSheetClassDetailHeaderTitle"/>
 
-        <RadioButton
-            android:id="@+id/rbBottomSheetClassDetailHeaderKelas2"
-            android:layout_width="match_parent"
-            android:layout_height="52dp"
-            style="@style/RadioButtonRed"
-            android:layout_marginLeft="@dimen/size_32"
-            android:layout_marginRight="@dimen/size_12"
-            android:layoutDirection="rtl"
-            android:textAlignment="textStart"
-            android:text="Kelas 2 Fatamorgana"
-            android:textSize="@dimen/text_16"
-            android:textColor="#212121" />
+<!--        <RadioButton-->
+<!--            android:id="@+id/rbBottomSheetClassDetailHeaderKelas1"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="52dp"-->
+<!--            style="@style/RadioButtonRed"-->
+<!--            android:layout_marginLeft="@dimen/size_32"-->
+<!--            android:layout_marginRight="@dimen/size_12"-->
+<!--            android:layoutDirection="rtl"-->
+<!--            android:textAlignment="textStart"-->
+<!--            android:text="Kelas 1 Aurora"-->
+<!--            android:textSize="@dimen/text_16"-->
+<!--            android:textColor="#212121" />-->
+
+<!--        <RadioButton-->
+<!--            android:id="@+id/rbBottomSheetClassDetailHeaderKelas2"-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="52dp"-->
+<!--            style="@style/RadioButtonRed"-->
+<!--            android:layout_marginLeft="@dimen/size_32"-->
+<!--            android:layout_marginRight="@dimen/size_12"-->
+<!--            android:layoutDirection="rtl"-->
+<!--            android:textAlignment="textStart"-->
+<!--            android:text="Kelas 2 Fatamorgana"-->
+<!--            android:textSize="@dimen/text_16"-->
+<!--            android:textColor="#212121" />-->
 
     </RadioGroup>
 

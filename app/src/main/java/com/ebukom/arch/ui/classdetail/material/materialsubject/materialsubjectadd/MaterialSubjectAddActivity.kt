@@ -54,13 +54,40 @@ class MaterialSubjectAddActivity : AppCompatActivity() {
 
         initToolbar()
 
+        val layout = intent?.extras?.getString("layout")
         subjectId = intent?.extras?.getString("subjectId")
         classId = intent?.extras?.getString("classId")
         sectionId = intent?.extras?.getString("sectionId")
         subjectName = intent?.extras?.getString("subjectName")
         action = intent?.extras?.getString("action")
+
+        if (layout == "education") {
+            tvToolbarTitle.text = "Tambah Materi Mendidik Anak"
+            btnMaterialSubjectAddDone.setOnClickListener {
+                val data = hashMapOf<String, Any>(
+                    "name" to etMaterialSubjectAddTitle.text.toString(),
+                    "date" to Timestamp(Date()),
+                    "files" to mFileList
+                )
+
+                loading.visibility = View.VISIBLE
+                db.collection("material_education").add(data).addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        loading.visibility = View.GONE
+                        finish()
+                    } else {
+                        loading.visibility = View.GONE
+                        finish()
+                    }
+                }.addOnFailureListener {
+                    Log.d("TAG", "Material failed to be inserted")
+                }
+            }
+        }
+        ///////////////////////////////////////////
         if (action == "edit") {
-            db.collection("material_subjects").document(subjectId!!).collection("subject_sections")
+            db.collection("material_subjects").document(subjectId!!)
+                .collection("subject_sections")
                 .document(sectionId!!)
                 .addSnapshotListener { value, error ->
                     if (error != null) {
@@ -109,7 +136,7 @@ class MaterialSubjectAddActivity : AppCompatActivity() {
             if (subjectName == "Rekap Pembelajaran\nOnline") {
                 subjectName = "Rekap Pembelajaran Online"
             }
-            tvToolbarTitle.text = "Tambah materi " + subjectName
+            tvToolbarTitle.text = "Tambah Materi " + subjectName
 
             btnMaterialSubjectAddDone.setOnClickListener {
 

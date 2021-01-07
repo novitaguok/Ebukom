@@ -8,6 +8,7 @@ import android.os.Bundle
 import android.text.Editable
 import android.text.Html
 import android.text.TextWatcher
+import android.util.Log
 import android.util.SparseIntArray
 import android.view.Menu
 import android.view.MenuItem
@@ -18,7 +19,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.aminography.primecalendar.civil.CivilCalendar
-import com.aminography.primecalendar.persian.PersianCalendar
 import com.aminography.primedatepicker.picker.PrimeDatePicker
 import com.aminography.primedatepicker.picker.callback.RangeDaysPickCallback
 import com.aminography.primedatepicker.picker.theme.LightThemeFactory
@@ -28,18 +28,17 @@ import com.ebukom.arch.dao.ClassDetailTemplateTextDao
 import com.ebukom.arch.ui.classdetail.ClassDetailAttachmentAdapter
 import com.ebukom.arch.ui.classdetail.ClassDetailTemplateAdapter
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.SchoolAnnouncementAddTemplateActivity
-import com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementnewnext.SchoolAnnouncementNewNextActivity
 import com.ebukom.data.DataDummy
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
-import kotlinx.android.synthetic.main.activity_school_announcement_new_next.*
 import kotlinx.android.synthetic.main.activity_school_anouncement_new.*
 import kotlinx.android.synthetic.main.activity_school_anouncement_new.toolbar
 import kotlinx.android.synthetic.main.alert_edit_text.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_class_detail_attachment.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_class_detail_school_announcement_template.view.*
 import kotlinx.android.synthetic.main.item_announcement_attachment.view.*
+import timber.log.Timber
 import java.util.*
 
 
@@ -50,6 +49,7 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
     private val mTemplateList: ArrayList<ClassDetailTemplateTextDao> = arrayListOf()
     lateinit var mTemplateAdapter: ClassDetailTemplateAdapter
     var classId: String? = ""
+    var announcementId: String? = ""
     var eventStart = Timestamp(Date())
     var eventEnd = Timestamp(Date())
     var enabled = false
@@ -68,6 +68,7 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
         // Intent from SchoolAnnouncementActivity
         val layout = intent?.extras?.getString("layout")
         classId = intent.getStringExtra("classId")
+        announcementId = intent.getStringExtra("announcementId")
 
         // Announcement template
         bottomSheetDialog = BottomSheetDialog(this)
@@ -110,21 +111,105 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
             bottomSheetDialog.show()
         }
 
-        // Showing datetime picker dialog
-        btnSchoolAnnouncementNewTime.setOnClickListener {
-            pickTime()
-        }
-
         if (layout == "edit") {
             tvToolbarTitle.text = "Edit Pengumuman"
+            btnSchoolAnnouncementNewNext.text = "SIMPAN PERUBAHAN"
 
-//            db.collection()
+            db.collection("classes").document(classId!!).collection("announcements")
+                .document(announcementId!!)
+                .get().addOnSuccessListener {
+
+                    initRecycler()
+
+                    etSchoolAnnouncementNewTitle.setText(it["title"] as String)
+                    etSchoolAnnouncementNewContent.setText(it["content"] as String)
+
+                    var startMonthName = ""
+                    var endMonthName = ""
+                    val eventStartDate = (it["event_start"] as Timestamp).toDate().date.toString()
+                    val eventStartMonth = (it["event_start"] as Timestamp).toDate().month.toString()
+                    val eventEndDate = (it["event_end"] as Timestamp).toDate().date.toString()
+                    val eventEndMonth = (it["event_end"] as Timestamp).toDate().month.toString()
+
+                    when (eventStartMonth) {
+                        "0" -> startMonthName = "Januari"
+                        "1" -> startMonthName = "Febuari"
+                        "2" -> startMonthName = "Maret"
+                        "3" -> startMonthName = "April"
+                        "4" -> startMonthName = "Mei"
+                        "5" -> startMonthName = "Juni"
+                        "6" -> startMonthName = "Juli"
+                        "7" -> startMonthName = "Agustus"
+                        "8" -> startMonthName = "September"
+                        "9" -> startMonthName = "Oktober"
+                        "10" -> startMonthName = "November"
+                        "11" -> startMonthName = "Desember"
+                    }
+
+                    when (eventEndMonth) {
+                        "0" -> endMonthName = "Januari"
+                        "1" -> endMonthName = "Febuari"
+                        "2" -> endMonthName = "Maret"
+                        "3" -> endMonthName = "April"
+                        "4" -> endMonthName = "Mei"
+                        "5" -> endMonthName = "Juni"
+                        "6" -> endMonthName = "Juli"
+                        "7" -> endMonthName = "Agustus"
+                        "8" -> endMonthName = "September"
+                        "9" -> endMonthName = "Oktober"
+                        "10" -> endMonthName = "November"
+                        "11" -> endMonthName = "Desember"
+                    }
+
+                    btnSchoolAnnouncementNewTime.text =
+                        "${eventStartDate} ${startMonthName} - ${eventEndDate} ${endMonthName}"
+
+                    for (data in it["attachments"] as List<HashMap<Any, Any>>) {
+                        mAttachmentList.add(
+                            ClassDetailAttachmentDao(
+                                data["path"] as String,
+                                (data["category"] as Long).toInt()
+                            )
+                        )
+                        mAttachmentAdapter.notifyDataSetChanged()
+                        checkEmpty()
+                    }
+
+                    checkEmpty()
+
+                }
+
+            val title = etSchoolAnnouncementNewTitle.text.toString()
+            val content = etSchoolAnnouncementNewContent.text.toString()
+            btnSchoolAnnouncementNewNext.setOnClickListener {
+                val data = hashMapOf(
+                    "content" to content,
+                    "title" to title,
+                    "attachments" to mAttachmentList,
+                    "event_start" to eventStart,
+                    "event_end" to eventEnd
+                )
+
+                loading.visibility = View.VISIBLE
+                db.collection("classes").document(classId!!).collection("announcements")
+                    .document(announcementId!!).update(data).addOnCompleteListener {
+                    if (it.isSuccessful) {
+//                        val announcementId = it.result?.id!!
+                        loading.visibility = View.GONE
+                        finish()
+                    } else {
+                        Log.d("TAG", "announcement inserted")
+                        loading.visibility = View.GONE
+                        finish()
+                    }
+                }
+
+            }
         } else {
-            // Go to next page
+            // Go to next process/page
             btnSchoolAnnouncementNewNext.setOnClickListener {
                 val title = etSchoolAnnouncementNewTitle.text.toString()
                 val content = etSchoolAnnouncementNewContent.text.toString()
-                val intent = Intent(this, SchoolAnnouncementNewNextActivity::class.java)
 
                 if (!isSetTime) {
                     eventStart = Timestamp.now()
@@ -141,6 +226,11 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
                 startActivity(intent)
                 finish()
             }
+        }
+
+        // Showing datetime picker dialog
+        btnSchoolAnnouncementNewTime.setOnClickListener {
+            pickTime()
         }
 
         // Text watcher
@@ -162,7 +252,7 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
 
             btnSchoolAnnouncementNewTime.text =
                 "${start.date} ${start.monthNameShort} - ${end.date} ${end.monthNameShort}"
-    //                btnSchoolAnnouncementNewTime.text = "${start.weekDayName} ${start.month} ${start.date}"
+            //                btnSchoolAnnouncementNewTime.text = "${start.weekDayName} ${start.month} ${start.date}"
             btnSchoolAnnouncementNewTime.setTextColor(Color.parseColor("#808080"))
 
             isSetTime = true
@@ -237,7 +327,7 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
             )
             adapter = mAttachmentAdapter
         }
-        checkAttachmentEmpty()
+        checkEmpty()
     }
 
     /**
@@ -314,7 +404,7 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
                         val link = view.etAlertEditText?.text.toString()
                         DataDummy.announcementAttachmentData.add(ClassDetailAttachmentDao(link, 0))
                         insertAttachment(view, link)
-                        checkAttachmentEmpty()
+                        checkEmpty()
                     }
 
                     val dialog: AlertDialog = builder.create()
@@ -392,7 +482,7 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
         mAttachmentAdapter.notifyDataSetChanged()
         view.tvItemAnnouncementAttachment?.text = path
 
-        checkAttachmentEmpty()
+        checkEmpty()
     }
 
     fun deleteAttachment(item: ClassDetailAttachmentDao) {
@@ -408,7 +498,7 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
             mAttachmentList.remove(item)
             mAttachmentAdapter.notifyDataSetChanged()
 
-            checkAttachmentEmpty()
+            checkEmpty()
         }
 
         val dialog: AlertDialog = builder.create()
@@ -431,7 +521,7 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
         )
     }
 
-    private fun checkAttachmentEmpty() {
+    private fun checkEmpty() {
         if (mAttachmentList.isEmpty()) {
             tvSchoolAnnouncementNewAttachmentTitle.visibility = View.GONE
         } else {

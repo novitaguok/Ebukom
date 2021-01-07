@@ -64,7 +64,6 @@
                     android:id="@+id/etMaterialSubjectAddTitle"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/edit_text_rectangle_selector"
                     android:textSize="@dimen/text_16"
                     android:paddingLeft="@dimen/size_16"
                     android:paddingRight="@dimen/size_16"/>

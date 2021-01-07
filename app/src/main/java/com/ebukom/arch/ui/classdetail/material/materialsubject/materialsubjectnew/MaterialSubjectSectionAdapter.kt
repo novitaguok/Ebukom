@@ -5,6 +5,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.ebukom.R
 import com.ebukom.arch.dao.ClassDetailMaterialSubjectSectionDao
@@ -48,45 +49,7 @@ class MaterialSubjectSectionAdapter(
                 }
             }
         }
-
-//        if (sectionList.get(position).subjectId == id) {
-//            var dayName = ""
-//            var monthName = ""
-//            val date = sectionList.get(position).timestamp.toDate().date.toString()
-//            val year = sectionList.get(position).timestamp.toDate().year.toString()
-//
-//            when (sectionList.get(position).timestamp.toDate().day.toString()) {
-//                "0" -> dayName = "Minggu"
-//                "1" -> dayName = "Senin"
-//                "2" -> dayName = "Selasa"
-//                "3" -> dayName = "Rabu"
-//                "4" -> dayName = "Kamis"
-//                "5" -> dayName = "Jumat"
-//                "6" -> dayName = "Sabtu"
-//            }
-//
-//            when (sectionList.get(position).timestamp.toDate().month.toString()) {
-//                "0" -> monthName = "Januari"
-//                "1" -> monthName = "Febuari"
-//                "2" -> monthName = "Maret"
-//                "3" -> monthName = "April"
-//                "4" -> monthName = "Mei"
-//                "5" -> monthName = "Juni"
-//                "6" -> monthName = "Juli"
-//                "7" -> monthName = "Agustus"
-//                "8" -> monthName = "September"
-//                "9" -> monthName = "Oktober"
-//                "10" -> monthName = "November"
-//                "11" -> monthName = "Desember"
-//            }
-//
-//            holder.view.tvItemSubjectMaterial.text =
-//                dayName + ", " + date + " " + monthName + " " + year
-//        } else {
         holder.view.tvItemSubjectMaterial.text = sectionList.get(position).sectionName
-        
-//        }
-
         holder.view.clItemSubjectMaterial.setOnClickListener {
             val intent = Intent(
                 (context as MaterialSubjectNewActivity),
@@ -99,9 +62,18 @@ class MaterialSubjectSectionAdapter(
         }
 
         holder.view.ibItemSubjectMaterial.setOnClickListener {
-            (context as MaterialSubjectNewActivity).popUpMenu(sectionList.get(position).sectionId)
+            if (context is MaterialSubjectNewActivity) (context as MaterialSubjectNewActivity).popUpMenu(
+                sectionList.get(position).sectionId
+            )
+            else {
+//                callback.onMoreClicked(sectionList.get(position).sectionId, position)
+            }
         }
     }
 
     class ViewHolder(val view: View) : RecyclerView.ViewHolder(view)
+
+    interface OnMoreCallback {
+        fun onMoreClicked(id: String, position: Int)
+    }
 }

@@ -78,7 +78,7 @@ class SchoolAnnouncementNewNextActivity : AppCompatActivity(),
                     val item = classGrade + " " + className
 
                     mClassList.add(
-                        ClassDetailItemCheckDao(item)
+                        ClassDetailItemCheckDao(item,id = document.id)
                     )
                     rvSchoolAnnouncementNewNext.adapter?.notifyDataSetChanged()
                 }
@@ -160,19 +160,21 @@ class SchoolAnnouncementNewNextActivity : AppCompatActivity(),
             )
 
             loading.visibility = View.VISIBLE
-            if (classId != null) {
-                db.collection("classes").document(classId!!).collection("announcements")
-                    .add(data).addOnCompleteListener {
-                        if (it.isSuccessful) {
-                            val announcementId = it.result?.id!!
-                            loading.visibility = View.GONE
-                            finish()
-                        } else {
-                            Log.d("TAG", "announcement inserted")
-                            loading.visibility = View.GONE
-                            finish()
+            mClassList.forEach {
+                if(it.isChecked && !it.id.isNullOrEmpty()){
+                    db.collection("classes").document(it.id!!).collection("announcements")
+                        .add(data).addOnCompleteListener {
+                            if (it.isSuccessful) {
+                                val announcementId = it.result?.id!!
+                                loading.visibility = View.GONE
+                                finish()
+                            } else {
+                                Log.d("TAG", "announcement inserted")
+                                loading.visibility = View.GONE
+                                finish()
+                            }
                         }
-                    }
+                }
             }
         }
     }

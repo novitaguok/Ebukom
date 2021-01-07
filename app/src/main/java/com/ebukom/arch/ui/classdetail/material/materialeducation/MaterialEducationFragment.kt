@@ -11,17 +11,26 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ebukom.R
 import com.ebukom.arch.dao.ClassDetailAnnouncementDao
+import com.ebukom.arch.dao.ClassDetailMaterialSubjectSectionDao
 import com.ebukom.arch.ui.classdetail.MainClassDetailActivity
 import com.ebukom.arch.ui.classdetail.OnMoreCallback
 import com.ebukom.arch.ui.classdetail.material.materialeducation.materialeducationnew.MaterialEducationNewActivity
+import com.ebukom.arch.ui.classdetail.material.materialsubject.materialsubjectadd.MaterialSubjectAddActivity
+import com.ebukom.arch.ui.classdetail.material.materialsubject.materialsubjectnew.MaterialSubjectSectionAdapter
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.SchoolAnnouncementAdapter
 import com.ebukom.data.DataDummy
+import com.google.firebase.Timestamp
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_material_education.*
+import kotlinx.android.synthetic.main.fragment_personal_sent_note.*
+import timber.log.Timber
 import java.lang.ClassCastException
 
 class MaterialEducationFragment : Fragment() {
-    private val mPersonalEducationList: ArrayList<ClassDetailAnnouncementDao> = arrayListOf()
-    lateinit var mPersonalEducationAdapter: SchoolAnnouncementAdapter
+    private val mPersonalEducationList: ArrayList<ClassDetailMaterialSubjectSectionDao> = arrayListOf()
+    lateinit var mPersonalEducationAdapter: MaterialSubjectSectionAdapter
+    var classId: String? = null
+    val db = FirebaseFirestore.getInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,29 +47,45 @@ class MaterialEducationFragment : Fragment() {
             btnMaterialEducationNew.visibility = View.GONE
         }
 
-        mPersonalEducationAdapter = SchoolAnnouncementAdapter(mPersonalEducationList, callback, this)
-        mPersonalEducationList.clear()
-        mPersonalEducationList.addAll(DataDummy.educationData)
-        mPersonalEducationAdapter.notifyDataSetChanged()
-
-        // Education List
-        rvMaterialEducation.apply {
-            layoutManager =
-                LinearLayoutManager(
-                    this.context,
-                    LinearLayoutManager.VERTICAL,
-                    false
-                )
-            adapter = mPersonalEducationAdapter
-        }
-        mPersonalEducationList.addAll(DataDummy.educationData)
-        mPersonalEducationAdapter.notifyDataSetChanged()
+        classId = MainClassDetailActivity.CLASS_ID
+        initRecycler()
+        checkEducationEmpty()
 
         btnMaterialEducationNew.setOnClickListener {
-            (context as MainClassDetailActivity).startActivity(Intent((context as MainClassDetailActivity), MaterialEducationNewActivity::class.java))
+            val intent = Intent((context as MainClassDetailActivity), MaterialSubjectAddActivity::class.java)
+            intent.putExtra("layout", "education")
+            (context as MainClassDetailActivity).startActivity(intent)
         }
 
-        checkEducationEmpty()
+        if (classId != null) {
+            db.collection("material_education").addSnapshotListener { value, error ->
+                    if (error != null) {
+                        Timber.e(error)
+                        return@addSnapshotListener
+                    }
+
+                    initRecycler()
+
+                    if (value!!.documents != null) {
+                        mPersonalEducationList.clear()
+                        for (document in value.documents) {
+                            mPersonalEducationList.add(
+                                ClassDetailMaterialSubjectSectionDao(
+                                    document["name"] as String,
+                                    arrayListOf(),
+                                    (document["date"] as Timestamp).toDate().toString(),
+                                    document.id,
+                                    "",
+                                    classId!!,
+                                    (document["date"] as Timestamp)
+                                )
+                            )
+                        }
+                        mPersonalEducationAdapter.notifyDataSetChanged()
+                        checkEmpty()
+                    }
+                }
+        }
     }
 
     private fun checkEducationEmpty() {
@@ -86,14 +111,32 @@ class MaterialEducationFragment : Fragment() {
         }
     }
 
-    override fun onResume() {
-        super.onResume()
-        MainClassDetailActivity.isAnnouncement = false
+    private fun initRecycler() {
+        /**
+         * Section list
+         */
+//        mMaterialSubjectList.clear()
+        mPersonalEducationAdapter = MaterialSubjectSectionAdapter(mPersonalEducationList, context as MainClassDetailActivity)
+        rvMaterialEducation.apply {
+            layoutManager =
+                LinearLayoutManager(
+                    this.context,
+                    LinearLayoutManager.VERTICAL,
+                    false
+                )
+            adapter = mPersonalEducationAdapter
+        }
 
-        mPersonalEducationList.clear()
-        mPersonalEducationList.addAll(DataDummy.educationData)
-        mPersonalEducationAdapter.notifyDataSetChanged()
+        checkEmpty()
+    }
 
-        checkEducationEmpty()
+    private fun checkEmpty() {
+        if (mPersonalEducationList.isEmpty()) {
+            ivMaterialEducationEmpty.visibility = View.VISIBLE
+            tvMaterialEducationEmpty.visibility = View.VISIBLE
+        } else {
+            ivMaterialEducationEmpty.visibility = View.GONE
+            tvMaterialEducationEmpty.visibility = View.GONE
+        }
     }
 }

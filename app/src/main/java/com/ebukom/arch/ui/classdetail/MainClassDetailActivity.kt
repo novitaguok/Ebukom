@@ -3,6 +3,7 @@ package com.ebukom.arch.ui.classdetail
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.Color
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
@@ -11,10 +12,13 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.ebukom.R
 import com.ebukom.arch.dao.*
+import com.ebukom.arch.ui.chooseclass.ChooseClassAdapter
 import com.ebukom.arch.ui.classdetail.material.MaterialFragment
 import com.ebukom.arch.ui.classdetail.material.materialeducation.materialeducationedit.MaterialEducationEditActivity
+import com.ebukom.arch.ui.classdetail.material.materialsubject.materialsubjectadd.MaterialSubjectAddActivity
 import com.ebukom.arch.ui.classdetail.member.MemberFragment
 import com.ebukom.arch.ui.classdetail.notification.NotificationActivity
 import com.ebukom.arch.ui.classdetail.personal.PersonalFragment
@@ -23,7 +27,6 @@ import com.ebukom.arch.ui.classdetail.personal.PersonalNoteAdapter
 import com.ebukom.arch.ui.classdetail.personal.personalparent.PersonalParentFragment
 import com.ebukom.arch.ui.classdetail.school.SchoolFragment
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.SchoolAnnouncementAdapter
-//import com.ebukom.arch.ui.classdetail.school.schoolannouncement.SchoolAnnouncementAdapter
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementedit.SchoolAnnouncementEditActivity
 import com.ebukom.arch.ui.classdetail.school.schoolphoto.SchoolPhotoAdapter
 import com.ebukom.arch.ui.classdetail.school.schoolphoto.schoolphotoedit.SchoolPhotoEditActivity
@@ -34,10 +37,12 @@ import com.ebukom.data.DataDummy
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_main_class_detail.*
+import kotlinx.android.synthetic.main.activity_personal_note_detail.*
 import kotlinx.android.synthetic.main.bottom_sheet_choose_class.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_class_detail_header.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_school_announcement.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_school_announcement.view.tvEditInfo
+import timber.log.Timber
 
 class MainClassDetailActivity : AppCompatActivity(), OnMoreCallback {
     companion object {
@@ -57,6 +62,10 @@ class MainClassDetailActivity : AppCompatActivity(), OnMoreCallback {
     lateinit var mNoteAdapter: PersonalNoteAdapter
     private val mEducationList: ArrayList<ClassDetailAnnouncementDao> = DataDummy.educationData
     lateinit var mEducationAdapter: SchoolAnnouncementAdapter
+    private val mClassList: ArrayList<ChooseClassDao> = arrayListOf()
+    lateinit var mClassAdapter: MainClassDetailAdapter
+//    private val mClassList: ArrayList<> = arrayListOf()
+//    lateinit var mClassAdapter:
     val db = FirebaseFirestore.getInstance()
 
     var classId: String? = null
@@ -84,6 +93,11 @@ class MainClassDetailActivity : AppCompatActivity(), OnMoreCallback {
         val memberFragment = MemberFragment()
 
         classId = intent?.extras?.getString("classId")
+        val className = intent?.extras?.getString("className")?: ""
+        val classNumber = intent?.extras?.getString("classNumber")?: ""
+        tvClassHeaderClassName.text = className
+        tvClassHeaderClassNumber.text = classNumber
+
         if (classId != null) {
 
             CLASS_ID = classId!!
@@ -110,24 +124,84 @@ class MainClassDetailActivity : AppCompatActivity(), OnMoreCallback {
         val bottomSheetDialog = BottomSheetDialog(this)
         val view = layoutInflater.inflate(R.layout.bottom_sheet_class_detail_header, null)
 
+        mClassAdapter = MainClassDetailAdapter(mClassList)
+        view.rvBottomSheetClassDetailHeader.apply {
+            layoutManager =
+                LinearLayoutManager(
+                    this.context,
+                    LinearLayoutManager.VERTICAL,
+                    false
+                )
+            adapter = mClassAdapter
+        }
+        mClassAdapter.notifyDataSetChanged()
+
+        val uid = sharePref.getString("uid", "") as String
+        db.collection("classes").whereArrayContains("class_teacher_ids", uid)
+            .addSnapshotListener { value, error ->
+                if (error != null) {
+                    Timber.e(error)
+                    return@addSnapshotListener
+                }
+
+                mClassList.clear()
+                for (document in value!!.documents) {
+
+                    if (classId != document.id) {
+                        mClassList.add(
+                            ChooseClassDao(
+                                document["class_grade"] as String,
+                                document["class_name"] as String,
+                                document["class_teacher.name"] as String,
+                                (document["class_bg"] as Long).toInt(),
+                                Color.parseColor(document["class_theme"] as String),
+                                document.id
+                            )
+                        )
+                    } else {
+                        mClassList.add(
+                            ChooseClassDao(
+                                document["class_grade"] as String,
+                                document["class_name"] as String,
+                                document["class_teacher.name"] as String,
+                                (document["class_bg"] as Long).toInt(),
+                                Color.parseColor(document["class_theme"] as String),
+                                document.id,
+                                true
+                            )
+                        )
+                    }
+                    view.rvBottomSheetClassDetailHeader.adapter?.notifyDataSetChanged()
+                }
+            }
+
+
+
+
+
+
+
+
         bottomSheetDialog.setContentView(view)
 
         tvClassHeaderClassName.setOnClickListener {
             bottomSheetDialog.show()
         }
 
-        view.rbBottomSheetClassDetailHeaderKelas1.isChecked = true
-        view.rbGroupClassDetailHeader.setOnCheckedChangeListener { _, checkedId ->
-            if (checkedId == R.id.rbBottomSheetClassDetailHeaderKelas1) {
-                bottomSheetDialog.dismiss()
-                tvClassHeaderClassNumber.text = "Kelas 1"
-                tvClassHeaderClassName.text = "Aurora"
-            } else {
-                bottomSheetDialog.dismiss()
-                tvClassHeaderClassNumber.text = "Kelas 2"
-                tvClassHeaderClassName.text = "Fatamorgana"
-            }
-        }
+//        view.rbBottomSheetClassDetailHeaderKelas1.isChecked = true
+//        view.rbGroupClassDetailHeader.setOnCheckedChangeListener { _, checkedId ->
+//            if (checkedId == R.id.rbBottomSheetClassDetailHeaderKelas1) {
+//                bottomSheetDialog.dismiss()
+//                tvClassHeaderClassNumber.text = "Kelas 1"
+//                tvClassHeaderClassName.text = "Aurora"
+//            } else {
+//                bottomSheetDialog.dismiss()
+//                tvClassHeaderClassNumber.text = "Kelas 2"
+//                tvClassHeaderClassName.text = "Fatamorgana"
+//            }
+//        }
+
+
     }
 
     // Move fragment
@@ -184,8 +258,14 @@ class MainClassDetailActivity : AppCompatActivity(), OnMoreCallback {
                     intent.putExtra("pos", pos)
                 }
                 else -> {
-                    intent = Intent(this, PersonalNoteEditActivity::class.java)
-                    intent.putExtra("noteId", id)
+                    if (bnClassDetail.selectedItemId == R.id.studyMaterial) {
+                        intent = Intent(this, MaterialSubjectAddActivity::class.java)
+                        intent.putExtra("materialId", id)
+                        intent.putExtra("materialLayout", "edit")
+                    } else {
+                        intent = Intent(this, PersonalNoteEditActivity::class.java)
+                        intent.putExtra("noteId", id)
+                    }
                 }
             }
 

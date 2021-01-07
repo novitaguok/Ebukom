@@ -104,7 +104,6 @@ class PersonalNoteAdapter(
             }
             itemView.ivItemNoteMoreButton.setOnClickListener {
                 callback.onMoreClicked(note.noteId, adapterPosition)
-
             }
 
             itemView.tvItemNoteMore.setOnClickListener {

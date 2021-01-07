@@ -65,9 +65,10 @@ class ChooseClassViewHolder(var view: View, var context: Context) : RecyclerView
                     MainClassDetailActivity::class.java
                 )
 
-                db.collection("classes").get()
+//                db.collection("classes").get()
 
                 intent.putExtra("classId", item.classId)
+                intent.putExtra("className", item.className)
                 (context as ChooseClassActivity).startActivity(intent)
             }
         } else {

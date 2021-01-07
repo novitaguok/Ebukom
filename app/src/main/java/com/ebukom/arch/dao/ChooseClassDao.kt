@@ -6,5 +6,6 @@ data class ChooseClassDao(
     var teacher: String? = null,
     var background: Int = 0,
     var colorTheme: Int? = null,
-    var classId: String = ""
+    var classId: String = "",
+    var isChecked: Boolean = false
 )
