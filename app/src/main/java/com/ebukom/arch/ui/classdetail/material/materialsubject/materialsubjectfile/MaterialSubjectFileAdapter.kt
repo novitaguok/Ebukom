@@ -71,7 +71,7 @@ class MaterialSubjectFileAdapter(private val data: List<ClassDetailAttachmentDao
             }
 
             itemView.ibItemSubjectMaterialFile.setOnClickListener {
-                (context as MaterialSubjectFileActivity).popUpMenu(adapterPosition)
+                (context as MaterialSubjectFileActivity).popUpMenu(item.attachmentId)
             }
         }
     }

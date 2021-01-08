@@ -66,22 +66,29 @@ class MaterialSubjectAddActivity : AppCompatActivity() {
             btnMaterialSubjectAddDone.setOnClickListener {
                 val data = hashMapOf<String, Any>(
                     "name" to etMaterialSubjectAddTitle.text.toString(),
-                    "date" to Timestamp(Date()),
-                    "files" to mFileList
+                    "date" to Timestamp(Date())
                 )
 
                 loading.visibility = View.VISIBLE
-                db.collection("material_education").add(data).addOnCompleteListener {
-                    if (it.isSuccessful) {
+                db.collection("material_education").add(data)
+                    .addOnSuccessListener {
+
+                        sectionId = it.id
+
+                        mFileList.forEach {
+                            val file = hashMapOf<String, Any>(
+                                "title" to it.path,
+                                "category" to it.category
+                            )
+                            db.collection("material_education").document(sectionId!!)
+                                .collection("files").add(file)
+                        }
+
                         loading.visibility = View.GONE
                         finish()
-                    } else {
-                        loading.visibility = View.GONE
-                        finish()
+                    }.addOnFailureListener {
+                        Log.d("TAG", "Material failed to be inserted")
                     }
-                }.addOnFailureListener {
-                    Log.d("TAG", "Material failed to be inserted")
-                }
             }
         } else if (layout == "educationEdit") {
             tvToolbarTitle.text = "Edit Materi Mendidik Anak"
@@ -91,26 +98,26 @@ class MaterialSubjectAddActivity : AppCompatActivity() {
 
                 initRecycler()
 
-                val files = it["files"] as List<HashMap<String, Any>?>?
-                if (files != null) {
-                    files.forEach {
-                        mFileList.add(
-                            ClassDetailAttachmentDao(
-                                it?.get("path") as String,
-                                (it["category"] as Long).toInt()
+                db.collection("material_education").document(sectionId!!).collection("files")
+                    .addSnapshotListener { value, error ->
+                        mFileList.clear()
+                        for (data in value!!.documents) {
+                            mFileList.add(
+                                ClassDetailAttachmentDao(
+                                    data["title"] as String,
+                                    (data["category"] as Long).toInt()
+                                )
                             )
-                        )
-                        mFileAdapter.notifyDataSetChanged()
-                        checkEmpty()
+                            mFileAdapter.notifyDataSetChanged()
+                            checkEmpty()
+                        }
                     }
-                }
             }
 
             btnMaterialSubjectAddDone.setOnClickListener {
                 val data = hashMapOf<String, Any>(
                     "name" to etMaterialSubjectAddTitle.text.toString(),
-                    "date" to Timestamp(Date()),
-                    "files" to mFileList
+                    "date" to Timestamp(Date())
                 )
 
                 loading.visibility = View.VISIBLE
@@ -138,26 +145,32 @@ class MaterialSubjectAddActivity : AppCompatActivity() {
 
                     tvToolbarTitle.text = "Edit Materi " + value?.get("name") as String
                     etMaterialSubjectAddTitle.setText(value["name"] as String)
-                    for (data in value?.get("files") as List<HashMap<Any, Any>>) {
-                        mFileList.add(
-                            ClassDetailAttachmentDao(
-                                data["path"] as String,
-                                (data["category"] as Long).toInt()
-                            )
-                        )
-                    }
 
-                    mFileAdapter.notifyDataSetChanged()
-                    checkEmpty()
+                    db.collection("material_subjects").document(subjectId!!)
+                        .collection("subject_sections")
+                        .document(sectionId!!).collection("files")
+                        .addSnapshotListener { value, error ->
+                            mFileList.clear()
+                            for (data in value!!.documents) {
+                                mFileList.add(
+                                    ClassDetailAttachmentDao(
+                                        data["title"] as String,
+                                        (data["category"] as Long).toInt()
+                                    )
+                                )
+                                mFileAdapter.notifyDataSetChanged()
+                                checkEmpty()
+                            }
+                        }
 
+//                    checkEmpty()
                     initRecycler()
                 }
 
             btnMaterialSubjectAddDone.setOnClickListener {
                 val data = hashMapOf<String, Any>(
                     "name" to etMaterialSubjectAddTitle.text.toString(),
-                    "date" to Timestamp(Date()),
-                    "files" to mFileList
+                    "date" to Timestamp(Date())
                 )
 
                 loading.visibility = View.VISIBLE
@@ -171,7 +184,6 @@ class MaterialSubjectAddActivity : AppCompatActivity() {
                         this@MaterialSubjectAddActivity.finish()
                     }
             }
-
             checkEmpty()
         } else {
             if (subjectName == "Rekap Pembelajaran\nOnline") {
@@ -183,25 +195,33 @@ class MaterialSubjectAddActivity : AppCompatActivity() {
 
                 val data = hashMapOf<String, Any>(
                     "name" to etMaterialSubjectAddTitle.text.toString(),
-                    "date" to Timestamp(Date()),
-                    "files" to mFileList
+                    "date" to Timestamp(Date())
                 )
 
                 loading.visibility = View.VISIBLE
                 db.collection("material_subjects").document(subjectId!!)
                     .collection("subject_sections")
-                    .add(data).addOnCompleteListener {
-                        if (it.isSuccessful) {
+                    .add(data).addOnSuccessListener {
 
-                            loading.visibility = View.GONE
-                            finish()
-                        } else {
-                            loading.visibility = View.GONE
-                            finish()
+                        sectionId = it.id
+
+                        mFileList.forEach {
+                            val file = hashMapOf<String, Any>(
+                                "title" to it.path,
+                                "category" to it.category
+                            )
+                            db.collection("material_subjects").document(subjectId!!)
+                                .collection("subject_sections").document(sectionId!!)
+                                .collection("files")
+                                .add(file)
                         }
+
+                        loading.visibility = View.GONE
+                        finish()
                     }.addOnFailureListener {
                         Log.d("TAG", "Material failed to be inserted")
                     }
+
             }
         }
 

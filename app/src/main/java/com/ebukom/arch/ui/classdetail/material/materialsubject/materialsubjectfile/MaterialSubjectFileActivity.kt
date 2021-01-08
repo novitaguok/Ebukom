@@ -43,7 +43,9 @@ class MaterialSubjectFileActivity : AppCompatActivity() {
         tvToolbarTitle.text = sectionName
 
         if (layout == "education") {
-            db.collection("material_education").document(sectionId!!).addSnapshotListener { value, error ->
+            // Load data
+            db.collection("material_education").document(sectionId!!).collection("files")
+                .addSnapshotListener { value, error ->
                     if (error != null) {
                         Timber.e(error)
                         return@addSnapshotListener
@@ -51,22 +53,23 @@ class MaterialSubjectFileActivity : AppCompatActivity() {
 
                     initRecycler()
 
-                    if ((value?.get("files") as List<HashMap<Any, Any>>).isNotEmpty()) {
-                        for (data in value?.get("files") as List<HashMap<Any, Any>>) {
-                            mFileList.add(
-                                ClassDetailAttachmentDao(
-                                    data["path"] as String,
-                                    (data["category"] as Long).toInt()
-                                )
+                    for (data in value!!.documents) {
+                        mFileList.add(
+                            ClassDetailAttachmentDao(
+                                data["title"] as String,
+                                (data["category"] as Long).toInt(),
+                                data.id,
+                                "",
+                                sectionId!!
                             )
-                        }
+                        )
+                        mFileAdapter.notifyDataSetChanged()
                     }
 
-                    mFileAdapter.notifyDataSetChanged()
                 }
         } else {
             db.collection("material_subjects").document(subjectId!!).collection("subject_sections")
-                .document(sectionId!!).addSnapshotListener { value, error ->
+                .document(sectionId!!).collection("files").addSnapshotListener { value, error ->
                     if (error != null) {
                         Timber.e(error)
                         return@addSnapshotListener
@@ -74,21 +77,20 @@ class MaterialSubjectFileActivity : AppCompatActivity() {
 
                     initRecycler()
 
-                    if ((value?.get("files") as List<HashMap<Any, Any>>).isNotEmpty()) {
-                        for (data in value?.get("files") as List<HashMap<Any, Any>>) {
-                            mFileList.add(
-                                ClassDetailAttachmentDao(
-                                    data["path"] as String,
-                                    (data["category"] as Long).toInt()
-                                )
+                    for (file in value!!.documents) {
+                        mFileList.add(
+                            ClassDetailAttachmentDao(
+                                file["title"] as String,
+                                (file["category"] as Long).toInt(),
+                                file.id,
+                                subjectId!!,
+                                sectionId!!
                             )
-                        }
+                        )
+                        mFileAdapter.notifyDataSetChanged()
                     }
-
-                    mFileAdapter.notifyDataSetChanged()
                 }
         }
-
     }
 
     fun initToolbar() {
@@ -118,7 +120,7 @@ class MaterialSubjectFileActivity : AppCompatActivity() {
 //        checkAttachmentEmpty()
     }
 
-    fun popUpMenu(pos: Int) {
+    fun popUpMenu(fileId: String) {
         val bottomSheetDialog = BottomSheetDialog(this)
         val view = layoutInflater.inflate(R.layout.bottom_sheet_choose_class, null)
         view.tvDeleteClass.text = "Hapus Materi"
@@ -136,16 +138,9 @@ class MaterialSubjectFileActivity : AppCompatActivity() {
             builder.setPositiveButton("HAPUS") { _, _ ->
                 loading.visibility = View.VISIBLE
 
-                mFileList.removeAt(pos)
-                mFileAdapter.notifyDataSetChanged()
-
-                val data = hashMapOf<String, Any>(
-                    "files" to mFileList
-                )
-
                 db.collection("material_subjects").document(subjectId!!)
                     .collection("subject_sections")
-                    .document(sectionId!!).update(data)
+                    .document(sectionId!!).collection("files").document(fileId).delete()
                     .addOnSuccessListener {
                         loading.visibility = View.GONE
                         Log.d("TAG", "Deleted successfully")

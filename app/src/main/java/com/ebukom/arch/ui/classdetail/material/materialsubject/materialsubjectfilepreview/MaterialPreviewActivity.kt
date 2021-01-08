@@ -23,32 +23,64 @@ class MaterialPreviewActivity : AppCompatActivity() {
 
         initToolbar()
 
+//        val layout = intent?.extras?.getString("layout")
         fileId = intent?.extras?.getString("fileId")
         subjectId = intent?.extras?.getString("subjectId")
         sectionId = intent?.extras?.getString("sectionId")
 
-        if (subjectId != null && sectionId != null && fileId != null) {
+        if (subjectId == "") {
+            if (sectionId != null) {
+                db.collection("material_education").document(sectionId!!)
+                    .addSnapshotListener { value, error ->
+                        if (error != null) {
+                            Timber.e(error)
+                            return@addSnapshotListener
+                        }
 
-            db.collection("material_subjects").document(subjectId!!).collection("subject_sections")
-                .document(sectionId!!).addSnapshotListener { value, error ->
-                    if (error != null) {
-                        Timber.e(error)
-                        return@addSnapshotListener
-                    }
+                        tvToolbarTitle.text = value?.get("name") as String
 
-                    tvToolbarTitle.text = value?.get("name") as String
-                }
-
-            db.collection("material_subjects").document(subjectId!!).collection("subject_sections")
-                .document(sectionId!!).collection("files").document(fileId!!)
-                .addSnapshotListener { value, error ->
-                    if (error != null) {
-                        Timber.e(error)
-                        return@addSnapshotListener
-                    }
+                        if (fileId != null) {
+                            db.collection("material_education").document(sectionId!!)
+                                .collection("files")
+                                .document(fileId!!)
+                                .addSnapshotListener { value, error ->
+                                    if (error != null) {
+                                        Timber.e(error)
+                                        return@addSnapshotListener
+                                    }
 
 //                ivMaterialPreview.setImageURI(value[""])
-                }
+                                }
+                        }
+                    }
+            }
+        } else {
+            if (subjectId != null && sectionId != null) {
+                db.collection("material_subjects").document(subjectId!!)
+                    .collection("subject_sections")
+                    .document(sectionId!!).addSnapshotListener { value, error ->
+                        if (error != null) {
+                            Timber.e(error)
+                            return@addSnapshotListener
+                        }
+
+                        tvToolbarTitle.text = value?.get("name") as String
+
+                        if (fileId != null) {
+                            db.collection("material_subjects").document(subjectId!!)
+                                .collection("subject_sections")
+                                .document(sectionId!!).collection("files").document(fileId!!)
+                                .addSnapshotListener { value, error ->
+                                    if (error != null) {
+                                        Timber.e(error)
+                                        return@addSnapshotListener
+                                    }
+
+//                ivMaterialPreview.setImageURI(value[""])
+                                }
+                        }
+                    }
+            }
         }
 
         btnMaterialPreviewSave.setOnClickListener {

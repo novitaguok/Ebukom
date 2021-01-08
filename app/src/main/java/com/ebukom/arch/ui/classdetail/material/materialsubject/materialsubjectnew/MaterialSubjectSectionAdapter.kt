@@ -11,6 +11,7 @@ import com.ebukom.R
 import com.ebukom.arch.dao.ClassDetailMaterialSubjectSectionDao
 import com.ebukom.arch.ui.classdetail.MainClassDetailActivity
 import com.ebukom.arch.ui.classdetail.material.materialsubject.materialsubjectfile.MaterialSubjectFileActivity
+import com.ebukom.arch.ui.classdetail.material.materialsubject.materialsubjectfilepreview.MaterialPreviewActivity
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.item_subject_material.view.*
 import timber.log.Timber
@@ -61,7 +62,7 @@ class MaterialSubjectSectionAdapter(
                 intent.putExtra("sectionId", sectionList.get(position).sectionId)
                 intent.putExtra("sectionName", sectionList.get(position).sectionName)
                 (context as MaterialSubjectNewActivity).startActivity(intent)
-            } else {
+            } else if (context is MainClassDetailActivity) {
                 val intent = Intent(
                     (context as MainClassDetailActivity),
                     MaterialSubjectFileActivity::class.java
@@ -69,8 +70,18 @@ class MaterialSubjectSectionAdapter(
                 intent.putExtra("subjectId", sectionList.get(position).subjectId)
                 intent.putExtra("sectionId", sectionList.get(position).sectionId)
                 intent.putExtra("sectionName", sectionList.get(position).sectionName)
-                intent.putExtra("layout", "educationNew")
+                intent.putExtra("layout", "education")
                 (context as MainClassDetailActivity).startActivity(intent)
+            } else if (context is MaterialSubjectFileActivity) {
+                val intent = Intent(
+                    (context as MaterialSubjectFileActivity),
+                    MaterialPreviewActivity::class.java
+                )
+                intent.putExtra("subjectId", sectionList.get(position).subjectId)
+                intent.putExtra("sectionId", sectionList.get(position).sectionId)
+                intent.putExtra("sectionName", sectionList.get(position).sectionName)
+//                intent.putExtra("layout", "educationPreview")
+                (context as MaterialSubjectFileActivity).startActivity(intent)
             }
         }
 
@@ -78,9 +89,8 @@ class MaterialSubjectSectionAdapter(
             if (context is MaterialSubjectNewActivity) (context as MaterialSubjectNewActivity).popUpMenu(
                 sectionList.get(position).sectionId
             )
-            else {
+            else if (context is MainClassDetailActivity)
                 (context as MainClassDetailActivity).popupMenuInfo(sectionList.get(position).sectionId, position)
-            }
         }
     }
 

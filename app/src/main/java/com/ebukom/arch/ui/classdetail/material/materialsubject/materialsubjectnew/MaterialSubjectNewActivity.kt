@@ -58,7 +58,7 @@ class MaterialSubjectNewActivity : AppCompatActivity() {
         subjectName = intent?.extras?.getString("subjectName")
 
         /**
-         * Toolbar title setup
+         * Toolbar title
          */
         if (subjectName == "Rekap Pembelajaran\nOnline") {
             subjectName = "Rekap Pembelajaran Online"
@@ -179,14 +179,19 @@ class MaterialSubjectNewActivity : AppCompatActivity() {
 
                     sectionTitle = value!!["name"] as String
 
-                    for (data in value["files"] as List<HashMap<Any, Any>>) {
-                        mFileList.add(
-                            ClassDetailAttachmentDao(
-                                data["path"] as String,
-                                (data["category"] as Long).toInt()
-                            )
-                        )
-                    }
+                    db.collection("material_subjects").document(subjectId!!)
+                        .collection("subject_sections")
+                        .document(sectionId).collection("files")
+                        .addSnapshotListener { value, error ->
+                            for (data in value!!.documents) {
+                                mFileList.add(
+                                    ClassDetailAttachmentDao(
+                                        data["title"] as String,
+                                        (data["category"] as Long).toInt()
+                                    )
+                                )
+                            }
+                        }
                 }
 
             val intent = Intent(this, MaterialSubjectAddActivity::class.java)

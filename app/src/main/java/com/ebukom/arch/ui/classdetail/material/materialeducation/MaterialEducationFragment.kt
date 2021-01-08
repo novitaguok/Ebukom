@@ -22,12 +22,14 @@ import com.ebukom.data.DataDummy
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_material_education.*
+import kotlinx.android.synthetic.main.fragment_material_education.view.*
 import kotlinx.android.synthetic.main.fragment_personal_sent_note.*
 import timber.log.Timber
 import java.lang.ClassCastException
 
 class MaterialEducationFragment : Fragment() {
-    private val mPersonalEducationList: ArrayList<ClassDetailMaterialSubjectSectionDao> = arrayListOf()
+    private val mPersonalEducationList: ArrayList<ClassDetailMaterialSubjectSectionDao> =
+        arrayListOf()
     lateinit var mPersonalEducationAdapter: MaterialSubjectSectionAdapter
     var classId: String? = null
     val db = FirebaseFirestore.getInstance()
@@ -42,59 +44,49 @@ class MaterialEducationFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         // Shared Preference
-        val sharePref: SharedPreferences = activity!!.getSharedPreferences("EBUKOM", Context.MODE_PRIVATE)
-        if(sharePref.getLong("level", 0) == 1L){
+        val sharePref: SharedPreferences =
+            activity!!.getSharedPreferences("EBUKOM", Context.MODE_PRIVATE)
+        if (sharePref.getLong("level", 0) == 1L) {
             btnMaterialEducationNew.visibility = View.GONE
         }
 
         classId = MainClassDetailActivity.CLASS_ID
-        initRecycler()
-        checkEducationEmpty()
+        initRecycler(view)
+        checkEmpty(view)
 
-        btnMaterialEducationNew.setOnClickListener {
-            val intent = Intent((context as MainClassDetailActivity), MaterialSubjectAddActivity::class.java)
-            intent.putExtra("layout", "education")
+        view.btnMaterialEducationNew.setOnClickListener {
+            val intent =
+                Intent((context as MainClassDetailActivity), MaterialSubjectAddActivity::class.java)
+            intent.putExtra("layout", "educationNew")
             (context as MainClassDetailActivity).startActivity(intent)
         }
 
         if (classId != null) {
             db.collection("material_education").addSnapshotListener { value, error ->
-                    if (error != null) {
-                        Timber.e(error)
-                        return@addSnapshotListener
-                    }
-
-                    initRecycler()
-
-                    if (value!!.documents != null) {
-                        mPersonalEducationList.clear()
-                        for (document in value.documents) {
-                            mPersonalEducationList.add(
-                                ClassDetailMaterialSubjectSectionDao(
-                                    document["name"] as String,
-                                    arrayListOf(),
-                                    (document["date"] as Timestamp).toDate().toString(),
-                                    document.id,
-                                    "",
-                                    classId!!,
-                                    (document["date"] as Timestamp)
-                                )
-                            )
-                        }
-                        mPersonalEducationAdapter.notifyDataSetChanged()
-                        checkEmpty()
-                    }
+                if (error != null) {
+                    Timber.e(error)
+                    return@addSnapshotListener
                 }
-        }
-    }
 
-    private fun checkEducationEmpty() {
-        if (mPersonalEducationList.isEmpty()) {
-            ivMaterialEducationEmpty.visibility = View.VISIBLE
-            tvMaterialEducationEmpty.visibility = View.VISIBLE
-        } else {
-            ivMaterialEducationEmpty.visibility = View.GONE
-            tvMaterialEducationEmpty.visibility = View.GONE
+                if (value!!.documents != null) {
+                    mPersonalEducationList.clear()
+                    for (document in value.documents) {
+                        mPersonalEducationList.add(
+                            ClassDetailMaterialSubjectSectionDao(
+                                document["name"] as String,
+                                arrayListOf(),
+                                (document["date"] as Timestamp).toDate().toString(),
+                                document.id,
+                                "",
+                                classId!!,
+                                (document["date"] as Timestamp)
+                            )
+                        )
+                    }
+                    mPersonalEducationAdapter.notifyDataSetChanged()
+                    checkEmpty(view)
+                }
+            }
         }
     }
 
@@ -111,13 +103,14 @@ class MaterialEducationFragment : Fragment() {
         }
     }
 
-    private fun initRecycler() {
+    private fun initRecycler(view: View) {
         /**
          * Section list
          */
 //        mMaterialSubjectList.clear()
-        mPersonalEducationAdapter = MaterialSubjectSectionAdapter(mPersonalEducationList, context as MainClassDetailActivity)
-        rvMaterialEducation.apply {
+        mPersonalEducationAdapter =
+            MaterialSubjectSectionAdapter(mPersonalEducationList, activity!!)
+        view.rvMaterialEducation.apply {
             layoutManager =
                 LinearLayoutManager(
                     this.context,
@@ -127,16 +120,16 @@ class MaterialEducationFragment : Fragment() {
             adapter = mPersonalEducationAdapter
         }
 
-        checkEmpty()
+        checkEmpty(view)
     }
 
-    private fun checkEmpty() {
+    private fun checkEmpty(view: View) {
         if (mPersonalEducationList.isEmpty()) {
-            ivMaterialEducationEmpty.visibility = View.VISIBLE
-            tvMaterialEducationEmpty.visibility = View.VISIBLE
+            view.ivMaterialEducationEmpty.visibility = View.VISIBLE
+            view.tvMaterialEducationEmpty.visibility = View.VISIBLE
         } else {
-            ivMaterialEducationEmpty.visibility = View.GONE
-            tvMaterialEducationEmpty.visibility = View.GONE
+            view.ivMaterialEducationEmpty.visibility = View.GONE
+            view.tvMaterialEducationEmpty.visibility = View.GONE
         }
     }
 }
