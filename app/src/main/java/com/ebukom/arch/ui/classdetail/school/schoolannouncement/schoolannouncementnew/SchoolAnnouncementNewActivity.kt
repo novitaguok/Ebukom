@@ -28,6 +28,8 @@ import com.ebukom.arch.dao.ClassDetailTemplateTextDao
 import com.ebukom.arch.ui.classdetail.ClassDetailAttachmentAdapter
 import com.ebukom.arch.ui.classdetail.ClassDetailTemplateAdapter
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.SchoolAnnouncementAddTemplateActivity
+import com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementmainpage.SchoolAnnouncementMonthAdapter
+import com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementnewnext.SchoolAnnouncementNewNextActivity
 import com.ebukom.data.DataDummy
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.Timestamp
@@ -212,6 +214,7 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
             btnSchoolAnnouncementNewNext.setOnClickListener {
                 val title = etSchoolAnnouncementNewTitle.text.toString()
                 val content = etSchoolAnnouncementNewContent.text.toString()
+                val intent = Intent(this, SchoolAnnouncementNewNextActivity::class.java)
 
                 if (!isSetTime) {
                     eventStart = Timestamp.now()

@@ -138,15 +138,25 @@ class MaterialSubjectFileActivity : AppCompatActivity() {
             builder.setPositiveButton("HAPUS") { _, _ ->
                 loading.visibility = View.VISIBLE
 
-                db.collection("material_subjects").document(subjectId!!)
-                    .collection("subject_sections")
-                    .document(sectionId!!).collection("files").document(fileId).delete()
-                    .addOnSuccessListener {
+                if (subjectId != "") {
+                    db.collection("material_subjects").document(subjectId!!)
+                        .collection("subject_sections")
+                        .document(sectionId!!).collection("files").document(fileId).delete()
+                        .addOnSuccessListener {
+                            loading.visibility = View.GONE
+                            Log.d("TAG", "Deleted successfully")
+                        }.addOnFailureListener {
+                            Log.d("TAG", "Delete failed")
+                        }
+                } else {
+                    db.collection("material_education").document(sectionId!!).collection("files")
+                        .document(fileId).delete().addOnSuccessListener {
                         loading.visibility = View.GONE
                         Log.d("TAG", "Deleted successfully")
                     }.addOnFailureListener {
                         Log.d("TAG", "Delete failed")
                     }
+                }
             }
 
             val dialog: AlertDialog = builder.create()

@@ -59,7 +59,6 @@ class MaterialSubjectFragment : Fragment() {
             initRecycler(view)
 
             for (document in value!!.documents) {
-
                 mSubjectList.add(
                     ClassDetailMaterialSubjectDao(
                         document["material_name"] as String,

@@ -327,10 +327,18 @@ class MainClassDetailActivity : AppCompatActivity(), OnMoreCallback {
                         }, 1000)
                     }
                     else -> {
-                        db.collection("notes").document(id).delete().addOnSuccessListener {
-                            Log.d("PersonalNote", "deleted successfully")
-                        }.addOnFailureListener {
-                            Log.d("PersonalNote", "fail to delete")
+                        if (bnClassDetail.selectedItemId == R.id.studyMaterial) {
+                            db.collection("material_education").document(id).delete().addOnSuccessListener {
+                                Log.d("MaterialEducation", "deleted successfully")
+                            }.addOnFailureListener {
+                                Log.d("MaterialEducation", "fail to delete")
+                            }
+                        } else {
+                            db.collection("notes").document(id).delete().addOnSuccessListener {
+                                Log.d("PersonalNote", "deleted successfully")
+                            }.addOnFailureListener {
+                                Log.d("PersonalNote", "fail to delete")
+                            }
                         }
                     }
                 }
