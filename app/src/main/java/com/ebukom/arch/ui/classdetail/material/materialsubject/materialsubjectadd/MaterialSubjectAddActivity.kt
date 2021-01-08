@@ -61,7 +61,7 @@ class MaterialSubjectAddActivity : AppCompatActivity() {
         subjectName = intent?.extras?.getString("subjectName")
         action = intent?.extras?.getString("action")
 
-        if (layout == "education") {
+        if (layout == "educationNew") {
             tvToolbarTitle.text = "Tambah Materi Mendidik Anak"
             btnMaterialSubjectAddDone.setOnClickListener {
                 val data = hashMapOf<String, Any>(
@@ -83,9 +83,50 @@ class MaterialSubjectAddActivity : AppCompatActivity() {
                     Log.d("TAG", "Material failed to be inserted")
                 }
             }
-        }
-        ///////////////////////////////////////////
-        if (action == "edit") {
+        } else if (layout == "educationEdit") {
+            tvToolbarTitle.text = "Edit Materi Mendidik Anak"
+
+            db.collection("material_education").document(sectionId!!).get().addOnSuccessListener {
+                etMaterialSubjectAddTitle.setText(it["name"] as String)
+
+                initRecycler()
+
+                val files = it["files"] as List<HashMap<String, Any>?>?
+                if (files != null) {
+                    files.forEach {
+                        mFileList.add(
+                            ClassDetailAttachmentDao(
+                                it?.get("path") as String,
+                                (it["category"] as Long).toInt()
+                            )
+                        )
+                        mFileAdapter.notifyDataSetChanged()
+                        checkEmpty()
+                    }
+                }
+            }
+
+            btnMaterialSubjectAddDone.setOnClickListener {
+                val data = hashMapOf<String, Any>(
+                    "name" to etMaterialSubjectAddTitle.text.toString(),
+                    "date" to Timestamp(Date()),
+                    "files" to mFileList
+                )
+
+                loading.visibility = View.VISIBLE
+                db.collection("material_education").add(data).addOnCompleteListener {
+                    if (it.isSuccessful) {
+                        loading.visibility = View.GONE
+                        finish()
+                    } else {
+                        loading.visibility = View.GONE
+                        finish()
+                    }
+                }.addOnFailureListener {
+                    Log.d("TAG", "Material failed to be inserted")
+                }
+            }
+        } else if (layout == "subjectEdit") {
             db.collection("material_subjects").document(subjectId!!)
                 .collection("subject_sections")
                 .document(sectionId!!)

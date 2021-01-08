@@ -8,12 +8,6 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ebukom.R
 import com.ebukom.arch.dao.ChooseClassDao
-import com.ebukom.arch.dao.ClassDetailAnnouncementDao
-import com.ebukom.arch.ui.chooseclass.ChooseClassActivity
-import com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementdetail.SchoolAnnouncementDetailActivity
-import com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementmainpage.SchoolAnnouncementActivity
-import com.ebukom.arch.ui.joinclass.JoinClassActivity
-import kotlinx.android.synthetic.main.item_announcement_title.view.*
 import kotlinx.android.synthetic.main.item_class_detail_header.view.*
 
 class MainClassDetailAdapter(private val classes: List<ChooseClassDao>) :

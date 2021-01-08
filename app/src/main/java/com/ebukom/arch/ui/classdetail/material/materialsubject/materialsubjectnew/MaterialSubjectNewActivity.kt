@@ -190,7 +190,7 @@ class MaterialSubjectNewActivity : AppCompatActivity() {
                 }
 
             val intent = Intent(this, MaterialSubjectAddActivity::class.java)
-            intent.putExtra("action", "edit")
+            intent.putExtra("layout", "subjectEdit")
             intent.putExtra("sectionId", sectionId)
             intent.putExtra("subjectId", subjectId)
             startActivity(intent)

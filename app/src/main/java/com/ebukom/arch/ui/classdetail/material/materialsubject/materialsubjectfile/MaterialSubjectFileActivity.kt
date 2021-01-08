@@ -35,34 +35,59 @@ class MaterialSubjectFileActivity : AppCompatActivity() {
         initToolbar()
         initRecycler()
 
+        val layout = intent?.extras?.getString("layout")
         sectionId = intent?.extras?.getString("sectionId")
         sectionName = intent?.extras?.getString("sectionName")
         subjectId = intent?.extras?.getString("subjectId")
 
         tvToolbarTitle.text = sectionName
 
-        db.collection("material_subjects").document(subjectId!!).collection("subject_sections")
-            .document(sectionId!!).addSnapshotListener { value, error ->
-                if (error != null) {
-                    Timber.e(error)
-                    return@addSnapshotListener
-                }
-
-                initRecycler()
-
-                if ((value?.get("files") as List<HashMap<Any, Any>>).isNotEmpty()) {
-                    for (data in value?.get("files") as List<HashMap<Any, Any>>) {
-                        mFileList.add(
-                            ClassDetailAttachmentDao(
-                                data["path"] as String,
-                                (data["category"] as Long).toInt()
-                            )
-                        )
+        if (layout == "education") {
+            db.collection("material_education").document(sectionId!!).addSnapshotListener { value, error ->
+                    if (error != null) {
+                        Timber.e(error)
+                        return@addSnapshotListener
                     }
-                }
 
-                mFileAdapter.notifyDataSetChanged()
-            }
+                    initRecycler()
+
+                    if ((value?.get("files") as List<HashMap<Any, Any>>).isNotEmpty()) {
+                        for (data in value?.get("files") as List<HashMap<Any, Any>>) {
+                            mFileList.add(
+                                ClassDetailAttachmentDao(
+                                    data["path"] as String,
+                                    (data["category"] as Long).toInt()
+                                )
+                            )
+                        }
+                    }
+
+                    mFileAdapter.notifyDataSetChanged()
+                }
+        } else {
+            db.collection("material_subjects").document(subjectId!!).collection("subject_sections")
+                .document(sectionId!!).addSnapshotListener { value, error ->
+                    if (error != null) {
+                        Timber.e(error)
+                        return@addSnapshotListener
+                    }
+
+                    initRecycler()
+
+                    if ((value?.get("files") as List<HashMap<Any, Any>>).isNotEmpty()) {
+                        for (data in value?.get("files") as List<HashMap<Any, Any>>) {
+                            mFileList.add(
+                                ClassDetailAttachmentDao(
+                                    data["path"] as String,
+                                    (data["category"] as Long).toInt()
+                                )
+                            )
+                        }
+                    }
+
+                    mFileAdapter.notifyDataSetChanged()
+                }
+        }
 
     }
 

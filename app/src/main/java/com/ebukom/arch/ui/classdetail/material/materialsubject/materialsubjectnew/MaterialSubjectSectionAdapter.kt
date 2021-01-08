@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.ebukom.R
 import com.ebukom.arch.dao.ClassDetailMaterialSubjectSectionDao
+import com.ebukom.arch.ui.classdetail.MainClassDetailActivity
 import com.ebukom.arch.ui.classdetail.material.materialsubject.materialsubjectfile.MaterialSubjectFileActivity
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.item_subject_material.view.*
@@ -51,14 +52,26 @@ class MaterialSubjectSectionAdapter(
         }
         holder.view.tvItemSubjectMaterial.text = sectionList.get(position).sectionName
         holder.view.clItemSubjectMaterial.setOnClickListener {
-            val intent = Intent(
-                (context as MaterialSubjectNewActivity),
-                MaterialSubjectFileActivity::class.java
-            )
-            intent.putExtra("subjectId", sectionList.get(position).subjectId)
-            intent.putExtra("sectionId", sectionList.get(position).sectionId)
-            intent.putExtra("sectionName", sectionList.get(position).sectionName)
-            (context as MaterialSubjectNewActivity).startActivity(intent)
+            if (context is MaterialSubjectNewActivity) {
+                val intent = Intent(
+                    (context as MaterialSubjectNewActivity),
+                    MaterialSubjectFileActivity::class.java
+                )
+                intent.putExtra("subjectId", sectionList.get(position).subjectId)
+                intent.putExtra("sectionId", sectionList.get(position).sectionId)
+                intent.putExtra("sectionName", sectionList.get(position).sectionName)
+                (context as MaterialSubjectNewActivity).startActivity(intent)
+            } else {
+                val intent = Intent(
+                    (context as MainClassDetailActivity),
+                    MaterialSubjectFileActivity::class.java
+                )
+                intent.putExtra("subjectId", sectionList.get(position).subjectId)
+                intent.putExtra("sectionId", sectionList.get(position).sectionId)
+                intent.putExtra("sectionName", sectionList.get(position).sectionName)
+                intent.putExtra("layout", "educationNew")
+                (context as MainClassDetailActivity).startActivity(intent)
+            }
         }
 
         holder.view.ibItemSubjectMaterial.setOnClickListener {
@@ -66,7 +79,7 @@ class MaterialSubjectSectionAdapter(
                 sectionList.get(position).sectionId
             )
             else {
-//                callback.onMoreClicked(sectionList.get(position).sectionId, position)
+                (context as MainClassDetailActivity).popupMenuInfo(sectionList.get(position).sectionId, position)
             }
         }
     }

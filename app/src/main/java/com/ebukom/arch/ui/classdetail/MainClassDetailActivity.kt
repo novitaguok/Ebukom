@@ -233,8 +233,8 @@ class MainClassDetailActivity : AppCompatActivity(), OnMoreCallback {
                 else -> {
                     if (bnClassDetail.selectedItemId == R.id.studyMaterial) {
                         intent = Intent(this, MaterialSubjectAddActivity::class.java)
-                        intent.putExtra("materialId", id)
-                        intent.putExtra("materialLayout", "edit")
+                        intent.putExtra("sectionId", id)
+                        intent.putExtra("layout", "educationEdit")
                     } else {
                         intent = Intent(this, PersonalNoteEditActivity::class.java)
                         intent.putExtra("noteId", id)
