@@ -3,6 +3,7 @@ package com.ebukom.arch.ui.classdetail
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -51,7 +52,7 @@ class ClassDetailTemplateAdapter(
         fun bind(data: ClassDetailTemplateTextDao) {
             itemView.tvItemTemplate.text = data.title
             itemView.tvItemTemplate.setOnClickListener {
-                if (context is SchoolAnnouncementNewActivity) (context as SchoolAnnouncementNewActivity).setText(data.title, data.content)
+                if (context is SchoolAnnouncementNewActivity) (context as SchoolAnnouncementNewActivity).setText(data.title, Html.fromHtml(data.content).toString())
                 else (context as PersonalNoteNewActivity).setText(data.title, data.content)
             }
         }
