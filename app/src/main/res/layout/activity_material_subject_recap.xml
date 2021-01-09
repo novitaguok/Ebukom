@@ -79,7 +79,6 @@
                     android:id="@+id/etMaterialSubjectRecapLink"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:background="@drawable/edit_text_rectangle_selector"
                     android:padding="@dimen/size_16" />
             </com.google.android.material.textfield.TextInputLayout>
 

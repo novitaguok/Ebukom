@@ -36,20 +36,20 @@ class MaterialSubjectRecapActivity : AppCompatActivity() {
 
         initToolbar()
 
+        // Intent from another activity
+        val layout = intent?.extras?.getString("layout")
         subjectId = intent?.extras?.getString("subjectId", subjectId)
         sectionId = intent?.extras?.getString("sectionId")
 
+        // Set date
         btnMaterialSubjectRecapDate.setOnClickListener {
             val dateTimeDialogFragment = SwitchDateTimeDialogFragment.newInstance(
                 "Tanggal Pembelajaran Online",
                 "SELESAI",
                 "BATALKAN"
             )
-
-            dateTimeDialogFragment.setTimeZone(TimeZone.getDefault())
-
-            val dateFormat = SimpleDateFormat("d MMM yyyy HH:mm", Locale.getDefault())
-
+            val dateFormat = SimpleDateFormat("EEEE, d MMMM yyyy", Locale("in", "ID"))
+            dateTimeDialogFragment.setTimeZone(TimeZone.getTimeZone("Asia/Jakarta"))
             dateTimeDialogFragment.startAtCalendarView()
             dateTimeDialogFragment.set24HoursMode(true)
             dateTimeDialogFragment.minimumDateTime =
@@ -57,7 +57,8 @@ class MaterialSubjectRecapActivity : AppCompatActivity() {
 
             try {
                 dateTimeDialogFragment.simpleDateMonthAndDayFormat =
-                    SimpleDateFormat("dd MMMM", Locale.getDefault())
+//                    SimpleDateFormat("dd MMMM", Locale.getDefault())
+                    SimpleDateFormat("EEE, d MMMM yyyy", Locale("in", "ID"))
             } catch (e: SwitchDateTimeDialogFragment.SimpleDateMonthAndDayFormatException) {
                 Log.e("error", e.message)
             }
@@ -77,6 +78,7 @@ class MaterialSubjectRecapActivity : AppCompatActivity() {
             dateTimeDialogFragment.show(supportFragmentManager, "")
         }
 
+        // Enable button
         if (etMaterialSubjectRecapLink.text.toString().isNotEmpty() && isSetLink && isSetDate) {
             btnMaterialSubjectRecapDone.isEnabled = true
             btnMaterialSubjectRecapDone.setBackgroundColor(
@@ -95,50 +97,77 @@ class MaterialSubjectRecapActivity : AppCompatActivity() {
             )
         }
 
+        // Text watcher
         etMaterialSubjectRecapLink.addTextChangedListener(textWatcher)
 
-        btnMaterialSubjectRecapDone.setOnClickListener {
-
-            mFileList.add(
-                ClassDetailAttachmentDao(
-                    etMaterialSubjectRecapLink.text.toString(),
-                    3,
-                    "",
-                    "",
-                    "",
-                    btnMaterialSubjectRecapDate.text.toString()
+        // Insert to database
+        if (layout == "recapEdit") {
+//            btnMaterialSubjectRecapDone.setOnClickListener {
+//                mFileList.add(
+//                    ClassDetailAttachmentDao(
+//                        etMaterialSubjectRecapLink.text.toString(),
+//                        0
+//                    )
+//                )
+//
+//                val data = hashMapOf<String, Any>(
+////                "files" to mFileList,
+//                    "name" to btnMaterialSubjectRecapDate.text,
+//                    "date" to Timestamp(Date())
+//                )
+//
+//                loading.visibility = View.VISIBLE
+//                val file = hashMapOf<String, Any>(
+//                    "title" to mFileList[0].path,
+//                    "category" to mFileList[0].category
+//                )
+//                db.collection("material_subjects").document(subjectId!!)
+//                    .collection("subject_sections")
+//                    .add(data).addOnSuccessListener {
+//                        sectionId = it.id
+//                        db.collection("material_subjects").document(subjectId!!)
+//                            .collection("subject_sections").document(sectionId!!).collection("files")
+//                            .add(file)
+//                        Log.d("Recap", "Material successfully inserted")
+//                    }.addOnFailureListener {
+//                        Log.d("Recap", "Material failed to be inserted")
+//                    }
+//                finish()
+//            }
+        } else {
+            btnMaterialSubjectRecapDone.setOnClickListener {
+                mFileList.add(
+                    ClassDetailAttachmentDao(
+                        etMaterialSubjectRecapLink.text.toString(),
+                        0
+                    )
                 )
-            )
 
-            val data = hashMapOf<String, Any>(
-                "files" to mFileList,
-                "date" to Timestamp(Date()),
-                "name" to "Recap"
-            )
+                val data = hashMapOf<String, Any>(
+//                "files" to mFileList,
+                    "name" to btnMaterialSubjectRecapDate.text,
+                    "date" to Timestamp(Date())
+                )
 
-            loading.visibility = View.VISIBLE
-            db.collection("material_subjects").document(subjectId!!)
-                .collection("subject_sections")
-                .add(data).addOnCompleteListener {
-                    if (it.isSuccessful) {
-                        loading.visibility = View.GONE
-                        finish()
-                    } else {
-                        loading.visibility = View.GONE
-                        finish()
+                loading.visibility = View.VISIBLE
+                val file = hashMapOf<String, Any>(
+                    "title" to mFileList[0].path,
+                    "category" to mFileList[0].category
+                )
+                db.collection("material_subjects").document(subjectId!!)
+                    .collection("subject_sections")
+                    .add(data).addOnSuccessListener {
+                        sectionId = it.id
+                        db.collection("material_subjects").document(subjectId!!)
+                            .collection("subject_sections").document(sectionId!!)
+                            .collection("files")
+                            .add(file)
+                        Log.d("Recap", "Material successfully inserted")
+                    }.addOnFailureListener {
+                        Log.d("Recap", "Material failed to be inserted")
                     }
-                }.addOnFailureListener {
-                    Log.d("TAG", "Material failed to be inserted")
-                }
-
-//            db.collection("material_subjects").document(subjectId!!).collection("subject_sections")
-//                .add(data).addOnSuccessListener {
-//                    Log.d("TAG", "Material inserted successfully")
-//                }.addOnFailureListener {
-//                    Log.d("TAG", "Material failed to be inserted")
-//                }
-
-            finish()
+                finish()
+            }
         }
     }
 

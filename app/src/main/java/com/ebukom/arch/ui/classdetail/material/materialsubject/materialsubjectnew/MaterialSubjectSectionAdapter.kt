@@ -2,16 +2,19 @@ package com.ebukom.arch.ui.classdetail.material.materialsubject.materialsubjectn
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
 import com.ebukom.R
+import com.ebukom.arch.dao.ClassDetailAttachmentDao
 import com.ebukom.arch.dao.ClassDetailMaterialSubjectSectionDao
 import com.ebukom.arch.ui.classdetail.MainClassDetailActivity
 import com.ebukom.arch.ui.classdetail.material.materialsubject.materialsubjectfile.MaterialSubjectFileActivity
 import com.ebukom.arch.ui.classdetail.material.materialsubject.materialsubjectfilepreview.MaterialPreviewActivity
+import com.ebukom.arch.ui.classdetail.school.schoolphoto.SchoolPhotoActivity
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.item_subject_material.view.*
 import timber.log.Timber
@@ -51,17 +54,46 @@ class MaterialSubjectSectionAdapter(
                 }
             }
         }
+
         holder.view.tvItemSubjectMaterial.text = sectionList.get(position).sectionName
         holder.view.clItemSubjectMaterial.setOnClickListener {
             if (context is MaterialSubjectNewActivity) {
-                val intent = Intent(
-                    (context as MaterialSubjectNewActivity),
-                    MaterialSubjectFileActivity::class.java
-                )
-                intent.putExtra("subjectId", sectionList.get(position).subjectId)
-                intent.putExtra("sectionId", sectionList.get(position).sectionId)
-                intent.putExtra("sectionName", sectionList.get(position).sectionName)
-                (context as MaterialSubjectNewActivity).startActivity(intent)
+
+                if (sectionList.get(position).sectionName.contains(",")) {
+                    var mFileList: ArrayList<ClassDetailAttachmentDao> = arrayListOf()
+
+                    db.collection("material_subjects").document(sectionList.get(position).subjectId)
+                        .collection("subject_sections")
+                        .document(sectionList.get(position).sectionId).collection("files")
+                        .get().addOnSuccessListener {
+                            it.forEach {
+                                mFileList.add(
+                                    ClassDetailAttachmentDao(
+                                        it["title"] as String,
+                                        (it["category"] as Long).toInt()
+                                    )
+                                )
+                            }
+
+                            var url = mFileList[0].path
+                            if (!url.startsWith("http://")) {
+                                url = "http://" + url
+                            }
+
+                            val intent = Intent(Intent.ACTION_VIEW)
+                            intent.data = Uri.parse(url)
+                            context.startActivity(intent)
+                        }
+                } else {
+                    val intent = Intent(
+                        (context as MaterialSubjectNewActivity),
+                        MaterialSubjectFileActivity::class.java
+                    )
+                    intent.putExtra("subjectId", sectionList.get(position).subjectId)
+                    intent.putExtra("sectionId", sectionList.get(position).sectionId)
+                    intent.putExtra("sectionName", sectionList.get(position).sectionName)
+                    (context as MaterialSubjectNewActivity).startActivity(intent)
+                }
             } else if (context is MainClassDetailActivity) {
                 val intent = Intent(
                     (context as MainClassDetailActivity),
@@ -86,11 +118,18 @@ class MaterialSubjectSectionAdapter(
         }
 
         holder.view.ibItemSubjectMaterial.setOnClickListener {
-            if (context is MaterialSubjectNewActivity) (context as MaterialSubjectNewActivity).popUpMenu(
-                sectionList.get(position).sectionId
-            )
-            else if (context is MainClassDetailActivity)
-                (context as MainClassDetailActivity).popupMenuInfo(sectionList.get(position).sectionId, position)
+            if (context is MaterialSubjectNewActivity) {
+                if (sectionList.get(position).sectionName.contains(",")) (context as MaterialSubjectNewActivity).popUpMenu(
+                    sectionList.get(position).sectionId,
+                    true
+                )
+                else (context as MaterialSubjectNewActivity).popUpMenu(sectionList.get(position).sectionId)
+
+            } else if (context is MainClassDetailActivity)
+                (context as MainClassDetailActivity).popupMenuInfo(
+                    sectionList.get(position).sectionId,
+                    position
+                )
         }
     }
 

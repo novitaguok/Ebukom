@@ -155,7 +155,7 @@ class MaterialSubjectNewActivity : AppCompatActivity() {
         }
     }
 
-    fun popUpMenu(sectionId: String) {
+    fun popUpMenu(sectionId: String, recap: Boolean = false) {
         val bottomSheetDialog = BottomSheetDialog(this)
         val view = layoutInflater.inflate(R.layout.bottom_sheet_school_announcement, null)
         view.tvEditInfo.text = "Edit Materi"
@@ -194,8 +194,14 @@ class MaterialSubjectNewActivity : AppCompatActivity() {
                         }
                 }
 
-            val intent = Intent(this, MaterialSubjectAddActivity::class.java)
-            intent.putExtra("layout", "subjectEdit")
+            var intent = Intent(this, MaterialSubjectRecapActivity::class.java)
+            if (recap) {
+                intent.putExtra("layout", "recapEdit")
+            } else {
+                intent = Intent(this, MaterialSubjectAddActivity::class.java)
+                intent.putExtra("layout", "subjectEdit")
+            }
+
             intent.putExtra("sectionId", sectionId)
             intent.putExtra("subjectId", subjectId)
             startActivity(intent)
