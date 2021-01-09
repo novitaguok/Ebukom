@@ -1,6 +1,7 @@
 package com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementnewnext
 
 import android.content.Context
+import android.content.Intent
 import android.content.SharedPreferences
 import android.graphics.Color
 import androidx.appcompat.app.AppCompatActivity
@@ -13,6 +14,8 @@ import com.ebukom.R
 import com.ebukom.arch.dao.ClassDetailAttachmentDao
 import com.ebukom.arch.dao.ClassDetailItemCheckDao
 import com.ebukom.arch.ui.classdetail.ClassDetailCheckAdapter
+import com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementmainpage.SchoolAnnouncementActivity
+import com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementnew.SchoolAnnouncementNewActivity
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 import com.kunzisoft.switchdatetime.SwitchDateTimeDialogFragment
@@ -78,7 +81,7 @@ class SchoolAnnouncementNewNextActivity : AppCompatActivity(),
                     val item = classGrade + " " + className
 
                     mClassList.add(
-                        ClassDetailItemCheckDao(item,id = document.id)
+                        ClassDetailItemCheckDao(item, id = document.id)
                     )
                     rvSchoolAnnouncementNewNext.adapter?.notifyDataSetChanged()
                 }
@@ -161,16 +164,31 @@ class SchoolAnnouncementNewNextActivity : AppCompatActivity(),
 
             loading.visibility = View.VISIBLE
             mClassList.forEach {
-                if(it.isChecked && !it.id.isNullOrEmpty()){
+                if (it.isChecked && !it.id.isNullOrEmpty()) {
                     db.collection("classes").document(it.id!!).collection("announcements")
                         .add(data).addOnCompleteListener {
                             if (it.isSuccessful) {
-                                val announcementId = it.result?.id!!
+                                val intent = Intent(this, SchoolAnnouncementActivity::class.java)
+
                                 loading.visibility = View.GONE
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                intent.putExtra("classId", classId)
+                                intent.putExtra("EXIT", true)
+                                startActivity(intent)
                                 finish()
                             } else {
                                 Log.d("TAG", "announcement inserted")
+                                val intent = Intent(this, SchoolAnnouncementActivity::class.java)
+
                                 loading.visibility = View.GONE
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                                intent.putExtra("classId", classId)
+                                intent.putExtra("EXIT", true)
+                                startActivity(intent)
                                 finish()
                             }
                         }

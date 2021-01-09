@@ -1,5 +1,6 @@
 package com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementnew
 
+import android.app.Activity
 import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
@@ -45,7 +46,6 @@ import java.util.*
 
 
 class SchoolAnnouncementNewActivity : AppCompatActivity() {
-
     private val mAttachmentList: ArrayList<ClassDetailAttachmentDao> = arrayListOf()
     private val mAttachmentAdapter = ClassDetailAttachmentAdapter(mAttachmentList)
     private val mTemplateList: ArrayList<ClassDetailTemplateTextDao> = arrayListOf()
@@ -229,7 +229,7 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
                 intent.putExtra("attachments", mAttachmentList)
 
                 startActivity(intent)
-                finish()
+//                finish()
             }
         }
 
