@@ -35,6 +35,7 @@ import com.ebukom.arch.ui.classdetail.school.schoolschedule.schoolscheduleedit.S
 import com.ebukom.arch.ui.editprofile.EditProfileActivity
 import com.ebukom.data.DataDummy
 import com.google.android.material.bottomsheet.BottomSheetDialog
+import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_main_class_detail.*
 import kotlinx.android.synthetic.main.activity_personal_note_detail.*
@@ -90,8 +91,8 @@ class MainClassDetailActivity : AppCompatActivity(), OnMoreCallback {
         val memberFragment = MemberFragment()
 
         classId = intent?.extras?.getString("classId")
-        val className = intent?.extras?.getString("className")?: ""
-        val classNumber = intent?.extras?.getString("classNumber")?: ""
+        val className = intent?.extras?.getString("className") ?: ""
+        val classNumber = intent?.extras?.getString("classNumber") ?: ""
         tvClassHeaderClassName.text = className
         tvClassHeaderClassNumber.text = classNumber
 
@@ -328,12 +329,26 @@ class MainClassDetailActivity : AppCompatActivity(), OnMoreCallback {
                     }
                     else -> {
                         if (bnClassDetail.selectedItemId == R.id.studyMaterial) {
-                            db.collection("material_education").document(id).delete().addOnSuccessListener {
-                                Log.d("MaterialEducation", "deleted successfully")
-                            }.addOnFailureListener {
+                            // Delete files collection
+                            val collectionFiles =
+                                db.collection("material_education").document(id)
+                                    .collection("files")
+                            deleteCollection(collectionFiles, 5) {}
+
+                            // Delete the material
+                            db.collection("material_education").document(id).delete()
+                                .addOnSuccessListener {
+                                    Log.d("MaterialEducation", "deleted successfully")
+                                }.addOnFailureListener {
                                 Log.d("MaterialEducation", "fail to delete")
                             }
                         } else {
+                            // Delete comments collection
+                            val collectionComments =
+                                db.collection("notes").document(id).collection("comments")
+                            deleteCollection(collectionComments, 5) {}
+
+                            // Delete the note
                             db.collection("notes").document(id).delete().addOnSuccessListener {
                                 Log.d("PersonalNote", "deleted successfully")
                             }.addOnFailureListener {
@@ -423,6 +438,30 @@ class MainClassDetailActivity : AppCompatActivity(), OnMoreCallback {
         }
 
         bottomSheetDialog.show()
+    }
+
+    fun deleteCollection(collection: CollectionReference, batchSize: Int, nextAction: () -> Unit) {
+        try {
+            // Retrieve a small batch of documents to avoid out-of-memory errors/
+            var deleted = 0
+            collection
+                .limit(batchSize.toLong())
+                .get()
+                .addOnCompleteListener {
+                    for (document in it.result!!.documents) {
+                        document.getReference().delete()
+                        ++deleted
+                    }
+                    if (deleted >= batchSize) {
+                        // retrieve and delete another batch
+                        deleteCollection(collection, batchSize, nextAction)
+                    } else {
+                        nextAction()
+                    }
+                }
+        } catch (e: Exception) {
+            System.err.println("Error deleting collection : " + e.message)
+        }
     }
 
     override fun onMoreClicked(id: String, pos: Int) {

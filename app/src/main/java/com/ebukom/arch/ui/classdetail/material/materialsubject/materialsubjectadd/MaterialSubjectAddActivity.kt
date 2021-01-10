@@ -102,11 +102,10 @@ class MaterialSubjectAddActivity : AppCompatActivity() {
                 etMaterialSubjectAddTitle.setText(it["name"] as String)
 
                 // Add file
-                DataDummy.materialFileData.clear()
                 db.collection("material_education").document(sectionId!!).collection("files")
-                    .addSnapshotListener { value, error ->
+                    .get().addOnSuccessListener {
                         DataDummy.materialFileData.clear()
-                        for (data in value!!.documents) {
+                        for (data in it!!.documents) {
                             DataDummy.materialFileData.add(
                                 ClassDetailAttachmentDao(
                                     data["title"] as String,
@@ -114,36 +113,51 @@ class MaterialSubjectAddActivity : AppCompatActivity() {
                                 )
                             )
                         }
+                        mFileList.clear()
                         mFileList.addAll(DataDummy.materialFileData)
                         checkEmpty()
+                    }.addOnFailureListener {
+                        Timber.e(it)
                     }
+            }.addOnFailureListener {
+                Timber.e(it)
             }
 
             // Done
             btnMaterialSubjectAddDone.setOnClickListener {
-                mFileList.clear()
-                mFileList.addAll(DataDummy.materialFileData)
-                mFileAdapter.notifyDataSetChanged()
                 val data = hashMapOf<String, Any>(
                     "name" to etMaterialSubjectAddTitle.text.toString(),
                     "date" to Timestamp(Date())
                 )
                 loading.visibility = View.VISIBLE
-                db.collection("material_education").add(data).addOnSuccessListener {
-                    sectionId = it.id
-                    mFileList.forEach {
-                        val file = hashMapOf<String, Any>(
-                            "title" to it.path,
-                            "category" to it.category
-                        )
-                        db.collection("material_education").document(sectionId!!)
-                            .collection("files").add(file).addOnSuccessListener {
-                                DataDummy.materialFileData.clear()
+                db.collection("material_education").document(sectionId!!).update(data)
+                    .addOnSuccessListener {
+
+                        /**
+                         * Insert all file ID to array,
+                         * in purpose to delete all documents in a collection,
+                         * and re-add all files to collection
+                         */
+                        val collectionFiles =
+                            db.collection("material_education").document(sectionId!!)
+                                .collection("files")
+                        deleteCollection(collectionFiles, 5) {
+                            mFileList.forEach {
+                                val file = hashMapOf<String, Any>(
+                                    "title" to it.path,
+                                    "category" to it.category
+                                )
+                                db.collection("material_education").document(sectionId!!)
+                                    .collection("files").add(file)
                             }
-                    }
-                    Log.d("TAG", "Material successfully inserted")
-                }.addOnFailureListener {
-                    Log.d("TAG", "Material failed to be inserted")
+                        }
+                        loading.visibility = View.GONE
+                        Log.d("FileInsert", "Material successfully inserted")
+                        this@MaterialSubjectAddActivity.finish()
+                    }.addOnFailureListener {
+                    loading.visibility = View.GONE
+                    Log.d("FileInsert", "Material failed to be inserted")
+                    this@MaterialSubjectAddActivity.finish()
                 }
             }
         } else if (layout == "subjectEdit") {
@@ -180,9 +194,6 @@ class MaterialSubjectAddActivity : AppCompatActivity() {
                     Timber.e(it)
                 }
             btnMaterialSubjectAddDone.setOnClickListener {
-//                mFileList.clear()
-//                mFileList.addAll(DataDummy.materialFileData)
-//                mFileAdapter.notifyDataSetChanged()
                 val data = hashMapOf<String, Any>(
                     "name" to etMaterialSubjectAddTitle.text.toString(),
                     "date" to Timestamp(Date())
@@ -197,7 +208,6 @@ class MaterialSubjectAddActivity : AppCompatActivity() {
                          * in purpose to delete all documents in a collection,
                          * and re-add all files to collection
                          */
-
                         val collectionFiles =
                             db.collection("material_subjects").document(subjectId!!)
                                 .collection("subject_sections").document(sectionId!!)
@@ -249,10 +259,11 @@ class MaterialSubjectAddActivity : AppCompatActivity() {
 
 */
                         loading.visibility = View.GONE
+                        Log.d("FileInsert", "Material successfully inserted")
                         this@MaterialSubjectAddActivity.finish()
                     }.addOnFailureListener {
                         loading.visibility = View.GONE
-                        Log.d("TAG", "Material failed to be inserted")
+                        Log.d("FileInsert", "Material failed to be inserted")
                         this@MaterialSubjectAddActivity.finish()
                     }
             }
@@ -539,6 +550,5 @@ class MaterialSubjectAddActivity : AppCompatActivity() {
         } catch (e: Exception) {
             System.err.println("Error deleting collection : " + e.message)
         }
-
     }
 }

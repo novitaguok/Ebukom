@@ -2,8 +2,10 @@ package com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncem
 
 import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import android.graphics.PointF
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.LinearSmoothScroller
@@ -34,19 +36,23 @@ class SchoolAnnouncementActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_school_announcement)
 
-        classId = intent.extras?.getString("classId")
+        val sharePref: SharedPreferences = getSharedPreferences("EBUKOM", Context.MODE_PRIVATE)
+        if(sharePref.getLong("level", 0) == 1L) {
+            btnSchoolAnnouncementNew.visibility = View.GONE
+        }
 
         initToolbar()
         initListener()
         initRecycler()
         loadAnnouncement()
+
+        classId = intent.extras?.getString("classId")
     }
 
     /**
      * Load announcement data from Firestore
      */
     private fun loadAnnouncement() {
-
         if (classId != null) {
             val db = FirebaseFirestore.getInstance()
             db.collection("classes").document(classId!!).collection("announcements")

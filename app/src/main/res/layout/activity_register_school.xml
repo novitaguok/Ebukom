@@ -102,8 +102,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:paddingLeft="@dimen/size_16"
-                    android:paddingRight="@dimen/size_16"
-                    android:background="@drawable/edit_text_rectangle_selector"/>
+                    android:paddingRight="@dimen/size_16" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <TextView

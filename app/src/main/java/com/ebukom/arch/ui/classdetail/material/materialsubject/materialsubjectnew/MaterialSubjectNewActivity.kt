@@ -17,6 +17,7 @@ import com.ebukom.arch.ui.classdetail.material.materialsubject.materialsubjectad
 import com.ebukom.arch.ui.classdetail.material.materialsubject.materialsubjectadd.MaterialSubjectRecapActivity
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.Timestamp
+import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_material_subject_new.*
 import kotlinx.android.synthetic.main.activity_material_subject_new.toolbar
@@ -221,10 +222,10 @@ class MaterialSubjectNewActivity : AppCompatActivity() {
                 dialog.dismiss()
             }
             builder.setPositiveButton("HAPUS") { _, _ ->
-
-//                deleteC
-
-
+                val collectionFiles =
+                    db.collection("material_subjects").document("subject_sections")
+                        .collection("files")
+                deleteCollection(collectionFiles, 5) {}
                 db.collection("material_subjects").document(subjectId!!)
                     .collection("subject_sections")
                     .document(sectionId).delete().addOnSuccessListener {
@@ -257,6 +258,30 @@ class MaterialSubjectNewActivity : AppCompatActivity() {
         }
 
         bottomSheetDialog.show()
+
+    }
+    fun deleteCollection(collection: CollectionReference, batchSize: Int, nextAction: () -> Unit) {
+        try {
+            // Retrieve a small batch of documents to avoid out-of-memory errors/
+            var deleted = 0
+            collection
+                .limit(batchSize.toLong())
+                .get()
+                .addOnCompleteListener {
+                    for (document in it.result!!.documents) {
+                        document.getReference().delete()
+                        ++deleted
+                    }
+                    if (deleted >= batchSize) {
+                        // retrieve and delete another batch
+                        deleteCollection(collection, batchSize, nextAction)
+                    } else {
+                        nextAction()
+                    }
+                }
+        } catch (e: Exception) {
+            System.err.println("Error deleting collection : " + e.message)
+        }
 
     }
 }

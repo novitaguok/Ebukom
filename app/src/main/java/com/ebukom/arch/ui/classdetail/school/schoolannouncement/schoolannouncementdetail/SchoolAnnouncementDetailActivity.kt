@@ -20,6 +20,7 @@ import com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannounceme
 import com.ebukom.utils.toCalendar
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.Timestamp
+import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_school_announcement_detail.*
 import kotlinx.android.synthetic.main.alert_edit_text.view.*
@@ -343,6 +344,13 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
                 dialog.dismiss()
             }
             builder.setPositiveButton("HAPUS") { dialog, which ->
+                // Delete comments collection
+                val collectionComments =
+                    db.collection("classes").document(classId!!).collection("announcements")
+                        .document(announcementId!!).collection("comments")
+                deleteCollection(collectionComments, 5) {}
+
+                // Delete the announcement
                 db.collection("classes").document(classId!!).collection("announcements")
                     .document(announcementId!!).delete().addOnSuccessListener {
                         Log.d("TAG", "announcement deleted")
@@ -532,6 +540,30 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
         supportActionBar?.title = ""
         toolbar.setNavigationOnClickListener {
             onBackPressed()
+        }
+    }
+
+    fun deleteCollection(collection: CollectionReference, batchSize: Int, nextAction: () -> Unit) {
+        try {
+            // Retrieve a small batch of documents to avoid out-of-memory errors/
+            var deleted = 0
+            collection
+                .limit(batchSize.toLong())
+                .get()
+                .addOnCompleteListener {
+                    for (document in it.result!!.documents) {
+                        document.getReference().delete()
+                        ++deleted
+                    }
+                    if (deleted >= batchSize) {
+                        // retrieve and delete another batch
+                        deleteCollection(collection, batchSize, nextAction)
+                    } else {
+                        nextAction()
+                    }
+                }
+        } catch (e: Exception) {
+            System.err.println("Error deleting collection : " + e.message)
         }
     }
 }

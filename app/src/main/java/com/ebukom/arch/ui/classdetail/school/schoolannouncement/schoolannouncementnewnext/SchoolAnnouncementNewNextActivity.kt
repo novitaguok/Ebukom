@@ -168,27 +168,26 @@ class SchoolAnnouncementNewNextActivity : AppCompatActivity(),
                     db.collection("classes").document(it.id!!).collection("announcements")
                         .add(data).addOnCompleteListener {
                             if (it.isSuccessful) {
-                                val intent = Intent(this, SchoolAnnouncementActivity::class.java)
-
+//                                val intent = Intent(this, SchoolAnnouncementActivity::class.java)
                                 loading.visibility = View.GONE
 //                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
 //                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
 //                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                                intent.putExtra("classId", classId)
+//                                intent.putExtra("classId", classId)
 //                                intent.putExtra("EXIT", true)
-                                startActivity(intent)
+//                                startActivity(intent)
                                 finish()
                             } else {
                                 Log.d("TAG", "announcement inserted")
-                                val intent = Intent(this, SchoolAnnouncementActivity::class.java)
+//                                val intent = Intent(this, SchoolAnnouncementActivity::class.java)
 
                                 loading.visibility = View.GONE
 //                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
 //                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
 //                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                                intent.putExtra("classId", classId)
+//                                intent.putExtra("classId", classId)
 //                                intent.putExtra("EXIT", true)
-                                startActivity(intent)
+//                                startActivity(intent)
                                 finish()
                             }
                         }

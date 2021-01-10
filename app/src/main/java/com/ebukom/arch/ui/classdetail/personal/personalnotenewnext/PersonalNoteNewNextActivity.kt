@@ -78,32 +78,26 @@ class PersonalNoteNewNextActivity : AppCompatActivity(), ClassDetailCheckAdapter
         /**
          * Get parents data
          */
-        db.collection("users").addSnapshotListener { value, error ->
-            if (error != null) {
-                Timber.e(error)
-                return@addSnapshotListener
-            }
-
-            initRecycler()
-
+        db.collection("users").get().addOnSuccessListener {
             if (level == 0L) {
                 mParentList.clear()
-                for (document in value!!.documents) {
+                for (document in it!!.documents) {
                     if ((document["level"] as Long).toInt() == 1) {
                         mParentList.clear()
                         mParentList.add(
                             ClassDetailItemCheckThumbnailDao(
                                 document["name"] as String,
-                                document["childNames"] as String,
+                                document["child"] as String,
                                 0,
                                 userId = document.id
                             )
                         )
                     }
                 }
+                mParentAdapter.notifyDataSetChanged()
             } else {
                 mParentList.clear()
-                for (document in value!!.documents) {
+                for (document in it!!.documents) {
                     if ((document["level"] as Long).toInt() == 0) {
                         mParentList.clear()
                         mParentList.add(
@@ -116,7 +110,10 @@ class PersonalNoteNewNextActivity : AppCompatActivity(), ClassDetailCheckAdapter
                         )
                     }
                 }
+                mParentAdapter.notifyDataSetChanged()
             }
+        }.addOnFailureListener {
+            Timber.e(it)
         }
 
         // Alarm Dialog Box
