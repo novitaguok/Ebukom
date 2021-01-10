@@ -9,6 +9,6 @@ data class RegisterParentRequestDao(
     val phone : String,
     val eskul : List<String>,
     @Exclude val pass : String,
-    val profilePic : String,
+    var profilePic : String,
     val level : Int = 1
 ) : Serializable

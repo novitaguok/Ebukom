@@ -145,30 +145,22 @@ class RegisterSchoolActivity : AppCompatActivity() {
             if (isValid()) {
                 if (reformatPhoneNumber(etRegisterSchoolPhone.text.toString()) != null) {
                     if (imageFile != null) {
-                        FirebaseStorage.getInstance()
-                            .getReference("images/profile/")
-                            .putFile(Uri.fromFile(imageFile))
-                            .addOnSuccessListener {
-                                val data = RegisterSchoolRequestDao(
-                                    etRegisterSchoolName.text.toString(),
-                                    RegisterRolesDao(
-                                        "",
-                                        role
-                                    ),
-                                    reformatPhoneNumber(etRegisterSchoolPhone.text.toString())!!,
-                                    etRegisterSchoolPassword.text.toString(),
-                                    it.toString(),
-                                    0
-                                )
+                        val data = RegisterSchoolRequestDao(
+                            etRegisterSchoolName.text.toString(),
+                            RegisterRolesDao(
+                                "",
+                                role
+                            ),
+                            reformatPhoneNumber(etRegisterSchoolPhone.text.toString())!!,
+                            etRegisterSchoolPassword.text.toString(),
+                            imagePath.toString(),
+                            0
+                        )
 
-                                val intent = Intent(this, VerificationActivity::class.java)
-                                intent.putExtra("layout", VerificationActivity.LAYOUT_REGISTER)
-                                intent.putExtra("data", data)
-                                startActivity(intent)
-                            }
-                            .addOnFailureListener {
-                                Timber.e(it)
-                            }
+                        val intent = Intent(this, VerificationActivity::class.java)
+                        intent.putExtra("layout", VerificationActivity.LAYOUT_REGISTER)
+                        intent.putExtra("data", data)
+                        startActivity(intent)
                     } else {
                         val data = RegisterSchoolRequestDao(
                             etRegisterSchoolName.text.toString(),
@@ -178,7 +170,7 @@ class RegisterSchoolActivity : AppCompatActivity() {
                             ),
                             reformatPhoneNumber(etRegisterSchoolPhone.text.toString())!!,
                             etRegisterSchoolPassword.text.toString(),
-                            it.toString(),
+                            "",
                             0
                         )
 

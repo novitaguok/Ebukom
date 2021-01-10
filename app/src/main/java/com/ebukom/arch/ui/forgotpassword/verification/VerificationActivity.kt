@@ -1,13 +1,13 @@
 package com.ebukom.arch.ui.forgotpassword.verification
 
 import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.util.Log
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContextCompat
 import com.ebukom.R
 import com.ebukom.arch.dao.firebase.RegisterParentRequestDao
 import com.ebukom.arch.dao.firebase.RegisterSchoolRequestDao
@@ -17,7 +17,10 @@ import com.google.firebase.FirebaseException
 import com.google.firebase.FirebaseTooManyRequestsException
 import com.google.firebase.auth.*
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_verification.*
+import timber.log.Timber
+import java.io.File
 import java.util.concurrent.TimeUnit
 
 class VerificationActivity : AppCompatActivity() {
@@ -142,7 +145,7 @@ class VerificationActivity : AppCompatActivity() {
     private fun onVerifyPhone(phone: String) {
         val callbacks = object : PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
             override fun onVerificationCompleted(credential: PhoneAuthCredential) {
-                Log.d("VerificationActivity", "onVerificationCompleted:$credential")
+                Timber.d("onVerificationCompleted:$credential")
                 val code: String? = credential.getSmsCode()
                 if (code != null) {
                     txt_pin_entry.setText(code)
@@ -152,7 +155,7 @@ class VerificationActivity : AppCompatActivity() {
             }
 
             override fun onVerificationFailed(e: FirebaseException) {
-                Log.w("VerificationActivity", "onVerificationFailed", e)
+                Timber.e(e)
 
                 if (e is FirebaseAuthInvalidCredentialsException) {
                     Toast.makeText(
@@ -173,7 +176,7 @@ class VerificationActivity : AppCompatActivity() {
                 verificationId: String,
                 token: PhoneAuthProvider.ForceResendingToken
             ) {
-                Log.d("VerificationActivity", "onCodeSent:$verificationId")
+                Timber.d("onCodeSent:$verificationId")
 
                 // Save verification ID and resending token so we can use them later
                 storedVerificationId = verificationId
@@ -291,20 +294,74 @@ class VerificationActivity : AppCompatActivity() {
             else -> 0
         }
 
-        db.collection("users").document(user.uid).set(data).addOnSuccessListener {
-            Toast.makeText(this, "Registration success", Toast.LENGTH_LONG)
-                .show()
-
-            loading.visibility = View.GONE
-            val intent = Intent(this, LoginActivity::class.java)
-            intent.putExtra("role", level)
-            startActivity(intent)
-            finish()
-        }.addOnFailureListener {
-            loading.visibility = View.GONE
-            Toast.makeText(this, "Registration failed", Toast.LENGTH_LONG)
-                .show()
+        var picPath = ""
+        when (data) {
+            is RegisterParentRequestDao -> {
+                if (data.profilePic.equals("")) {
+                    data.profilePic = "gs://ebukom-6d1a9.appspot.com/images/profile/default.png"
+                } else {
+                    picPath = data.profilePic
+                }
+            }
+            is RegisterSchoolRequestDao -> {
+                if (data.profilePic.equals("")) {
+                    data.profilePic = "gs://ebukom-6d1a9.appspot.com/images/profile/default.png"
+                } else {
+                    picPath = data.profilePic
+                }
+            }
         }
+
+        if (picPath.isNotEmpty()) {
+            val file = File(picPath)
+            FirebaseStorage.getInstance().getReference("images/profile/")
+                .putFile(Uri.fromFile(file))
+                .addOnSuccessListener {
+                    FirebaseStorage.getInstance().getReference("images/profile/").downloadUrl.addOnSuccessListener {
+                        val download_url: String = it.toString()
+                        when (data) {
+                            is RegisterParentRequestDao -> {
+                                data.profilePic = download_url
+                            }
+                            is RegisterSchoolRequestDao -> {
+                                data.profilePic = download_url
+                            }
+                        }
+                    }
+
+
+                    db.collection("users").document(user.uid).set(data).addOnSuccessListener {
+                        Toast.makeText(this, "Registration success", Toast.LENGTH_LONG)
+                            .show()
+
+                        loading.visibility = View.GONE
+                        val intent = Intent(this, LoginActivity::class.java)
+                        intent.putExtra("role", level)
+                        startActivity(intent)
+                        finish()
+                    }.addOnFailureListener {
+                        loading.visibility = View.GONE
+                        Toast.makeText(this, "Registration failed", Toast.LENGTH_LONG)
+                            .show()
+                    }
+                }
+        } else {
+            db.collection("users").document(user.uid).set(data).addOnSuccessListener {
+                Toast.makeText(this, "Registration success", Toast.LENGTH_LONG)
+                    .show()
+
+                loading.visibility = View.GONE
+                val intent = Intent(this, LoginActivity::class.java)
+                intent.putExtra("role", level)
+                startActivity(intent)
+                finish()
+            }.addOnFailureListener {
+                loading.visibility = View.GONE
+                Toast.makeText(this, "Registration failed", Toast.LENGTH_LONG)
+                    .show()
+            }
+        }
+
     }
 
 

@@ -227,9 +227,9 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
                 intent.putExtra("eventStart", eventStart)
                 intent.putExtra("eventEnd", eventEnd)
                 intent.putExtra("attachments", mAttachmentList)
+                intent.addFlags(Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP)
 
                 startActivity(intent)
-//                finish()
             }
         }
 

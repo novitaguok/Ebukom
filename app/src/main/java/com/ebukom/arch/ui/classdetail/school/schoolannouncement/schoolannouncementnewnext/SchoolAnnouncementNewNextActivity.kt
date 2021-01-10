@@ -171,11 +171,11 @@ class SchoolAnnouncementNewNextActivity : AppCompatActivity(),
                                 val intent = Intent(this, SchoolAnnouncementActivity::class.java)
 
                                 loading.visibility = View.GONE
-                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+//                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+//                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+//                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                                 intent.putExtra("classId", classId)
-                                intent.putExtra("EXIT", true)
+//                                intent.putExtra("EXIT", true)
                                 startActivity(intent)
                                 finish()
                             } else {
@@ -183,11 +183,11 @@ class SchoolAnnouncementNewNextActivity : AppCompatActivity(),
                                 val intent = Intent(this, SchoolAnnouncementActivity::class.java)
 
                                 loading.visibility = View.GONE
-                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+//                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+//                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
+//                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
                                 intent.putExtra("classId", classId)
-                                intent.putExtra("EXIT", true)
+//                                intent.putExtra("EXIT", true)
                                 startActivity(intent)
                                 finish()
                             }

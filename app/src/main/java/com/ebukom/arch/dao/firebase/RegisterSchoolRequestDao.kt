@@ -8,7 +8,7 @@ data class RegisterSchoolRequestDao(
     val role : RegisterRolesDao,
     val phone : String,
     @Exclude val pass : String,
-    val profilePic : String,
+    var profilePic : String,
     val level : Int = 0
 ) : Serializable
 

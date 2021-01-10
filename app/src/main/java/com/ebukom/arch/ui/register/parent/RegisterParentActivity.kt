@@ -61,7 +61,8 @@ class RegisterParentActivity : AppCompatActivity() {
             } else {
                 EasyPermissions.requestPermissions(
                     this, "camera",
-                    611, *perms)
+                    611, *perms
+                )
             }
         }
 
@@ -140,29 +141,20 @@ class RegisterParentActivity : AppCompatActivity() {
             if (isValid()) {
                 if (reformatPhoneNumber(etRegisterParentPhone.text.toString()) != null) {
                     if (imageFile != null) {
-                        loading.visibility = View.VISIBLE
-                        FirebaseStorage.getInstance()
-                            .getReference("images/profile/")
-                            .putFile(Uri.fromFile(imageFile))
-                            .addOnSuccessListener {
-                                val data = RegisterParentRequestDao(
-                                    etRegisterParentName.text.toString(),
-                                    etRegisterParentChild.text.toString(),
-                                    reformatPhoneNumber(etRegisterParentPhone.text.toString())!!,
-                                    eskul,
-                                    etRegisterParentPassword.text.toString(),
-                                    "",
-                                    1
-                                )
+                        val data = RegisterParentRequestDao(
+                            etRegisterParentName.text.toString(),
+                            etRegisterParentChild.text.toString(),
+                            reformatPhoneNumber(etRegisterParentPhone.text.toString())!!,
+                            eskul,
+                            etRegisterParentPassword.text.toString(),
+                            imagePath.toString(),
+                            1
+                        )
 
-                                val intent = Intent(this, VerificationActivity::class.java)
-                                intent.putExtra("layout", VerificationActivity.LAYOUT_REGISTER)
-                                intent.putExtra("data", data)
-                                startActivity(intent)
-                            }
-                            .addOnFailureListener {
-                                Timber.e(it)
-                            }
+                        val intent = Intent(this, VerificationActivity::class.java)
+                        intent.putExtra("layout", VerificationActivity.LAYOUT_REGISTER)
+                        intent.putExtra("data", data)
+                        startActivity(intent)
                     } else {
                         val data = RegisterParentRequestDao(
                             etRegisterParentName.text.toString(),
@@ -254,6 +246,7 @@ class RegisterParentActivity : AppCompatActivity() {
             }
         }
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == ImagePicker.REQUEST_CODE) {
             if (resultCode == Activity.RESULT_OK) {

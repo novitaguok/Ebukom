@@ -177,7 +177,7 @@ class MaterialSubjectNewActivity : AppCompatActivity() {
                         return@addSnapshotListener
                     }
 
-                    sectionTitle = value!!["name"] as String
+                    sectionTitle = value?.get("name") as String
 
                     db.collection("material_subjects").document(subjectId!!)
                         .collection("subject_sections")
@@ -221,6 +221,10 @@ class MaterialSubjectNewActivity : AppCompatActivity() {
                 dialog.dismiss()
             }
             builder.setPositiveButton("HAPUS") { _, _ ->
+
+//                deleteC
+
+
                 db.collection("material_subjects").document(subjectId!!)
                     .collection("subject_sections")
                     .document(sectionId).delete().addOnSuccessListener {

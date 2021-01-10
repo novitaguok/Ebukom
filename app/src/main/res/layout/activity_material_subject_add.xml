@@ -33,113 +33,120 @@
         </androidx.appcompat.widget.Toolbar>
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.core.widget.NestedScrollView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <androidx.core.widget.NestedScrollView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tilMaterialSubjectAddTitle"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/size_52"
-                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-                android:layout_marginTop="@dimen/size_36"
-                android:hint="Nama Materi"
-                android:theme="@style/LoginTextInputLayoutLabel"
-                app:boxCornerRadiusBottomEnd="@dimen/size_8"
-                app:boxCornerRadiusBottomStart="@dimen/size_8"
-                app:boxCornerRadiusTopEnd="@dimen/size_8"
-                app:boxCornerRadiusTopStart="@dimen/size_8"
-                app:boxStrokeColor="@color/colorBlack"
-                app:boxStrokeWidth="@dimen/size_1"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etMaterialSubjectAddTitle"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:textSize="@dimen/text_16"
-                    android:paddingLeft="@dimen/size_16"
-                    android:paddingRight="@dimen/size_16"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/rvMaterialSubjectAddAttachment"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="@dimen/size_28"
-                app:layout_constraintTop_toBottomOf="@id/tilMaterialSubjectAddTitle"
-                android:visibility="gone"/>
+            android:layout_above="@+id/btnMaterialSubjectAddDone">
 
             <androidx.constraintlayout.widget.ConstraintLayout
-                android:id="@+id/clMaterialSubjectAddButton"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:layout_constraintTop_toBottomOf="@+id/rvMaterialSubjectAddAttachment"
-                android:layout_marginTop="@dimen/size_20">
+                android:layout_height="match_parent"
+                app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
-                <TextView
-                    android:id="@+id/tvMaterialSubjectAddButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:elevation="@dimen/size_4"
-                    android:text="Tambah File Materi"
-                    android:textColor="@color/colorWhite"
-                    android:textSize="@dimen/text_16"
-                    android:textStyle="bold"
-                    app:layout_constraintBottom_toBottomOf="@+id/btnMaterialSubjectAddButton"
-                    app:layout_constraintHorizontal_chainStyle="packed"
-                    app:layout_constraintLeft_toRightOf="@+id/ivMaterialSubjectAddButton"
-                    app:layout_constraintRight_toRightOf="@+id/btnMaterialSubjectAddButton"
-                    app:layout_constraintTop_toTopOf="@+id/btnMaterialSubjectAddButton" />
+                <com.google.android.material.textfield.TextInputLayout
+                    android:id="@+id/tilMaterialSubjectAddTitle"
+                    style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/size_52"
+                    android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                    android:layout_marginTop="@dimen/size_36"
+                    android:hint="Nama Materi"
+                    android:theme="@style/LoginTextInputLayoutLabel"
+                    app:boxCornerRadiusBottomEnd="@dimen/size_8"
+                    app:boxCornerRadiusBottomStart="@dimen/size_8"
+                    app:boxCornerRadiusTopEnd="@dimen/size_8"
+                    app:boxCornerRadiusTopStart="@dimen/size_8"
+                    app:boxStrokeColor="@color/colorBlack"
+                    app:boxStrokeWidth="@dimen/size_1"
+                    app:layout_constraintTop_toTopOf="parent">
 
-                <ImageView
-                    android:id="@+id/ivMaterialSubjectAddButton"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="@dimen/size_12"
-                    android:elevation="@dimen/size_4"
-                    android:src="@drawable/ic_plus_yellow"
-                    app:layout_constraintBottom_toBottomOf="@+id/tvMaterialSubjectAddButton"
-                    app:layout_constraintHorizontal_chainStyle="packed"
-                    app:layout_constraintLeft_toLeftOf="@+id/btnMaterialSubjectAddButton"
-                    app:layout_constraintRight_toLeftOf="@+id/tvMaterialSubjectAddButton"
-                    app:layout_constraintTop_toTopOf="@+id/tvMaterialSubjectAddButton" />
+                    <com.google.android.material.textfield.TextInputEditText
+                        android:id="@+id/etMaterialSubjectAddTitle"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:textSize="@dimen/text_16"
+                        android:paddingLeft="@dimen/size_16"
+                        android:paddingRight="@dimen/size_16"/>
+                </com.google.android.material.textfield.TextInputLayout>
 
-                <Button
-                    android:id="@+id/btnMaterialSubjectAddButton"
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/rvMaterialSubjectAddAttachment"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/size_20"
-                    android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
-                    android:height="@dimen/size_64"
-                    android:background="@drawable/btn_blue_rectangle_8dp"
-                    app:layout_constraintBottom_toTopOf="@+id/btnChooseClassLogout"
-                    app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintRight_toRightOf="parent" />
+                    android:layout_marginTop="@dimen/size_28"
+                    app:layout_constraintTop_toBottomOf="@id/tilMaterialSubjectAddTitle"
+                    android:visibility="gone"/>
 
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clMaterialSubjectAddButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintTop_toBottomOf="@+id/rvMaterialSubjectAddAttachment"
+                    android:layout_marginTop="@dimen/size_20">
+
+                    <TextView
+                        android:id="@+id/tvMaterialSubjectAddButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:elevation="@dimen/size_4"
+                        android:text="Tambah File Materi"
+                        android:textColor="@color/colorWhite"
+                        android:textSize="@dimen/text_16"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/btnMaterialSubjectAddFile"
+                        app:layout_constraintHorizontal_chainStyle="packed"
+                        app:layout_constraintLeft_toRightOf="@+id/ivMaterialSubjectAddButton"
+                        app:layout_constraintRight_toRightOf="@+id/btnMaterialSubjectAddFile"
+                        app:layout_constraintTop_toTopOf="@+id/btnMaterialSubjectAddFile" />
+
+                    <ImageView
+                        android:id="@+id/ivMaterialSubjectAddButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/size_12"
+                        android:elevation="@dimen/size_4"
+                        android:src="@drawable/ic_plus_yellow"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvMaterialSubjectAddButton"
+                        app:layout_constraintHorizontal_chainStyle="packed"
+                        app:layout_constraintLeft_toLeftOf="@+id/btnMaterialSubjectAddFile"
+                        app:layout_constraintRight_toLeftOf="@+id/tvMaterialSubjectAddButton"
+                        app:layout_constraintTop_toTopOf="@+id/tvMaterialSubjectAddButton" />
+
+                    <Button
+                        android:id="@+id/btnMaterialSubjectAddFile"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/size_20"
+                        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                        android:height="@dimen/size_64"
+                        android:background="@drawable/btn_blue_rectangle_8dp"
+                        app:layout_constraintBottom_toTopOf="@+id/btnChooseClassLogout"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintRight_toRightOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
             </androidx.constraintlayout.widget.ConstraintLayout>
-        </androidx.constraintlayout.widget.ConstraintLayout>
-    </androidx.core.widget.NestedScrollView>
+        </androidx.core.widget.NestedScrollView>
 
-    <Button
-        android:id="@+id/btnMaterialSubjectAddDone"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:background="#828282"
-        android:enabled="false"
-        android:lineHeight="@dimen/text_16"
-        android:text="BAGIKAN MATERI"
-        android:textColor="@color/colorWhite"
-        android:textFontWeight="500"
-        android:textSize="@dimen/text_14" />
+        <Button
+            android:id="@+id/btnMaterialSubjectAddDone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="#828282"
+            android:enabled="false"
+            android:lineHeight="@dimen/text_16"
+            android:text="BAGIKAN MATERI"
+            android:textColor="@color/colorWhite"
+            android:textFontWeight="500"
+            android:textSize="@dimen/text_14" />
+
+    </RelativeLayout>
 
     <include
         android:id="@+id/loading"

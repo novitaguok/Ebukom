@@ -181,7 +181,6 @@ class SchoolAnnouncementActivity : AppCompatActivity() {
 
         btnSchoolAnnouncementNew.setOnClickListener {
             val intent = Intent(this, SchoolAnnouncementNewActivity::class.java)
-
             intent.putExtra("classId", classId)
             startActivity(intent)
         }

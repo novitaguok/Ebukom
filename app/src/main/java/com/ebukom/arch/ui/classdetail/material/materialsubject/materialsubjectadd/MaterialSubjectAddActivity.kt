@@ -7,6 +7,7 @@ import android.graphics.drawable.Drawable
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.provider.ContactsContract
 import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
@@ -21,6 +22,7 @@ import com.ebukom.arch.ui.classdetail.ClassDetailAttachmentAdapter
 import com.ebukom.data.DataDummy
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.Timestamp
+import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_material_subject_add.*
 import kotlinx.android.synthetic.main.activity_material_subject_add.rvMaterialSubjectAddAttachment
@@ -53,7 +55,10 @@ class MaterialSubjectAddActivity : AppCompatActivity() {
         setContentView(R.layout.activity_material_subject_add)
 
         initToolbar()
+        checkSection()
+        initRecycler()
 
+        // Intent from another activities
         val layout = intent?.extras?.getString("layout")
         subjectId = intent?.extras?.getString("subjectId")
         classId = intent?.extras?.getString("classId")
@@ -61,6 +66,11 @@ class MaterialSubjectAddActivity : AppCompatActivity() {
         subjectName = intent?.extras?.getString("subjectName")
         action = intent?.extras?.getString("action")
 
+
+        /**
+         * There are 2 kinds of layout for this activity:
+         * create new education material and edit eduaction material
+         */
         if (layout == "educationNew") {
             tvToolbarTitle.text = "Tambah Materi Mendidik Anak"
             btnMaterialSubjectAddDone.setOnClickListener {
@@ -68,13 +78,10 @@ class MaterialSubjectAddActivity : AppCompatActivity() {
                     "name" to etMaterialSubjectAddTitle.text.toString(),
                     "date" to Timestamp(Date())
                 )
-
                 loading.visibility = View.VISIBLE
                 db.collection("material_education").add(data)
                     .addOnSuccessListener {
-
                         sectionId = it.id
-
                         mFileList.forEach {
                             val file = hashMapOf<String, Any>(
                                 "title" to it.path,
@@ -83,7 +90,6 @@ class MaterialSubjectAddActivity : AppCompatActivity() {
                             db.collection("material_education").document(sectionId!!)
                                 .collection("files").add(file)
                         }
-
                         loading.visibility = View.GONE
                         finish()
                     }.addOnFailureListener {
@@ -92,43 +98,50 @@ class MaterialSubjectAddActivity : AppCompatActivity() {
             }
         } else if (layout == "educationEdit") {
             tvToolbarTitle.text = "Edit Materi Mendidik Anak"
-
             db.collection("material_education").document(sectionId!!).get().addOnSuccessListener {
                 etMaterialSubjectAddTitle.setText(it["name"] as String)
 
-                initRecycler()
-
+                // Add file
+                DataDummy.materialFileData.clear()
                 db.collection("material_education").document(sectionId!!).collection("files")
                     .addSnapshotListener { value, error ->
-                        mFileList.clear()
+                        DataDummy.materialFileData.clear()
                         for (data in value!!.documents) {
-                            mFileList.add(
+                            DataDummy.materialFileData.add(
                                 ClassDetailAttachmentDao(
                                     data["title"] as String,
                                     (data["category"] as Long).toInt()
                                 )
                             )
-                            mFileAdapter.notifyDataSetChanged()
-                            checkEmpty()
                         }
+                        mFileList.addAll(DataDummy.materialFileData)
+                        checkEmpty()
                     }
             }
 
+            // Done
             btnMaterialSubjectAddDone.setOnClickListener {
+                mFileList.clear()
+                mFileList.addAll(DataDummy.materialFileData)
+                mFileAdapter.notifyDataSetChanged()
                 val data = hashMapOf<String, Any>(
                     "name" to etMaterialSubjectAddTitle.text.toString(),
                     "date" to Timestamp(Date())
                 )
-
                 loading.visibility = View.VISIBLE
-                db.collection("material_education").add(data).addOnCompleteListener {
-                    if (it.isSuccessful) {
-                        loading.visibility = View.GONE
-                        finish()
-                    } else {
-                        loading.visibility = View.GONE
-                        finish()
+                db.collection("material_education").add(data).addOnSuccessListener {
+                    sectionId = it.id
+                    mFileList.forEach {
+                        val file = hashMapOf<String, Any>(
+                            "title" to it.path,
+                            "category" to it.category
+                        )
+                        db.collection("material_education").document(sectionId!!)
+                            .collection("files").add(file).addOnSuccessListener {
+                                DataDummy.materialFileData.clear()
+                            }
                     }
+                    Log.d("TAG", "Material successfully inserted")
                 }.addOnFailureListener {
                     Log.d("TAG", "Material failed to be inserted")
                 }
@@ -137,49 +150,108 @@ class MaterialSubjectAddActivity : AppCompatActivity() {
             db.collection("material_subjects").document(subjectId!!)
                 .collection("subject_sections")
                 .document(sectionId!!)
-                .addSnapshotListener { value, error ->
-                    if (error != null) {
-                        Timber.e(error)
-                        return@addSnapshotListener
-                    }
+                .get()
+                .addOnSuccessListener {
+                    tvToolbarTitle.text = "Edit Materi " + it?.get("name") as String
+                    etMaterialSubjectAddTitle.setText(it["name"] as String)
 
-                    tvToolbarTitle.text = "Edit Materi " + value?.get("name") as String
-                    etMaterialSubjectAddTitle.setText(value["name"] as String)
-
+                    // Add file
                     db.collection("material_subjects").document(subjectId!!)
                         .collection("subject_sections")
                         .document(sectionId!!).collection("files")
-                        .addSnapshotListener { value, error ->
-                            mFileList.clear()
-                            for (data in value!!.documents) {
-                                mFileList.add(
+                        .get().addOnSuccessListener {
+                            DataDummy.materialFileData.clear()
+                            for (data in it!!.documents) {
+                                DataDummy.materialFileData.add(
                                     ClassDetailAttachmentDao(
                                         data["title"] as String,
                                         (data["category"] as Long).toInt()
                                     )
                                 )
-                                mFileAdapter.notifyDataSetChanged()
-                                checkEmpty()
                             }
+                            mFileList.clear()
+                            mFileList.addAll(DataDummy.materialFileData)
+                            checkEmpty()
+                        }.addOnFailureListener {
+                            Timber.e(it)
                         }
 
-//                    checkEmpty()
-                    initRecycler()
+                }.addOnFailureListener {
+                    Timber.e(it)
                 }
-
             btnMaterialSubjectAddDone.setOnClickListener {
+//                mFileList.clear()
+//                mFileList.addAll(DataDummy.materialFileData)
+//                mFileAdapter.notifyDataSetChanged()
                 val data = hashMapOf<String, Any>(
                     "name" to etMaterialSubjectAddTitle.text.toString(),
                     "date" to Timestamp(Date())
                 )
-
                 loading.visibility = View.VISIBLE
                 db.collection("material_subjects").document(subjectId!!)
                     .collection("subject_sections")
                     .document(sectionId!!).update(data).addOnSuccessListener {
+
+                        /**
+                         * Insert all file ID to array,
+                         * in purpose to delete all documents in a collection,
+                         * and re-add all files to collection
+                         */
+
+                        val collectionFiles =
+                            db.collection("material_subjects").document(subjectId!!)
+                                .collection("subject_sections").document(sectionId!!)
+                                .collection("files")
+                        deleteCollection(collectionFiles, 5) {
+                            mFileList.forEach {
+                                val file = hashMapOf<String, Any>(
+                                    "title" to it.path,
+                                    "category" to it.category
+                                )
+                                db.collection("material_subjects")
+                                    .document(subjectId!!)
+                                    .collection("subject_sections")
+                                    .document(sectionId!!)
+                                    .collection("files")
+                                    .add(file)
+                            }
+                        }
+
+/*
+                        val fileIds = arrayListOf<String>()
+                        db.collection("material_subjects").document(subjectId!!)
+                            .collection("subject_sections").document(sectionId!!)
+                            .collection("files").get().addOnSuccessListener {
+                                for (data in it.documents) {
+                                    fileIds.add(data.id)
+                                }
+
+                                fileIds.forEach {
+                                    db.collection("material_subjects").document(subjectId!!)
+                                        .collection("subject_sections").document(sectionId!!)
+                                        .collection("files").document(it).delete()
+                                        .addOnSuccessListener {
+                                            mFileList.forEach {
+                                                val file = hashMapOf<String, Any>(
+                                                    "title" to it.path,
+                                                    "category" to it.category
+                                                )
+                                                db.collection("material_subjects")
+                                                    .document(subjectId!!)
+                                                    .collection("subject_sections")
+                                                    .document(sectionId!!)
+                                                    .collection("files")
+                                                    .add(file)
+                                            }
+                                        }
+                                }
+                            }
+
+*/
                         loading.visibility = View.GONE
                         this@MaterialSubjectAddActivity.finish()
                     }.addOnFailureListener {
+                        loading.visibility = View.GONE
                         Log.d("TAG", "Material failed to be inserted")
                         this@MaterialSubjectAddActivity.finish()
                     }
@@ -190,21 +262,16 @@ class MaterialSubjectAddActivity : AppCompatActivity() {
                 subjectName = "Rekap Pembelajaran Online"
             }
             tvToolbarTitle.text = "Tambah Materi " + subjectName
-
             btnMaterialSubjectAddDone.setOnClickListener {
-
                 val data = hashMapOf<String, Any>(
                     "name" to etMaterialSubjectAddTitle.text.toString(),
                     "date" to Timestamp(Date())
                 )
-
                 loading.visibility = View.VISIBLE
                 db.collection("material_subjects").document(subjectId!!)
                     .collection("subject_sections")
                     .add(data).addOnSuccessListener {
-
                         sectionId = it.id
-
                         mFileList.forEach {
                             val file = hashMapOf<String, Any>(
                                 "title" to it.path,
@@ -215,24 +282,20 @@ class MaterialSubjectAddActivity : AppCompatActivity() {
                                 .collection("files")
                                 .add(file)
                         }
-
+                        DataDummy.materialFileData.clear()
                         loading.visibility = View.GONE
                         finish()
                     }.addOnFailureListener {
+                        loading.visibility = View.GONE
                         Log.d("TAG", "Material failed to be inserted")
                     }
-
             }
         }
-
-        checkEmpty()
-        initRecycler()
 
         /**
          * File chooser
          */
-        btnMaterialSubjectAddButton.setOnClickListener {
-
+        btnMaterialSubjectAddFile.setOnClickListener {
             val bottomSheetDialog = BottomSheetDialog(this)
             val view =
                 layoutInflater.inflate(R.layout.bottom_sheet_class_detail_attachment, null)
@@ -307,12 +370,47 @@ class MaterialSubjectAddActivity : AppCompatActivity() {
          * Text watcher
          */
         etMaterialSubjectAddTitle.addTextChangedListener(textWatcher)
+    }
 
-        checkSection()
+    fun initToolbar() {
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.title = ""
+        toolbar.setNavigationOnClickListener {
+            onBackPressed()
+        }
+    }
+
+    override fun onBackPressed() {
+        DataDummy.materialFileData.clear()
+        super.onBackPressed()
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        val view = layoutInflater.inflate(R.layout.item_announcement_attachment, null)
+        var path = data?.data?.path ?: ""
+        if (resultCode == RESULT_OK) {
+            when (requestCode) {
+                10 -> {
+                    DataDummy.materialFileData.add(ClassDetailAttachmentDao(path, 1))
+                    insertFile(view, path)
+                }
+                11 -> {
+                    DataDummy.materialFileData.add(ClassDetailAttachmentDao(path, 2))
+                    insertFile(view, path)
+                }
+                else -> {
+                    val bp = (data?.extras?.get("data")) as Bitmap
+//            blabla.setImageBitmap(bp)
+                }
+            }
+        }
+        super.onActivityResult(requestCode, resultCode, data)
     }
 
     private fun initRecycler() {
         mFileList.clear()
+        DataDummy.materialFileData.clear()
         mFileAdapter = ClassDetailAttachmentAdapter(mFileList)
         rvMaterialSubjectAddAttachment.apply {
             layoutManager = LinearLayoutManager(
@@ -338,7 +436,6 @@ class MaterialSubjectAddActivity : AppCompatActivity() {
                     R.color.colorSuperDarkBlue
                 )
             )
-
             rvMaterialSubjectAddAttachment.visibility = View.VISIBLE
         } else {
             btnMaterialSubjectAddDone.isEnabled = false
@@ -348,7 +445,6 @@ class MaterialSubjectAddActivity : AppCompatActivity() {
                     R.color.colorGray
                 )
             )
-
             rvMaterialSubjectAddAttachment.visibility = View.GONE
         }
     }
@@ -380,39 +476,6 @@ class MaterialSubjectAddActivity : AppCompatActivity() {
                 Color.parseColor("#BDBDBD")
             )
         }
-
-    }
-
-    fun initToolbar() {
-        setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.title = ""
-        toolbar.setNavigationOnClickListener {
-            onBackPressed()
-        }
-    }
-
-    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        val view = layoutInflater.inflate(R.layout.item_announcement_attachment, null)
-        var path = data?.data?.path ?: ""
-
-        if (resultCode == RESULT_OK) {
-            when (requestCode) {
-                10 -> {
-                    DataDummy.materialFileData.add(ClassDetailAttachmentDao(path, 1))
-                    insertFile(view, path)
-                }
-                11 -> {
-                    DataDummy.materialFileData.add(ClassDetailAttachmentDao(path, 2))
-                    insertFile(view, path)
-                }
-                else -> {
-                    val bp = (data?.extras?.get("data")) as Bitmap
-//            blabla.setImageBitmap(bp)
-                }
-            }
-        }
-        super.onActivityResult(requestCode, resultCode, data)
     }
 
     private fun insertFile(view: View, path: String) {
@@ -420,15 +483,12 @@ class MaterialSubjectAddActivity : AppCompatActivity() {
         mFileList.addAll(DataDummy.materialFileData)
         mFileAdapter.notifyDataSetChanged()
         view.tvItemAnnouncementAttachment?.text = path
-
         checkEmpty()
     }
 
     fun deleteAttachment(item: ClassDetailAttachmentDao) {
         val builder = android.app.AlertDialog.Builder(this@MaterialSubjectAddActivity)
-
         builder.setMessage("Apakah Anda yakin ingin menghapus file materi ini?")
-
         builder.setNegativeButton("BATALKAN") { dialog, which ->
             dialog.dismiss()
         }
@@ -439,10 +499,8 @@ class MaterialSubjectAddActivity : AppCompatActivity() {
 
             checkEmpty()
         }
-
         val dialog: android.app.AlertDialog = builder.create()
         dialog.show()
-
         val positiveButton = dialog.getButton(android.app.AlertDialog.BUTTON_POSITIVE)
         positiveButton.setTextColor(
             ContextCompat.getColor(
@@ -450,7 +508,6 @@ class MaterialSubjectAddActivity : AppCompatActivity() {
                 R.color.colorGray
             )
         )
-
         val negativeButton = dialog.getButton(android.app.AlertDialog.BUTTON_NEGATIVE)
         negativeButton.setTextColor(
             ContextCompat.getColor(
@@ -458,5 +515,30 @@ class MaterialSubjectAddActivity : AppCompatActivity() {
                 R.color.colorRed
             )
         )
+    }
+
+    fun deleteCollection(collection: CollectionReference, batchSize: Int, nextAction: () -> Unit) {
+        try {
+            // Retrieve a small batch of documents to avoid out-of-memory errors/
+            var deleted = 0
+            collection
+                .limit(batchSize.toLong())
+                .get()
+                .addOnCompleteListener {
+                    for (document in it.result!!.documents) {
+                        document.getReference().delete()
+                        ++deleted
+                    }
+                    if (deleted >= batchSize) {
+                        // retrieve and delete another batch
+                        deleteCollection(collection, batchSize, nextAction)
+                    } else {
+                        nextAction()
+                    }
+                }
+        } catch (e: Exception) {
+            System.err.println("Error deleting collection : " + e.message)
+        }
+
     }
 }
