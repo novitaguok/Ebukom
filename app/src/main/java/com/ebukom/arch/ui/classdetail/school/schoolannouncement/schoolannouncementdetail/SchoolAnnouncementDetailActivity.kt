@@ -135,17 +135,6 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
                             }
                         }
                     }
-//                    for (data in (value?.get("attachments") as List<HashMap<Any, Any>>)) {
-//                        mAttachmentList.add(
-//                            ClassDetailAttachmentDao(
-//                                data["path"] as String,
-//                                (data["category"] as Long).toInt()
-//                            )
-//                        )
-//                        mAttachmentAdapter.notifyDataSetChanged()
-//                        checkEmpty()
-//                    }
-
                 }
 
             /**

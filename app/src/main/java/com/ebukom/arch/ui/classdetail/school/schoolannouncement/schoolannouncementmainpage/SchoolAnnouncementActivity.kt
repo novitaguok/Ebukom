@@ -14,8 +14,10 @@ import androidx.recyclerview.widget.RecyclerView.SmoothScroller
 import com.ebukom.R
 import com.ebukom.arch.dao.ClassDetailAnnouncementDao
 import com.ebukom.arch.dao.ClassDetailSchoolAnnouncementMonthDao
+import com.ebukom.arch.ui.classdetail.MainClassDetailActivity
 import com.ebukom.arch.ui.classdetail.OnMoreCallback
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementnew.SchoolAnnouncementNewActivity
+import com.ebukom.data.DataDummy
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_school_announcement.*

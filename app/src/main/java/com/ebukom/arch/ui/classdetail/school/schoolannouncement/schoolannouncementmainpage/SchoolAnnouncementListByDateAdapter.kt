@@ -37,6 +37,8 @@ class SchoolAnnouncementListByDateAdapter(var announcements: List<ClassDetailAnn
             itemView.tvAnnouncementDetail.text = data.announcementTitle
             itemView.rlItemAnnouncementTitle.setOnClickListener {
                 val intent = Intent(context, SchoolAnnouncementDetailActivity::class.java)
+                data.isRead = true
+                if (data.isRead) itemView.ivAnnouncementDetailBadge.visibility = View.GONE
                 intent.putExtra("classId", data.classId)
                 intent.putExtra("announcementId", data.announcementId)
                 (context as SchoolAnnouncementActivity).startActivity(intent)

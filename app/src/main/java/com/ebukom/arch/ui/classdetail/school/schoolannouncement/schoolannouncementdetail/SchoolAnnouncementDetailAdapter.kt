@@ -34,10 +34,9 @@ class SchoolAnnouncementDetailAdapter(
 
     class ViewHolder(itemView: View, val context: Context) : RecyclerView.ViewHolder(itemView) {
         fun bind(comment: ClassDetailAnnouncementCommentDao) {
-            itemView.tvAnnouncementDetailCommentName.text = comment?.name
-            itemView.tvAnnouncementDetailCommentContent.text = comment?.comment
+            itemView.tvAnnouncementDetailCommentName.text = comment.name
+            itemView.tvAnnouncementDetailCommentContent.text = comment.comment
             itemView.ivAnnouncementDetailCommentProfilePicture.setImageResource(comment.profilePic)
-
             itemView.ivAnnouncementDetailCommentMoreButton.setOnClickListener {
                 if (context is SchoolAnnouncementDetailActivity) context.popupMenuComment(comment.commentId)
                 else if (context is PersonalNoteDetailActivity) context.popupMenuComment(comment.commentId)
