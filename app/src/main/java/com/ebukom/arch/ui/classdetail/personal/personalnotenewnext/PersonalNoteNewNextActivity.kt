@@ -80,10 +80,8 @@ class PersonalNoteNewNextActivity : AppCompatActivity(), ClassDetailCheckAdapter
          */
         db.collection("users").get().addOnSuccessListener {
             if (level == 0L) {
-                mParentList.clear()
                 for (document in it!!.documents) {
                     if ((document["level"] as Long).toInt() == 1) {
-                        mParentList.clear()
                         mParentList.add(
                             ClassDetailItemCheckThumbnailDao(
                                 document["name"] as String,
@@ -96,10 +94,8 @@ class PersonalNoteNewNextActivity : AppCompatActivity(), ClassDetailCheckAdapter
                 }
                 mParentAdapter.notifyDataSetChanged()
             } else {
-                mParentList.clear()
                 for (document in it!!.documents) {
                     if ((document["level"] as Long).toInt() == 0) {
-                        mParentList.clear()
                         mParentList.add(
                             ClassDetailItemCheckThumbnailDao(
                                 document["name"] as String,

@@ -40,13 +40,13 @@ class SchoolAnnouncementActivity : AppCompatActivity() {
         if(sharePref.getLong("level", 0) == 1L) {
             btnSchoolAnnouncementNew.visibility = View.GONE
         }
+        classId = intent.extras?.getString("classId")
 
         initToolbar()
         initListener()
         initRecycler()
         loadAnnouncement()
 
-        classId = intent.extras?.getString("classId")
     }
 
     /**
