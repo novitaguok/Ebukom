@@ -1,7 +1,10 @@
 package com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementnew
 
 import android.app.Activity
+import android.content.BroadcastReceiver
+import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.os.Build
@@ -59,6 +62,7 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
     lateinit var bottomSheetDialog: BottomSheetDialog
     val db = FirebaseFirestore.getInstance()
 
+
     @RequiresApi(Build.VERSION_CODES.N)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,6 +75,18 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
         val layout = intent?.extras?.getString("layout")
         classId = intent.getStringExtra("classId")
         announcementId = intent.getStringExtra("announcementId")
+
+        // Intent setup
+        val broadcast_reciever = object : BroadcastReceiver() {
+            override fun onReceive(arg0: Context, intent: Intent) {
+                val action = intent.action
+                if (action == "finish_activity") {
+                    finish()
+                    // DO WHATEVER YOU WANT.
+                }
+            }
+        }
+        registerReceiver(broadcast_reciever, IntentFilter("finish_activity"))
 
         // Announcement template
         bottomSheetDialog = BottomSheetDialog(this)
@@ -538,7 +554,10 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
         etSchoolAnnouncementNewTitle.setText(announcementTitle)
         etSchoolAnnouncementNewContent.setText(announcementContent)
         bottomSheetDialog.dismiss()
+    }
 
+    override fun startActivityForResult(intent: Intent?, requestCode: Int, options: Bundle?) {
+        super.startActivityForResult(intent, requestCode, options)
     }
 }
 

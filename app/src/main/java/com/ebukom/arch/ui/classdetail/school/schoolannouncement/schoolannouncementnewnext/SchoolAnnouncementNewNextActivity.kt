@@ -50,9 +50,7 @@ class SchoolAnnouncementNewNextActivity : AppCompatActivity(),
 
         sharePref = getSharedPreferences("EBUKOM", Context.MODE_PRIVATE)
 
-        /**
-         * Intent from SchoolAnnouncementNewActivity
-         */
+        // Intent from SchoolAnnouncementNewActivity
         classId = intent.getStringExtra("classId")
         title = intent?.extras?.getString("title", "") ?: ""
         content = intent?.extras?.getString("content", "") ?: ""
@@ -62,9 +60,7 @@ class SchoolAnnouncementNewNextActivity : AppCompatActivity(),
             intent?.getSerializableExtra("attachments") as List<ClassDetailAttachmentDao>
         dateTime = ""
 
-        /**
-         * Class list
-         */
+        // Class list
         initRecycler()
         val uid = sharePref.getString("uid", "") as String
         db.collection("classes").whereArrayContains("class_teacher_ids", uid)
@@ -94,9 +90,7 @@ class SchoolAnnouncementNewNextActivity : AppCompatActivity(),
             rvSchoolAnnouncementNewNext.adapter?.notifyDataSetChanged()
         }
 
-        /**
-         * Datetime picker
-         */
+        // Datetime picker
         sSchoolAnnouncementNewNextAlarm.setOnCheckedChangeListener { _, isChecked ->
             if (!isChecked) dateTime = ""
             else {
@@ -119,7 +113,6 @@ class SchoolAnnouncementNewNextActivity : AppCompatActivity(),
                 } catch (e: SwitchDateTimeDialogFragment.SimpleDateMonthAndDayFormatException) {
                     Log.e("error", e.message)
                 }
-
 
                 dateTimeDialogFragment.setOnButtonClickListener(object :
                     SwitchDateTimeDialogFragment.OnButtonClickListener {
@@ -168,26 +161,15 @@ class SchoolAnnouncementNewNextActivity : AppCompatActivity(),
                     db.collection("classes").document(it.id!!).collection("announcements")
                         .add(data).addOnCompleteListener {
                             if (it.isSuccessful) {
-//                                val intent = Intent(this, SchoolAnnouncementActivity::class.java)
                                 loading.visibility = View.GONE
-//                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-//                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-//                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-//                                intent.putExtra("classId", classId)
-//                                intent.putExtra("EXIT", true)
-//                                startActivity(intent)
+                                val intent = Intent("finish_activity")
+                                sendBroadcast(intent)
                                 finish()
                             } else {
                                 Log.d("TAG", "announcement inserted")
-//                                val intent = Intent(this, SchoolAnnouncementActivity::class.java)
-
                                 loading.visibility = View.GONE
-//                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-//                                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK)
-//                                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-//                                intent.putExtra("classId", classId)
-//                                intent.putExtra("EXIT", true)
-//                                startActivity(intent)
+                                val intent = Intent("finish_activity")
+                                sendBroadcast(intent)
                                 finish()
                             }
                         }
