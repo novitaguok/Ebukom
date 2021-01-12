@@ -34,7 +34,7 @@ import kotlinx.android.synthetic.main.alert_edit_text.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_class_detail_attachment.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_class_detail_school_announcement_template.view.*
 import kotlinx.android.synthetic.main.fragment_personal_sent_note.*
-import kotlinx.android.synthetic.main.item_announcement_attachment.view.*
+import kotlinx.android.synthetic.main.item_attachment.view.*
 
 class PersonalNoteNewActivity : AppCompatActivity() {
 
@@ -259,7 +259,7 @@ class PersonalNoteNewActivity : AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        val view = layoutInflater.inflate(R.layout.item_announcement_attachment, null)
+        val view = layoutInflater.inflate(R.layout.item_attachment, null)
         var path = data?.data?.path ?: ""
 
         if (resultCode == RESULT_OK) {
@@ -285,7 +285,7 @@ class PersonalNoteNewActivity : AppCompatActivity() {
         mAttachmentAdapter.notifyDataSetChanged()
         mAttachmentList.clear()
         mAttachmentList.addAll(DataDummy.noteAttachmentData)
-        view.tvItemAnnouncementAttachment?.text = path
+        view.tvItemAttachment?.text = path
 
         checkAttachmentEmpty()
     }

@@ -30,7 +30,7 @@ import kotlinx.android.synthetic.main.activity_material_subject_add.toolbar
 import kotlinx.android.synthetic.main.activity_material_subject_add.tvToolbarTitle
 import kotlinx.android.synthetic.main.alert_edit_text.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_class_detail_attachment.view.*
-import kotlinx.android.synthetic.main.item_announcement_attachment.view.*
+import kotlinx.android.synthetic.main.item_attachment.view.*
 import timber.log.Timber
 import java.util.*
 import kotlin.collections.ArrayList
@@ -84,7 +84,7 @@ class MaterialSubjectAddActivity : AppCompatActivity() {
                         sectionId = it.id
                         mFileList.forEach {
                             val file = hashMapOf<String, Any>(
-                                "title" to it.path,
+                                "title" to it.fileName,
                                 "category" to it.category
                             )
                             db.collection("material_education").document(sectionId!!)
@@ -144,7 +144,7 @@ class MaterialSubjectAddActivity : AppCompatActivity() {
                         deleteCollection(collectionFiles, 5) {
                             mFileList.forEach {
                                 val file = hashMapOf<String, Any>(
-                                    "title" to it.path,
+                                    "title" to it.fileName,
                                     "category" to it.category
                                 )
                                 db.collection("material_education").document(sectionId!!)
@@ -215,7 +215,7 @@ class MaterialSubjectAddActivity : AppCompatActivity() {
                         deleteCollection(collectionFiles, 5) {
                             mFileList.forEach {
                                 val file = hashMapOf<String, Any>(
-                                    "title" to it.path,
+                                    "title" to it.fileName,
                                     "category" to it.category
                                 )
                                 db.collection("material_subjects")
@@ -285,7 +285,7 @@ class MaterialSubjectAddActivity : AppCompatActivity() {
                         sectionId = it.id
                         mFileList.forEach {
                             val file = hashMapOf<String, Any>(
-                                "title" to it.path,
+                                "title" to it.fileName,
                                 "category" to it.category
                             )
                             db.collection("material_subjects").document(subjectId!!)
@@ -398,7 +398,7 @@ class MaterialSubjectAddActivity : AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        val view = layoutInflater.inflate(R.layout.item_announcement_attachment, null)
+        val view = layoutInflater.inflate(R.layout.item_attachment, null)
         var path = data?.data?.path ?: ""
         if (resultCode == RESULT_OK) {
             when (requestCode) {
@@ -493,7 +493,7 @@ class MaterialSubjectAddActivity : AppCompatActivity() {
         mFileList.clear()
         mFileList.addAll(DataDummy.materialFileData)
         mFileAdapter.notifyDataSetChanged()
-        view.tvItemAnnouncementAttachment?.text = path
+        view.tvItemAttachment?.text = path
         checkEmpty()
     }
 

@@ -88,45 +88,6 @@ class VerificationActivity : AppCompatActivity() {
                         txt_pin_entry.text.toString()
                     )
                     doRegisterWithPhone(credential)
-
-/*
-                    Handler().postDelayed({
-                        loading.visibility = View.GONE
-
-                        if (txt_pin_entry.text.toString() == "0000") {
-                            Handler().postDelayed({
-                                loading.visibility = View.GONE
-
-                                val builder = AlertDialog.Builder(this@VerificationActivity)
-                                builder.setMessage("Akun Anda berhasil diverifikasi. Selamat menggunakan.")
-                                builder.setPositiveButton("OK") { dialog, which ->
-                                    Toast.makeText(applicationContext, "Next?", Toast.LENGTH_SHORT).show()
-                                }
-
-                                val dialog: AlertDialog = builder.create()
-                                dialog.show()
-
-                                val positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
-                                positiveButton.setTextColor(
-                                    ContextCompat.getColor(
-                                        applicationContext,
-                                        R.color.colorSuperDarkBlue
-                                    )
-                                )
-
-                                positiveButton.setOnClickListener{
-                                    startActivity(Intent(this, LoginActivity::class.java))
-                                }
-
-                            }, 1000)
-                        } else {
-                            Handler().postDelayed({
-                                loading.visibility = View.GONE
-                                tvVerificationErrorMessage.visibility = View.VISIBLE
-                            }, 1000)
-                        }
-                    }, 1000)
-                    */
                 }
             }
         }
@@ -243,33 +204,6 @@ class VerificationActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
 
                     task.result?.user?.let { it -> insertData(it, data!!) }
-
-/*
-                    val credential = PhoneAuthProvider.getCredential(
-                        storedVerificationId,
-                        txt_pin_entry.text.toString()
-                    )
-
-                    auth.currentUser?.linkWithCredential(credential)?.addOnCompleteListener(
-                        this
-                    ) { task ->
-                        if (task.isSuccessful) {
-                            Log.d("VerificationActivity", "linkWithCredential:success")
-                            task.result?.user?.let { it -> insertData(it, data!!) }
-                        } else {
-                            loading.visibility = View.GONE
-                            Log.w(
-                                "VerificationActivity",
-                                "linkWithCredential:failure",
-                                task.exception
-                            )
-                            Toast.makeText(
-                                baseContext, "Authentication failed.",
-                                Toast.LENGTH_SHORT
-                            ).show()
-                        }
-                    }
-*/
                 } else {
                     loading.visibility = View.GONE
                     Log.e("VerificationActivity", task.exception?.message)
@@ -284,9 +218,7 @@ class VerificationActivity : AppCompatActivity() {
     }
 
 
-    /**
-     * Insert data to Firestore
-     */
+    // Insert data to Firestore
     private fun insertData(user: FirebaseUser, data: Any) {
         var level = when (data) {
             is RegisterParentRequestDao -> (data as RegisterParentRequestDao).level
@@ -329,7 +261,6 @@ class VerificationActivity : AppCompatActivity() {
                         }
                     }
 
-
                     db.collection("users").document(user.uid).set(data).addOnSuccessListener {
                         Toast.makeText(this, "Registration success", Toast.LENGTH_LONG)
                             .show()
@@ -363,7 +294,6 @@ class VerificationActivity : AppCompatActivity() {
         }
 
     }
-
 
     fun initToolbar() {
         setSupportActionBar(toolbar)

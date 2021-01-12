@@ -27,7 +27,7 @@ import kotlinx.android.synthetic.main.activity_school_announcement_edit.*
 import kotlinx.android.synthetic.main.activity_school_announcement_edit.toolbar
 import kotlinx.android.synthetic.main.alert_edit_text.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_class_detail_attachment.view.*
-import kotlinx.android.synthetic.main.item_announcement_attachment.view.*
+import kotlinx.android.synthetic.main.item_attachment.view.*
 import timber.log.Timber
 import java.util.*
 import kotlin.collections.ArrayList
@@ -319,7 +319,7 @@ class SchoolAnnouncementEditActivity : AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        val view = layoutInflater.inflate(R.layout.item_announcement_attachment, null)
+        val view = layoutInflater.inflate(R.layout.item_attachment, null)
         var path = data?.data?.path ?: ""
 
         if (resultCode == RESULT_OK) {
@@ -384,7 +384,7 @@ class SchoolAnnouncementEditActivity : AppCompatActivity() {
         mAttachmentAdapter.notifyDataSetChanged()
         mAttachmentList.clear()
         mAttachmentList.addAll(DataDummy.announcementAttachmentData)
-        view.tvItemAnnouncementAttachment?.text = path
+        view.tvItemAttachment?.text = path
 
         this.checkEmpty()
     }

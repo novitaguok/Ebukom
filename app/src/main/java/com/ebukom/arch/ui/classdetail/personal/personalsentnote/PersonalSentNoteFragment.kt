@@ -106,7 +106,6 @@ class PersonalSentNoteFragment : Fragment() {
                                         data.noteTitle = user.get("name") as String
                                         data.profilePicture = 0
                                         mNoteList.add(data)
-
                                         mNoteAdapter.notifyDataSetChanged()
                                         checkEmpty(view!!)
                                     }
@@ -143,9 +142,8 @@ class PersonalSentNoteFragment : Fragment() {
                                         data.noteTitle = user.get("name") as String
                                         data.profilePicture = 0
                                         mNoteList.add(data)
-
                                         mNoteAdapter.notifyDataSetChanged()
-                                        checkEmpty(view!!)
+                                        checkEmpty(view)
                                     }
                                 }
                         }

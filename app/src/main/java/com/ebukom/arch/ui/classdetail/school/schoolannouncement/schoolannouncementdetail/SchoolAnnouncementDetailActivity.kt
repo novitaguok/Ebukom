@@ -1,8 +1,11 @@
 package com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementdetail
 
+import android.app.Dialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
+import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -15,7 +18,6 @@ import com.ebukom.R
 import com.ebukom.arch.dao.ClassDetailAnnouncementCommentDao
 import com.ebukom.arch.dao.ClassDetailAttachmentDao
 import com.ebukom.arch.ui.classdetail.ClassDetailAttachmentAdapter
-import com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementedit.SchoolAnnouncementEditActivity
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementnew.SchoolAnnouncementNewActivity
 import com.ebukom.utils.toCalendar
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -26,9 +28,10 @@ import kotlinx.android.synthetic.main.activity_school_announcement_detail.*
 import kotlinx.android.synthetic.main.alert_edit_text.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_school_announcement.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_school_announcement_comment.view.*
+//import kotlinx.android.synthetic.main.dialog_file_preview.view.*
 import timber.log.Timber
 import java.util.*
-import kotlin.collections.HashMap
+
 
 class SchoolAnnouncementDetailActivity : AppCompatActivity() {
 
@@ -88,10 +91,10 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
 
                     // Toolbar title
                     var time = (value?.get("event_start") as? Timestamp)?.toDate()?.toCalendar()
-                    var day = time?.get(Calendar.DAY_OF_WEEK)?: 1
-                    var date = time?.get(Calendar.DATE)?: 1
-                    var month = time?.get(Calendar.MONTH)?: 1
-                    var year = time?.get(Calendar.YEAR)?: 1990
+                    var day = time?.get(Calendar.DAY_OF_WEEK) ?: 1
+                    var date = time?.get(Calendar.DATE) ?: 1
+                    var month = time?.get(Calendar.MONTH) ?: 1
+                    var year = time?.get(Calendar.YEAR) ?: 1990
                     var dayName = ""
                     var monthName = ""
                     var pair = initTime(day, dayName, month, monthName)
@@ -102,16 +105,17 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
 
                     // Announcement time
                     time = (value?.get("time") as? Timestamp)?.toDate()?.toCalendar()
-                    day = time?.get(Calendar.DAY_OF_WEEK)?: 1
-                    date = time?.get(Calendar.DATE)?: 1
-                    month = time?.get(Calendar.MONTH)?: 1
-                    year = time?.get(Calendar.YEAR)?: 1990
+                    day = time?.get(Calendar.DAY_OF_WEEK) ?: 1
+                    date = time?.get(Calendar.DATE) ?: 1
+                    month = time?.get(Calendar.MONTH) ?: 1
+                    year = time?.get(Calendar.YEAR) ?: 1990
                     dayName = ""
                     monthName = ""
                     pair = initTime(day, dayName, month, monthName)
                     dayName = pair.first
                     monthName = pair.second
-                    tvSchoolAnnouncementDetailDate.text = dayName + ", " + date + " " + monthName + " " + (year)
+                    tvSchoolAnnouncementDetailDate.text =
+                        dayName + ", " + date + " " + monthName + " " + (year)
                     tvSchoolAnnouncementDetailTitle.text = value?.get("title") as? String
                     tvSchoolAnnouncementDetailContent.text = value?.get("content") as? String
                     tvSchoolAnnouncementDetailTeacher.text = value?.get("teacher.name") as? String
@@ -127,7 +131,12 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
                                     mAttachmentList.add(
                                         ClassDetailAttachmentDao(
                                             it["path"] as String,
-                                            (it["category"] as Long).toInt()
+                                            (it["category"] as Long).toInt(),
+                                            "",
+                                            "",
+                                            "",
+                                            "",
+                                            it["fileName"] as String
                                         )
                                     )
                                 mAttachmentAdapter.notifyDataSetChanged()
@@ -554,5 +563,16 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
         } catch (e: Exception) {
             System.err.println("Error deleting collection : " + e.message)
         }
+    }
+
+    fun filePreview(path: String) {
+//        val dialog = Dialog(this)
+//        val view = layoutInflater.inflate(R.layout.dialog_file_preview, null)
+
+//        view.ivDialogFilePreview.setImageURI(Uri.parse(path))
+
+//        dialog.setContentView(view)
+//        dialog.show()
+//        val intent = Intent()
     }
 }

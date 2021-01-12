@@ -76,7 +76,7 @@ class MaterialSubjectSectionAdapter(
                             }
 
                             var url = mFileList[0].path
-                            if (!url.startsWith("http://")) {
+                            if (!url!!.startsWith("http://")) {
                                 url = "http://" + url
                             }
 

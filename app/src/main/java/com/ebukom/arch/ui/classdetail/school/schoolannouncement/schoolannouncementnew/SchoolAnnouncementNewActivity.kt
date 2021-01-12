@@ -7,8 +7,10 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
 import android.text.Editable
 import android.text.Html
 import android.text.TextWatcher
@@ -35,6 +37,7 @@ import com.ebukom.arch.ui.classdetail.school.schoolannouncement.SchoolAnnounceme
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementmainpage.SchoolAnnouncementMonthAdapter
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementnewnext.SchoolAnnouncementNewNextActivity
 import com.ebukom.data.DataDummy
+import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
@@ -43,23 +46,23 @@ import kotlinx.android.synthetic.main.activity_school_anouncement_new.toolbar
 import kotlinx.android.synthetic.main.alert_edit_text.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_class_detail_attachment.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_class_detail_school_announcement_template.view.*
-import kotlinx.android.synthetic.main.item_announcement_attachment.view.*
 import timber.log.Timber
 import java.util.*
-
 
 class SchoolAnnouncementNewActivity : AppCompatActivity() {
     private val mAttachmentList: ArrayList<ClassDetailAttachmentDao> = arrayListOf()
     private val mAttachmentAdapter = ClassDetailAttachmentAdapter(mAttachmentList)
     private val mTemplateList: ArrayList<ClassDetailTemplateTextDao> = arrayListOf()
     lateinit var mTemplateAdapter: ClassDetailTemplateAdapter
+    lateinit var bottomSheetDialog: BottomSheetDialog
+    lateinit var fileName: String
     var classId: String? = ""
     var announcementId: String? = ""
     var eventStart = Timestamp(Date())
     var eventEnd = Timestamp(Date())
     var enabled = false
     var isSetTime = false
-    lateinit var bottomSheetDialog: BottomSheetDialog
+    var filePath: String? = null
     val db = FirebaseFirestore.getInstance()
 
 
@@ -183,8 +186,7 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
                         btnSchoolAnnouncementNewTime.text = "Tanggal Acara (Optional)"
                         eventStart = Timestamp.now()
                         eventEnd = Timestamp.now()
-                    }
-                    else btnSchoolAnnouncementNewTime.text =
+                    } else btnSchoolAnnouncementNewTime.text =
                         "${eventStartDate} ${startMonthName} - ${eventEndDate} ${endMonthName}"
 
                     for (data in it["attachments"] as List<HashMap<Any, Any>>) {
@@ -242,9 +244,10 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
                 intent.putExtra("content", content)
                 intent.putExtra("eventStart", eventStart)
                 intent.putExtra("eventEnd", eventEnd)
+                intent.putExtra("filePath", filePath)
                 intent.putExtra("attachments", mAttachmentList)
-                intent.addFlags(Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP)
 
+                intent.addFlags(Intent.FLAG_ACTIVITY_PREVIOUS_IS_TOP)
                 startActivity(intent)
             }
         }
@@ -260,12 +263,6 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
     }
 
     private fun pickTime() {
-        //            val calendar = CivilCalendar(TimeZone.getDefault(), Locale.ENGLISH).also {
-        //                it.year = 2021                       // determines starting year
-        //                it.month = 0                         // determines starting month
-        //                it.firstDayOfWeek = Calendar.SUNDAY  // sets first day of week to Monday
-        //            }
-
         val callback = RangeDaysPickCallback { start, end ->
             // TODO: 12/26/20 Put after selected date
             eventStart = Timestamp(Date(start.year - 1900, start.month, start.date))
@@ -424,7 +421,7 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
                     builder.setPositiveButton("LAMPIRKAN") { dialog, which ->
                         val link = view.etAlertEditText?.text.toString()
                         DataDummy.announcementAttachmentData.add(ClassDetailAttachmentDao(link, 0))
-                        insertAttachment(view, link)
+                        insertAttachment()
                         checkEmpty()
                     }
 
@@ -451,9 +448,7 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
                     bottomSheetDialog.dismiss()
                     openCamera()
                 }
-
                 bottomSheetDialog.show()
-
                 return true
             }
             else -> return super.onOptionsItemSelected(item)
@@ -475,34 +470,52 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        val view = layoutInflater.inflate(R.layout.item_announcement_attachment, null)
-        var path = data?.data?.path ?: ""
+        filePath = data?.data!!.toString()
+        fileName = data.data!!.path.toString()
 
         if (resultCode == RESULT_OK) {
             when (requestCode) {
-                10 -> {
-                    DataDummy.announcementAttachmentData.add(ClassDetailAttachmentDao(path, 1))
-                    insertAttachment(view, path)
+                10 -> { // photo
+                    DataDummy.announcementAttachmentData.add(
+                        ClassDetailAttachmentDao(
+                            filePath,
+                            1,
+                            "",
+                            "",
+                            "",
+                            "",
+                            fileName.substringAfterLast("/")
+                        )
+                    )
+                    insertAttachment()
                 }
-                11 -> {
-                    DataDummy.announcementAttachmentData.add(ClassDetailAttachmentDao(path, 2))
-                    insertAttachment(view, path)
+                11 -> { // file
+                    DataDummy.announcementAttachmentData.add(
+                        ClassDetailAttachmentDao(
+                            filePath,
+                            2,
+                            "",
+                            "",
+                            "",
+                            "",
+                            fileName.substringAfterLast("/")
+                        )
+                    )
+                    insertAttachment()
                 }
-                else -> {
-                    val bp = (data?.extras?.get("data")) as Bitmap
-//            blabla.setImageBitmap(bp)
+                else -> { // camera
+                    var bitmap =
+                        MediaStore.Images.Media.getBitmap(contentResolver, Uri.parse(filePath))
                 }
             }
         }
         super.onActivityResult(requestCode, resultCode, data)
     }
 
-    private fun insertAttachment(view: View, path: String) {
+    private fun insertAttachment() {
         mAttachmentList.clear()
         mAttachmentList.addAll(DataDummy.announcementAttachmentData)
         mAttachmentAdapter.notifyDataSetChanged()
-        view.tvItemAnnouncementAttachment?.text = path
-
         checkEmpty()
     }
 

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout
+    android:id="@+id/clItemAttachment"
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
@@ -8,7 +9,7 @@
     android:layout_marginVertical="6dp">
     
     <ImageView
-        android:id="@+id/ivItemAnnouncementAttachment"
+        android:id="@+id/ivItemAttachment"
         android:layout_width="@dimen/size_24"
         android:layout_height="@dimen/size_24"
         android:src="@drawable/ic_link_red"
@@ -16,26 +17,26 @@
         app:layout_constraintLeft_toLeftOf="parent"/>
 
     <TextView
-        android:id="@+id/tvItemAnnouncementAttachment"
+        android:id="@+id/tvItemAttachment"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="@dimen/size_12"
         android:text="aturan-aturan FieldTrip.pdf"
         android:textColor="#212121"
         android:textSize="@dimen/text_14"
-        app:layout_constraintTop_toTopOf="@id/ivItemAnnouncementAttachment"
-        app:layout_constraintBottom_toBottomOf="@+id/ivItemAnnouncementAttachment"
-        app:layout_constraintLeft_toRightOf="@id/ivItemAnnouncementAttachment"/>
+        app:layout_constraintTop_toTopOf="@id/ivItemAttachment"
+        app:layout_constraintBottom_toBottomOf="@+id/ivItemAttachment"
+        app:layout_constraintLeft_toRightOf="@id/ivItemAttachment" />
 
     <ImageView
-        android:id="@+id/ivItemAnnouncementAttachmentDelete"
+        android:id="@+id/ivItemAttachmentDelete"
         android:layout_width="@dimen/size_24"
         android:layout_height="@dimen/size_24"
         android:src="@drawable/ic_close"
         android:clickable="true"
-        app:layout_constraintBottom_toBottomOf="@+id/tvItemAnnouncementAttachment"
+        app:layout_constraintBottom_toBottomOf="@+id/tvItemAttachment"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="@id/tvItemAnnouncementAttachment" />
+        app:layout_constraintTop_toTopOf="@id/tvItemAttachment"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

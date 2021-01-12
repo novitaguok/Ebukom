@@ -253,7 +253,6 @@ class RegisterParentActivity : AppCompatActivity() {
                 val fileUri = data?.data
                 imageFile = ImagePicker.getFile(data)
                 imagePath = ImagePicker.getFilePath(data)
-
                 ivRegisterParentProfilePicture.setImageURI(fileUri)
             } else if (resultCode == ImagePicker.RESULT_ERROR) {
                 Timber.e(ImagePicker.getError(data))
@@ -270,7 +269,6 @@ class RegisterParentActivity : AppCompatActivity() {
         grantResults: IntArray
     ) {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-
         EasyPermissions.onRequestPermissionsResult(requestCode, permissions, grantResults, this)
     }
 }

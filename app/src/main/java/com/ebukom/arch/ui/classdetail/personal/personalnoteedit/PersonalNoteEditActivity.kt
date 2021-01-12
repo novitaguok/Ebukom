@@ -27,7 +27,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_personal_note_edit.*
 import kotlinx.android.synthetic.main.alert_edit_text.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_class_detail_attachment.view.*
-import kotlinx.android.synthetic.main.item_announcement_attachment.view.*
+import kotlinx.android.synthetic.main.item_attachment.view.*
 
 class PersonalNoteEditActivity : AppCompatActivity() {
 
@@ -221,7 +221,7 @@ class PersonalNoteEditActivity : AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        val view = layoutInflater.inflate(R.layout.item_announcement_attachment, null)
+        val view = layoutInflater.inflate(R.layout.item_attachment, null)
         var path = data?.data?.path ?: ""
 
         if (resultCode == RESULT_OK) {
@@ -283,7 +283,7 @@ class PersonalNoteEditActivity : AppCompatActivity() {
         mAttachmentAdapter.notifyDataSetChanged()
         mAttachmentList.clear()
         mAttachmentList.addAll(DataDummy.noteAttachmentData)
-        view.tvItemAnnouncementAttachment?.text = path
+        view.tvItemAttachment?.text = path
 
         checkEmpty()
     }

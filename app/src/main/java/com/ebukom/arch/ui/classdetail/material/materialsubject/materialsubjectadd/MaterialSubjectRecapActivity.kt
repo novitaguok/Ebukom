@@ -151,7 +151,7 @@ class MaterialSubjectRecapActivity : AppCompatActivity() {
 
                 loading.visibility = View.VISIBLE
                 val file = hashMapOf<String, Any>(
-                    "title" to mFileList[0].path,
+                    "title" to mFileList[0].fileName,
                     "category" to mFileList[0].category
                 )
                 db.collection("material_subjects").document(subjectId!!)

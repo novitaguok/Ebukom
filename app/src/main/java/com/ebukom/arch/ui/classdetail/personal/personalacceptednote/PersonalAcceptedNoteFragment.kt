@@ -66,7 +66,7 @@ class PersonalAcceptedNoteFragment : Fragment() {
                         val listUserIds = document["parent_ids"] as List<String>
                         if (listUserIds.size == 1) {
                             val data = ClassDetailPersonalNoteDao(
-                                0,
+                                R.drawable.ic_photo_white,
                                 "",
                                 document["content"] as String,
                                 arrayListOf(),
@@ -81,7 +81,6 @@ class PersonalAcceptedNoteFragment : Fragment() {
                                         data.noteTitle = user.get("name") as String
                                         data.profilePicture = 0
                                         mPersonalNoteList.add(data)
-
                                         mPersonalNoteAdapter.notifyDataSetChanged()
                                         checkEmpty(view)
                                     }
@@ -101,7 +100,7 @@ class PersonalAcceptedNoteFragment : Fragment() {
                         val listUserIds = document["teacher_ids"] as List<String>
                         if (listUserIds.size == 1) {
                             val data = ClassDetailPersonalNoteDao(
-                                0,
+                                R.drawable.ic_photo_white,
                                 "",
                                 document["content"] as String,
                                 arrayListOf(),
@@ -116,7 +115,6 @@ class PersonalAcceptedNoteFragment : Fragment() {
                                         data.noteTitle = user.get("name") as String
                                         data.profilePicture = 0
                                         mPersonalNoteList.add(data)
-
                                         mPersonalNoteAdapter.notifyDataSetChanged()
                                         checkEmpty(view)
                                     }
@@ -125,10 +123,6 @@ class PersonalAcceptedNoteFragment : Fragment() {
                     }
                 }
         }
-
-//        mPersonalNoteList.clear()
-//        mPersonalNoteList.addAll(DataDummy.noteAcceptedData)
-//        mPersonalNoteAdapter.notifyDataSetChanged()
     }
 
     private fun initRecycler() {
