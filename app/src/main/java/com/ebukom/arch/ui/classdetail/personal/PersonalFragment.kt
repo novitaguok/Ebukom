@@ -38,10 +38,6 @@ class PersonalFragment : Fragment() {
         tabLayout?.setupWithViewPager(viewPager)
         viewPager?.currentItem = 0
 
-//        mainClassPersonalViewPager?.adapter = PersonalPageAdapter(childFragmentManager)
-//        mainClassPersonalTabLayout?.setupWithViewPager(mainClassPersonalViewPager)
-//        mainClassPersonalViewPager?.currentItem = 0
-
         view.btnPersonalNew.setOnClickListener {
             activity?.startActivity(Intent(activity, PersonalNoteNewActivity::class.java))
         }

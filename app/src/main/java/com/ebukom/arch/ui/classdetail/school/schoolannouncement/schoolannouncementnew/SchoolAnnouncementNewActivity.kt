@@ -1,15 +1,14 @@
 package com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementnew
 
 import android.app.Activity
-import android.content.BroadcastReceiver
-import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
+import android.content.*
+import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.provider.MediaStore
 import android.text.Editable
 import android.text.Html
@@ -19,9 +18,11 @@ import android.util.SparseIntArray
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.aminography.primecalendar.civil.CivilCalendar
@@ -47,6 +48,7 @@ import kotlinx.android.synthetic.main.alert_edit_text.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_class_detail_attachment.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_class_detail_school_announcement_template.view.*
 import timber.log.Timber
+import java.io.File
 import java.util.*
 
 class SchoolAnnouncementNewActivity : AppCompatActivity() {
@@ -85,7 +87,6 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
                 val action = intent.action
                 if (action == "finish_activity") {
                     finish()
-                    // DO WHATEVER YOU WANT.
                 }
             }
         }
@@ -465,17 +466,17 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
     }
 
     fun openCamera() {
-        val intent = Intent(android.provider.MediaStore.ACTION_IMAGE_CAPTURE)
-        startActivityForResult(intent, 0)
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        if (intent.resolveActivity(this.packageManager) != null) startActivityForResult(intent, 0)
+        else Toast.makeText(this, "Unable to open camera", Toast.LENGTH_SHORT).show()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        filePath = data?.data!!.toString()
-        fileName = data.data!!.path.toString()
-
+        fileName = data?.data!!.path.toString()
         if (resultCode == RESULT_OK) {
             when (requestCode) {
                 10 -> { // photo
+                    filePath = data.data!!.toString() // URI
                     DataDummy.announcementAttachmentData.add(
                         ClassDetailAttachmentDao(
                             filePath,
@@ -490,6 +491,7 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
                     insertAttachment()
                 }
                 11 -> { // file
+                    filePath = data.data!!.toString() // URI
                     DataDummy.announcementAttachmentData.add(
                         ClassDetailAttachmentDao(
                             filePath,
@@ -504,8 +506,20 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
                     insertAttachment()
                 }
                 else -> { // camera
-                    var bitmap =
-                        MediaStore.Images.Media.getBitmap(contentResolver, Uri.parse(filePath))
+//                    val image =
+//                        MediaStore.Images.Media.getBitmap(contentResolver, Uri.parse(filePath))
+//                    DataDummy.announcementAttachmentData.add(
+//                        ClassDetailAttachmentDao(
+//                            filePath,
+//                            1,
+//                            "",
+//                            "",
+//                            "",
+//                            "",
+//                            fileName.substringAfterLast("/")
+//                        )
+//                    )
+//                    insertAttachment()
                 }
             }
         }
@@ -567,10 +581,6 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
         etSchoolAnnouncementNewTitle.setText(announcementTitle)
         etSchoolAnnouncementNewContent.setText(announcementContent)
         bottomSheetDialog.dismiss()
-    }
-
-    override fun startActivityForResult(intent: Intent?, requestCode: Int, options: Bundle?) {
-        super.startActivityForResult(intent, requestCode, options)
     }
 }
 

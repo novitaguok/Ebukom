@@ -1,19 +1,26 @@
 package com.ebukom.arch.ui.classdetail.material.materialsubject.materialsubjectfilepreview
 
 import android.graphics.Color
-import android.net.Uri
-import androidx.appcompat.app.AppCompatActivity
+import android.os.AsyncTask
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AlertDialog
+import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.ebukom.R
+import com.github.barteksc.pdfviewer.scroll.DefaultScrollHandle
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import kotlinx.android.synthetic.main.activity_material_preview.*
 import kotlinx.android.synthetic.main.activity_register_parent.toolbar
 import timber.log.Timber
+import java.io.BufferedInputStream
+import java.io.IOException
+import java.io.InputStream
+import java.net.HttpURLConnection
+import java.net.URL
+import javax.net.ssl.HttpsURLConnection
 
 class MaterialPreviewActivity : AppCompatActivity() {
 
@@ -21,6 +28,9 @@ class MaterialPreviewActivity : AppCompatActivity() {
     var subjectId: String? = null
     var sectionId: String? = null
     var filePath: String? = null
+    var fileName: String? = null
+    var activity: String? = null
+    var category: Int = 0
     val db = FirebaseFirestore.getInstance()
     val storage = FirebaseStorage.getInstance()
 
@@ -30,28 +40,32 @@ class MaterialPreviewActivity : AppCompatActivity() {
 
         initToolbar()
 
-//        val layout = intent?.extras?.getString("layout")
         fileId = intent?.extras?.getString("fileId")
         subjectId = intent?.extras?.getString("subjectId")
         sectionId = intent?.extras?.getString("sectionId")
-
-        // Intent from SchoolAnnouncementDetailActivity
         filePath = intent?.extras?.getString("filePath")
+        fileName = intent?.extras?.getString("fileName")
+        activity = intent?.extras?.getString("activity")
+        category = intent?.extras?.getInt("category")!!
 
-        if (!filePath.isNullOrEmpty()) {
+        if (activity == "announcement") {
             appbar.visibility = View.GONE
-//            clMaterialPreview.setBackgroundColor(Color.parseColor("#ffff0000"))
-
-//            val gsRef = storage.getReferenceFromUrl(filePath!!)
-            Glide.with(this)
-                .load(filePath)
-                .centerCrop()
-                .into(ivMaterialPreview)
+            clMaterialPreview.setBackgroundColor(Color.parseColor("#80000000"))
+            if (category == 1) {
+                pdfView?.visibility = View.GONE
+                Glide.with(this)
+                    .load(filePath)
+                    .centerCrop()
+                    .into(ivMaterialPreview)
+            } else if (category == 2) {
+                pdfView.visibility = View.VISIBLE
+                ivMaterialPreviewClose.visibility = View.GONE
+                ivMaterialPreview.visibility = View.GONE
+                RetrivePDFfromUrl().execute(filePath)
+            }
         } else {
             ivMaterialPreviewClose.visibility = View.GONE
         }
-
-
 
         if (subjectId == "") {
             if (sectionId != null) {
@@ -73,8 +87,6 @@ class MaterialPreviewActivity : AppCompatActivity() {
                                         Timber.e(error)
                                         return@addSnapshotListener
                                     }
-
-//                ivMaterialPreview.setImageURI(value[""])
                                 }
                         }
                     }
@@ -100,8 +112,6 @@ class MaterialPreviewActivity : AppCompatActivity() {
                                         Timber.e(error)
                                         return@addSnapshotListener
                                     }
-
-//                ivMaterialPreview.setImageURI(value[""])
                                 }
                         }
                     }
@@ -136,6 +146,37 @@ class MaterialPreviewActivity : AppCompatActivity() {
         supportActionBar?.title = ""
         toolbar.setNavigationOnClickListener {
             onBackPressed()
+        }
+    }
+
+    // For PDF viewer
+    inner class RetrivePDFfromUrl :
+        AsyncTask<String?, Void?, InputStream?>() {
+        override fun doInBackground(vararg strings: String?): InputStream? {
+            // Inputstream for getting out PDF
+            var inputStream: InputStream? = null
+            try {
+                val url = URL(strings[0])
+                // Creating connection
+                val urlConnection: HttpURLConnection = url.openConnection() as HttpsURLConnection
+                if (urlConnection.getResponseCode() === 200) {
+                    /**
+                     * Response success, then get the input stream from url
+                     * and store it to variable
+                     */
+                    inputStream = BufferedInputStream(urlConnection.getInputStream())
+                }
+            } catch (e: IOException) {
+                e.printStackTrace()
+                return null
+            }
+            return inputStream
+        }
+
+        override fun onPostExecute(inputStream: InputStream?) {
+            // After async, load pdf in pdf viewer
+            pdfView.fromStream(inputStream).enableSwipe(true).enableDoubletap(true)
+                .scrollHandle(DefaultScrollHandle(this@MaterialPreviewActivity)).load()
         }
     }
 }

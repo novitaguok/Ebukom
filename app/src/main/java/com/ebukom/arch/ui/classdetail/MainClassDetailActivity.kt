@@ -82,11 +82,7 @@ class MainClassDetailActivity : AppCompatActivity(), OnMoreCallback {
 
         val sharePref: SharedPreferences = getSharedPreferences("EBUKOM", Context.MODE_PRIVATE)
         val schoolFragment = SchoolFragment()
-        val personalFragment = if (sharePref.getLong("level", 0) == 1L) {
-            PersonalParentFragment()
-        } else {
-            PersonalFragment()
-        }
+        val personalFragment = PersonalFragment()
         val materialFragment = MaterialFragment()
         val memberFragment = MemberFragment()
 

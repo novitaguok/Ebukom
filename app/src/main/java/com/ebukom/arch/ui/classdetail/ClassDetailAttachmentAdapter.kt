@@ -52,9 +52,17 @@ class ClassDetailAttachmentAdapter(private val data: List<ClassDetailAttachmentD
 
             itemView.clItemAttachment.setOnClickListener {
                 if (context is SchoolAnnouncementDetailActivity) {
-                    val intent = Intent(context as SchoolAnnouncementDetailActivity, MaterialPreviewActivity::class.java)
-                    intent.putExtra("filePath", item.path)
-                    context.startActivity(intent)
+                    if (item.category == 1 || item.category == 2) {
+                        val intent = Intent(
+                            context as SchoolAnnouncementDetailActivity,
+                            MaterialPreviewActivity::class.java
+                        )
+                        intent.putExtra("filePath", item.path)
+                        intent.putExtra("fileName", item.fileName)
+                        intent.putExtra("activity", "announcement")
+                        intent.putExtra("category", item.category)
+                        context.startActivity(intent)
+                    } else if (item.category == 2) {}
                 }
 //                        (context as SchoolAnnouncementDetailActivity).filePreview(item.path)
             }
