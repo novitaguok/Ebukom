@@ -223,9 +223,10 @@ class MaterialSubjectNewActivity : AppCompatActivity() {
             }
             builder.setPositiveButton("HAPUS") { _, _ ->
                 val collectionFiles =
-                    db.collection("material_subjects").document("subject_sections")
-                        .collection("files")
+                    db.collection("material_subjects").document(subjectId!!)
+                        .collection("subject_sections").document(sectionId).collection("files")
                 deleteCollection(collectionFiles, 5) {}
+
                 db.collection("material_subjects").document(subjectId!!)
                     .collection("subject_sections")
                     .document(sectionId).delete().addOnSuccessListener {
@@ -260,6 +261,7 @@ class MaterialSubjectNewActivity : AppCompatActivity() {
         bottomSheetDialog.show()
 
     }
+
     fun deleteCollection(collection: CollectionReference, batchSize: Int, nextAction: () -> Unit) {
         try {
             // Retrieve a small batch of documents to avoid out-of-memory errors/

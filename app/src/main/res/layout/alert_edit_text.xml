@@ -24,6 +24,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/size_12"
         android:layout_marginHorizontal="@dimen/size_20"
+        android:hint="Komentar"
         android:paddingHorizontal="@dimen/size_12"
         android:paddingTop="@dimen/size_8"
         android:theme="@style/GeneralTextInputLayoutStyle"
@@ -34,7 +35,6 @@
             android:id="@+id/etAlertEditText"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:hint="Komentar"
             android:textCursorDrawable="@null"/>
 
     </com.google.android.material.textfield.TextInputLayout>

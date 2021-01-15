@@ -50,7 +50,6 @@ class ClassDetailAttachmentAdapter(private val data: List<ClassDetailAttachmentD
         RecyclerView.ViewHolder(itemView) {
         fun bind(item: ClassDetailAttachmentDao) {
             itemView.tvItemAttachment.text = item.fileName
-
             itemView.clItemAttachment.setOnClickListener {
                 if (context is SchoolAnnouncementDetailActivity) {
                     if (item.category == 0) {
@@ -72,8 +71,26 @@ class ClassDetailAttachmentAdapter(private val data: List<ClassDetailAttachmentD
                         intent.putExtra("category", item.category)
                         context.startActivity(intent)
                     }
+                } else {
+                    if (item.category == 0) {
+                        var url = item.path
+                        if (!url!!.startsWith("http://")) {
+                            url = "http://" + url
+                        }
+                        val intent = Intent(Intent.ACTION_VIEW)
+                        intent.data = Uri.parse(url)
+                        context.startActivity(intent)
+                    } else if (item.category == 1 || item.category == 2) {
+                        val intent = Intent(
+                            context as MaterialSubjectAddActivity,
+                            MaterialPreviewActivity::class.java
+                        )
+                        intent.putExtra("filePath", item.path)
+                        intent.putExtra("fileName", item.fileName)
+                        intent.putExtra("category", item.category)
+                        context.startActivity(intent)
+                    }
                 }
-//                        (context as SchoolAnnouncementDetailActivity).filePreview(item.path)
             }
 
             when (item.category) {

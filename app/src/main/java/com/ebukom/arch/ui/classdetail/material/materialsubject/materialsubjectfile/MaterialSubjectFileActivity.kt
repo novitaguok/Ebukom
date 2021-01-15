@@ -27,7 +27,6 @@ class MaterialSubjectFileActivity : AppCompatActivity() {
     var sectionName: String? = null
     val db = FirebaseFirestore.getInstance()
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_material_subject_file)
@@ -56,11 +55,13 @@ class MaterialSubjectFileActivity : AppCompatActivity() {
                     for (data in value!!.documents) {
                         mFileList.add(
                             ClassDetailAttachmentDao(
-                                data["title"] as String,
+                                data["path"] as String,
                                 (data["category"] as Long).toInt(),
                                 data.id,
                                 "",
-                                sectionId!!
+                                sectionId!!,
+                                "",
+                                data["title"] as String
                             )
                         )
                         mFileAdapter.notifyDataSetChanged()
@@ -80,11 +81,13 @@ class MaterialSubjectFileActivity : AppCompatActivity() {
                     for (file in value!!.documents) {
                         mFileList.add(
                             ClassDetailAttachmentDao(
-                                file["title"] as String,
+                                file["path"] as String,
                                 (file["category"] as Long).toInt(),
                                 file.id,
                                 subjectId!!,
-                                sectionId!!
+                                sectionId!!,
+                                "",
+                                file["title"] as String
                             )
                         )
                         mFileAdapter.notifyDataSetChanged()

@@ -1,9 +1,13 @@
 package com.ebukom.arch.ui.classdetail.material.materialsubject.materialsubjectfilepreview
 
 import android.graphics.Color
+import android.net.Uri
 import android.os.AsyncTask
+import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.widget.MediaController
+import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
@@ -34,6 +38,7 @@ class MaterialPreviewActivity : AppCompatActivity() {
     val db = FirebaseFirestore.getInstance()
     val storage = FirebaseStorage.getInstance()
 
+    @RequiresApi(Build.VERSION_CODES.LOLLIPOP)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_material_preview)
@@ -52,7 +57,10 @@ class MaterialPreviewActivity : AppCompatActivity() {
             appbar.visibility = View.GONE
             clMaterialPreview.setBackgroundColor(Color.parseColor("#80000000"))
             if (category == 1) {
+                ivMaterialPreviewClose.visibility = View.VISIBLE
                 pdfView?.visibility = View.GONE
+                ivMaterialPreview.visibility = View.VISIBLE
+                vvMaterialPreview.visibility = View.GONE
                 Glide.with(this)
                     .load(filePath)
                     .centerCrop()
@@ -61,58 +69,51 @@ class MaterialPreviewActivity : AppCompatActivity() {
                 pdfView.visibility = View.VISIBLE
                 ivMaterialPreviewClose.visibility = View.GONE
                 ivMaterialPreview.visibility = View.GONE
+                vvMaterialPreview.visibility = View.GONE
                 RetrivePDFfromUrl().execute(filePath)
             }
         } else {
             ivMaterialPreviewClose.visibility = View.GONE
+            if (category == 1) {
+                val mediaController = MediaController(this)
+                mediaController.setAnchorView(vvMaterialPreview)
+                pdfView?.visibility = View.GONE
+                ivMaterialPreview.visibility = View.GONE
+                vvMaterialPreview.visibility = View.VISIBLE
+                vvMaterialPreview.setMediaController(mediaController)
+                vvMaterialPreview.setVideoURI(Uri.parse(filePath))
+                vvMaterialPreview.start()
+            } else if (category == 2) {
+                pdfView.visibility = View.VISIBLE
+                ivMaterialPreview.visibility = View.GONE
+                vvMaterialPreview.visibility = View.GONE
+                RetrivePDFfromUrl().execute(filePath)
+            }
         }
 
-        if (subjectId == "") {
+        if (subjectId == "") { // education
             if (sectionId != null) {
                 db.collection("material_education").document(sectionId!!)
-                    .addSnapshotListener { value, error ->
-                        if (error != null) {
-                            Timber.e(error)
-                            return@addSnapshotListener
-                        }
-
-                        tvToolbarTitle.text = value?.get("name") as String
-
+                    .get().addOnSuccessListener{
+                        tvToolbarTitle.text = it.get("name") as String
                         if (fileId != null) {
                             db.collection("material_education").document(sectionId!!)
                                 .collection("files")
-                                .document(fileId!!)
-                                .addSnapshotListener { value, error ->
-                                    if (error != null) {
-                                        Timber.e(error)
-                                        return@addSnapshotListener
-                                    }
-                                }
+                                .document(fileId!!).get()
                         }
                     }
             }
-        } else {
+        } else { // subject
             if (subjectId != null && sectionId != null) {
                 db.collection("material_subjects").document(subjectId!!)
                     .collection("subject_sections")
-                    .document(sectionId!!).addSnapshotListener { value, error ->
-                        if (error != null) {
-                            Timber.e(error)
-                            return@addSnapshotListener
-                        }
-
-                        tvToolbarTitle.text = value?.get("name") as String
-
+                    .document(sectionId!!).get().addOnSuccessListener {
+                        tvToolbarTitle.text = it?.get("name") as String
                         if (fileId != null) {
                             db.collection("material_subjects").document(subjectId!!)
                                 .collection("subject_sections")
                                 .document(sectionId!!).collection("files").document(fileId!!)
-                                .addSnapshotListener { value, error ->
-                                    if (error != null) {
-                                        Timber.e(error)
-                                        return@addSnapshotListener
-                                    }
-                                }
+                                .get()
                         }
                     }
             }

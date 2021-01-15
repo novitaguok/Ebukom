@@ -42,7 +42,7 @@ class MaterialSubjectFileAdapter(private val data: List<ClassDetailAttachmentDao
     ) :
         RecyclerView.ViewHolder(itemView) {
         fun bind(item: ClassDetailAttachmentDao) {
-            itemView.tvItemSubjectMaterialFile.text = item.path
+            itemView.tvItemSubjectMaterialFile.text = item.fileName
 
             when (item.category) {
                 0 -> {
@@ -67,6 +67,9 @@ class MaterialSubjectFileAdapter(private val data: List<ClassDetailAttachmentDao
                 intent.putExtra("fileId", item.attachmentId)
                 intent.putExtra("subjectId", item.subjectId)
                 intent.putExtra("sectionId", item.sectionId)
+                intent.putExtra("filePath", item.path)
+                intent.putExtra("category", item.category)
+                intent.putExtra("fileName", item.fileName)
                 context.startActivity(intent)
             }
 

@@ -4,6 +4,7 @@ import android.content.Intent
 import android.graphics.Bitmap
 import android.graphics.Color
 import android.graphics.drawable.Drawable
+import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
@@ -12,6 +13,7 @@ import android.text.Editable
 import android.text.TextWatcher
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.annotation.RequiresApi
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
@@ -24,6 +26,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.activity_material_subject_add.*
 import kotlinx.android.synthetic.main.activity_material_subject_add.rvMaterialSubjectAddAttachment
 import kotlinx.android.synthetic.main.activity_material_subject_add.toolbar
@@ -38,14 +42,17 @@ import kotlin.collections.ArrayList
 class MaterialSubjectAddActivity : AppCompatActivity() {
     private var mFileList: ArrayList<ClassDetailAttachmentDao> = arrayListOf()
     lateinit var mFileAdapter: ClassDetailAttachmentAdapter
+    lateinit var fileName: String
+    lateinit var storageReference: StorageReference
     var isSetTitle = false
     var isSetFile = false
     var subjectId: String? = null
     var subjectName: String? = null
     var classId: String? = null
     var sectionId: String? = null
-    var sectionName: String? = null
-    var files = arrayListOf<ClassDetailAttachmentDao>()
+    var savedImageUri = arrayListOf<String>()
+    var counter = 0
+    var filePath: String? = null
     var action: String? = null
     val db = FirebaseFirestore.getInstance()
 
@@ -74,27 +81,62 @@ class MaterialSubjectAddActivity : AppCompatActivity() {
         if (layout == "educationNew") {
             tvToolbarTitle.text = "Tambah Materi Mendidik Anak"
             btnMaterialSubjectAddDone.setOnClickListener {
-                val data = hashMapOf<String, Any>(
-                    "name" to etMaterialSubjectAddTitle.text.toString(),
-                    "date" to Timestamp(Date())
-                )
                 loading.visibility = View.VISIBLE
-                db.collection("material_education").add(data)
-                    .addOnSuccessListener {
-                        sectionId = it.id
-                        mFileList.forEach {
-                            val file = hashMapOf<String, Any>(
-                                "title" to it.fileName,
-                                "category" to it.category
-                            )
-                            db.collection("material_education").document(sectionId!!)
-                                .collection("files").add(file)
-                        }
-                        loading.visibility = View.GONE
-                        finish()
-                    }.addOnFailureListener {
-                        Log.d("TAG", "Material failed to be inserted")
+                for (i in 0..(mFileList.size - 1)) {
+                    if (mFileList[i].category == 1) {
+                        storageReference = FirebaseStorage.getInstance()
+                            .getReference("videos/material/education/${mFileList[i].fileName}")
+                    } else if (mFileList[i].category == 2) {
+                        storageReference =
+                            FirebaseStorage.getInstance().reference.child("files/material/education/${mFileList[i].fileName}")
+                    } else {
+
                     }
+
+                    // Upload and get the download URL
+                    storageReference.putFile(Uri.parse(mFileList[i].path))
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                storageReference.downloadUrl.addOnSuccessListener {
+                                    counter++
+                                    if (task.isSuccessful) {
+                                        savedImageUri.add(it.toString())
+                                    } else {
+                                        storageReference.delete()
+                                        Toast.makeText(this, "Couldn't save " + mFileList[i].fileName, Toast.LENGTH_LONG).show()
+                                    }
+                                    if (counter == mFileList.size) {
+                                        for (i in 0..mFileList.size - 1) mFileList[i].path = savedImageUri[i]
+
+                                        val data = hashMapOf<String, Any>(
+                                            "name" to etMaterialSubjectAddTitle.text.toString(),
+                                            "date" to Timestamp(Date())
+                                        )
+                                        loading.visibility = View.VISIBLE
+                                        db.collection("material_education").add(data)
+                                            .addOnSuccessListener {
+                                                sectionId = it.id
+                                                mFileList.forEach {
+                                                    val file = hashMapOf<String, Any>(
+                                                        "title" to it.fileName,
+                                                        "category" to it.category,
+                                                        "path" to it.path!!
+                                                    )
+                                                    db.collection("material_education").document(sectionId!!)
+                                                        .collection("files").add(file)
+                                                }
+                                                loading.visibility = View.GONE
+                                                finish()
+                                            }.addOnFailureListener {
+                                                Log.d("TAG", "Material failed to be inserted")
+                                            }
+                                    }
+                                }
+                            } else {
+                                counter++
+                            }
+                        }
+                }
             }
         } else if (layout == "educationEdit") {
             tvToolbarTitle.text = "Edit Materi Mendidik Anak"
@@ -108,8 +150,13 @@ class MaterialSubjectAddActivity : AppCompatActivity() {
                         for (data in it!!.documents) {
                             DataDummy.materialFileData.add(
                                 ClassDetailAttachmentDao(
-                                    data["title"] as String,
-                                    (data["category"] as Long).toInt()
+                                    data["path"] as String,
+                                    (data["category"] as Long).toInt(),
+                                    "",
+                                    "",
+                                    "",
+                                    "",
+                                    data["title"] as String
                                 )
                             )
                         }
@@ -125,39 +172,73 @@ class MaterialSubjectAddActivity : AppCompatActivity() {
 
             // Done
             btnMaterialSubjectAddDone.setOnClickListener {
-                val data = hashMapOf<String, Any>(
-                    "name" to etMaterialSubjectAddTitle.text.toString(),
-                    "date" to Timestamp(Date())
-                )
                 loading.visibility = View.VISIBLE
-                db.collection("material_education").document(sectionId!!).update(data)
-                    .addOnSuccessListener {
+                for (i in 0..(mFileList.size - 1)) {
+                    if (mFileList[i].category == 1) {
+                        storageReference = FirebaseStorage.getInstance()
+                            .getReference("videos/material/education/${mFileList[i].fileName}")
+                    } else if (mFileList[i].category == 2) {
+                        storageReference =
+                            FirebaseStorage.getInstance().reference.child("files/material/education/${mFileList[i].fileName}")
+                    } else {
 
-                        /**
-                         * Insert all file ID to array,
-                         * in purpose to delete all documents in a collection,
-                         * and re-add all files to collection
-                         */
-                        val collectionFiles =
-                            db.collection("material_education").document(sectionId!!)
-                                .collection("files")
-                        deleteCollection(collectionFiles, 5) {
-                            mFileList.forEach {
-                                val file = hashMapOf<String, Any>(
-                                    "title" to it.fileName,
-                                    "category" to it.category
-                                )
-                                db.collection("material_education").document(sectionId!!)
-                                    .collection("files").add(file)
+                    }
+
+                    // Upload and get the download URL
+                    storageReference.putFile(Uri.parse(mFileList[i].path))
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                storageReference.downloadUrl.addOnSuccessListener {
+                                    counter++
+                                    if (task.isSuccessful) {
+                                        savedImageUri.add(it.toString())
+                                    } else {
+                                        storageReference.delete()
+                                        Toast.makeText(this, "Couldn't save " + mFileList[i].fileName, Toast.LENGTH_LONG).show()
+                                    }
+                                    if (counter == mFileList.size) {
+                                        for (i in 0..mFileList.size - 1) mFileList[i].path = savedImageUri[i]
+                                        val data = hashMapOf<String, Any>(
+                                            "name" to etMaterialSubjectAddTitle.text.toString(),
+                                            "date" to Timestamp(Date())
+                                        )
+
+                                        db.collection("material_education").document(sectionId!!).update(data)
+                                            .addOnSuccessListener {
+
+                                                /**
+                                                 * Insert all file ID to array,
+                                                 * in purpose to delete all documents in a collection,
+                                                 * and re-add all files to collection
+                                                 */
+                                                val collectionFiles =
+                                                    db.collection("material_education").document(sectionId!!)
+                                                        .collection("files")
+                                                deleteCollection(collectionFiles, 5) {
+                                                    mFileList.forEach {
+                                                        val file = hashMapOf<String, Any>(
+                                                            "title" to it.fileName,
+                                                            "category" to it.category,
+                                                            "path" to it.path!!
+                                                        )
+                                                        db.collection("material_education").document(sectionId!!)
+                                                            .collection("files").add(file)
+                                                    }
+                                                }
+                                                loading.visibility = View.GONE
+                                                Log.d("FileInsert", "Material successfully inserted")
+                                                this@MaterialSubjectAddActivity.finish()
+                                            }.addOnFailureListener {
+                                                loading.visibility = View.GONE
+                                                Log.d("FileInsert", "Material failed to be inserted")
+                                                this@MaterialSubjectAddActivity.finish()
+                                            }
+                                    }
+                                }
+                            } else {
+                                counter++
                             }
                         }
-                        loading.visibility = View.GONE
-                        Log.d("FileInsert", "Material successfully inserted")
-                        this@MaterialSubjectAddActivity.finish()
-                    }.addOnFailureListener {
-                    loading.visibility = View.GONE
-                    Log.d("FileInsert", "Material failed to be inserted")
-                    this@MaterialSubjectAddActivity.finish()
                 }
             }
         } else if (layout == "subjectEdit") {
@@ -178,8 +259,13 @@ class MaterialSubjectAddActivity : AppCompatActivity() {
                             for (data in it!!.documents) {
                                 DataDummy.materialFileData.add(
                                     ClassDetailAttachmentDao(
-                                        data["title"] as String,
-                                        (data["category"] as Long).toInt()
+                                        data["path"] as String,
+                                        (data["category"] as Long).toInt(),
+                                        "",
+                                        "",
+                                        "",
+                                        "",
+                                        data["title"] as String
                                     )
                                 )
                             }
@@ -194,78 +280,81 @@ class MaterialSubjectAddActivity : AppCompatActivity() {
                     Timber.e(it)
                 }
             btnMaterialSubjectAddDone.setOnClickListener {
-                val data = hashMapOf<String, Any>(
-                    "name" to etMaterialSubjectAddTitle.text.toString(),
-                    "date" to Timestamp(Date())
-                )
                 loading.visibility = View.VISIBLE
-                db.collection("material_subjects").document(subjectId!!)
-                    .collection("subject_sections")
-                    .document(sectionId!!).update(data).addOnSuccessListener {
 
-                        /**
-                         * Insert all file ID to array,
-                         * in purpose to delete all documents in a collection,
-                         * and re-add all files to collection
-                         */
-                        val collectionFiles =
-                            db.collection("material_subjects").document(subjectId!!)
-                                .collection("subject_sections").document(sectionId!!)
-                                .collection("files")
-                        deleteCollection(collectionFiles, 5) {
-                            mFileList.forEach {
-                                val file = hashMapOf<String, Any>(
-                                    "title" to it.fileName,
-                                    "category" to it.category
-                                )
-                                db.collection("material_subjects")
-                                    .document(subjectId!!)
-                                    .collection("subject_sections")
-                                    .document(sectionId!!)
-                                    .collection("files")
-                                    .add(file)
+                for (i in 0..(mFileList.size - 1)) {
+                    if (mFileList[i].category == 1) {
+                        storageReference = FirebaseStorage.getInstance()
+                            .getReference("videos/material/subject/${mFileList[i].fileName}")
+                    } else if (mFileList[i].category == 2) {
+                        storageReference =
+                            FirebaseStorage.getInstance().reference.child("files/material/subject/${mFileList[i].fileName}")
+                    } else {
+
+                    }
+
+                    // Upload and get the download URL
+                    storageReference.putFile(Uri.parse(mFileList[i].path))
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                storageReference.downloadUrl.addOnSuccessListener {
+                                    counter++
+                                    if (task.isSuccessful) {
+                                        savedImageUri.add(it.toString())
+                                    } else {
+                                        storageReference.delete()
+                                        Toast.makeText(this, "Couldn't save " + mFileList[i].fileName, Toast.LENGTH_LONG).show()
+                                    }
+                                    if (counter == mFileList.size) {
+                                        for (i in 0..mFileList.size - 1) mFileList[i].path = savedImageUri[i]
+
+                                        val data = hashMapOf<String, Any>(
+                                            "name" to etMaterialSubjectAddTitle.text.toString(),
+                                            "date" to Timestamp(Date())
+                                        )
+                                        db.collection("material_subjects").document(subjectId!!)
+                                            .collection("subject_sections")
+                                            .document(sectionId!!).update(data).addOnSuccessListener {
+
+                                                /**
+                                                 * Insert all file ID to array,
+                                                 * in purpose to delete all documents in a collection,
+                                                 * and re-add all files to collection
+                                                 */
+                                                val collectionFiles =
+                                                    db.collection("material_subjects").document(subjectId!!)
+                                                        .collection("subject_sections").document(sectionId!!)
+                                                        .collection("files")
+                                                deleteCollection(collectionFiles, 5) {
+                                                    mFileList.forEach {
+                                                        val file = hashMapOf<String, Any>(
+                                                            "title" to it.fileName,
+                                                            "category" to it.category,
+                                                            "path" to it.path!!
+                                                        )
+                                                        db.collection("material_subjects")
+                                                            .document(subjectId!!)
+                                                            .collection("subject_sections")
+                                                            .document(sectionId!!)
+                                                            .collection("files")
+                                                            .add(file)
+                                                    }
+                                                }
+                                                loading.visibility = View.GONE
+                                                Log.d("FileInsert", "Material successfully inserted")
+                                                this@MaterialSubjectAddActivity.finish()
+                                            }.addOnFailureListener {
+                                                loading.visibility = View.GONE
+                                                Log.d("FileInsert", "Material failed to be inserted")
+                                                this@MaterialSubjectAddActivity.finish()
+                                            }
+                                    }
+                                }
+                            } else {
+                                counter++
                             }
                         }
-
-/*
-                        val fileIds = arrayListOf<String>()
-                        db.collection("material_subjects").document(subjectId!!)
-                            .collection("subject_sections").document(sectionId!!)
-                            .collection("files").get().addOnSuccessListener {
-                                for (data in it.documents) {
-                                    fileIds.add(data.id)
-                                }
-
-                                fileIds.forEach {
-                                    db.collection("material_subjects").document(subjectId!!)
-                                        .collection("subject_sections").document(sectionId!!)
-                                        .collection("files").document(it).delete()
-                                        .addOnSuccessListener {
-                                            mFileList.forEach {
-                                                val file = hashMapOf<String, Any>(
-                                                    "title" to it.path,
-                                                    "category" to it.category
-                                                )
-                                                db.collection("material_subjects")
-                                                    .document(subjectId!!)
-                                                    .collection("subject_sections")
-                                                    .document(sectionId!!)
-                                                    .collection("files")
-                                                    .add(file)
-                                            }
-                                        }
-                                }
-                            }
-
-*/
-                        loading.visibility = View.GONE
-                        Log.d("FileInsert", "Material successfully inserted")
-                        this@MaterialSubjectAddActivity.finish()
-                    }.addOnFailureListener {
-                        loading.visibility = View.GONE
-                        Log.d("FileInsert", "Material failed to be inserted")
-                        this@MaterialSubjectAddActivity.finish()
-                    }
+                }
             }
             checkEmpty()
         } else {
@@ -273,33 +362,70 @@ class MaterialSubjectAddActivity : AppCompatActivity() {
                 subjectName = "Rekap Pembelajaran Online"
             }
             tvToolbarTitle.text = "Tambah Materi " + subjectName
+
+            // Done
             btnMaterialSubjectAddDone.setOnClickListener {
-                val data = hashMapOf<String, Any>(
-                    "name" to etMaterialSubjectAddTitle.text.toString(),
-                    "date" to Timestamp(Date())
-                )
                 loading.visibility = View.VISIBLE
-                db.collection("material_subjects").document(subjectId!!)
-                    .collection("subject_sections")
-                    .add(data).addOnSuccessListener {
-                        sectionId = it.id
-                        mFileList.forEach {
-                            val file = hashMapOf<String, Any>(
-                                "title" to it.fileName,
-                                "category" to it.category
-                            )
-                            db.collection("material_subjects").document(subjectId!!)
-                                .collection("subject_sections").document(sectionId!!)
-                                .collection("files")
-                                .add(file)
-                        }
-                        DataDummy.materialFileData.clear()
-                        loading.visibility = View.GONE
-                        finish()
-                    }.addOnFailureListener {
-                        loading.visibility = View.GONE
-                        Log.d("TAG", "Material failed to be inserted")
+
+                for (i in 0..(mFileList.size - 1)) {
+                    if (mFileList[i].category == 1) {
+                        storageReference = FirebaseStorage.getInstance()
+                            .getReference("videos/material/subject/${mFileList[i].fileName}")
+                    } else if (mFileList[i].category == 2) {
+                        storageReference =
+                            FirebaseStorage.getInstance().reference.child("files/material/subject/${mFileList[i].fileName}")
+                    } else {
+
                     }
+
+                    // Upload and get the download URL
+                    storageReference.putFile(Uri.parse(mFileList[i].path))
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                storageReference.downloadUrl.addOnSuccessListener {
+                                    counter++
+                                    if (task.isSuccessful) {
+                                        savedImageUri.add(it.toString())
+                                    } else {
+                                        storageReference.delete()
+                                        Toast.makeText(this, "Couldn't save " + mFileList[i].fileName, Toast.LENGTH_LONG).show()
+                                    }
+                                    if (counter == mFileList.size) {
+                                        for (i in 0..mFileList.size - 1) mFileList[i].path = savedImageUri[i]
+
+                                        val data = hashMapOf<String, Any>(
+                                            "name" to etMaterialSubjectAddTitle.text.toString(),
+                                            "date" to Timestamp(Date())
+                                        )
+                                        db.collection("material_subjects").document(subjectId!!)
+                                            .collection("subject_sections")
+                                            .add(data).addOnSuccessListener {
+                                                sectionId = it.id
+                                                mFileList.forEach {
+                                                    val file = hashMapOf<String, Any>(
+                                                        "title" to it.fileName,
+                                                        "category" to it.category,
+                                                        "path" to it.path!!
+                                                    )
+                                                    db.collection("material_subjects").document(subjectId!!)
+                                                        .collection("subject_sections").document(sectionId!!)
+                                                        .collection("files")
+                                                        .add(file)
+                                                }
+                                                DataDummy.materialFileData.clear()
+                                                loading.visibility = View.GONE
+                                                finish()
+                                            }.addOnFailureListener {
+                                                loading.visibility = View.GONE
+                                                Log.d("TAG", "Material failed to be inserted")
+                                            }
+                                    }
+                                }
+                            } else {
+                                counter++
+                            }
+                        }
+                }
             }
         }
 
@@ -325,13 +451,13 @@ class MaterialSubjectAddActivity : AppCompatActivity() {
             view.clBottomClassDetailAttachmentPhoto.setOnClickListener {
                 bottomSheetDialog.dismiss()
                 val fileIntent = Intent(Intent.ACTION_GET_CONTENT)
-                fileIntent.type = "*/*"
+                fileIntent.type = "video/*"
                 startActivityForResult(fileIntent, 10)
             }
             view.clBottomSheetClassDetailAttachmentFile.setOnClickListener {
                 bottomSheetDialog.dismiss()
                 val fileIntent = Intent(Intent.ACTION_GET_CONTENT)
-                fileIntent.type = "*/*"
+                fileIntent.type = "application/*"
                 startActivityForResult(fileIntent, 11)
             }
             view.clBottomSheetClassDetailAttachmentLink.setOnClickListener {
@@ -340,7 +466,8 @@ class MaterialSubjectAddActivity : AppCompatActivity() {
                 val view = layoutInflater.inflate(R.layout.alert_edit_text, null)
 
                 view.tvAlertEditText.text = "Link"
-                view.etAlertEditText.hint = "Masukkan link"
+//                view.etAlertEditText.hint = "Masukkan link"
+                view.tilAlertEditText.hint = "Masukkan link"
 
                 bottomSheetDialog.dismiss()
                 builder.setView(view)
@@ -350,8 +477,8 @@ class MaterialSubjectAddActivity : AppCompatActivity() {
                 builder.setPositiveButton("LAMPIRKAN") { dialog, which ->
                     val link = view.etAlertEditText?.text.toString()
                     DataDummy.materialFileData.add(ClassDetailAttachmentDao(link, 0))
-                    insertFile(view, link)
-//                    checkAttachmentEmpty()
+                    insertFile()
+                    checkEmpty()
                 }
 
                 val dialog: AlertDialog = builder.create()
@@ -398,21 +525,38 @@ class MaterialSubjectAddActivity : AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        val view = layoutInflater.inflate(R.layout.item_attachment, null)
-        var path = data?.data?.path ?: ""
+        fileName = data?.data!!.path.toString()
         if (resultCode == RESULT_OK) {
             when (requestCode) {
                 10 -> {
-                    DataDummy.materialFileData.add(ClassDetailAttachmentDao(path, 1))
-                    insertFile(view, path)
+                    filePath = data.data!!.toString() // URI
+                    DataDummy.materialFileData.add(
+                        ClassDetailAttachmentDao(
+                            filePath,
+                            1,
+                            "",
+                            "",
+                            "",
+                            "",
+                            fileName.substringAfterLast("/")
+                        )
+                    )
+                    insertFile()
                 }
                 11 -> {
-                    DataDummy.materialFileData.add(ClassDetailAttachmentDao(path, 2))
-                    insertFile(view, path)
-                }
-                else -> {
-                    val bp = (data?.extras?.get("data")) as Bitmap
-//            blabla.setImageBitmap(bp)
+                    filePath = data.data!!.toString() // URI
+                    DataDummy.materialFileData.add(
+                        ClassDetailAttachmentDao(
+                            filePath,
+                            2,
+                            "",
+                            "",
+                            "",
+                            "",
+                            fileName.substringAfterLast("/")
+                        )
+                    )
+                    insertFile()
                 }
             }
         }
@@ -420,7 +564,6 @@ class MaterialSubjectAddActivity : AppCompatActivity() {
     }
 
     private fun initRecycler() {
-        mFileList.clear()
         DataDummy.materialFileData.clear()
         mFileAdapter = ClassDetailAttachmentAdapter(mFileList)
         rvMaterialSubjectAddAttachment.apply {
@@ -489,11 +632,10 @@ class MaterialSubjectAddActivity : AppCompatActivity() {
         }
     }
 
-    private fun insertFile(view: View, path: String) {
+    private fun insertFile() {
         mFileList.clear()
         mFileList.addAll(DataDummy.materialFileData)
         mFileAdapter.notifyDataSetChanged()
-        view.tvItemAttachment?.text = path
         checkEmpty()
     }
 
