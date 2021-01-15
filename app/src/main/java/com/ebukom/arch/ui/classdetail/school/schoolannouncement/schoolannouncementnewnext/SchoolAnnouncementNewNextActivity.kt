@@ -12,6 +12,7 @@ import android.os.Bundle
 import android.util.Base64
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ebukom.R
@@ -146,89 +147,42 @@ class SchoolAnnouncementNewNextActivity : AppCompatActivity(),
             }
         }
 
-        /********************************************************/
-//        attachmentList.forEach { list ->
-//            var fileName = list.fileName
-//            var fileUri = Uri.parse(list.path)
-//
-//            // Storage references
-//            if (list.category == 1) { // photo
-//                storageReference = FirebaseStorage.getInstance()
-//                    .getReference("images/announcement/${fileName}")
-//            } else if (list.category == 2) { // file
-//                storageReference =
-//                    FirebaseStorage.getInstance().reference.child("files/announcement/${fileName}")
-//            } else {
-//
-//            }
-//            // Upload and get the download URL
-//            val uploadTask = storageReference.putFile(fileUri)
-//            val task = uploadTask.continueWithTask { task ->
-//                if (!task.isSuccessful) Log.d(
-//                    "AnnouncementNewNext",
-//                    "Successfully uploaded"
-//                )
-//                storageReference.downloadUrl
-//            }.addOnCompleteListener { task ->
-//                if (task.isSuccessful) {
-//                    val downloadUri = task.result
-//                    val url = downloadUri.toString()
-//                        .substring(0, downloadUri.toString().indexOf("&token"))
-//                    Log.d("DIRECTLINK", url)
-//                    list.path = url
-//                }
-//            }
-//        }
-        /********************************************************/
-
-        for (i in 0..(attachmentList.size - 1)) {
-            if (attachmentList[i].category == 1) {
-                storageReference = FirebaseStorage.getInstance()
-                    .getReference("images/announcement/${attachmentList[i].fileName}")
-            } else if (attachmentList[i].category == 2) {
-                storageReference =
-                    FirebaseStorage.getInstance().reference.child("files/announcement/${attachmentList[i].fileName}")
-            } else {
-
-            }
-
-            // Upload and get the download URL
-            storageReference.putFile(Uri.parse(attachmentList[i].path))
-                .addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        storageReference.downloadUrl.addOnCompleteListener {
-                            counter++
-                            if (task.isSuccessful) {
-                                val downloadUri = task.result
-                                val url = downloadUri.toString()
-                                    .substring(0, downloadUri.toString().indexOf("&token"))
-                                savedImageUri.add(url)
-//                                attachmentList[i].path = url
-                                Log.d("DIRECTLINK", url)
-                            } else {
-                                counter++
-                            }
-                            if (counter == attachmentList.size) {
-                                saveDataToFirestore()
-                            }
-                        }
-                        Log.d(
-                            "AnnouncementNewNext",
-                            "Successfully uploaded"
-                        )
-                    }
-                }
-        }
-
-
-        /********************************************************/
-
         // Share announcement button
         btnSchoolAnnouncementNewNextDone.setOnClickListener {
-            saveDataToFirestore()
+            for (i in 0..(attachmentList.size - 1)) {
+                if (attachmentList[i].category == 1) {
+                    storageReference = FirebaseStorage.getInstance()
+                        .getReference("images/announcement/${attachmentList[i].fileName}")
+                } else if (attachmentList[i].category == 2) {
+                    storageReference =
+                        FirebaseStorage.getInstance().reference.child("files/announcement/${attachmentList[i].fileName}")
+                } else {
+
+                }
+
+                // Upload and get the download URL
+                storageReference.putFile(Uri.parse(attachmentList[i].path))
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            storageReference.downloadUrl.addOnSuccessListener {
+                                counter++
+                                if (task.isSuccessful) {
+                                    savedImageUri.add(it.toString())
+                                } else {
+                                    storageReference.delete()
+                                    Toast.makeText(this, "Couldn't save " + attachmentList[i].fileName, Toast.LENGTH_LONG).show()
+                                }
+                                if (counter == attachmentList.size) {
+                                    saveDataToFirestore()
+                                }
+                            }
+                        } else {
+                            counter++
+                        }
+                    }
+            }
         }
     }
-
 
     private fun initRecycler() {
         // Load classes joined data
@@ -247,11 +201,11 @@ class SchoolAnnouncementNewNextActivity : AppCompatActivity(),
     }
 
     fun saveDataToFirestore() {
+        for (i in 0..attachmentList.size - 1) attachmentList[i].path = savedImageUri[i]
+
         val sharePref = getSharedPreferences("EBUKOM", Context.MODE_PRIVATE)
         val uid = sharePref.getString("uid", "") as String
         val teacherName = sharePref.getString("name", "") as String
-
-        for (i in 0..attachmentList.size) attachmentList[i].path = savedImageUri[i]
         val data = hashMapOf(
             "content" to content,
             "teacher" to mapOf<String, Any>(
