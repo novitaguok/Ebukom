@@ -53,7 +53,7 @@ class ClassDetailTemplateAdapter(
             itemView.tvItemTemplate.text = data.title
             itemView.tvItemTemplate.setOnClickListener {
                 if (context is SchoolAnnouncementNewActivity) (context as SchoolAnnouncementNewActivity).setText(data.title, Html.fromHtml(data.content).toString())
-                else (context as PersonalNoteNewActivity).setText(data.title, data.content)
+                else (context as PersonalNoteNewActivity).setText(data.content)
             }
         }
     }

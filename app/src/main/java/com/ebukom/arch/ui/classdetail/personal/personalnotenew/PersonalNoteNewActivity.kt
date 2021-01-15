@@ -34,7 +34,6 @@ import kotlinx.android.synthetic.main.alert_edit_text.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_class_detail_attachment.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_class_detail_school_announcement_template.view.*
 import kotlinx.android.synthetic.main.fragment_personal_sent_note.*
-import kotlinx.android.synthetic.main.item_attachment.view.*
 
 class PersonalNoteNewActivity : AppCompatActivity() {
 
@@ -155,14 +154,16 @@ class PersonalNoteNewActivity : AppCompatActivity() {
 
                 view.clBottomClassDetailAttachmentPhoto.setOnClickListener {
                     bottomSheetDialog.dismiss()
-                    val fileIntent = Intent(Intent.ACTION_GET_CONTENT)
-                    fileIntent.type = "*/*"
+                    val fileIntent = Intent(Intent.ACTION_GET_CONTENT).apply {
+                        type = "image/*"
+                    }
                     startActivityForResult(fileIntent, 10)
                 }
                 view.clBottomSheetClassDetailAttachmentFile.setOnClickListener {
                     bottomSheetDialog.dismiss()
-                    val fileIntent = Intent(Intent.ACTION_GET_CONTENT)
-                    fileIntent.type = "*/*"
+                    val fileIntent = Intent(Intent.ACTION_GET_CONTENT).apply {
+                        type = "application/*"
+                    }
                     startActivityForResult(fileIntent, 11)
                 }
                 view.clBottomSheetClassDetailAttachmentLink.setOnClickListener {
@@ -285,7 +286,6 @@ class PersonalNoteNewActivity : AppCompatActivity() {
         mAttachmentAdapter.notifyDataSetChanged()
         mAttachmentList.clear()
         mAttachmentList.addAll(DataDummy.noteAttachmentData)
-        view.tvItemAttachment?.text = path
 
         checkAttachmentEmpty()
     }
@@ -334,7 +334,7 @@ class PersonalNoteNewActivity : AppCompatActivity() {
         )
     }
 
-    fun setText(announcementTitle: String, noteContent: String) {
+    fun setText(noteContent: String) {
         etPersonalNoteNewContent.setText(noteContent)
         bottomSheetDialog.dismiss()
 

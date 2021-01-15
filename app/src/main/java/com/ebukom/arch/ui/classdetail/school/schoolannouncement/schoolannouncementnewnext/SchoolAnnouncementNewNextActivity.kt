@@ -4,35 +4,32 @@ import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.content.SharedPreferences
+import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.util.Base64
 import android.util.Log
 import android.view.View
-import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ebukom.R
 import com.ebukom.arch.dao.ClassDetailAttachmentDao
 import com.ebukom.arch.dao.ClassDetailItemCheckDao
 import com.ebukom.arch.ui.classdetail.ClassDetailCheckAdapter
-import com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementmainpage.SchoolAnnouncementActivity
-import com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementnew.SchoolAnnouncementNewActivity
+import com.google.android.gms.common.util.Base64Utils.decode
 import com.google.firebase.Timestamp
-import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
-import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
-import com.google.firebase.storage.UploadTask
-import com.google.firebase.storage.ktx.storage
 import com.kunzisoft.switchdatetime.SwitchDateTimeDialogFragment
 import kotlinx.android.synthetic.main.activity_school_announcement_new_next.*
 import kotlinx.android.synthetic.main.activity_school_announcement_new_next.loading
 import kotlinx.android.synthetic.main.activity_school_announcement_new_next.toolbar
 import timber.log.Timber
-import java.io.File
+import java.io.ByteArrayOutputStream
+import java.lang.Byte.decode
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
@@ -49,6 +46,9 @@ class SchoolAnnouncementNewNextActivity : AppCompatActivity(),
     lateinit var attachmentList: List<ClassDetailAttachmentDao>
     lateinit var sharePref: SharedPreferences
     lateinit var storageReference: StorageReference
+    var savedImageUri = arrayListOf<String>()
+    var counter = 0
+
     var classId: String? = ""
     var dateTime: String = ""
     var filePath: String? = null
@@ -146,84 +146,89 @@ class SchoolAnnouncementNewNextActivity : AppCompatActivity(),
             }
         }
 
+        /********************************************************/
+//        attachmentList.forEach { list ->
+//            var fileName = list.fileName
+//            var fileUri = Uri.parse(list.path)
+//
+//            // Storage references
+//            if (list.category == 1) { // photo
+//                storageReference = FirebaseStorage.getInstance()
+//                    .getReference("images/announcement/${fileName}")
+//            } else if (list.category == 2) { // file
+//                storageReference =
+//                    FirebaseStorage.getInstance().reference.child("files/announcement/${fileName}")
+//            } else {
+//
+//            }
+//            // Upload and get the download URL
+//            val uploadTask = storageReference.putFile(fileUri)
+//            val task = uploadTask.continueWithTask { task ->
+//                if (!task.isSuccessful) Log.d(
+//                    "AnnouncementNewNext",
+//                    "Successfully uploaded"
+//                )
+//                storageReference.downloadUrl
+//            }.addOnCompleteListener { task ->
+//                if (task.isSuccessful) {
+//                    val downloadUri = task.result
+//                    val url = downloadUri.toString()
+//                        .substring(0, downloadUri.toString().indexOf("&token"))
+//                    Log.d("DIRECTLINK", url)
+//                    list.path = url
+//                }
+//            }
+//        }
+        /********************************************************/
+
+        for (i in 0..(attachmentList.size - 1)) {
+            if (attachmentList[i].category == 1) {
+                storageReference = FirebaseStorage.getInstance()
+                    .getReference("images/announcement/${attachmentList[i].fileName}")
+            } else if (attachmentList[i].category == 2) {
+                storageReference =
+                    FirebaseStorage.getInstance().reference.child("files/announcement/${attachmentList[i].fileName}")
+            } else {
+
+            }
+
+            // Upload and get the download URL
+            storageReference.putFile(Uri.parse(attachmentList[i].path))
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
+                        storageReference.downloadUrl.addOnCompleteListener {
+                            counter++
+                            if (task.isSuccessful) {
+                                val downloadUri = task.result
+                                val url = downloadUri.toString()
+                                    .substring(0, downloadUri.toString().indexOf("&token"))
+                                savedImageUri.add(url)
+//                                attachmentList[i].path = url
+                                Log.d("DIRECTLINK", url)
+                            } else {
+                                counter++
+                            }
+                            if (counter == attachmentList.size) {
+                                saveDataToFirestore()
+                            }
+                        }
+                        Log.d(
+                            "AnnouncementNewNext",
+                            "Successfully uploaded"
+                        )
+                    }
+                }
+        }
+
+
+        /********************************************************/
+
         // Share announcement button
         btnSchoolAnnouncementNewNextDone.setOnClickListener {
-            val sharePref = getSharedPreferences("EBUKOM", Context.MODE_PRIVATE)
-            val uid = sharePref.getString("uid", "") as String
-            val teacherName = sharePref.getString("name", "") as String
-
-            attachmentList.forEach { list ->
-                var fileName = list.fileName
-                var fileUri = Uri.parse(list.path)
-
-                // Storage references
-                if (list.category == 1) { // photo
-                    storageReference = FirebaseStorage.getInstance()
-                        .getReference("images/announcement/${fileName}")
-                } else if (list.category == 2) { // file
-                    storageReference =
-                        FirebaseStorage.getInstance().reference.child("files/announcement/${fileName}")
-                } else if (list.category == 3) { // video
-                    storageReference =
-                        FirebaseStorage.getInstance().reference.child("videos/announcement/${fileName}")
-                } else {
-
-                }
-
-                // Upload and get the download URL
-                val uploadTask = storageReference.putFile(fileUri)
-                val task = uploadTask.continueWithTask { task ->
-                    if (!task.isSuccessful) Log.d(
-                        "SchoolAnnouncementNewNextActivity",
-                        "Successfully uploaded"
-                    )
-                    storageReference.downloadUrl
-                }.addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        val downloadUri = task.result
-                        val url = downloadUri.toString()
-                            .substring(0, downloadUri.toString().indexOf("&token"))
-                        Log.d("DIRECTLINK", url)
-                        list.path = url
-                    }
-
-                    val data = hashMapOf(
-                        "content" to content,
-                        "teacher" to mapOf<String, Any>(
-                            "name" to teacherName,
-                            "id" to uid
-                        ),
-                        "time" to Timestamp(Date()),
-                        "title" to title,
-                        "attachments" to attachmentList,
-                        "event_start" to eventStart,
-                        "event_end" to eventEnd
-                    )
-
-                    loading.visibility = View.VISIBLE
-                    mClassList.forEach {
-                        if (it.isChecked && !it.id.isNullOrEmpty()) {
-                            db.collection("classes").document(it.id!!).collection("announcements")
-                                .add(data).addOnCompleteListener {
-                                    if (it.isSuccessful) {
-                                        loading.visibility = View.GONE
-                                        val intent = Intent("finish_activity")
-                                        sendBroadcast(intent)
-                                        finish()
-                                    } else {
-                                        Log.d("TAG", "announcement inserted")
-                                        loading.visibility = View.GONE
-                                        val intent = Intent("finish_activity")
-                                        sendBroadcast(intent)
-                                        finish()
-                                    }
-                                }
-                        }
-                    }
-                }
-            }
+            saveDataToFirestore()
         }
     }
+
 
     private fun initRecycler() {
         // Load classes joined data
@@ -238,6 +243,47 @@ class SchoolAnnouncementNewNextActivity : AppCompatActivity(),
                     mClassList,
                     this@SchoolAnnouncementNewNextActivity
                 )
+        }
+    }
+
+    fun saveDataToFirestore() {
+        val sharePref = getSharedPreferences("EBUKOM", Context.MODE_PRIVATE)
+        val uid = sharePref.getString("uid", "") as String
+        val teacherName = sharePref.getString("name", "") as String
+
+        for (i in 0..attachmentList.size) attachmentList[i].path = savedImageUri[i]
+        val data = hashMapOf(
+            "content" to content,
+            "teacher" to mapOf<String, Any>(
+                "name" to teacherName,
+                "id" to uid
+            ),
+            "time" to Timestamp(Date()),
+            "title" to title,
+            "attachments" to attachmentList,
+            "event_start" to eventStart,
+            "event_end" to eventEnd
+        )
+
+        loading.visibility = View.VISIBLE
+        mClassList.forEach {
+            if (it.isChecked && !it.id.isNullOrEmpty()) {
+                db.collection("classes").document(it.id!!).collection("announcements")
+                    .add(data).addOnCompleteListener {
+                        if (it.isSuccessful) {
+                            loading.visibility = View.GONE
+                            val intent = Intent("finish_activity")
+                            sendBroadcast(intent)
+                            finish()
+                        } else {
+                            Log.d("TAG", "announcement inserted")
+                            loading.visibility = View.GONE
+                            val intent = Intent("finish_activity")
+                            sendBroadcast(intent)
+                            finish()
+                        }
+                    }
+            }
         }
     }
 

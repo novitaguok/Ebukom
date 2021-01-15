@@ -38,7 +38,7 @@
             <androidx.cardview.widget.CardView
                 android:id="@+id/cvPersonalNoteDetailNote"
                 android:layout_width="match_parent"
-                android:layout_height="235dp"
+                android:layout_height="wrap_content"
                 android:layout_marginHorizontal="5dp"
                 android:layout_marginTop="@dimen/size_8"
                 android:background="@color/colorWhite"
@@ -90,6 +90,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="@dimen/size_16"
+                        android:layout_marginBottom="@dimen/size_32"
                         android:lineHeight="@dimen/size_20"
                         android:paddingLeft="@dimen/size_10"
                         android:paddingRight="@dimen/size_10"
@@ -100,46 +101,19 @@
                         app:layout_constraintTop_toBottomOf="@+id/ivPersonalNoteDetailProfilePicture" />
 
                     <TextView
-                        android:id="@+id/tvPersonalNoteDetailMore"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="@dimen/size_36"
-                        android:lineHeight="@dimen/size_20"
-                        android:paddingLeft="@dimen/size_10"
-                        android:paddingRight="@dimen/size_10"
-                        android:text="Baca lebih lanjut"
-                        android:textColor="#3F3B5C"
-                        android:textSize="@dimen/text_14"
-                        app:layout_constraintBottom_toTopOf="@+id/tvPersonalNoteDetailComment"
-                        app:layout_constraintLeft_toLeftOf="parent" />
-
-                    <TextView
-                        android:id="@+id/tvPersonalNoteDetailComment"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/size_10"
-                        android:layout_marginTop="@dimen/size_36"
-                        android:layout_marginBottom="@dimen/size_20"
-                        android:lineHeight="@dimen/text_16"
-                        android:text="9 KOMENTAR"
-                        android:textColor="@color/colorRed"
-                        android:textFontWeight="500"
-                        android:textSize="@dimen/text_12"
-                        app:layout_constraintBottom_toBottomOf="parent"
-                        app:layout_constraintLeft_toLeftOf="parent"
-                        android:visibility="invisible"/>
-
-                    <TextView
                         android:id="@+id/tvPersonalNoteDetailTime"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/size_10"
                         android:layout_marginRight="@dimen/size_10"
+                        android:layout_marginTop="@dimen/size_32"
+                        android:layout_marginBottom="@dimen/size_24"
                         android:lineHeight="@dimen/text_20"
                         android:text="12.00 - Senin, 12 Maret 2020"
                         android:textColor="#7A7A7A"
                         android:textSize="@dimen/text_10"
-                        app:layout_constraintBottom_toBottomOf="@id/tvPersonalNoteDetailComment"
+                        app:layout_constraintTop_toBottomOf="@id/tvPersonalNoteDetailContent"
+                        app:layout_constraintBottom_toBottomOf="parent"
                         app:layout_constraintRight_toRightOf="parent" />
 
                 </androidx.constraintlayout.widget.ConstraintLayout>

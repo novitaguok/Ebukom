@@ -13,6 +13,7 @@ import android.provider.MediaStore
 import android.text.Editable
 import android.text.Html
 import android.text.TextWatcher
+import android.util.Base64
 import android.util.Log
 import android.util.SparseIntArray
 import android.view.Menu
@@ -42,12 +43,15 @@ import com.github.dhaval2404.imagepicker.ImagePicker
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import kotlinx.android.synthetic.main.activity_school_anouncement_new.*
 import kotlinx.android.synthetic.main.activity_school_anouncement_new.toolbar
 import kotlinx.android.synthetic.main.alert_edit_text.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_class_detail_attachment.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_class_detail_school_announcement_template.view.*
 import timber.log.Timber
+import java.io.ByteArrayOutputStream
 import java.io.File
 import java.util.*
 
@@ -58,6 +62,7 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
     lateinit var mTemplateAdapter: ClassDetailTemplateAdapter
     lateinit var bottomSheetDialog: BottomSheetDialog
     lateinit var fileName: String
+    lateinit var storageReference: StorageReference
     var classId: String? = ""
     var announcementId: String? = ""
     var eventStart = Timestamp(Date())
@@ -65,6 +70,8 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
     var enabled = false
     var isSetTime = false
     var filePath: String? = null
+    var fileUri: Uri? = null
+    var image: Bitmap? = null
     val db = FirebaseFirestore.getInstance()
 
 
@@ -143,7 +150,7 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
                     var startMonthName = ""
                     var endMonthName = ""
 
-                    initRecycler()
+//                    initRecycler()
 
                     etSchoolAnnouncementNewTitle.setText(it["title"] as String)
                     etSchoolAnnouncementNewContent.setText(it["content"] as String)
@@ -335,9 +342,9 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
     }
 
     private fun initRecycler() {
-        /**
-         * Attachment list
-         */
+        // Attahcment list
+        DataDummy.announcementAttachmentData.clear()
+        mAttachmentList.clear()
         rvMaterialSubjectAddAttachment.apply {
             layoutManager = LinearLayoutManager(
                 this@SchoolAnnouncementNewActivity,
@@ -421,7 +428,7 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
                     }
                     builder.setPositiveButton("LAMPIRKAN") { dialog, which ->
                         val link = view.etAlertEditText?.text.toString()
-                        DataDummy.announcementAttachmentData.add(ClassDetailAttachmentDao(link, 0))
+                        DataDummy.announcementAttachmentData.add(ClassDetailAttachmentDao(link, 0, "", "", "", "", link))
                         insertAttachment()
                         checkEmpty()
                     }
@@ -447,7 +454,8 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
                 }
                 view.clBottomSheetClassDetailAttachmentUseCamera.setOnClickListener {
                     bottomSheetDialog.dismiss()
-                    openCamera()
+                    val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                    startActivityForResult(intent, 0)
                 }
                 bottomSheetDialog.show()
                 return true
@@ -463,12 +471,6 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
         toolbar.setNavigationOnClickListener {
             onBackPressed()
         }
-    }
-
-    fun openCamera() {
-        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-        if (intent.resolveActivity(this.packageManager) != null) startActivityForResult(intent, 0)
-        else Toast.makeText(this, "Unable to open camera", Toast.LENGTH_SHORT).show()
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -506,20 +508,24 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
                     insertAttachment()
                 }
                 else -> { // camera
-//                    val image =
-//                        MediaStore.Images.Media.getBitmap(contentResolver, Uri.parse(filePath))
-//                    DataDummy.announcementAttachmentData.add(
-//                        ClassDetailAttachmentDao(
-//                            filePath,
-//                            1,
-//                            "",
-//                            "",
-//                            "",
-//                            "",
-//                            fileName.substringAfterLast("/")
-//                        )
-//                    )
-//                    insertAttachment()
+                    image = data.extras?.get("data") as Bitmap
+
+                    val baos = ByteArrayOutputStream()
+                    image!!.compress(Bitmap.CompressFormat.PNG, 100, baos)
+                    val b = baos.toByteArray()
+                    filePath = Base64.encodeToString(b, Base64.DEFAULT)
+                    DataDummy.announcementAttachmentData.add(
+                        ClassDetailAttachmentDao(
+                            filePath,
+                            4,
+                            "",
+                            "",
+                            "",
+                            "",
+                            "IMAGE_" + Timestamp.now().toString() + ".png"
+                        )
+                    )
+                    insertAttachment()
                 }
             }
         }

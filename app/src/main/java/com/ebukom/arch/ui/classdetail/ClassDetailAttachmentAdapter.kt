@@ -2,6 +2,7 @@ package com.ebukom.arch.ui.classdetail
 
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -52,7 +53,15 @@ class ClassDetailAttachmentAdapter(private val data: List<ClassDetailAttachmentD
 
             itemView.clItemAttachment.setOnClickListener {
                 if (context is SchoolAnnouncementDetailActivity) {
-                    if (item.category == 1 || item.category == 2) {
+                    if (item.category == 0) {
+                        var url = item.path
+                        if (!url!!.startsWith("http://")) {
+                            url = "http://" + url
+                        }
+                        val intent = Intent(Intent.ACTION_VIEW)
+                        intent.data = Uri.parse(url)
+                        context.startActivity(intent)
+                    } else if (item.category == 1 || item.category == 2) {
                         val intent = Intent(
                             context as SchoolAnnouncementDetailActivity,
                             MaterialPreviewActivity::class.java
@@ -62,7 +71,7 @@ class ClassDetailAttachmentAdapter(private val data: List<ClassDetailAttachmentD
                         intent.putExtra("activity", "announcement")
                         intent.putExtra("category", item.category)
                         context.startActivity(intent)
-                    } else if (item.category == 2) {}
+                    }
                 }
 //                        (context as SchoolAnnouncementDetailActivity).filePreview(item.path)
             }
@@ -79,6 +88,9 @@ class ClassDetailAttachmentAdapter(private val data: List<ClassDetailAttachmentD
                 }
                 3 -> {
                     itemView.ivItemAttachment.setImageResource(R.drawable.ic_video_red)
+                }
+                else -> {
+                    itemView.ivItemAttachment.setImageResource(R.drawable.ic_photo_red)
                 }
             }
 

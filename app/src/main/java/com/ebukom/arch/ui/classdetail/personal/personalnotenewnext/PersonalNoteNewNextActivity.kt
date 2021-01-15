@@ -62,22 +62,9 @@ class PersonalNoteNewNextActivity : AppCompatActivity(), ClassDetailCheckAdapter
         if (level == 1L) {
             tvToolbarTitle.text = "Buat Catatan untuk Guru"
             tvPersonalNoteNewNextAllParent.text = "Semua Guru"
-
-            // Share Personal Note Button
-            btnPersonalNoteNewNextDone.setOnClickListener {
-                sendNote(content)
-            }
-        } else {
-            // Share Personal Note Button
-            btnPersonalNoteNewNextDone.setOnClickListener {
-                sendNote(content)
-            }
-
         }
 
-        /**
-         * Get parents data
-         */
+        // Get parents data
         db.collection("users").get().addOnSuccessListener {
             if (level == 0L) {
                 for (document in it!!.documents) {
@@ -110,6 +97,12 @@ class PersonalNoteNewNextActivity : AppCompatActivity(), ClassDetailCheckAdapter
             }
         }.addOnFailureListener {
             Timber.e(it)
+        }
+
+        cbPersonalNoteNewNextAllParent.setOnCheckedChangeListener { _, isChecked ->
+            if (isChecked) mParentList.forEach { it.isChecked = true }
+            else mParentList.forEach { it.isChecked = false }
+            rvPersonalNoteNewNext.adapter?.notifyDataSetChanged()
         }
 
         // Alarm Dialog Box
@@ -160,10 +153,9 @@ class PersonalNoteNewNextActivity : AppCompatActivity(), ClassDetailCheckAdapter
             }
         }
 
-        cbPersonalNoteNewNextAllParent.setOnCheckedChangeListener { _, isChecked ->
-            if (isChecked) mParentList.forEach { it.isChecked = true }
-            else mParentList.forEach { it.isChecked = false }
-            rvPersonalNoteNewNext.adapter?.notifyDataSetChanged()
+        // Share Personal Note Button
+        btnPersonalNoteNewNextDone.setOnClickListener {
+            sendNote(content)
         }
     }
 
