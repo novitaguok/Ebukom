@@ -3,10 +3,12 @@ package com.ebukom.arch.ui.classdetail.personal.personalnotenewnext
 import android.content.Context
 import android.content.SharedPreferences
 import android.graphics.Color
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.view.View
+import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -21,6 +23,8 @@ import com.ebukom.arch.ui.classdetail.MainClassDetailActivity
 import com.ebukom.data.DataDummy
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
+import com.google.firebase.storage.StorageReference
 import com.kunzisoft.switchdatetime.SwitchDateTimeDialogFragment
 import kotlinx.android.synthetic.main.activity_personal_note_new.*
 import kotlinx.android.synthetic.main.activity_personal_note_new_next.*
@@ -36,10 +40,13 @@ class PersonalNoteNewNextActivity : AppCompatActivity(), ClassDetailCheckAdapter
     lateinit var mParentAdapter: ClassDetailCheckThumbnailAdapter
     lateinit var content: String
     lateinit var dateTime: String
+    lateinit var storageReference: StorageReference
     var attachments: List<ClassDetailAttachmentDao> = arrayListOf()
+    var savedImageUri = arrayListOf<String>()
     val db = FirebaseFirestore.getInstance()
     var nm: String? = null
     var lev: Long = 0L
+    var counter = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -155,11 +162,43 @@ class PersonalNoteNewNextActivity : AppCompatActivity(), ClassDetailCheckAdapter
 
         // Share Personal Note Button
         btnPersonalNoteNewNextDone.setOnClickListener {
-            sendNote(content)
+            for (i in 0..(attachments.size - 1)) {
+                if (attachments[i].category == 1) {
+                    storageReference = FirebaseStorage.getInstance()
+                        .getReference("images/note/${attachments[i].fileName}")
+                } else if (attachments[i].category == 2) {
+                    storageReference =
+                        FirebaseStorage.getInstance().reference.child("files/note/${attachments[i].fileName}")
+                } else {
+
+                }
+
+                // Upload and get the download URL
+                storageReference.putFile(Uri.parse(attachments[i].path))
+                    .addOnCompleteListener { task ->
+                        if (task.isSuccessful) {
+                            storageReference.downloadUrl.addOnSuccessListener {
+                                counter++
+                                if (task.isSuccessful) {
+                                    savedImageUri.add(it.toString())
+                                } else {
+                                    storageReference.delete()
+                                    Toast.makeText(this, "Couldn't save " + attachments[i].fileName, Toast.LENGTH_LONG).show()
+                                }
+                                if (counter == attachments.size) {
+                                    saveDataToFirestore()
+                                }
+                            }
+                        } else {
+                            counter++
+                        }
+                    }
+            }
         }
     }
 
     private fun initRecycler() {
+        DataDummy.noteAttachmentData.clear()
         mParentAdapter =
             ClassDetailCheckThumbnailAdapter(mParentList, this@PersonalNoteNewNextActivity)
         rvPersonalNoteNewNext.apply {
@@ -172,14 +211,20 @@ class PersonalNoteNewNextActivity : AppCompatActivity(), ClassDetailCheckAdapter
         }
     }
 
-    private fun sendNote(content: String) {
+    private fun saveDataToFirestore() {
+        for (i in 0..attachments.size - 1) attachments[i].path = savedImageUri[i]
+
+        val sharePref: SharedPreferences = getSharedPreferences("EBUKOM", Context.MODE_PRIVATE)
+        val uid = sharePref.getString("uid", "") as String
+        var data = hashMapOf<String, Any>()
+
         mParentList.forEach {
             if (it.isChecked) {
                 DataDummy.noteSentData.add(
                     ClassDetailPersonalNoteDao(
                         R.drawable.bg_solid_gray,
                         it.name,
-                        getString(R.string.announcement_content),
+                        content,
                         arrayListOf(),
                         dateTime,
                         attachments
@@ -189,9 +234,6 @@ class PersonalNoteNewNextActivity : AppCompatActivity(), ClassDetailCheckAdapter
             }
         }
 
-        val sharePref: SharedPreferences = getSharedPreferences("EBUKOM", Context.MODE_PRIVATE)
-        val uid = sharePref.getString("uid", "") as String
-        var data = hashMapOf<String, Any>()
         if (lev == 0L) {
             data = hashMapOf(
                 "content" to content,

@@ -62,7 +62,6 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
     lateinit var mTemplateAdapter: ClassDetailTemplateAdapter
     lateinit var bottomSheetDialog: BottomSheetDialog
     lateinit var fileName: String
-    lateinit var storageReference: StorageReference
     var classId: String? = ""
     var announcementId: String? = ""
     var eventStart = Timestamp(Date())
@@ -70,7 +69,6 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
     var enabled = false
     var isSetTime = false
     var filePath: String? = null
-    var fileUri: Uri? = null
     var image: Bitmap? = null
     val db = FirebaseFirestore.getInstance()
 
@@ -404,13 +402,13 @@ class SchoolAnnouncementNewActivity : AppCompatActivity() {
                 view.clBottomClassDetailAttachmentPhoto.setOnClickListener {
                     bottomSheetDialog.dismiss()
                     val fileIntent = Intent(Intent.ACTION_GET_CONTENT)
-                    fileIntent.type = "*/*"
+                    fileIntent.type = "image/*"
                     startActivityForResult(fileIntent, 10)
                 }
                 view.clBottomSheetClassDetailAttachmentFile.setOnClickListener {
                     bottomSheetDialog.dismiss()
                     val fileIntent = Intent(Intent.ACTION_GET_CONTENT)
-                    fileIntent.type = "*/*"
+                    fileIntent.type = "application/*"
                     startActivityForResult(fileIntent, 11)
                 }
                 view.clBottomSheetClassDetailAttachmentLink.setOnClickListener {

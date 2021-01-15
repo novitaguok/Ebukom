@@ -43,6 +43,8 @@ class PersonalNoteNewActivity : AppCompatActivity() {
     private val mTemplateList: ArrayList<ClassDetailTemplateTextDao> = arrayListOf()
     lateinit var mTemplateAdapter: ClassDetailTemplateAdapter
     lateinit var bottomSheetDialog: BottomSheetDialog
+    lateinit var fileName: String
+    var filePath: String? = null
     val db = FirebaseFirestore.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -182,8 +184,7 @@ class PersonalNoteNewActivity : AppCompatActivity() {
                     builder.setPositiveButton("LAMPIRKAN") { dialog, which ->
                         val link = view.etAlertEditText?.text.toString()
                         DataDummy.announcementAttachmentData.add(ClassDetailAttachmentDao(link, 0))
-                        insertAttachment(view, link)
-
+                        insertAttachment()
                         checkAttachmentEmpty()
                     }
 
@@ -260,18 +261,33 @@ class PersonalNoteNewActivity : AppCompatActivity() {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        val view = layoutInflater.inflate(R.layout.item_attachment, null)
-        var path = data?.data?.path ?: ""
-
+        fileName = data?.data!!.path.toString()
         if (resultCode == RESULT_OK) {
             when (requestCode) {
                 10 -> {
-                    DataDummy.noteAttachmentData.add(ClassDetailAttachmentDao(path, 1))
-                    insertAttachment(view, path)
+                    filePath = data.data!!.toString()
+                    DataDummy.noteAttachmentData.add(
+                        ClassDetailAttachmentDao(
+                            filePath, 1, "",
+                            "",
+                            "",
+                            "",
+                            fileName.substringAfterLast("/")
+                        )
+                    )
+                    insertAttachment()
                 }
                 11 -> {
-                    DataDummy.noteAttachmentData.add(ClassDetailAttachmentDao(path, 2))
-                    insertAttachment(view, path)
+                    DataDummy.noteAttachmentData.add(
+                        ClassDetailAttachmentDao(
+                            filePath, 2, "",
+                            "",
+                            "",
+                            "",
+                            fileName.substringAfterLast("/")
+                        )
+                    )
+                    insertAttachment()
                 }
                 else -> {
                     val bp = (data?.extras?.get("data")) as Bitmap
@@ -282,11 +298,10 @@ class PersonalNoteNewActivity : AppCompatActivity() {
         super.onActivityResult(requestCode, resultCode, data)
     }
 
-    private fun insertAttachment(view: View, path: String) {
+    private fun insertAttachment() {
         mAttachmentAdapter.notifyDataSetChanged()
         mAttachmentList.clear()
         mAttachmentList.addAll(DataDummy.noteAttachmentData)
-
         checkAttachmentEmpty()
     }
 

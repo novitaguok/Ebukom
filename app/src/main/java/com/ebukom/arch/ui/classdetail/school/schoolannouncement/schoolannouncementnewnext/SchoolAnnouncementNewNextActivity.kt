@@ -49,7 +49,6 @@ class SchoolAnnouncementNewNextActivity : AppCompatActivity(),
     lateinit var storageReference: StorageReference
     var savedImageUri = arrayListOf<String>()
     var counter = 0
-
     var classId: String? = ""
     var dateTime: String = ""
     var filePath: String? = null
@@ -224,14 +223,13 @@ class SchoolAnnouncementNewNextActivity : AppCompatActivity(),
             if (it.isChecked && !it.id.isNullOrEmpty()) {
                 db.collection("classes").document(it.id!!).collection("announcements")
                     .add(data).addOnCompleteListener {
+                        loading.visibility = View.GONE
                         if (it.isSuccessful) {
-                            loading.visibility = View.GONE
                             val intent = Intent("finish_activity")
                             sendBroadcast(intent)
                             finish()
                         } else {
                             Log.d("TAG", "announcement inserted")
-                            loading.visibility = View.GONE
                             val intent = Intent("finish_activity")
                             sendBroadcast(intent)
                             finish()
