@@ -73,7 +73,7 @@ class PersonalSentNoteFragment : Fragment() {
                                 0,
                                 "",
                                 document["content"] as String,
-                                arrayListOf<ClassDetailAnnouncementCommentDao>(),
+                                arrayListOf(),
                                 document["time"] as String,
                                 arrayListOf(),
                                 document.id

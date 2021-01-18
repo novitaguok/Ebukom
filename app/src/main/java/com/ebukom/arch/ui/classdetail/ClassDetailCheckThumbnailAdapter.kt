@@ -32,7 +32,7 @@ class ClassDetailCheckThumbnailAdapter(
         holder.view.ivItemCheckThumbnailProfilePicture.setImageResource(R.drawable.ic_notification)
         holder.view.cbItemCheckThumbnail.isChecked = list[position].isChecked
 
-        if (position == list?.size - 1) {
+        if (position == list.size - 1) {
             holder.view.vItemCheckThumbnail.visibility = View.INVISIBLE
         }
     }

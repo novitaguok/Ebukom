@@ -162,37 +162,129 @@ class PersonalNoteNewNextActivity : AppCompatActivity(), ClassDetailCheckAdapter
 
         // Share Personal Note Button
         btnPersonalNoteNewNextDone.setOnClickListener {
-            for (i in 0..(attachments.size - 1)) {
-                if (attachments[i].category == 1) {
-                    storageReference = FirebaseStorage.getInstance()
-                        .getReference("images/note/${attachments[i].fileName}")
-                } else if (attachments[i].category == 2) {
-                    storageReference =
-                        FirebaseStorage.getInstance().reference.child("files/note/${attachments[i].fileName}")
-                } else {
+            if (attachments.size != 0) {
+                for (i in 0..(attachments.size - 1)) {
+                    if (attachments[i].category == 1) {
+                        storageReference = FirebaseStorage.getInstance()
+                            .getReference("images/note/${attachments[i].fileName}")
+                    } else if (attachments[i].category == 2) {
+                        storageReference =
+                            FirebaseStorage.getInstance().reference.child("files/note/${attachments[i].fileName}")
+                    } else {
 
+                    }
+
+                    // Upload and get the download URL
+                    storageReference.putFile(Uri.parse(attachments[i].path))
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                storageReference.downloadUrl.addOnSuccessListener {
+                                    counter++
+                                    if (task.isSuccessful) {
+                                        savedImageUri.add(it.toString())
+                                    } else {
+                                        storageReference.delete()
+                                        Toast.makeText(
+                                            this,
+                                            "Couldn't save " + attachments[i].fileName,
+                                            Toast.LENGTH_LONG
+                                        ).show()
+                                    }
+                                    if (counter == attachments.size) {
+                                        saveDataToFirestore()
+                                    }
+                                }
+                            } else {
+                                counter++
+                            }
+                        }
+                }
+            } else {
+                val sharePref: SharedPreferences = getSharedPreferences("EBUKOM", Context.MODE_PRIVATE)
+                val uid = sharePref.getString("uid", "") as String
+                var data = hashMapOf<String, Any>()
+
+                mParentList.forEach {
+                    if (it.isChecked) {
+                        DataDummy.noteSentData.add(
+                            ClassDetailPersonalNoteDao(
+                                R.drawable.bg_solid_gray,
+                                it.name,
+                                content,
+                                arrayListOf(),
+                                dateTime,
+                                attachments
+                            )
+                        )
+                        it.isChecked = false
+                    }
                 }
 
-                // Upload and get the download URL
-                storageReference.putFile(Uri.parse(attachments[i].path))
-                    .addOnCompleteListener { task ->
-                        if (task.isSuccessful) {
-                            storageReference.downloadUrl.addOnSuccessListener {
-                                counter++
-                                if (task.isSuccessful) {
-                                    savedImageUri.add(it.toString())
-                                } else {
-                                    storageReference.delete()
-                                    Toast.makeText(this, "Couldn't save " + attachments[i].fileName, Toast.LENGTH_LONG).show()
-                                }
-                                if (counter == attachments.size) {
-                                    saveDataToFirestore()
-                                }
-                            }
-                        } else {
-                            counter++
-                        }
-                    }
+                if (lev == 0L) {
+                    data = hashMapOf(
+                        "content" to content,
+                        "parent_ids" to mParentList.filter { it.isChecked }.map { it.userId },
+                        "profilePicture" to 0,
+                        "teacher_ids" to arrayListOf<String>(uid),
+                        "time" to tvPersonalNoteNewNextAlarmContent.text.toString(),
+                        "upload_time" to Timestamp(Date()),
+                        "attachments" to attachments
+                    )
+                } else {
+                    data = hashMapOf(
+                        "noteTitle" to nm!!,
+                        "content" to content,
+                        "parent_ids" to arrayListOf<String>(uid),
+                        "profilePicture" to 0,
+                        "teacher_ids" to mParentList.filter { it.isChecked }.map { it.userId },
+                        "time" to tvPersonalNoteNewNextAlarmContent.text.toString(),
+                        "upload_time" to Timestamp(Date()),
+                        "attachments" to attachments
+                    )
+                }
+
+                db.collection("notes").add(
+                    data
+                ).addOnSuccessListener {
+                    Log.d("PersonalNoteNewActivity", "Note sent successfully")
+                }.addOnFailureListener {
+                    Log.d("PersonalNoteNewActivity", "Note is failed to be sent")
+                }
+
+
+                // Send Notification
+                var notifData = hashMapOf<String, Any>(
+                    "body" to content,
+                    "title" to sharePref.getString("name","Teacher") as String,
+                    "date" to Timestamp(Date()),
+                    "pictures" to "",
+                    "from" to uid,
+                    "to" to mParentList.map { it.userId },
+                    "isRead" to false
+                )
+
+                db.collection("notifications").add(notifData)
+
+
+                val builder = AlertDialog.Builder(this@PersonalNoteNewNextActivity)
+
+                builder.setMessage("Catatan berhasil disampaikan ke Ibu Ratu Cinta")
+                builder.setPositiveButton("OK", null)
+
+                val dialog: AlertDialog = builder.create()
+                dialog.show()
+
+                val positiveButton = dialog.getButton(AlertDialog.BUTTON_POSITIVE)
+                positiveButton.setOnClickListener {
+                    dialog.dismiss()
+                    finish()
+                }
+                positiveButton.setTextColor(
+                    ContextCompat.getColor(
+                        applicationContext,
+                        R.color.colorSuperDarkBlue
+                    )
+                )
             }
         }
     }

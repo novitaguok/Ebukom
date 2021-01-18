@@ -1,10 +1,12 @@
 package com.ebukom.arch.ui.classdetail.material.materialsubject.materialsubjectfilepreview
 
+import android.content.Intent
 import android.graphics.Color
 import android.net.Uri
 import android.os.AsyncTask
 import android.os.Build
 import android.os.Bundle
+import android.os.Environment
 import android.view.View
 import android.widget.MediaController
 import androidx.annotation.RequiresApi
@@ -20,6 +22,7 @@ import kotlinx.android.synthetic.main.activity_material_preview.*
 import kotlinx.android.synthetic.main.activity_register_parent.toolbar
 import timber.log.Timber
 import java.io.BufferedInputStream
+import java.io.File
 import java.io.IOException
 import java.io.InputStream
 import java.net.HttpURLConnection
@@ -66,11 +69,18 @@ class MaterialPreviewActivity : AppCompatActivity() {
                     .centerCrop()
                     .into(ivMaterialPreview)
             } else if (category == 2) {
-                pdfView.visibility = View.VISIBLE
+//                pdfView.visibility = View.VISIBLE
                 ivMaterialPreviewClose.visibility = View.GONE
                 ivMaterialPreview.visibility = View.GONE
                 vvMaterialPreview.visibility = View.GONE
-                RetrivePDFfromUrl().execute(filePath)
+//                RetrivePDFfromUrl().execute(filePath)
+
+                val file = File(Environment.getExternalStorageDirectory().absolutePath)
+                val target = Intent(Intent.ACTION_VIEW)
+                target.setDataAndType(Uri.parse(filePath), "application/*")
+                target.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
+                val intent = Intent.createChooser(target, "Open File")
+                startActivity(intent)
             }
         } else {
             ivMaterialPreviewClose.visibility = View.GONE
@@ -84,10 +94,10 @@ class MaterialPreviewActivity : AppCompatActivity() {
                 vvMaterialPreview.setVideoURI(Uri.parse(filePath))
                 vvMaterialPreview.start()
             } else if (category == 2) {
-                pdfView.visibility = View.VISIBLE
+//                pdfView.visibility = View.VISIBLE
                 ivMaterialPreview.visibility = View.GONE
                 vvMaterialPreview.visibility = View.GONE
-                RetrivePDFfromUrl().execute(filePath)
+//                RetrivePDFfromUrl().execute(filePath)
             }
         }
 

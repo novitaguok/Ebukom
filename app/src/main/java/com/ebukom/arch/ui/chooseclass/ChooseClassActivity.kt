@@ -62,6 +62,7 @@ class ChooseClassActivity : AppCompatActivity() {
             builder.setMessage("Apakah Anda yakin ingin melakukan logout?")
             builder.setPositiveButton("LOGOUT") { dialog, which ->
                 sharePref.edit().remove("level").apply()
+                sharePref.edit().remove("uid").apply()
                 sharePref.edit().apply {
                     putBoolean("isLogin", false)
                 }.apply()

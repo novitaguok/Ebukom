@@ -3,6 +3,7 @@ package com.ebukom.arch.ui.classdetail
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import android.os.Environment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,6 +19,7 @@ import com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannounceme
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementedit.SchoolAnnouncementEditActivity
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementnew.SchoolAnnouncementNewActivity
 import kotlinx.android.synthetic.main.item_attachment.view.*
+import java.io.File
 
 class ClassDetailAttachmentAdapter(private val data: List<ClassDetailAttachmentDao>) :
     RecyclerView.Adapter<ClassDetailAttachmentAdapter.ViewHolder>() {
@@ -60,7 +62,7 @@ class ClassDetailAttachmentAdapter(private val data: List<ClassDetailAttachmentD
                         val intent = Intent(Intent.ACTION_VIEW)
                         intent.data = Uri.parse(url)
                         context.startActivity(intent)
-                    } else if (item.category == 1 || item.category == 2) {
+                    } else if (item.category == 1) {
                         val intent = Intent(
                             context as SchoolAnnouncementDetailActivity,
                             MaterialPreviewActivity::class.java
@@ -69,6 +71,10 @@ class ClassDetailAttachmentAdapter(private val data: List<ClassDetailAttachmentD
                         intent.putExtra("fileName", item.fileName)
                         intent.putExtra("activity", "announcement")
                         intent.putExtra("category", item.category)
+                        context.startActivity(intent)
+                    } else {
+                        val webpage = Uri.parse(item.path)
+                        val intent = Intent(Intent.ACTION_VIEW, webpage)
                         context.startActivity(intent)
                     }
                 } else {
@@ -80,7 +86,7 @@ class ClassDetailAttachmentAdapter(private val data: List<ClassDetailAttachmentD
                         val intent = Intent(Intent.ACTION_VIEW)
                         intent.data = Uri.parse(url)
                         context.startActivity(intent)
-                    } else if (item.category == 1 || item.category == 2) {
+                    } else if (item.category == 1) {
                         val intent = Intent(
                             context as MaterialSubjectAddActivity,
                             MaterialPreviewActivity::class.java
@@ -88,6 +94,10 @@ class ClassDetailAttachmentAdapter(private val data: List<ClassDetailAttachmentD
                         intent.putExtra("filePath", item.path)
                         intent.putExtra("fileName", item.fileName)
                         intent.putExtra("category", item.category)
+                        context.startActivity(intent)
+                    } else {
+                        val webpage = Uri.parse(item.path)
+                        val intent = Intent(Intent.ACTION_VIEW, webpage)
                         context.startActivity(intent)
                     }
                 }

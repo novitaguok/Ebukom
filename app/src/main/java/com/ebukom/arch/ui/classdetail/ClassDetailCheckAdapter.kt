@@ -30,7 +30,7 @@ class ClassDetailCheckAdapter(
 
         holder.view.cbItemCheck.isChecked = list[position].isChecked
 
-        if (position == list?.size - 1) {
+        if (position == list.size - 1) {
             holder.view.vItemCheck.visibility = View.INVISIBLE
         }
     }
