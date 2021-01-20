@@ -11,11 +11,13 @@ import com.ebukom.R
 import com.ebukom.arch.dao.ClassDetailMemberContactDao
 import com.ebukom.arch.ui.classdetail.OnMoreCallback
 import com.ebukom.arch.ui.classdetail.member.MemberContactAdapter
+import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.fragment_member_parent.*
 
 class MemberParentFragment : Fragment() {
     private val mContactList: ArrayList<ClassDetailMemberContactDao> = arrayListOf()
     private lateinit var mContactAdapter: MemberContactAdapter
+    val db = FirebaseFirestore.getInstance()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -26,8 +28,27 @@ class MemberParentFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        addData()
 
+        initRecycler()
+        db.collection("users").get().addOnSuccessListener {
+            for (data in it.documents) {
+                if ((data["level"] as Long).toInt() == 1) {
+                    mContactList.add(
+                        ClassDetailMemberContactDao(
+                            data["name"] as String,
+                            data["child"] as String,
+                            data["profilePic"] as String,
+                            data["phone"] as String
+                        )
+                    )
+                }
+            }
+            mContactAdapter.notifyDataSetChanged()
+        }
+        addData()
+    }
+
+    private fun initRecycler() {
         mContactAdapter = MemberContactAdapter(mContactList, callback, activity!!)
         rvMemberParent.apply {
             layoutManager =
@@ -41,15 +62,41 @@ class MemberParentFragment : Fragment() {
     }
 
     private fun addData() {
-        for (i in 0..10) {
-            mContactList.add(
-                ClassDetailMemberContactDao(
-                    "Eni Trikuswanti",
-                    "Julian Akbar",
-                    R.drawable.bg_solid_gray
-                )
+        mContactList.add(
+            ClassDetailMemberContactDao(
+                "Ade Andreansyah",
+                "Julian Akbar",
+                "https://cutewallpaper.org/21/anime-profile-pictures-boy/cartoon-and-anime-profile-pics-toon.pfps-Instagram-Profile-.jpg"
             )
-        }
+        )
+        mContactList.add(
+            ClassDetailMemberContactDao(
+                "Aqiel Hilman Maulandany",
+                "Hermawan",
+                "https://upload.wikimedia.org/wikipedia/commons/5/5f/Alberto_conversi_profile_pic.jpg"
+            )
+        )
+        mContactList.add(
+            ClassDetailMemberContactDao(
+                "Julita Pramani",
+                "Prita",
+                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRXMMdfGVo0DUO60HH2rPeiBySnx-93spUlmw&usqp=CAU"
+            )
+        )
+        mContactList.add(
+            ClassDetailMemberContactDao(
+                "Aditya Anhar",
+                "Gita Putri",
+                "https://p.favim.com/orig/2018/10/01/cartoon-profile-picture-cute-Favim.com-6346120.jpg"
+            )
+        )
+        mContactList.add(
+            ClassDetailMemberContactDao(
+                "Jordi Pangestu",
+                "Jihan Maulana",
+                "https://qph.fs.quoracdn.net/main-qimg-217015358349186e0e382cb15c5d7c63"
+            )
+        )
     }
 
     lateinit var callback: OnMoreCallback

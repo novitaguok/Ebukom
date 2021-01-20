@@ -13,6 +13,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.ebukom.R
 import com.ebukom.arch.dao.*
 import com.ebukom.arch.ui.chooseclass.ChooseClassAdapter
@@ -38,6 +39,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.firestore.CollectionReference
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_main_class_detail.*
+import kotlinx.android.synthetic.main.activity_material_preview.*
 import kotlinx.android.synthetic.main.activity_personal_note_detail.*
 import kotlinx.android.synthetic.main.bottom_sheet_choose_class.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_class_detail_header.view.*
@@ -72,25 +74,31 @@ class MainClassDetailActivity : AppCompatActivity(), OnMoreCallback {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main_class_detail)
 
-        ivClassHeaderNotificationBell.setOnClickListener {
-            startActivity(Intent(this, NotificationActivity::class.java))
-        }
-
-        ivClassHeaderProfilePicture.setOnClickListener {
-//            startActivity(Intent(this, EditProfileActivity::class.java))
-        }
-
         val sharePref: SharedPreferences = getSharedPreferences("EBUKOM", Context.MODE_PRIVATE)
+        val uid = sharePref.getString("uid", "") as String
         val schoolFragment = SchoolFragment()
         val personalFragment = PersonalFragment()
         val materialFragment = MaterialFragment()
         val memberFragment = MemberFragment()
-
-        classId = intent?.extras?.getString("classId")
         val className = intent?.extras?.getString("className") ?: ""
         val classNumber = intent?.extras?.getString("classNumber") ?: ""
+        classId = intent?.extras?.getString("classId")
+
         tvClassHeaderClassName.text = className
         tvClassHeaderClassNumber.text = classNumber
+        ivClassHeaderNotificationBell.setOnClickListener {
+            startActivity(Intent(this, NotificationActivity::class.java))
+        }
+        ivClassHeaderProfilePicture.setOnClickListener {
+//            startActivity(Intent(this, EditProfileActivity::class.java))
+        }
+        db.collection("users").document(uid).get().addOnSuccessListener {
+            val profilePic = it["profilePic"] as String
+            Glide.with(this)
+                .load(profilePic)
+                .centerCrop()
+                .into(ivClassHeaderProfilePicture)
+        }
 
         if (classId != null) {
             CLASS_ID = classId!!
@@ -128,7 +136,6 @@ class MainClassDetailActivity : AppCompatActivity(), OnMoreCallback {
         }
         mClassAdapter.notifyDataSetChanged()
 
-        val uid = sharePref.getString("uid", "") as String
         db.collection("classes").whereArrayContains("class_teacher_ids", uid)
             .addSnapshotListener { value, error ->
                 if (error != null) {

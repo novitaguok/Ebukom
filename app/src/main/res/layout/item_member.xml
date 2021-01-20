@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="@dimen/size_72">
 
-    <ImageView
+    <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/ivItemMember"
         android:layout_width="@dimen/size_40"
         android:layout_height="@dimen/size_40"
@@ -12,7 +12,7 @@
         android:src="@drawable/ic_notification"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <TextView
         android:id="@+id/tvItemMemberTeacher"
