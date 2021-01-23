@@ -82,9 +82,9 @@ fun ArrayList<ClassDetailPersonalNoteDao>.buildParentNoteDummy(context: Context)
 }
 
 fun ArrayList<ClassDetailItemCheckThumbnailDao>.buildParentNameDummy(): ArrayList<ClassDetailItemCheckThumbnailDao> {
-    this.add(ClassDetailItemCheckThumbnailDao("Jumaidah Estetika", "Guru Kelas 1 Aurora", R.drawable.ic_notification))
-    this.add(ClassDetailItemCheckThumbnailDao("Siti Nur Mudhaya", "Guru Kelas 1 Aurora", R.drawable.ic_notification))
-    this.add(ClassDetailItemCheckThumbnailDao("Rizki Azhar", "Guru Kelas 1 Aurora", R.drawable.ic_notification))
-    this.add(ClassDetailItemCheckThumbnailDao("Putri Tryatna", "Guru Kelas 1 Aurora", R.drawable.ic_notification))
+    this.add(ClassDetailItemCheckThumbnailDao("Jumaidah Estetika", "Guru Kelas 1 Aurora", ""))
+    this.add(ClassDetailItemCheckThumbnailDao("Siti Nur Mudhaya", "Guru Kelas 1 Aurora", ""))
+    this.add(ClassDetailItemCheckThumbnailDao("Rizki Azhar", "Guru Kelas 1 Aurora", ""))
+    this.add(ClassDetailItemCheckThumbnailDao("Putri Tryatna", "Guru Kelas 1 Aurora", ""))
     return this
 }

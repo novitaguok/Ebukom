@@ -66,9 +66,8 @@ class PersonalSentNoteFragment : Fragment() {
 
                     mNoteList.clear()
                     for (document in value!!.documents) {
-
                         val listUserIds = document["parent_ids"] as List<String>
-                        if (listUserIds.size == 1) {
+                        listUserIds.forEach {
                             val data = ClassDetailPersonalNoteDao(
                                 0,
                                 "",
@@ -99,7 +98,7 @@ class PersonalSentNoteFragment : Fragment() {
 //                                .addOnSuccessListener {
 //                                }
 
-                            db.collection("users").document(listUserIds[0]).get()
+                            db.collection("users").document(it).get()
                                 .addOnSuccessListener { user ->
                                     Log.d("DEBUG", "onViewCreated: " + user["name"].toString())
                                     if (user != null) {

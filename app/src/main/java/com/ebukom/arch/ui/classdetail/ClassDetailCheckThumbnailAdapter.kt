@@ -23,12 +23,12 @@ class ClassDetailCheckThumbnailAdapter(
     }
 
     override fun getItemCount(): Int {
-        return list?.size
+        return list.size
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        holder.view.tvItemCheckThumbnailName.text = list?.get(position)?.name
-        holder.view.tvItemCheckThumbnailDesc.text = list?.get(position)?.desc
+        holder.view.tvItemCheckThumbnailName.text = list.get(position)?.name
+        holder.view.tvItemCheckThumbnailDesc.text = list.get(position)?.desc
         holder.view.ivItemCheckThumbnailProfilePicture.setImageResource(R.drawable.ic_notification)
         holder.view.cbItemCheckThumbnail.isChecked = list[position].isChecked
 

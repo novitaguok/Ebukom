@@ -47,6 +47,7 @@ class PersonalNoteNewNextActivity : AppCompatActivity(), ClassDetailCheckAdapter
     var nm: String? = null
     var lev: Long = 0L
     var counter = 0
+    var profilePic = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,6 +59,7 @@ class PersonalNoteNewNextActivity : AppCompatActivity(), ClassDetailCheckAdapter
         dateTime = ""
 
         val sharePref: SharedPreferences = getSharedPreferences("EBUKOM", Context.MODE_PRIVATE)
+        val uid = sharePref.getString("uid", "") as String
         val level = sharePref.getLong("level", 0)
         val name = sharePref.getString("name", "")
         lev = level
@@ -71,6 +73,11 @@ class PersonalNoteNewNextActivity : AppCompatActivity(), ClassDetailCheckAdapter
             tvPersonalNoteNewNextAllParent.text = "Semua Guru"
         }
 
+        // Get current user profile picture
+        db.collection("users").document(uid).get().addOnSuccessListener {
+            profilePic = it["profilePic"] as String
+        }
+
         // Get parents data
         db.collection("users").get().addOnSuccessListener {
             if (level == 0L) {
@@ -80,7 +87,7 @@ class PersonalNoteNewNextActivity : AppCompatActivity(), ClassDetailCheckAdapter
                             ClassDetailItemCheckThumbnailDao(
                                 document["name"] as String,
                                 document["child"] as String,
-                                0,
+                                document["profilePic"] as String,
                                 userId = document.id
                             )
                         )
@@ -94,7 +101,7 @@ class PersonalNoteNewNextActivity : AppCompatActivity(), ClassDetailCheckAdapter
                             ClassDetailItemCheckThumbnailDao(
                                 document["name"] as String,
                                 document["role.className"] as String,
-                                0,
+                                document["profilePic"] as String,
                                 userId = document.id
                             )
                         )
@@ -204,27 +211,11 @@ class PersonalNoteNewNextActivity : AppCompatActivity(), ClassDetailCheckAdapter
                 val uid = sharePref.getString("uid", "") as String
                 var data = hashMapOf<String, Any>()
 
-                mParentList.forEach {
-                    if (it.isChecked) {
-                        DataDummy.noteSentData.add(
-                            ClassDetailPersonalNoteDao(
-                                R.drawable.bg_solid_gray,
-                                it.name,
-                                content,
-                                arrayListOf(),
-                                dateTime,
-                                attachments
-                            )
-                        )
-                        it.isChecked = false
-                    }
-                }
-
                 if (lev == 0L) {
                     data = hashMapOf(
                         "content" to content,
                         "parent_ids" to mParentList.filter { it.isChecked }.map { it.userId },
-                        "profilePicture" to 0,
+                        "profilePic" to 0,
                         "teacher_ids" to arrayListOf<String>(uid),
                         "time" to tvPersonalNoteNewNextAlarmContent.text.toString(),
                         "upload_time" to Timestamp(Date()),
@@ -235,7 +226,7 @@ class PersonalNoteNewNextActivity : AppCompatActivity(), ClassDetailCheckAdapter
                         "noteTitle" to nm!!,
                         "content" to content,
                         "parent_ids" to arrayListOf<String>(uid),
-                        "profilePicture" to 0,
+                        "profilePic" to 0,
                         "teacher_ids" to mParentList.filter { it.isChecked }.map { it.userId },
                         "time" to tvPersonalNoteNewNextAlarmContent.text.toString(),
                         "upload_time" to Timestamp(Date()),
@@ -257,7 +248,7 @@ class PersonalNoteNewNextActivity : AppCompatActivity(), ClassDetailCheckAdapter
                     "body" to content,
                     "title" to sharePref.getString("name","Teacher") as String,
                     "date" to Timestamp(Date()),
-                    "pictures" to "",
+                    "profilePic" to profilePic,
                     "from" to uid,
                     "to" to mParentList.map { it.userId },
                     "isRead" to false
@@ -268,7 +259,7 @@ class PersonalNoteNewNextActivity : AppCompatActivity(), ClassDetailCheckAdapter
 
                 val builder = AlertDialog.Builder(this@PersonalNoteNewNextActivity)
 
-                builder.setMessage("Catatan berhasil disampaikan ke Ibu Ratu Cinta")
+                builder.setMessage("Catatan berhasil disampaikan")
                 builder.setPositiveButton("OK", null)
 
                 val dialog: AlertDialog = builder.create()
@@ -310,27 +301,11 @@ class PersonalNoteNewNextActivity : AppCompatActivity(), ClassDetailCheckAdapter
         val uid = sharePref.getString("uid", "") as String
         var data = hashMapOf<String, Any>()
 
-        mParentList.forEach {
-            if (it.isChecked) {
-                DataDummy.noteSentData.add(
-                    ClassDetailPersonalNoteDao(
-                        R.drawable.bg_solid_gray,
-                        it.name,
-                        content,
-                        arrayListOf(),
-                        dateTime,
-                        attachments
-                    )
-                )
-                it.isChecked = false
-            }
-        }
-
         if (lev == 0L) {
             data = hashMapOf(
                 "content" to content,
-                "parent_ids" to mParentList.map { it.userId },
-                "profilePicture" to 0,
+                "parent_ids" to mParentList.filter { it.isChecked }.map { it.userId },
+                "profilePic" to 0,
                 "teacher_ids" to arrayListOf<String>(uid),
                 "time" to tvPersonalNoteNewNextAlarmContent.text.toString(),
                 "upload_time" to Timestamp(Date()),
@@ -341,7 +316,7 @@ class PersonalNoteNewNextActivity : AppCompatActivity(), ClassDetailCheckAdapter
                 "noteTitle" to nm!!,
                 "content" to content,
                 "parent_ids" to arrayListOf<String>(uid),
-                "profilePicture" to 0,
+                "profilePic" to 0,
                 "teacher_ids" to mParentList.map { it.userId },
                 "time" to tvPersonalNoteNewNextAlarmContent.text.toString(),
                 "upload_time" to Timestamp(Date()),
@@ -363,7 +338,7 @@ class PersonalNoteNewNextActivity : AppCompatActivity(), ClassDetailCheckAdapter
             "body" to content,
             "title" to sharePref.getString("name","Teacher") as String,
             "date" to Timestamp(Date()),
-            "pictures" to "",
+            "profilePic" to profilePic,
             "from" to uid,
             "to" to mParentList.map { it.userId },
             "isRead" to false
@@ -374,7 +349,7 @@ class PersonalNoteNewNextActivity : AppCompatActivity(), ClassDetailCheckAdapter
 
         val builder = AlertDialog.Builder(this@PersonalNoteNewNextActivity)
 
-        builder.setMessage("Catatan berhasil disampaikan ke Ibu Ratu Cinta")
+        builder.setMessage("Catatan berhasil disampaikan")
         builder.setPositiveButton("OK", null)
 
         val dialog: AlertDialog = builder.create()
@@ -428,7 +403,7 @@ class PersonalNoteNewNextActivity : AppCompatActivity(), ClassDetailCheckAdapter
     fun popUpMenu() {
         val builder = AlertDialog.Builder(this@PersonalNoteNewNextActivity)
 
-        builder.setMessage("Catatan berhasil disampaikan ke Ibu Ratu Cinta")
+        builder.setMessage("Catatan berhasil disampaikan")
         builder.setPositiveButton("OK", null)
 
         val dialog: AlertDialog = builder.create()
