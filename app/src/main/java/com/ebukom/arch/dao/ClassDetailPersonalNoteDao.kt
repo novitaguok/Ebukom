@@ -6,10 +6,10 @@ import java.util.*
 import kotlin.collections.ArrayList
 
 data class ClassDetailPersonalNoteDao(
-    var profilePicture: Int,
+    var profilePicture: String = "",
     var noteTitle: String,
     var noteContent: String,
-    var comments : ArrayList<ClassDetailAnnouncementCommentDao> = arrayListOf(),
+    var comments : ArrayList<ClassDetailCommentDao> = arrayListOf(),
     var time: String,
     var attachments: List<ClassDetailAttachmentDao> = arrayListOf(),
     var noteId: String = "",

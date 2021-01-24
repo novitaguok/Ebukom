@@ -10,7 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ebukom.R
-import com.ebukom.arch.dao.ClassDetailAnnouncementCommentDao
+import com.ebukom.arch.dao.ClassDetailCommentDao
 import com.ebukom.arch.dao.ClassDetailPersonalNoteDao
 import com.ebukom.arch.ui.classdetail.MainClassDetailActivity
 import com.ebukom.arch.ui.classdetail.OnMoreCallback
@@ -69,7 +69,7 @@ class PersonalSentNoteFragment : Fragment() {
                         val listUserIds = document["parent_ids"] as List<String>
                         listUserIds.forEach {
                             val data = ClassDetailPersonalNoteDao(
-                                0,
+                                "",
                                 "",
                                 document["content"] as String,
                                 arrayListOf(),
@@ -83,7 +83,7 @@ class PersonalSentNoteFragment : Fragment() {
                                     data.comments.clear()
                                     for (document in value!!.documents) {
                                         data.comments.add(
-                                            ClassDetailAnnouncementCommentDao(
+                                            ClassDetailCommentDao(
                                                 document["user.name"] as String,
                                                 document["comment"] as String,
                                                 R.drawable.bg_square_blue_4dp,
@@ -103,7 +103,7 @@ class PersonalSentNoteFragment : Fragment() {
                                     Log.d("DEBUG", "onViewCreated: " + user["name"].toString())
                                     if (user != null) {
                                         data.noteTitle = user.get("name") as String
-                                        data.profilePicture = 0
+                                        data.profilePicture = user["profilePic"] as String
                                         mNoteList.add(data)
                                         mNoteAdapter.notifyDataSetChanged()
                                         checkEmpty(view!!)
@@ -125,7 +125,7 @@ class PersonalSentNoteFragment : Fragment() {
                         val listUserIds = document["parent_ids"] as List<String>
                         if (listUserIds.size == 1) {
                             val data = ClassDetailPersonalNoteDao(
-                                0,
+                                "",
                                 "",
                                 document["content"] as String,
                                 arrayListOf(),
@@ -139,7 +139,7 @@ class PersonalSentNoteFragment : Fragment() {
                                     Log.d("DEBUG", "onViewCreated: " + user["name"].toString())
                                     if (user != null) {
                                         data.noteTitle = user.get("name") as String
-                                        data.profilePicture = 0
+                                        data.profilePicture = user["profilePic"] as String
                                         mNoteList.add(data)
                                         mNoteAdapter.notifyDataSetChanged()
                                         checkEmpty(view)

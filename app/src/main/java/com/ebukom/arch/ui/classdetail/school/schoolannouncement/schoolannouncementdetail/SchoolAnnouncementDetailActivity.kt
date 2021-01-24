@@ -1,11 +1,8 @@
 package com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementdetail
 
-import android.app.Dialog
 import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.SharedPreferences
-import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import android.view.View
@@ -15,9 +12,10 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ebukom.R
-import com.ebukom.arch.dao.ClassDetailAnnouncementCommentDao
+import com.ebukom.arch.dao.ClassDetailCommentDao
 import com.ebukom.arch.dao.ClassDetailAttachmentDao
 import com.ebukom.arch.ui.classdetail.ClassDetailAttachmentAdapter
+import com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementmainpage.SchoolAnnouncementActivity
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementnew.SchoolAnnouncementNewActivity
 import com.ebukom.utils.toCalendar
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -28,6 +26,7 @@ import kotlinx.android.synthetic.main.activity_school_announcement_detail.*
 import kotlinx.android.synthetic.main.alert_edit_text.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_school_announcement.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_school_announcement_comment.view.*
+import kotlinx.android.synthetic.main.item_note.*
 //import kotlinx.android.synthetic.main.dialog_file_preview.view.*
 import timber.log.Timber
 import java.util.*
@@ -35,7 +34,7 @@ import java.util.*
 
 class SchoolAnnouncementDetailActivity : AppCompatActivity() {
 
-    private val mCommentList: ArrayList<ClassDetailAnnouncementCommentDao> = arrayListOf()
+    private val mCommentList: ArrayList<ClassDetailCommentDao> = arrayListOf()
     private val mCommentAdapter = SchoolAnnouncementDetailAdapter(mCommentList, this)
     private val mAttachmentList: ArrayList<ClassDetailAttachmentDao> = arrayListOf()
     private val mAttachmentAdapter = ClassDetailAttachmentAdapter(mAttachmentList)
@@ -43,6 +42,7 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
     var announcementId: String? = null
     var classId: String? = null
     var commentId: String? = null
+    var notificationId: String? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,6 +76,12 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
          */
         announcementId = intent?.extras?.getString("announcementId")
         classId = intent?.extras?.getString("classId")
+        notificationId = intent?.extras?.getString("notificationId")
+
+        if (notificationId != null) {
+            val db = FirebaseFirestore.getInstance()
+            db.collection("notifications").document(notificationId!!).delete()
+        }
 
         /**
          * Read announcement data
@@ -160,7 +166,7 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
                     mCommentList.clear()
                     for (document in value!!.documents) {
                         mCommentList.add(
-                            ClassDetailAnnouncementCommentDao(
+                            ClassDetailCommentDao(
                                 document["user.name"] as String,
                                 document["comment"] as String,
                                 R.drawable.bg_square_blue_4dp,
@@ -342,20 +348,58 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
                 dialog.dismiss()
             }
             builder.setPositiveButton("HAPUS") { dialog, which ->
-                // Delete comments collection
-                val collectionComments =
-                    db.collection("classes").document(classId!!).collection("announcements")
-                        .document(announcementId!!).collection("comments")
-                deleteCollection(collectionComments, 5) {}
+                // Delete notification
+                db.collection("notifications").whereEqualTo("contentId", announcementId).get()
+                    .addOnSuccessListener { notif ->
+                        var notificationIds = arrayListOf<String>()
+                        notif.forEach {
+                            notificationIds.add(it.id)
+                        }
+                        if (notificationIds.isNotEmpty()) {
+                            notificationIds.forEach {
+                                db.collection("notifications").document(it).delete()
+                                    .addOnSuccessListener {
+                                        // Delete comments collection
+                                        val collectionComments =
+                                            db.collection("classes").document(classId!!)
+                                                .collection("announcements")
+                                                .document(announcementId!!).collection("comments")
+                                        deleteCollection(collectionComments, 5) {}
 
-                // Delete the announcement
-                db.collection("classes").document(classId!!).collection("announcements")
-                    .document(announcementId!!).delete().addOnSuccessListener {
-                        Log.d("TAG", "announcement deleted")
-                    }.addOnFailureListener {
-                        Log.d("TAG", "announcement is failed to be deleted")
+                                        // Delete the announcement
+                                        db.collection("classes").document(classId!!)
+                                            .collection("announcements")
+                                            .document(announcementId!!).delete()
+                                            .addOnSuccessListener {
+                                                Log.d("TAG", "announcement deleted")
+                                                finish()
+                                            }.addOnFailureListener {
+                                                Log.d("TAG", "announcement is failed to be deleted")
+                                                finish()
+                                            }
+                                    }
+                            }
+                        } else {
+                            // Delete comments collection
+                            val collectionComments =
+                                db.collection("classes").document(classId!!)
+                                    .collection("announcements")
+                                    .document(announcementId!!).collection("comments")
+                            deleteCollection(collectionComments, 5) {}
+
+                            // Delete the announcement
+                            db.collection("classes").document(classId!!)
+                                .collection("announcements")
+                                .document(announcementId!!).delete()
+                                .addOnSuccessListener {
+                                    Log.d("TAG", "announcement deleted")
+                                    finish()
+                                }.addOnFailureListener {
+                                    Log.d("TAG", "announcement is failed to be deleted")
+                                    finish()
+                                }
+                        }
                     }
-                finish()
             }
 
             val dialog: AlertDialog = builder.create()
@@ -563,16 +607,5 @@ class SchoolAnnouncementDetailActivity : AppCompatActivity() {
         } catch (e: Exception) {
             System.err.println("Error deleting collection : " + e.message)
         }
-    }
-
-    fun filePreview(path: String) {
-//        val dialog = Dialog(this)
-//        val view = layoutInflater.inflate(R.layout.dialog_file_preview, null)
-
-//        view.ivDialogFilePreview.setImageURI(Uri.parse(path))
-
-//        dialog.setContentView(view)
-//        dialog.show()
-//        val intent = Intent()
     }
 }

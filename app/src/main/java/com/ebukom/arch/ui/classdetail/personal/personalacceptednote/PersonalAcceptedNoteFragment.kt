@@ -66,7 +66,7 @@ class PersonalAcceptedNoteFragment : Fragment() {
                         val listUserIds = document["parent_ids"] as List<String>
                         if (listUserIds.size == 1) {
                             val data = ClassDetailPersonalNoteDao(
-                                R.drawable.ic_photo_white,
+                                document["profilePic"] as String,
                                 "",
                                 document["content"] as String,
                                 arrayListOf(),
@@ -79,8 +79,11 @@ class PersonalAcceptedNoteFragment : Fragment() {
                                     Log.d("DEBUG", "onViewCreated: " + user["name"].toString())
                                     if (user != null) {
                                         data.noteTitle = user.get("name") as String
-                                        data.profilePicture = 0
+                                        data.profilePicture = user["profilePic"] as String
                                         mPersonalNoteList.add(data)
+                                        mPersonalNoteList.sortBy {
+                                            it.time
+                                        }
                                         mPersonalNoteAdapter.notifyDataSetChanged()
                                         checkEmpty(view)
                                     }
@@ -100,7 +103,7 @@ class PersonalAcceptedNoteFragment : Fragment() {
                         val listUserIds = document["teacher_ids"] as List<String>
                         if (listUserIds.size == 1) {
                             val data = ClassDetailPersonalNoteDao(
-                                R.drawable.ic_photo_white,
+                                document["profilePic"] as String,
                                 "",
                                 document["content"] as String,
                                 arrayListOf(),
@@ -113,8 +116,11 @@ class PersonalAcceptedNoteFragment : Fragment() {
                                     Log.d("DEBUG", "onViewCreated: " + user["name"].toString())
                                     if (user != null) {
                                         data.noteTitle = user.get("name") as String
-                                        data.profilePicture = 0
+                                        data.profilePicture = user["profilePic"] as String
                                         mPersonalNoteList.add(data)
+                                        mPersonalNoteList.sortBy {
+                                            it.time
+                                        }
                                         mPersonalNoteAdapter.notifyDataSetChanged()
                                         checkEmpty(view)
                                     }

@@ -215,7 +215,7 @@ class PersonalNoteNewNextActivity : AppCompatActivity(), ClassDetailCheckAdapter
                     data = hashMapOf(
                         "content" to content,
                         "parent_ids" to mParentList.filter { it.isChecked }.map { it.userId },
-                        "profilePic" to 0,
+                        "profilePic" to profilePic,
                         "teacher_ids" to arrayListOf<String>(uid),
                         "time" to tvPersonalNoteNewNextAlarmContent.text.toString(),
                         "upload_time" to Timestamp(Date()),
@@ -226,7 +226,7 @@ class PersonalNoteNewNextActivity : AppCompatActivity(), ClassDetailCheckAdapter
                         "noteTitle" to nm!!,
                         "content" to content,
                         "parent_ids" to arrayListOf<String>(uid),
-                        "profilePic" to 0,
+                        "profilePic" to profilePic,
                         "teacher_ids" to mParentList.filter { it.isChecked }.map { it.userId },
                         "time" to tvPersonalNoteNewNextAlarmContent.text.toString(),
                         "upload_time" to Timestamp(Date()),
@@ -237,26 +237,29 @@ class PersonalNoteNewNextActivity : AppCompatActivity(), ClassDetailCheckAdapter
                 db.collection("notes").add(
                     data
                 ).addOnSuccessListener {
+                    val contentId = it.id
+
+                    // Send Notification
+                    var notifData = hashMapOf<String, Any>(
+//                        "content" to "Catatan Pribadi: \"" + content + "\"",
+                        "content" to content,
+                        "title" to sharePref.getString("name","Teacher") as String,
+                        "date" to Timestamp(Date()),
+                        "profilePic" to profilePic,
+                        "from" to uid,
+                        "to" to mParentList.map { it.userId },
+                        "type" to 1,
+                        "contentId" to contentId
+                    )
+
+                    db.collection("notifications").add(notifData)
+
                     Log.d("PersonalNoteNewActivity", "Note sent successfully")
                 }.addOnFailureListener {
                     Log.d("PersonalNoteNewActivity", "Note is failed to be sent")
                 }
 
-
-                // Send Notification
-                var notifData = hashMapOf<String, Any>(
-                    "body" to content,
-                    "title" to sharePref.getString("name","Teacher") as String,
-                    "date" to Timestamp(Date()),
-                    "profilePic" to profilePic,
-                    "from" to uid,
-                    "to" to mParentList.map { it.userId },
-                    "isRead" to false
-                )
-
-                db.collection("notifications").add(notifData)
-
-
+                // Success dialog
                 val builder = AlertDialog.Builder(this@PersonalNoteNewNextActivity)
 
                 builder.setMessage("Catatan berhasil disampaikan")
@@ -283,7 +286,7 @@ class PersonalNoteNewNextActivity : AppCompatActivity(), ClassDetailCheckAdapter
     private fun initRecycler() {
         DataDummy.noteAttachmentData.clear()
         mParentAdapter =
-            ClassDetailCheckThumbnailAdapter(mParentList, this@PersonalNoteNewNextActivity)
+            ClassDetailCheckThumbnailAdapter(mParentList, this@PersonalNoteNewNextActivity, this)
         rvPersonalNoteNewNext.apply {
             layoutManager = LinearLayoutManager(
                 this@PersonalNoteNewNextActivity,
@@ -305,7 +308,7 @@ class PersonalNoteNewNextActivity : AppCompatActivity(), ClassDetailCheckAdapter
             data = hashMapOf(
                 "content" to content,
                 "parent_ids" to mParentList.filter { it.isChecked }.map { it.userId },
-                "profilePic" to 0,
+                "profilePic" to profilePic,
                 "teacher_ids" to arrayListOf<String>(uid),
                 "time" to tvPersonalNoteNewNextAlarmContent.text.toString(),
                 "upload_time" to Timestamp(Date()),
@@ -316,7 +319,7 @@ class PersonalNoteNewNextActivity : AppCompatActivity(), ClassDetailCheckAdapter
                 "noteTitle" to nm!!,
                 "content" to content,
                 "parent_ids" to arrayListOf<String>(uid),
-                "profilePic" to 0,
+                "profilePic" to profilePic,
                 "teacher_ids" to mParentList.map { it.userId },
                 "time" to tvPersonalNoteNewNextAlarmContent.text.toString(),
                 "upload_time" to Timestamp(Date()),
@@ -327,26 +330,28 @@ class PersonalNoteNewNextActivity : AppCompatActivity(), ClassDetailCheckAdapter
         db.collection("notes").add(
             data
         ).addOnSuccessListener {
+            val contentId = it.id
+
+            // Send Notification
+            var notifData = hashMapOf<String, Any>(
+//                "content" to "Catatan Pribadi: \"" + content + "\"",
+                "content" to content,
+                "title" to sharePref.getString("name","Teacher") as String,
+                "date" to Timestamp(Date()),
+                "profilePic" to profilePic,
+                "from" to uid,
+                "to" to mParentList.map { it.userId },
+                "type" to 1,
+                "contentId" to contentId
+            )
+            db.collection("notifications").add(notifData)
+
             Log.d("PersonalNoteNewActivity", "Note sent successfully")
         }.addOnFailureListener {
             Log.d("PersonalNoteNewActivity", "Note is failed to be sent")
         }
 
-
-        // Send Notification
-        var notifData = hashMapOf<String, Any>(
-            "body" to content,
-            "title" to sharePref.getString("name","Teacher") as String,
-            "date" to Timestamp(Date()),
-            "profilePic" to profilePic,
-            "from" to uid,
-            "to" to mParentList.map { it.userId },
-            "isRead" to false
-        )
-
-        db.collection("notifications").add(notifData)
-
-
+        // Success dialog
         val builder = AlertDialog.Builder(this@PersonalNoteNewNextActivity)
 
         builder.setMessage("Catatan berhasil disampaikan")

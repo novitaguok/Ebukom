@@ -11,12 +11,10 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ebukom.R
-import com.ebukom.arch.dao.ClassDetailAnnouncementCommentDao
+import com.ebukom.arch.dao.ClassDetailCommentDao
 import com.ebukom.arch.dao.ClassDetailAttachmentDao
-import com.ebukom.arch.dao.ClassDetailPersonalNoteDao
 import com.ebukom.arch.ui.classdetail.ClassDetailAttachmentAdapter
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementdetail.SchoolAnnouncementDetailAdapter
-import com.ebukom.data.DataDummy
 import com.google.android.material.bottomsheet.BottomSheetDialog
 import com.google.firebase.Timestamp
 import com.google.firebase.firestore.FirebaseFirestore
@@ -32,13 +30,14 @@ import kotlin.collections.HashMap
 
 class PersonalNoteDetailActivity : AppCompatActivity() {
 
-    private val mCommentList: ArrayList<ClassDetailAnnouncementCommentDao> = arrayListOf()
+    private val mCommentList: ArrayList<ClassDetailCommentDao> = arrayListOf()
     private val mCommentAdapter = SchoolAnnouncementDetailAdapter(mCommentList, this)
     private val mAttachmentList: ArrayList<ClassDetailAttachmentDao> = arrayListOf()
     private val mAttachmentAdapter = ClassDetailAttachmentAdapter(mAttachmentList)
     var noteId: String? = null
     var noteTitle: String? = null
     var noteContent: String? = null
+    var notificationId: String? = null
     var noteUploadTime = Timestamp(Date())
     var commentId: String? = null
     val db = FirebaseFirestore.getInstance()
@@ -61,7 +60,17 @@ class PersonalNoteDetailActivity : AppCompatActivity() {
         noteId = intent?.extras?.getString("noteId")
         noteTitle = intent?.extras?.getString("noteTitle")
         noteContent = intent?.extras?.getString("noteContent")
-        noteUploadTime = intent?.getParcelableExtra("noteUploadTime")!!
+        noteUploadTime = intent.getParcelableExtra("noteUploadTime")
+        notificationId = intent?.extras?.getString("notificationId")
+
+        // Delete notification
+        if (notificationId != null) {
+            val db = FirebaseFirestore.getInstance()
+            db.collection("notifications").document(notificationId!!).delete()
+
+            val index = noteContent?.indexOf("\"")
+            noteContent = noteContent?.substring(index!! + 1, noteContent!!.length - 1)
+        }
 
         val uploadTime = noteUploadTime.toDate().toCalendar()
         val day = uploadTime.get(Calendar.DAY_OF_WEEK)
@@ -140,7 +149,7 @@ class PersonalNoteDetailActivity : AppCompatActivity() {
                 mCommentList.clear()
                 for (document in value!!.documents) {
                     mCommentList.add(
-                        ClassDetailAnnouncementCommentDao(
+                        ClassDetailCommentDao(
                             document["user.name"] as String,
                             document["comment"] as String,
                             R.drawable.bg_square_blue_4dp,
@@ -225,17 +234,43 @@ class PersonalNoteDetailActivity : AppCompatActivity() {
 
             bottomSheetDialog.dismiss()
 
-            builder.setMessage("Apakah Anda yakin ingin menghapus pengumuman ini?")
+            builder.setMessage("Apakah Anda yakin ingin menghapus catatan ini?")
             builder.setNegativeButton("BATALKAN") { dialog, which ->
                 dialog.dismiss()
             }
             builder.setPositiveButton("HAPUS") { dialog, which ->
-                db.collection("notes").document(noteId!!).delete().addOnSuccessListener {
-                        Log.d("TAG", "announcement deleted")
-                    }.addOnFailureListener {
-                        Log.d("TAG", "announcement is failed to be deleted")
+                db.collection("notifications").whereEqualTo("contentId", noteId).get()
+                    .addOnSuccessListener { notif ->
+                        var notificationIds = arrayListOf<String>()
+                        notif.forEach {
+                            notificationIds.add(it.id)
+                        }
+                        if (notificationIds.isNotEmpty()) {
+                            notificationIds.forEach {
+                                db.collection("notifications").document(it).delete()
+                                    .addOnSuccessListener {
+                                        db.collection("notes").document(noteId!!).delete()
+                                            .addOnSuccessListener {
+                                                Log.d("TAG", "announcement deleted")
+                                            }.addOnFailureListener {
+                                            Log.d("TAG", "announcement is failed to be deleted")
+                                        }
+                                        finish()
+                                    }
+                            }
+                        } else {
+                            notificationIds.forEach {
+                            db.collection("notifications").document(it).delete().addOnSuccessListener {
+                                db.collection("notes").document(noteId!!).delete().addOnSuccessListener {
+                                    Log.d("TAG", "announcement deleted")
+                                }.addOnFailureListener {
+                                    Log.d("TAG", "announcement is failed to be deleted")
+                                }
+                                finish()
+                            }
+                        }
+                        }
                     }
-                finish()
             }
 
             val dialog: AlertDialog = builder.create()

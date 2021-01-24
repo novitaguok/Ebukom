@@ -9,7 +9,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ebukom.R
-import com.ebukom.arch.dao.ClassDetailAnnouncementCommentDao
+import com.ebukom.arch.dao.ClassDetailCommentDao
 import com.ebukom.arch.dao.ClassDetailAnnouncementDao
 import com.ebukom.arch.ui.classdetail.material.materialeducation.materialeducationedit.MaterialEducationEditActivity
 import com.ebukom.arch.ui.classdetail.school.schoolannouncement.schoolannouncementdetail.SchoolAnnouncementDetailAdapter
@@ -22,7 +22,7 @@ import kotlinx.android.synthetic.main.bottom_sheet_school_announcement_comment.v
 
 class MaterialEducationDetailActivity : AppCompatActivity() {
     private var pos: Int = -1
-    private val mCommentList: ArrayList<ClassDetailAnnouncementCommentDao> = arrayListOf()
+    private val mCommentList: ArrayList<ClassDetailCommentDao> = arrayListOf()
     private val mCommentAdapter = SchoolAnnouncementDetailAdapter(mCommentList, this)
     private val mEducationList: ArrayList<ClassDetailAnnouncementDao> = arrayListOf()
 
@@ -60,7 +60,7 @@ class MaterialEducationDetailActivity : AppCompatActivity() {
             var comment = etMaterialEducationDetailComment.text.toString()
 
             etMaterialEducationDetailComment.text.clear()
-            mCommentList.add(ClassDetailAnnouncementCommentDao("Ade Andreansyah", comment, R.drawable.bg_solid_gray))
+            mCommentList.add(ClassDetailCommentDao("Ade Andreansyah", comment, R.drawable.bg_solid_gray))
             mCommentAdapter.notifyDataSetChanged()
 
             DataDummy.educationData[pos].comments = mCommentList

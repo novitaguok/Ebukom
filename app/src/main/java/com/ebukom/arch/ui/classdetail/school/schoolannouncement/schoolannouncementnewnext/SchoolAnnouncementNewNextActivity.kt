@@ -52,6 +52,9 @@ class SchoolAnnouncementNewNextActivity : AppCompatActivity(),
     var classId: String? = ""
     var dateTime: String = ""
     var filePath: String? = null
+    var profilePic = ""
+    var mUserList = arrayListOf<String>()
+    var uid = ""
     val db = FirebaseFirestore.getInstance()
 
     @SuppressLint("LongLogTag")
@@ -61,6 +64,7 @@ class SchoolAnnouncementNewNextActivity : AppCompatActivity(),
 
         initToolbar()
         sharePref = getSharedPreferences("EBUKOM", Context.MODE_PRIVATE)
+        uid = sharePref.getString("uid", "") as String
 
         // Intent from SchoolAnnouncementNewActivity
         classId = intent.getStringExtra("classId")
@@ -72,9 +76,14 @@ class SchoolAnnouncementNewNextActivity : AppCompatActivity(),
         attachmentList =
             intent?.getSerializableExtra("attachments") as List<ClassDetailAttachmentDao>
 
+        // Get current user profile picture
+        db.collection("users").document(uid).get().addOnSuccessListener {
+            profilePic = it["profilePic"] as String
+        }
+
         // Class list
         initRecycler()
-        val uid = sharePref.getString("uid", "") as String
+//        val uid = sharePref.getString("uid", "") as String
         db.collection("classes").whereArrayContains("class_teacher_ids", uid)
             .addSnapshotListener { value, error ->
                 if (error != null) {
@@ -146,39 +155,105 @@ class SchoolAnnouncementNewNextActivity : AppCompatActivity(),
             }
         }
 
+        // Joined user list
+        db.collection("classes").document(classId!!).get().addOnSuccessListener {
+            for (data in it["class_teacher_ids"] as List<String>) {
+//                if (data != uid) {
+                mUserList.add(data)
+//                }
+            }
+        }
+
         // Share announcement button
         btnSchoolAnnouncementNewNextDone.setOnClickListener {
-            for (i in 0..(attachmentList.size - 1)) {
-                if (attachmentList[i].category == 1) {
-                    storageReference = FirebaseStorage.getInstance()
-                        .getReference("images/announcement/${attachmentList[i].fileName}")
-                } else if (attachmentList[i].category == 2) {
-                    storageReference =
-                        FirebaseStorage.getInstance().reference.child("files/announcement/${attachmentList[i].fileName}")
-                } else {
+            if (attachmentList.size != 0) {
+                for (i in 0..(attachmentList.size - 1)) {
+                    if (attachmentList[i].category == 1) {
+                        storageReference = FirebaseStorage.getInstance()
+                            .getReference("images/announcement/${attachmentList[i].fileName}")
+                    } else if (attachmentList[i].category == 2) {
+                        storageReference =
+                            FirebaseStorage.getInstance().reference.child("files/announcement/${attachmentList[i].fileName}")
+                    } else {
 
-                }
-
-                // Upload and get the download URL
-                storageReference.putFile(Uri.parse(attachmentList[i].path))
-                    .addOnCompleteListener { task ->
-                        if (task.isSuccessful) {
-                            storageReference.downloadUrl.addOnSuccessListener {
-                                counter++
-                                if (task.isSuccessful) {
-                                    savedImageUri.add(it.toString())
-                                } else {
-                                    storageReference.delete()
-                                    Toast.makeText(this, "Couldn't save " + attachmentList[i].fileName, Toast.LENGTH_LONG).show()
-                                }
-                                if (counter == attachmentList.size) {
-                                    saveDataToFirestore()
-                                }
-                            }
-                        } else {
-                            counter++
-                        }
                     }
+
+                    // Upload and get the download URL
+                    storageReference.putFile(Uri.parse(attachmentList[i].path))
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                storageReference.downloadUrl.addOnSuccessListener {
+                                    counter++
+                                    if (task.isSuccessful) {
+                                        savedImageUri.add(it.toString())
+                                    } else {
+                                        storageReference.delete()
+                                        Toast.makeText(
+                                            this,
+                                            "Couldn't save " + attachmentList[i].fileName,
+                                            Toast.LENGTH_LONG
+                                        ).show()
+                                    }
+                                    if (counter == attachmentList.size) {
+                                        saveDataToFirestore()
+                                    }
+                                }
+                            } else {
+                                counter++
+                            }
+                        }
+                }
+            } else {
+                val teacherName = sharePref.getString("name", "") as String
+                val data = hashMapOf(
+                    "content" to content,
+                    "teacher" to mapOf<String, Any>(
+                        "name" to teacherName,
+                        "id" to uid
+                    ),
+                    "time" to Timestamp(Date()),
+                    "title" to title,
+                    "attachments" to attachmentList,
+                    "event_start" to eventStart,
+                    "event_end" to eventEnd
+                )
+
+                loading.visibility = View.VISIBLE
+                mClassList.forEach {
+                    if (it.isChecked && !it.id.isNullOrEmpty()) {
+                        db.collection("classes").document(it.id!!).collection("announcements")
+                            .add(data).addOnSuccessListener { task ->
+                                val contentId = task.id
+                                mUserList.forEach {
+                                    var notifData = hashMapOf<String, Any>(
+                                        "content" to content,
+                                        "title" to title,
+                                        "date" to Timestamp(Date()),
+                                        "profilePic" to profilePic,
+                                        "from" to uid,
+                                        "to" to it,
+                                        "type" to 0,
+                                        "contentId" to contentId,
+                                        "classId" to classId!!
+                                    )
+                                    db.collection("notifications").add(notifData).addOnSuccessListener {
+                                        Log.d("TAG", "announcement inserted")
+                                        val intent = Intent("finish_activity")
+                                        sendBroadcast(intent)
+                                        loading.visibility = View.GONE
+                                        finish()
+                                    }
+                                }
+                            }.addOnFailureListener {
+                                Log.d("TAG", "announcement failed to be inserted")
+                                val intent = Intent("finish_activity")
+                                sendBroadcast(intent)
+                                loading.visibility = View.GONE
+                                finish()
+                            }
+
+                    }
+                }
             }
         }
     }
@@ -203,7 +278,7 @@ class SchoolAnnouncementNewNextActivity : AppCompatActivity(),
         for (i in 0..attachmentList.size - 1) attachmentList[i].path = savedImageUri[i]
 
         val sharePref = getSharedPreferences("EBUKOM", Context.MODE_PRIVATE)
-        val uid = sharePref.getString("uid", "") as String
+//        val uid = sharePref.getString("uid", "") as String
         val teacherName = sharePref.getString("name", "") as String
         val data = hashMapOf(
             "content" to content,
@@ -222,21 +297,36 @@ class SchoolAnnouncementNewNextActivity : AppCompatActivity(),
         mClassList.forEach {
             if (it.isChecked && !it.id.isNullOrEmpty()) {
                 db.collection("classes").document(it.id!!).collection("announcements")
-                    .add(data).addOnCompleteListener {
-                        loading.visibility = View.GONE
-                        if (it.isSuccessful) {
-                            val intent = Intent("finish_activity")
-                            sendBroadcast(intent)
-                            finish()
-                        } else {
+                    .add(data).addOnSuccessListener { task ->
+                        val contentId = task.id
+                        var notifData = hashMapOf<String, Any>(
+                            "content" to content,
+                            "title" to title,
+                            "date" to Timestamp(Date()),
+                            "profilePic" to profilePic,
+                            "from" to uid,
+                            "to" to mUserList,
+                            "type" to 0,
+                            "contentId" to contentId,
+                            "classId" to classId!!
+                        )
+                        db.collection("notifications").add(notifData).addOnSuccessListener {
+                            loading.visibility = View.GONE
                             Log.d("TAG", "announcement inserted")
                             val intent = Intent("finish_activity")
                             sendBroadcast(intent)
                             finish()
                         }
+                    }.addOnFailureListener {
+                        loading.visibility = View.GONE
+                        Log.d("TAG", "announcement failed to be inserted")
+                        val intent = Intent("finish_activity")
+                        sendBroadcast(intent)
+                        finish()
                     }
             }
         }
+            
     }
 
     fun initToolbar() {

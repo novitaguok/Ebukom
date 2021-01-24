@@ -7,15 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.ebukom.R
-import com.ebukom.arch.dao.ClassDetailAnnouncementCommentDao
+import com.ebukom.arch.dao.ClassDetailCommentDao
 import com.ebukom.arch.dao.ClassDetailPersonalNoteDao
 import com.ebukom.arch.ui.classdetail.MainClassDetailActivity
 import com.ebukom.arch.ui.classdetail.OnMoreCallback
 import com.ebukom.arch.ui.classdetail.personal.personalacceptednote.PersonalAcceptedNoteFragment
 import com.ebukom.arch.ui.classdetail.personal.personalnotedetail.PersonalNoteDetailActivity
-import com.google.firebase.Timestamp
-import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.android.synthetic.main.activity_main_class_detail.*
 import kotlinx.android.synthetic.main.item_note.view.*
 import java.util.*
 import kotlin.collections.ArrayList
@@ -27,7 +27,7 @@ class PersonalNoteAdapter(
     var fragment: Fragment
 ) : RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     lateinit var id: String
-    private val mCommentList: ArrayList<ClassDetailAnnouncementCommentDao> = arrayListOf()
+    private val mCommentList: ArrayList<ClassDetailCommentDao> = arrayListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val view =
@@ -50,10 +50,12 @@ class PersonalNoteAdapter(
     inner class ViewHolder(itemView: View, val callback: OnMoreCallback, val context: Context) :
         RecyclerView.ViewHolder(itemView) {
         fun bind(note: ClassDetailPersonalNoteDao) {
-
+            Glide.with(context)
+                .load(note.profilePicture)
+                .centerCrop()
+                .into(itemView.ivItemNoteProfilePicture)
             itemView.tvItemNoteComment.text =
                 note.comments.size.toString() + " KOMENTAR"
-            itemView.ivItemNoteProfilePicture.setImageResource(note.profilePicture)
             if (tabItem == 1) {
                 itemView.tvItemNoteTitle.text = "Untuk: " + note?.noteTitle
             } else {

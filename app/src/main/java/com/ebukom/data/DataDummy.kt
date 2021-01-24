@@ -69,7 +69,7 @@ fun ArrayList<ClassDetailPersonalNoteDao>.buildParentNoteDummy(context: Context)
     for (i in 1..5) {
         this.add(
             ClassDetailPersonalNoteDao(
-                R.drawable.bg_solid_gray,
+                "",
                 "Eni Trikuswanti",
                 content,
                 arrayListOf(),

@@ -1,18 +1,22 @@
 package com.ebukom.arch.ui.classdetail
 
+import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.ebukom.R
 import com.ebukom.arch.dao.ClassDetailItemCheckThumbnailDao
 import com.ebukom.arch.ui.classdetail.personal.personalnotenewnext.PersonalNoteNewNextActivity
 import kotlinx.android.synthetic.main.item_check.view.*
 import kotlinx.android.synthetic.main.item_check_thumbnail.view.*
+import kotlinx.android.synthetic.main.item_notification.view.*
 
 class ClassDetailCheckThumbnailAdapter(
     public val list: ArrayList<ClassDetailItemCheckThumbnailDao>,
-    val callback: PersonalNoteNewNextActivity
+    val callback: PersonalNoteNewNextActivity,
+    var context: Context
 ) :
     RecyclerView.Adapter<ClassDetailCheckThumbnailAdapter.ViewHolder>() {
 
@@ -29,7 +33,10 @@ class ClassDetailCheckThumbnailAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.view.tvItemCheckThumbnailName.text = list.get(position)?.name
         holder.view.tvItemCheckThumbnailDesc.text = list.get(position)?.desc
-        holder.view.ivItemCheckThumbnailProfilePicture.setImageResource(R.drawable.ic_notification)
+        Glide.with(context)
+            .load(list.get(position).profilePic)
+            .centerCrop()
+            .into(holder.view.ivItemCheckThumbnailProfilePicture)
         holder.view.cbItemCheckThumbnail.isChecked = list[position].isChecked
 
         if (position == list.size - 1) {

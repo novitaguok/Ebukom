@@ -6,12 +6,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.ebukom.R
-import com.ebukom.arch.dao.ClassDetailAnnouncementCommentDao
+import com.ebukom.arch.dao.ClassDetailCommentDao
 import com.ebukom.arch.ui.classdetail.personal.personalnotedetail.PersonalNoteDetailActivity
 import kotlinx.android.synthetic.main.item_announcement_detail_comment.view.*
 
 class SchoolAnnouncementDetailAdapter(
-    val comments: ArrayList<ClassDetailAnnouncementCommentDao>,
+    val comments: ArrayList<ClassDetailCommentDao>,
     val context: Context
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
@@ -33,7 +33,7 @@ class SchoolAnnouncementDetailAdapter(
     }
 
     class ViewHolder(itemView: View, val context: Context) : RecyclerView.ViewHolder(itemView) {
-        fun bind(comment: ClassDetailAnnouncementCommentDao) {
+        fun bind(comment: ClassDetailCommentDao) {
             itemView.tvAnnouncementDetailCommentName.text = comment.name
             itemView.tvAnnouncementDetailCommentContent.text = comment.comment
             itemView.ivAnnouncementDetailCommentProfilePicture.setImageResource(comment.profilePic)
