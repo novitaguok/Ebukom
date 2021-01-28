@@ -1,6 +1,9 @@
 package com.ebukom.arch.ui.classdetail.school.schoolschedule
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -14,79 +17,105 @@ import kotlinx.android.synthetic.main.activity_school_schedule.*
 import timber.log.Timber
 
 class SchoolScheduleActivity : AppCompatActivity() {
-    //    private val mSchoolScheduleList: ArrayList<ClassDetailScheduleDao> = arrayListOf()
-//    lateinit var mSchoolScheduleAdapter: SchoolScheduleAdapter
     lateinit var callback: OnMoreCallback
     var classId: String? = null
+    var academic: String = ""
+    var eskul: String = ""
+    var calendar: String = ""
     val db = FirebaseFirestore.getInstance()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_school_schedule)
 
-        initToolbar()
+        val sharePref: SharedPreferences = getSharedPreferences("EBUKOM", Context.MODE_PRIVATE)
+        val level = sharePref.getLong("level", 0)
 
+        initToolbar()
         classId = intent?.extras?.getString("classId")
 
-        /**
-         * Go to create new schedule activity
-         */
+        // New schedule activity button
+        if (level == 1L) {
+            btnSchoolScheduleNew.visibility = View.GONE
+        }
         btnSchoolScheduleNew.setOnClickListener {
             val intent = Intent(this, SchoolScheduleNewActivity::class.java)
             intent.putExtra("classId", classId)
             startActivity(intent)
         }
 
+        // Load data
         db.collection("classes").document(classId!!).addSnapshotListener { value, error ->
             if (error != null) {
                 Timber.e(error)
                 return@addSnapshotListener
             }
 
-            val subject = value!!["schedules.subject.photoUri"] as? String
-            val eskul = value["schedules.eskul.photoUri"] as? String
-            val academic = value["schedules.academic.photoUri"] as? String
-
-            if (subject != "") cvSchoolScheduleSubject.visibility =
-                View.VISIBLE
-            else cvSchoolScheduleSubject.visibility = View.GONE
-            if (eskul != "") cvSchoolScheduleEskul.visibility =
-                View.VISIBLE
-            else cvSchoolScheduleEskul.visibility = View.GONE
-            if (academic != "") cvSchoolScheduleAcademic.visibility =
-                View.VISIBLE
-            else cvSchoolScheduleAcademic.visibility = View.GONE
-
-            if (subject == "" && eskul == "" && academic == "") {
+            if (value?.get("schedules_academic") as String? != "" || value?.get("schedules_eskul") as String? != "" || value?.get(
+                    "schedules_calendar"
+                ) as String? != "" || value?.get("schedules_academic") as String? != null || value?.get(
+                    "schedules_eskul"
+                ) as String? != null || value?.get("schedules_calendar") as String? != null
+            ) {
+                if ((value?.get("schedules_academic") as String?).isNullOrEmpty()) cvSchoolScheduleAcademic.visibility =
+                    View.GONE
+                else cvSchoolScheduleAcademic.visibility = View.VISIBLE
+                if ((value?.get("schedules_eskul") as String?).isNullOrEmpty()) ivSchoolScheduleEskul.visibility =
+                    View.GONE
+                else ivSchoolScheduleEskul.visibility = View.VISIBLE
+                if ((value?.get("schedules_calendar") as String?).isNullOrEmpty()) cvSchoolScheduleCalendar.visibility =
+                    View.GONE
+                else cvSchoolScheduleCalendar.visibility = View.VISIBLE
+//                if (academic == "" && eskul == "" && calendar == "") {
+//                    ivSchoolScheduleEmpty.visibility = View.VISIBLE
+//                    tvSchoolScheduleEmpty.visibility = View.VISIBLE
+//                }
+            } else {
                 ivSchoolScheduleEmpty.visibility = View.VISIBLE
                 tvSchoolScheduleEmpty.visibility = View.VISIBLE
-            } else {
-                ivSchoolScheduleEmpty.visibility = View.GONE
-                tvSchoolScheduleEmpty.visibility = View.GONE
+                cvSchoolScheduleAcademic.visibility = View.GONE
+                cvSchoolScheduleEskul.visibility = View.GONE
+                cvSchoolScheduleCalendar.visibility = View.GONE
+            }
+
+            // Card clicked
+            db.collection("classes").document(classId!!).get().addOnSuccessListener { data ->
+                cvSchoolScheduleAcademic.setOnClickListener {
+                    if ((data["schedules_academic"] as String) != "" || (data["schedules_academic"] as String) != null) {
+                        val webpage = Uri.parse(data["schedules_academic"] as String)
+                        val intent = Intent(Intent.ACTION_VIEW, webpage)
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
+                        startActivity(intent)
+                    } else {
+                        val intent = Intent(this, SchoolScheduleFileActivity::class.java)
+                        startActivity(intent)
+                    }
+                }
+                cvSchoolScheduleEskul.setOnClickListener {
+                    if ((data["schedules_eskul"] as String) != "" || (data["schedules_eskul"] as String) != null) {
+                        val webpage = Uri.parse(data["schedules_eskul"] as String)
+                        val intent = Intent(Intent.ACTION_VIEW, webpage)
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
+                        startActivity(intent)
+                    } else {
+                        val intent = Intent(this, SchoolScheduleFileActivity::class.java)
+                        startActivity(intent)
+                    }
+                }
+                cvSchoolScheduleCalendar.setOnClickListener {
+                    if ((data["schedules_calendar"] as String) != "" || (data["schedules_calendar"] as String) != null) {
+                        val webpage = Uri.parse(data["schedules_calendar"] as String)
+                        val intent = Intent(Intent.ACTION_VIEW, webpage)
+                        intent.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
+                        startActivity(intent)
+                    } else {
+                        val intent = Intent(this, SchoolScheduleFileActivity::class.java)
+                        startActivity(intent)
+                    }
+                }
             }
         }
 
-        /**
-         * Card clicked
-         */
-        cvSchoolScheduleSubject.setOnClickListener {
-            val intent = Intent(this, SchoolScheduleFileActivity::class.java)
-            intent.putExtra("classId", classId)
-            intent.putExtra("scheduleType", "subject")
-            startActivity(intent)
-        }
-        cvSchoolScheduleEskul.setOnClickListener {
-            val intent = Intent(this, SchoolScheduleFileActivity::class.java)
-            intent.putExtra("classId", classId)
-            intent.putExtra("scheduleType", "eskul")
-            startActivity(intent)
-        }
-        cvSchoolScheduleAcademic.setOnClickListener {
-            val intent = Intent(this, SchoolScheduleFileActivity::class.java)
-            intent.putExtra("classId", classId)
-            intent.putExtra("scheduleType", "academic")
-            startActivity(intent)
-        }
     }
 
     fun initToolbar() {

@@ -30,7 +30,6 @@ class SchoolScheduleAdapter(private val items: List<ClassDetailScheduleDao>, var
 
     inner class ViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         fun bind (item: ClassDetailScheduleDao) {
-            val db = FirebaseFirestore.getInstance()
 
 //            itemView.tvItemScheduleSubject.text = item?.title
 //            itemView.tvItemScheduleSubjectType.text = item?.type

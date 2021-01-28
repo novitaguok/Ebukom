@@ -42,8 +42,8 @@ class NotificationActivity : AppCompatActivity() {
             for (data in value!!.documents) {
                 val sharePref = getSharedPreferences("EBUKOM", Context.MODE_PRIVATE)
                 val uid = sharePref.getString("uid", "") as String
-                if ((data["to"] as List<String>).contains(uid)) {
-//                if (data["from"] as String == uid) {
+//                if ((data["to"] as List<String>).contains(uid)) {
+                if (data["from"] as String == uid) {
                     if ((data["type"] as Long).toInt() == 0) { // announcement
                         mNotificationList.add(
                             ClassDetailNotificationDao(
@@ -119,9 +119,13 @@ class NotificationActivity : AppCompatActivity() {
             var deleted = 0
             collection
                 .limit(batchSize.toLong())
-                .get()
-                .addOnCompleteListener {
-                    for (document in it.result!!.documents) {
+                .addSnapshotListener { value, error ->
+                    if (error != null) {
+                        Timber.e(error)
+                        return@addSnapshotListener
+                    }
+
+                    for (document in value!!.documents) {
                         document.getReference().delete()
                         ++deleted
                     }

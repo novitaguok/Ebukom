@@ -79,7 +79,7 @@
         android:visibility="gone"/>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cvSchoolScheduleSubject"
+        android:id="@+id/cvSchoolScheduleAcademic"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/size_10"
@@ -89,13 +89,13 @@
         android:layout_marginTop="6dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/clSchoolScheduleSubject"
+            android:id="@+id/clSchoolScheduleAcademic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center">
 
             <ImageView
-                android:id="@+id/ivSchoolScheduleSubject"
+                android:id="@+id/ivSchoolScheduleAcademic"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="fitXY"
@@ -103,18 +103,18 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageButton
-                android:id="@+id/ibSchoolcheduleSubject"
+                android:id="@+id/ibSchoolcheduleAcademic"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_more_vertical"
                 android:background="@android:color/transparent"
                 android:layout_marginTop="@dimen/size_12"
                 android:layout_marginRight="@dimen/size_8"
-                app:layout_constraintTop_toTopOf="@+id/ivSchoolScheduleSubject"
-                app:layout_constraintRight_toRightOf="@+id/ivSchoolScheduleSubject"/>
+                app:layout_constraintTop_toTopOf="@+id/ivSchoolScheduleAcademic"
+                app:layout_constraintRight_toRightOf="@+id/ivSchoolScheduleAcademic"/>
 
             <TextView
-                android:id="@+id/tvSchoolScheduleSubjectType"
+                android:id="@+id/tvSchoolScheduleAcademicType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/size_24"
@@ -124,11 +124,11 @@
                 android:textFontWeight="500"
                 android:textSize="@dimen/text_16"
                 android:firstBaselineToTopHeight="@dimen/size_18"
-                app:layout_constraintBottom_toTopOf="@+id/tvSchoolScheduleSubject"
-                app:layout_constraintLeft_toLeftOf="@+id/tvSchoolScheduleSubject" />
+                app:layout_constraintBottom_toTopOf="@+id/tvSchoolScheduleAcademic"
+                app:layout_constraintLeft_toLeftOf="@+id/tvSchoolScheduleAcademic" />
 
             <TextView
-                android:id="@+id/tvSchoolScheduleSubject"
+                android:id="@+id/tvSchoolScheduleAcademic"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/size_20"
@@ -137,12 +137,12 @@
                 android:textSize="@dimen/text_28"
                 android:lineHeight="@dimen/size_32"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/ivSchoolScheduleSubject"
-                app:layout_constraintLeft_toLeftOf="@+id/ivSchoolScheduleSubject"
-                app:layout_constraintTop_toTopOf="@id/ivSchoolScheduleSubject" />
+                app:layout_constraintBottom_toBottomOf="@+id/ivSchoolScheduleAcademic"
+                app:layout_constraintLeft_toLeftOf="@+id/ivSchoolScheduleAcademic"
+                app:layout_constraintTop_toTopOf="@id/ivSchoolScheduleAcademic" />
 
             <TextView
-                android:id="@+id/tvSchoolScheduleSubjectOpen"
+                android:id="@+id/tvSchoolScheduleAcademicOpen"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/size_4"
@@ -152,8 +152,8 @@
                 android:textColor="#5A4569"
                 android:textFontWeight="500"
                 android:textSize="@dimen/text_14"
-                app:layout_constraintLeft_toLeftOf="@+id/tvSchoolScheduleSubject"
-                app:layout_constraintTop_toBottomOf="@+id/tvSchoolScheduleSubject" />
+                app:layout_constraintLeft_toLeftOf="@+id/tvSchoolScheduleAcademic"
+                app:layout_constraintTop_toBottomOf="@+id/tvSchoolScheduleAcademic" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
 
@@ -162,7 +162,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/size_10"
-        android:layout_below="@+id/cvSchoolScheduleSubject"
+        android:layout_below="@+id/cvSchoolScheduleAcademic"
         app:cardCornerRadius="@dimen/size_8"
         app:cardUseCompatPadding="true"
         android:layout_marginTop="6dp">
@@ -237,7 +237,7 @@
     </androidx.cardview.widget.CardView>
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/cvSchoolScheduleAcademic"
+        android:id="@+id/cvSchoolScheduleCalendar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="@dimen/size_10"
@@ -247,13 +247,13 @@
         android:layout_marginTop="6dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
-            android:id="@+id/clSchoolScheduleAcademic"
+            android:id="@+id/clSchoolScheduleCalendar"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center">
 
             <ImageView
-                android:id="@+id/ivSchoolScheduleAcademic"
+                android:id="@+id/ivSchoolScheduleCalendar"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:scaleType="fitXY"
@@ -261,18 +261,18 @@
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageButton
-                android:id="@+id/ibSchoolcheduleAcademic"
+                android:id="@+id/ibSchoolcheduleCalendar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/ic_more_vertical"
                 android:background="@android:color/transparent"
                 android:layout_marginTop="@dimen/size_12"
                 android:layout_marginRight="@dimen/size_8"
-                app:layout_constraintTop_toTopOf="@+id/ivSchoolScheduleAcademic"
-                app:layout_constraintRight_toRightOf="@+id/ivSchoolScheduleAcademic"/>
+                app:layout_constraintTop_toTopOf="@+id/ivSchoolScheduleCalendar"
+                app:layout_constraintRight_toRightOf="@+id/ivSchoolScheduleCalendar"/>
 
             <TextView
-                android:id="@+id/tvSchoolScheduleAcademicType"
+                android:id="@+id/tvSchoolScheduleCalendarType"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/size_24"
@@ -282,11 +282,11 @@
                 android:textFontWeight="500"
                 android:textSize="@dimen/text_16"
                 android:firstBaselineToTopHeight="@dimen/size_18"
-                app:layout_constraintBottom_toTopOf="@+id/tvSchoolScheduleAcademic"
-                app:layout_constraintLeft_toLeftOf="@+id/tvSchoolScheduleAcademic" />
+                app:layout_constraintBottom_toTopOf="@+id/tvSchoolScheduleCalendar"
+                app:layout_constraintLeft_toLeftOf="@+id/tvSchoolScheduleCalendar" />
 
             <TextView
-                android:id="@+id/tvSchoolScheduleAcademic"
+                android:id="@+id/tvSchoolScheduleCalendar"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/size_20"
@@ -295,12 +295,12 @@
                 android:textSize="@dimen/text_28"
                 android:lineHeight="@dimen/size_32"
                 android:textStyle="bold"
-                app:layout_constraintBottom_toBottomOf="@+id/ivSchoolScheduleAcademic"
-                app:layout_constraintLeft_toLeftOf="@+id/ivSchoolScheduleAcademic"
-                app:layout_constraintTop_toTopOf="@id/ivSchoolScheduleAcademic" />
+                app:layout_constraintBottom_toBottomOf="@+id/ivSchoolScheduleCalendar"
+                app:layout_constraintLeft_toLeftOf="@+id/ivSchoolScheduleCalendar"
+                app:layout_constraintTop_toTopOf="@id/ivSchoolScheduleCalendar" />
 
             <TextView
-                android:id="@+id/tvSchoolScheduleAcademicOpen"
+                android:id="@+id/tvSchoolScheduleCalendarOpen"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/size_4"
@@ -310,16 +310,8 @@
                 android:textColor="#5A4569"
                 android:textFontWeight="500"
                 android:textSize="@dimen/text_14"
-                app:layout_constraintLeft_toLeftOf="@+id/tvSchoolScheduleAcademic"
-                app:layout_constraintTop_toBottomOf="@+id/tvSchoolScheduleAcademic" />
+                app:layout_constraintLeft_toLeftOf="@+id/tvSchoolScheduleCalendar"
+                app:layout_constraintTop_toBottomOf="@+id/tvSchoolScheduleCalendar" />
         </androidx.constraintlayout.widget.ConstraintLayout>
     </androidx.cardview.widget.CardView>
-
-
-<!--    <androidx.recyclerview.widget.RecyclerView-->
-<!--        android:id="@+id/rvSchoolSchedule"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="wrap_content"-->
-<!--        android:layout_below="@+id/btnSchoolScheduleNew" />-->
-
 </RelativeLayout>

@@ -1,9 +1,11 @@
 package com.ebukom.arch.ui.classdetail.school.schoolschedule.schoolschedulefile
 
 import android.content.Context
+import android.content.Intent
 import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.view.View
 import com.ebukom.R
 import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.android.synthetic.main.activity_school_schedule_file.*
@@ -24,27 +26,7 @@ class SchoolScheduleFileActivity : AppCompatActivity() {
         classId = intent?.extras?.getString("classId")
         scheduleType = intent?.extras?.getString("scheduleType")
 
-        db.collection("classes").document(classId!!).addSnapshotListener { value, error ->
-            if (error != null) {
-                Timber.e(error)
-                return@addSnapshotListener
-            }
-
-//            val subject = value!!["schedules.subject"] as? String
-//            val eskul = value["schedules.eskul"] as? String
-//            val academic = value["schedules.academic"] as? String
-
-
-
-//            when (scheduleType) {
-//                "subject" -> ivSchoolScheduleFile.setImageURI(Uri.parse(subject))
-//                "eskul" -> {
-//                    ivSchoolScheduleFile.setImageURI(null)
-//                    ivSchoolScheduleFile.setImageURI(Uri.parse(eskul))
-//                }
-//                "academic" -> ivSchoolScheduleFile.setImageURI(Uri.parse(academic))
-//            }
-        }
+        ivSchoolScheduleFile.visibility = View.GONE
 
     }
 
@@ -56,10 +38,6 @@ class SchoolScheduleFileActivity : AppCompatActivity() {
         toolbar.setNavigationOnClickListener {
             onBackPressed()
         }
-    }
-
-    fun Context.drawableToUri(drawable: Int):Uri{
-        return Uri.parse("android.resource://$packageName/$drawable")
     }
 
 }

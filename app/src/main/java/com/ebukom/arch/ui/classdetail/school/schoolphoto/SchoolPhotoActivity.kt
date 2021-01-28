@@ -1,6 +1,8 @@
 package com.ebukom.arch.ui.classdetail.school.schoolphoto
 
+import android.content.Context
 import android.content.Intent
+import android.content.SharedPreferences
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
@@ -10,6 +12,7 @@ import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.ebukom.R
 import com.ebukom.arch.dao.ClassDetailPhotoDao
+import com.ebukom.arch.ui.classdetail.MainClassDetailActivity
 import com.ebukom.arch.ui.classdetail.school.schoolphoto.schoolphotoedit.SchoolPhotoEditActivity
 import com.ebukom.arch.ui.classdetail.school.schoolphoto.schoolphotonew.SchoolPhotoNewActivity
 import com.google.android.material.bottomsheet.BottomSheetDialog
@@ -34,11 +37,16 @@ class SchoolPhotoActivity : AppCompatActivity() {
         initToolbar()
         checkEmpty()
 
-        /**
-         * Get intent from SchoolFragment
-         */
+        val sharePref: SharedPreferences = getSharedPreferences("EBUKOM", Context.MODE_PRIVATE)
+        val level = sharePref.getLong("level", 0)
+
+        // Get intent from SchoolFragment
         classId = intent?.extras?.getString("classId")
 
+        // New photo button
+        if (level == 1L) {
+            btnSchoolPhotoNew.visibility = View.GONE
+        }
         btnSchoolPhotoNew.setOnClickListener {
             val intent = Intent(this, SchoolPhotoNewActivity::class.java)
             intent.putExtra("classId", classId)

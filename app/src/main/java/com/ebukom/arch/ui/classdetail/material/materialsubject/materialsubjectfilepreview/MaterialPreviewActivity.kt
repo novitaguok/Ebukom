@@ -61,7 +61,6 @@ class MaterialPreviewActivity : AppCompatActivity() {
             clMaterialPreview.setBackgroundColor(Color.parseColor("#80000000"))
             if (category == 1) {
                 ivMaterialPreviewClose.visibility = View.VISIBLE
-                pdfView?.visibility = View.GONE
                 ivMaterialPreview.visibility = View.VISIBLE
                 vvMaterialPreview.visibility = View.GONE
                 Glide.with(this)
@@ -69,11 +68,9 @@ class MaterialPreviewActivity : AppCompatActivity() {
                     .centerCrop()
                     .into(ivMaterialPreview)
             } else if (category == 2) {
-//                pdfView.visibility = View.VISIBLE
                 ivMaterialPreviewClose.visibility = View.GONE
                 ivMaterialPreview.visibility = View.GONE
                 vvMaterialPreview.visibility = View.GONE
-//                RetrivePDFfromUrl().execute(filePath)
 
                 val file = File(Environment.getExternalStorageDirectory().absolutePath)
                 val target = Intent(Intent.ACTION_VIEW)
@@ -87,17 +84,21 @@ class MaterialPreviewActivity : AppCompatActivity() {
             if (category == 1) {
                 val mediaController = MediaController(this)
                 mediaController.setAnchorView(vvMaterialPreview)
-                pdfView?.visibility = View.GONE
                 ivMaterialPreview.visibility = View.GONE
                 vvMaterialPreview.visibility = View.VISIBLE
                 vvMaterialPreview.setMediaController(mediaController)
                 vvMaterialPreview.setVideoURI(Uri.parse(filePath))
                 vvMaterialPreview.start()
             } else if (category == 2) {
-//                pdfView.visibility = View.VISIBLE
                 ivMaterialPreview.visibility = View.GONE
                 vvMaterialPreview.visibility = View.GONE
-//                RetrivePDFfromUrl().execute(filePath)
+
+                val file = File(Environment.getExternalStorageDirectory().absolutePath)
+                val target = Intent(Intent.ACTION_VIEW)
+                target.setDataAndType(Uri.parse(filePath), "application/*")
+                target.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY)
+                val intent = Intent.createChooser(target, "Open File")
+                startActivity(intent)
             }
         }
 
@@ -182,12 +183,6 @@ class MaterialPreviewActivity : AppCompatActivity() {
                 return null
             }
             return inputStream
-        }
-
-        override fun onPostExecute(inputStream: InputStream?) {
-            // After async, load pdf in pdf viewer
-            pdfView.fromStream(inputStream).enableSwipe(true).enableDoubletap(true)
-                .scrollHandle(DefaultScrollHandle(this@MaterialPreviewActivity)).load()
         }
     }
 }

@@ -53,12 +53,6 @@
                 android:layout_height="match_parent"
                 android:background="#202020">
 
-                <com.github.barteksc.pdfviewer.PDFView
-                    android:id="@+id/pdfView"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:visibility="gone"/>
-
                 <ImageView
                     android:id="@+id/ivMaterialPreviewClose"
                     android:layout_width="wrap_content"

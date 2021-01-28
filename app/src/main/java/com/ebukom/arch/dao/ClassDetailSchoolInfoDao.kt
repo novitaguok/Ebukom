@@ -4,5 +4,6 @@ data class ClassDetailSchoolInfoDao (
     var title: String,
     var background: Int,
     var colorTheme: Int,
-    var type: String
+    var type: String,
+    var classId: String = ""
 )

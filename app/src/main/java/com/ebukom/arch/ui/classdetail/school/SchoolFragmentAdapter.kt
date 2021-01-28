@@ -49,6 +49,8 @@ class SchoolFragmentAdapter(private val items: List<ClassDetailSchoolInfoDao>, v
                     }
                 } else if (position == 1) {
                     itemView.clItemShoolInfo.setOnClickListener {
+                        val intent = Intent((context as MainClassDetailActivity), SchoolScheduleActivity::class.java)
+                        intent.putExtra("classId", items.classId)
                         (context as MainClassDetailActivity).startActivity(Intent(context, SchoolScheduleActivity::class.java))
                     }
                 } else {

@@ -187,8 +187,13 @@ class MaterialSubjectNewActivity : AppCompatActivity() {
                             for (data in value!!.documents) {
                                 mFileList.add(
                                     ClassDetailAttachmentDao(
-                                        data["title"] as String,
-                                        (data["category"] as Long).toInt()
+                                        data["path"] as String,
+                                        (data["category"] as Long).toInt(),
+                                        "",
+                                        "",
+                                        "",
+                                        "",
+                                        data["title"] as String
                                     )
                                 )
                             }

@@ -21,6 +21,7 @@ import com.ebukom.arch.dao.ClassDetailItemCheckDao
 import com.ebukom.arch.ui.classdetail.ClassDetailCheckAdapter
 import com.google.android.gms.common.util.Base64Utils.decode
 import com.google.firebase.Timestamp
+import com.google.firebase.firestore.DocumentReference
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
 import com.google.firebase.storage.StorageReference
@@ -83,6 +84,7 @@ class SchoolAnnouncementNewNextActivity : AppCompatActivity(),
 
         // Class list
         initRecycler()
+        loadUserFromClass()
 //        val uid = sharePref.getString("uid", "") as String
         db.collection("classes").whereArrayContains("class_teacher_ids", uid)
             .addSnapshotListener { value, error ->
@@ -155,15 +157,6 @@ class SchoolAnnouncementNewNextActivity : AppCompatActivity(),
             }
         }
 
-        // Joined user list
-        db.collection("classes").document(classId!!).get().addOnSuccessListener {
-            for (data in it["class_teacher_ids"] as List<String>) {
-//                if (data != uid) {
-                mUserList.add(data)
-//                }
-            }
-        }
-
         // Share announcement button
         btnSchoolAnnouncementNewNextDone.setOnClickListener {
             if (attachmentList.size != 0) {
@@ -223,27 +216,7 @@ class SchoolAnnouncementNewNextActivity : AppCompatActivity(),
                     if (it.isChecked && !it.id.isNullOrEmpty()) {
                         db.collection("classes").document(it.id!!).collection("announcements")
                             .add(data).addOnSuccessListener { task ->
-                                val contentId = task.id
-                                mUserList.forEach {
-                                    var notifData = hashMapOf<String, Any>(
-                                        "content" to content,
-                                        "title" to title,
-                                        "date" to Timestamp(Date()),
-                                        "profilePic" to profilePic,
-                                        "from" to uid,
-                                        "to" to it,
-                                        "type" to 0,
-                                        "contentId" to contentId,
-                                        "classId" to classId!!
-                                    )
-                                    db.collection("notifications").add(notifData).addOnSuccessListener {
-                                        Log.d("TAG", "announcement inserted")
-                                        val intent = Intent("finish_activity")
-                                        sendBroadcast(intent)
-                                        loading.visibility = View.GONE
-                                        finish()
-                                    }
-                                }
+                                sendNotification(task)
                             }.addOnFailureListener {
                                 Log.d("TAG", "announcement failed to be inserted")
                                 val intent = Intent("finish_activity")
@@ -255,6 +228,40 @@ class SchoolAnnouncementNewNextActivity : AppCompatActivity(),
                     }
                 }
             }
+        }
+    }
+
+    fun loadUserFromClass(){
+        // Joined user list
+        db.collection("classes").document(classId!!).get().addOnSuccessListener {
+            mUserList.clear()
+            for (data in it["class_teacher_ids"] as List<String>) {
+                mUserList.add(data)
+            }
+
+        }
+    }
+
+    private fun sendNotification(task: DocumentReference) {
+
+        val contentId = task.id
+        var notifData = hashMapOf<String, Any>(
+            "content" to content,
+            "title" to title,
+            "date" to Timestamp(Date()),
+            "profilePic" to profilePic,
+            "from" to uid,
+            "to" to mUserList,
+            "type" to 0,
+            "contentId" to contentId,
+            "classId" to classId!!
+        )
+        db.collection("notifications").add(notifData).addOnSuccessListener {
+            Log.d("TAG", "announcement inserted")
+            val intent = Intent("finish_activity")
+            sendBroadcast(intent)
+            loading.visibility = View.GONE
+            finish()
         }
     }
 
