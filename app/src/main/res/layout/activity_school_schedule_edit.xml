@@ -1,0 +1,298 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    tools:context=".arch.ui.classdetail.school.schoolschedule.schoolschedulenew.SchoolScheduleNewActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:elevation="@dimen/size_10"
+        app:elevation="@dimen/size_10">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:minHeight="?attr/actionBarSize">
+
+            <TextView
+                android:id="@+id/tvToolbarTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Edit Jadwal &amp; Kalender"
+                android:textColor="@color/colorSuperDarkBlue"
+                android:textSize="@dimen/text_16"
+                android:textStyle="bold" />
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvSchoolScheduleEditSubject"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_8"
+                android:layout_marginHorizontal="@dimen/size_8"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:cardCornerRadius="@dimen/size_4"
+                android:background="@color/colorWhite"
+                app:cardUseCompatPadding="true">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clSchoolScheduleEditSubject"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/tvSchoolScheduleNewSubjectTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/size_16"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:layout_marginLeft="@dimen/size_10"
+                        android:text="Jadwal Pelajaran"
+                        android:textSize="@dimen/text_16"
+                        android:lineHeight="@dimen/size_20"
+                        android:textFontWeight="500"
+                        android:textColor="@color/colorSuperDarkBlue"/>
+
+                    <Button
+                        android:id="@+id/btnSchoolScheduleEditSubject"
+                        android:layout_width="175dp"
+                        android:layout_height="@dimen/size_36"
+                        app:layout_constraintTop_toBottomOf="@+id/tvSchoolScheduleEditSubjectTitle"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:layout_marginLeft="@dimen/size_10"
+                        android:layout_marginTop="@dimen/size_10"
+                        android:background="@drawable/btn_blue_rectangle_8dp"
+                        android:text="PILIH FILE JADWAL"
+                        android:textSize="@dimen/text_14"
+                        android:lineHeight="@dimen/size_16"
+                        android:textFontWeight="500"
+                        android:textColor="@color/colorWhite"/>
+
+                    <TextView
+                        android:id="@+id/tvSchoolScheduleEditSubjectPath"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/size_16"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/btnSchoolScheduleEditSubject"
+                        android:layout_marginLeft="@dimen/size_10"
+                        android:layout_marginTop="@dimen/size_14"
+                        android:text="JadwalPelajaran2020.pdf"
+                        android:textSize="@dimen/text_12"
+                        android:lineHeight="@dimen/text_16"
+                        android:textColor="#212121"
+                        android:visibility="invisible"/>
+
+                    <ImageView
+                        android:id="@+id/ivSchoolScheduleEditSubjectDelete"
+                        android:layout_width="@dimen/size_24"
+                        android:layout_height="@dimen/size_24"
+                        android:layout_marginRight="@dimen/size_12"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/tvSchoolScheduleEditSubjectPath"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvSchoolScheduleEditSubjectPath"
+                        android:src="@drawable/ic_close"
+                        android:visibility="gone"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvSchoolScheduleEditEskul"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/cvSchoolScheduleEditSubject"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginHorizontal="@dimen/size_8"
+                app:cardCornerRadius="@dimen/size_4"
+                android:background="@color/colorWhite"
+                app:cardUseCompatPadding="true">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clSchoolScheduleEditEskul"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/tvSchoolScheduleEditEskulTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/size_16"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:layout_marginLeft="@dimen/size_10"
+                        android:text="Jadwal Eskul"
+                        android:textSize="@dimen/text_16"
+                        android:lineHeight="@dimen/size_20"
+                        android:textFontWeight="500"
+                        android:textColor="@color/colorSuperDarkBlue"/>
+
+                    <Button
+                        android:id="@+id/btnSchoolScheduleEditEskul"
+                        android:layout_width="175dp"
+                        android:layout_height="@dimen/size_36"
+                        app:layout_constraintTop_toBottomOf="@+id/tvSchoolScheduleEditEskulTitle"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:layout_marginLeft="@dimen/size_10"
+                        android:layout_marginTop="@dimen/size_10"
+                        android:background="@drawable/btn_blue_rectangle_8dp"
+                        android:text="PILIH FILE JADWAL"
+                        android:textSize="@dimen/text_14"
+                        android:lineHeight="@dimen/size_16"
+                        android:textFontWeight="500"
+                        android:textColor="@color/colorWhite"/>
+
+                    <TextView
+                        android:id="@+id/tvSchoolScheduleEditEskulPath"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/size_16"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/btnSchoolScheduleEditEskul"
+                        android:layout_marginLeft="@dimen/size_10"
+                        android:layout_marginTop="@dimen/size_14"
+                        android:text="JadwalEskul.pdf"
+                        android:textSize="@dimen/text_12"
+                        android:lineHeight="@dimen/text_16"
+                        android:textColor="#212121"
+                        android:visibility="invisible"/>
+
+                    <ImageView
+                        android:id="@+id/ivSchoolScheduleEditEskulDelete"
+                        android:layout_width="@dimen/size_24"
+                        android:layout_height="@dimen/size_24"
+                        android:layout_marginRight="@dimen/size_12"
+                        android:src="@drawable/ic_close"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvSchoolScheduleEditEskulPath"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/tvSchoolScheduleEditEskulPath"
+                        android:visibility="gone"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvSchoolScheduleEditAcademicCalendar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/cvSchoolScheduleEditEskul"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:layout_marginHorizontal="@dimen/size_8"
+                app:cardCornerRadius="@dimen/size_4"
+                android:background="@color/colorWhite"
+                app:cardUseCompatPadding="true">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/clSchoolScheduleEditCalendar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/tvSchoolScheduleEditCalendarTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/size_16"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:layout_marginLeft="@dimen/size_10"
+                        android:text="Kalender Akademik"
+                        android:textSize="@dimen/text_16"
+                        android:lineHeight="@dimen/size_20"
+                        android:textFontWeight="500"
+                        android:textColor="@color/colorSuperDarkBlue"/>
+
+                    <Button
+                        android:id="@+id/btnSchoolScheduleEditCalendar"
+                        android:layout_width="175dp"
+                        android:layout_height="@dimen/size_36"
+                        app:layout_constraintTop_toBottomOf="@+id/tvSchoolScheduleEditCalendarTitle"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:layout_marginLeft="@dimen/size_10"
+                        android:layout_marginTop="@dimen/size_10"
+                        android:background="@drawable/btn_blue_rectangle_8dp"
+                        android:text="PILIH FILE KALENDER"
+                        android:textSize="@dimen/text_14"
+                        android:lineHeight="@dimen/size_16"
+                        android:textFontWeight="500"
+                        android:textColor="@color/colorWhite"/>
+
+                    <TextView
+                        android:id="@+id/tvSchoolScheduleEditCalendarPath"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="@dimen/size_16"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/btnSchoolScheduleEditCalendar"
+                        android:layout_marginLeft="@dimen/size_10"
+                        android:layout_marginTop="@dimen/size_14"
+                        android:text="KalenderAkademik.pdf"
+                        android:textSize="@dimen/text_12"
+                        android:lineHeight="@dimen/text_16"
+                        android:textColor="#212121"
+                        android:visibility="invisible"/>
+
+                    <ImageView
+                        android:id="@+id/ivSchoolScheduleEditCalendarDelete"
+                        android:layout_width="@dimen/size_24"
+                        android:layout_height="@dimen/size_24"
+                        android:layout_marginRight="@dimen/size_12"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/tvSchoolScheduleEditCalendarPath"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvSchoolScheduleEditCalendarPath"
+                        android:src="@drawable/ic_close"
+                        android:visibility="gone"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <Button
+        android:id="@+id/btnSchoolScheduleEditDone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="#BDBDBD"
+        android:lineHeight="@dimen/text_16"
+        android:text="BAGIKAN JADWAL &amp; KALENDER"
+        android:textColor="@color/colorWhite"
+        android:textFontWeight="500"
+        android:textSize="@dimen/text_14"
+
+        android:enabled="false"/>
+
+    app:layout_constraintTop_toBottomOf="@id/rvSchoolAnnouncementEditTemplate"
+
+    <include
+        android:id="@+id/loading"
+        layout="@layout/layout_loading"
+        android:visibility="gone" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

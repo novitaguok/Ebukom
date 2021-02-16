@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/clChooseClassAdd">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:descendantFocusability="blocksDescendants"
+            android:paddingBottom="@dimen/size_14">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvChooseClassHeader"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:elevation="@dimen/size_2"
+                app:cardCornerRadius="@dimen/size_8"
+                app:cardElevation="@dimen/size_2"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <ImageView
+                    android:id="@+id/ivChooseClassHeader"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/bg_books" />
+
+            </androidx.cardview.widget.CardView>
+
+            <TextView
+                android:id="@+id/tvChooseClassWelcome"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_16"
+                android:layout_marginTop="@dimen/size_52"
+                android:shadowColor="@android:color/transparent"
+                android:text="Selamat datang di \nEbukom Cendekia Muda"
+                android:textColor="@color/colorRed"
+                android:textSize="@dimen/text_20"
+                android:textStyle="bold"
+                android:translationZ="10dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvChooseClassTooltips"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_16"
+                android:layout_marginTop="@dimen/size_12"
+                android:shadowColor="@android:color/transparent"
+                android:text="Silakan memilih kelas yang tersedia"
+                android:textColor="@color/colorSuperDarkBlue"
+                android:textFontWeight="500"
+                android:textSize="@dimen/text_14"
+                android:translationZ="10dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvChooseClassWelcome" />
+
+
+            <ImageView
+                android:id="@+id/ivChooseClassMainEmpty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="60dp"
+                android:src="@drawable/ic_building"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cvChooseClassHeader" />
+
+            <TextView
+                android:id="@+id/tvChooseClassMainEmpty"
+                android:layout_width="256dp"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_20"
+                android:text="Anda belum memiliki kelas, \n Silahkan gabung kelas terlebih dahulu"
+                android:textAlignment="center"
+                android:textColor="@color/colorBlack"
+                android:textSize="@dimen/text_14"
+                app:layout_constraintLeft_toLeftOf="@id/ivChooseClassMainEmpty"
+                app:layout_constraintRight_toRightOf="@id/ivChooseClassMainEmpty"
+                app:layout_constraintTop_toBottomOf="@id/ivChooseClassMainEmpty" />
+
+            <androidx.constraintlayout.widget.Group
+                android:id="@+id/groupChooseClassMainEmpty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvChooseClassClasses"
+                android:nestedScrollingEnabled="false"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_18"
+                app:layout_constraintTop_toBottomOf="@+id/cvChooseClassHeader" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clChooseClassAdd"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
+
+        <TextView
+            android:id="@+id/tvChooseClassJoin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:elevation="@dimen/size_4"
+            android:text="Tambah Kelas"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_16"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/btnChooseClassJoin"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintLeft_toRightOf="@+id/ivChooseClassJoin"
+            app:layout_constraintRight_toRightOf="@+id/btnChooseClassJoin"
+            app:layout_constraintTop_toTopOf="@+id/btnChooseClassJoin" />
+
+        <ImageView
+            android:id="@+id/ivChooseClassJoin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="@dimen/size_12"
+            android:elevation="@dimen/size_4"
+            android:src="@drawable/ic_plus_yellow"
+            app:layout_constraintBottom_toBottomOf="@+id/tvChooseClassJoin"
+            app:layout_constraintHorizontal_chainStyle="packed"
+            app:layout_constraintLeft_toLeftOf="@+id/btnChooseClassJoin"
+            app:layout_constraintRight_toLeftOf="@+id/tvChooseClassJoin"
+            app:layout_constraintTop_toTopOf="@+id/tvChooseClassJoin" />
+
+        <Button
+            android:id="@+id/btnChooseClassJoin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:height="@dimen/size_64"
+            android:background="@color/colorSuperDarkBlue"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/btnChooseClassLogout" />
+
+        <Button
+            android:id="@+id/btnChooseClassLogout"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_52"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:background="#F6F6F6"
+            android:text="Logout"
+            android:textColor="@color/colorRed"
+            android:textSize="@dimen/text_16"
+            android:textStyle="bold" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</RelativeLayout>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/flSchoolAnnouncement"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".arch.ui.classdetail.school.schoolannouncement.SchoolAnnouncementFragment">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clSchoolAnnouncement"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:descendantFocusability="blocksDescendants">
+
+            <Button
+                android:id="@+id/btnSchoolAnnouncementNew"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_48"
+                android:layout_marginHorizontal="@dimen/size_8"
+                android:layout_marginTop="@dimen/size_12"
+                android:layout_marginBottom="@dimen/size_12"
+                android:background="@drawable/btn_white_rectangle_4dp"
+                android:elevation="@dimen/size_2"
+                android:lineHeight="@dimen/text_24"
+                android:text="Bagikan Pengumuman Baru"
+                android:textAllCaps="false"
+                android:textColor="@color/colorSuperDarkBlue"
+                android:textSize="@dimen/text_16"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/ivSchoolAnnouncementEmpty"
+                android:layout_width="@dimen/size_100"
+                android:layout_height="@dimen/size_100"
+                android:layout_marginTop="@dimen/size_48"
+                android:src="@drawable/ic_school_gray"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnSchoolAnnouncementNew"/>
+
+            <TextView
+                android:id="@+id/tvSchoolAnnouncementEmpty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_8"
+                android:lineHeight="@dimen/text_24"
+                android:text="Belum ada pengumuman"
+                android:textColor="#E0E0E0"
+                android:textSize="@dimen/text_14"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ivSchoolAnnouncementEmpty" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvSchoolAnnouncement"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btnSchoolAnnouncementNew"
+                app:layout_constraintBottom_toBottomOf="parent"
+                android:layout_marginBottom="@dimen/size_8"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</FrameLayout>

@@ -1,6 +1,22 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.ebukom">
+
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <queries>
+        <intent>
+            <action android:name="android.media.action.IMAGE_CAPTURE" />
+        </intent>
+    </queries>
+
 
     <application
         android:allowBackup="true"
@@ -9,13 +25,81 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".arch.ui.main.MainActivity">
+        <activity android:name=".arch.ui.classdetail.material.materialsubject.materialsubjectfilepreview.MaterialSubjectFilePreviewActivity"></activity>
+        <activity android:name=".arch.ui.classdetail.material.materialsubject.materialsubjectfile.MaterialSubjectFileActivity" />
+        <activity android:name=".arch.ui.classdetail.material.materialsubject.materialsubjectfilepreview.MaterialPreviewActivity" />
+        <activity android:name=".arch.ui.classdetail.school.schoolphoto.SchoolPhotoActivity" />
+        <activity android:name=".arch.ui.classdetail.school.schoolschedule.SchoolScheduleActivity" />
+        <activity android:name=".arch.ui.classdetail.school.schoolannouncement.schoolannouncementmainpage.SchoolAnnouncementActivity" />
+        <activity android:name=".arch.ui.welcome.WelcomeActivity" />
+        <activity android:name=".arch.ui.admin.adminschoolfeeinfo.adminshareschoolfeeinforecheck.AdminShareSchoolFeeInfoRecheckActivity" />
+        <activity android:name=".arch.ui.admin.adminschoolfeeinfo.adminshareschoolfeeinfonext.AdminShareSchoolFeeInfoNextActivity" />
+        <activity android:name=".arch.ui.admin.adminschoolfeeinfo.adminshareschoolfeeinfoaddpaymentitemtemplate.AdminSchoolFeeInfoAddPaymentItemTemplateIActivity" />
+        <activity android:name=".arch.ui.classdetail.personal.personalnoteedit.PersonalNoteEditActivity" />
+        <activity android:name=".arch.ui.classdetail.personal.personalnotedetail.PersonalNoteDetailActivity" />
+        <activity android:name=".arch.ui.classdetail.school.schoolschedule.schoolschedulefile.SchoolScheduleFileActivity" />
+        <activity android:name=".arch.ui.admin.adminschoolfeeinfo.adminshareschoolfeeinfoaddnote.AdminSchoolFeeInfoAddNoteActivity" />
+        <activity android:name=".arch.ui.admin.adminschoolfeeinfo.adminshareschoolfeeinfoaddpaymentitem.AdminSchoolFeeInfoAddPaymentItemActivity" />
+        <activity android:name=".arch.ui.admin.adminschoolfeeinfo.adminshareschoolfeeinfo.AdminShareSchoolFeeInfoActivity" />
+        <activity android:name=".arch.ui.admin.MainAdminActivity" />
+        <activity android:name=".arch.ui.classdetail.personal.personalparent.personalparentschoolfeeinfo.PersonalParentSchoolFeeInfoActivity" />
+        <activity android:name=".arch.ui.classdetail.material.materialeducation.materialeducationedit.MaterialEducationEditActivity" />
+        <activity android:name=".arch.ui.classdetail.material.materialeducation.materialeducationdetail.MaterialEducationDetailActivity" />
+        <activity android:name=".arch.ui.classdetail.material.materialeducation.materialeducationnew.MaterialEducationNewActivity" />
+        <activity android:name=".arch.ui.classdetail.material.materialsubject.materialsubjectadd.MaterialSubjectRecapActivity" />
+        <activity android:name=".arch.ui.classdetail.material.materialsubject.materialsubjectadd.MaterialSubjectAddActivity" />
+        <activity android:name=".arch.ui.classdetail.material.materialsubject.materialsubjectnew.MaterialSubjectNewActivity" />
+        <activity android:name=".arch.ui.classdetail.personal.personalnotenewnext.PersonalNoteNewNextActivity" />
+        <activity android:name=".arch.ui.classdetail.personal.personalnotenew.PersonalNoteAddTemplateActivity" />
+        <activity
+            android:name=".arch.ui.classdetail.personal.personalnotenew.PersonalNoteNewActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".arch.ui.classdetail.school.schoolphoto.schoolphotonew.SchoolPhotoNewActivity" />
+        <activity android:name=".arch.ui.classdetail.school.schoolphoto.schoolphotoedit.SchoolPhotoEditActivity" />
+        <activity android:name=".arch.ui.classdetail.school.schoolschedule.schoolschedulenew.SchoolScheduleNewActivity" />
+        <activity android:name=".arch.ui.classdetail.school.schoolschedule.schoolscheduleedit.SchoolScheduleEditActivity" />
+        <activity android:name=".arch.ui.classdetail.school.schoolannouncement.schoolannouncementnewnext.SchoolAnnouncementNewNextActivity" />
+        <activity android:name=".arch.ui.classdetail.school.schoolannouncement.SchoolAnnouncementAddTemplateActivity" />
+        <activity
+            android:name=".arch.ui.classdetail.school.schoolannouncement.schoolannouncementnew.SchoolAnnouncementNewActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".arch.ui.classdetail.school.schoolannouncement.schoolannouncementedit.SchoolAnnouncementEditActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".arch.ui.classdetail.school.schoolannouncement.schoolannouncementdetail.SchoolAnnouncementDetailActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity android:name=".arch.ui.forgotpassword.resetpassword.ResetPasswordActivity" />
+        <activity android:name=".arch.ui.classdetail.MainClassDetailActivity" />
+        <activity android:name=".arch.ui.joinclass.JoinClassActivity" />
+        <activity android:name=".arch.ui.classdetail.notification.NotificationActivity" />
+        <activity android:name=".arch.ui.editprofile.EditProfileActivity" />
+        <activity android:name=".arch.ui.chooseclass.ChooseClassActivity" />
+        <activity android:name=".arch.ui.register.school.RegisterSchoolActivity" />
+        <activity android:name=".arch.ui.register.parent.RegisterParentActivity" />
+        <activity android:name=".arch.ui.forgotpassword.verification.VerificationActivity" />
+        <activity android:name=".arch.ui.forgotpassword.sendcode.SendCodeActivity" />
+        <activity android:name=".arch.ui.login.LoginActivity" />
+        <activity android:name=".arch.ui.splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".arch.ui.main.MainActivity" />
+
+        <service android:name=".services.FirebaseCloudMessagingService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_icon"
+            android:resource="@drawable/ic_logo_ebukom" />
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_color"
+            android:resource="@color/colorAccent" />
     </application>
 
 </manifest>

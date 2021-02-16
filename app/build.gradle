@@ -1,10 +1,11 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'com.google.gms.google-services'
 
 ext.versionMajor = 1
 ext.versionMinor = 0
-ext.versionPatch = 16
+ext.versionPatch = 17
 
 ext.versionDatabase = 1
 ext.minimumSdkVersion = 19
@@ -38,12 +39,17 @@ android {
         applicationVariants.all { variant ->
             variant.outputs.all {
                 if (variant.buildType.name == "release") {
-                    outputFileName = "telyoucious-${variant.versionName}.apk"
+                    outputFileName = "ebukom-${variant.versionName}.apk"
                 } else {
-                    outputFileName = "telyoucious-${variant.versionName}.apk"
+                    outputFileName = "ebukom-${variant.versionName}.apk"
                 }
             }
         }
+    }
+
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
     }
 }
 
@@ -60,11 +66,14 @@ dependencies {
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation 'androidx.appcompat:appcompat:1.1.0'
     implementation 'androidx.constraintlayout:constraintlayout:1.1.3'
+    implementation 'com.google.firebase:firebase-auth:20.0.1'
+    implementation 'com.google.firebase:firebase-database:19.5.1'
+    implementation 'com.google.firebase:firebase-firestore:22.0.0'
+    implementation 'com.google.firebase:firebase-storage:19.2.0'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test:runner:1.2.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
-    implementation 'com.google.android.material:material:1.0.0'
     implementation 'com.joooonho:selectableroundedimageview:1.0.1'
     implementation 'com.jakewharton.timber:timber:4.7.1'
     implementation 'androidx.multidex:multidex:2.0.0'
@@ -77,4 +86,67 @@ dependencies {
     // For developers using the Android Support Library
     implementation 'pub.devrel:easypermissions:3.0.0'
 
+    implementation 'androidx.appcompat:appcompat:1.0.0'
+    implementation 'com.google.android.material:material:1.0.0'
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+
+    implementation('com.alimuzaffar.lib:pinentryedittext:1.3.10') {
+        // Exclude is only needed if you already have
+        // any of the following as a dependency in your project.
+        exclude group: 'com.android.support', module: 'support-v4'
+        exclude group: 'com.android.support', module: 'appcompat-v7'
+        exclude group: 'com.android.support', module: 'support-v13'
+    }
+
+    // Circle image`
+    implementation 'de.hdodenhof:circleimageview:3.1.0'
+
+    // Datetime picker
+    implementation 'com.github.Kunzisoft:Android-SwitchDateTimePicker:2.0'
+
+    // Import the BoM for the Firebase platform
+    implementation platform('com.google.firebase:firebase-bom:26.1.0')
+
+    // Declare the dependency for the Firebase Authentication library
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation 'com.google.firebase:firebase-auth-ktx'
+
+    // Declare the dependency for the Cloud Storage library
+    // When using the BoM, you don't specify versions in Firebase library dependencies
+    implementation 'com.google.firebase:firebase-storage-ktx'
+
+    implementation 'androidx.browser:browser:1.2.0'
+
+    implementation 'com.appeaser.sublimepickerlibrary:sublimepickerlibrary:2.1.2'
+
+    implementation 'com.google.firebase:firebase-messaging:17.4.0'
+
+    // For developers using the Android Support Library
+    implementation 'pub.devrel:easypermissions:3.0.0'
+    implementation 'com.github.bumptech.glide:glide:4.10.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.10.0'
+    implementation 'com.github.dhaval2404:imagepicker-support:1.1'
+
+    // Range date picker
+    implementation('com.aminography:primedatepicker:3.3.1') {
+        // Exclude is only needed if you already have
+        // any of the following as a dependency in your project.
+        exclude group: 'com.android.support', module: 'support-v4'
+        exclude group: 'com.android.support', module: 'appcompat-v7'
+        exclude group: 'com.android.support', module: 'support-v13'
+    }
+
+    implementation('com.aminography:primecalendar:1.3.2') {
+        // Exclude is only needed if you already have
+        // any of the following as a dependency in your project.
+        exclude group: 'com.android.support', module: 'support-v4'
+        exclude group: 'com.android.support', module: 'appcompat-v7'
+        exclude group: 'com.android.support', module: 'support-v13'
+    }
+
+    // PDF viewer
+    implementation 'com.github.barteksc:android-pdf-viewer:2.8.2'
+
+    // Coroutine
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.1.1'
 }

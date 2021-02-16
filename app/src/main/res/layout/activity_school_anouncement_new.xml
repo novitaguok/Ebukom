@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    tools:context=".arch.ui.classdetail.school.schoolannouncement.schoolannouncementnew.SchoolAnnouncementNewActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:elevation="@dimen/size_10"
+        app:elevation="@dimen/size_10">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:minHeight="?attr/actionBarSize">
+
+            <TextView
+                android:id="@+id/tvToolbarTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Bagikan Pengumuman"
+                android:textColor="@color/colorSuperDarkBlue"
+                android:textSize="@dimen/text_16"
+                android:textStyle="bold" />
+
+        </androidx.appcompat.widget.Toolbar>
+
+        <Button
+            android:id="@+id/btnSchoolAnnouncementNewUseTemplate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorSuperDarkBlue"
+            android:text="GUNAKAN TEMPLATE PENGUMUMAN"
+            android:textColor="@color/colorWhite"
+            android:textFontWeight="400"
+            android:textSize="@dimen/text_14" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilSchoolAnnouncementNewTitle"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="60dp"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/size_24"
+                android:hint="Judul pengumuman"
+                android:theme="@style/LoginTextInputLayoutLabel"
+                app:boxCornerRadiusBottomEnd="@dimen/size_8"
+                app:boxCornerRadiusBottomStart="@dimen/size_8"
+                app:boxCornerRadiusTopEnd="@dimen/size_8"
+                app:boxCornerRadiusTopStart="@dimen/size_8"
+                app:boxStrokeColor="@color/colorBlack"
+                app:boxStrokeWidth="@dimen/size_1"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etSchoolAnnouncementNewTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingHorizontal="@dimen/size_16"
+                    android:textSize="@dimen/text_16" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <Button
+                android:id="@+id/btnSchoolAnnouncementNewTime"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_52"
+                android:stateListAnimator="@null"
+                app:layout_constraintTop_toBottomOf="@+id/tilSchoolAnnouncementNewTitle"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/size_20"
+                android:background="@drawable/edit_text_rectangle_selector"
+                android:drawableRight="@drawable/ic_calendar_24"
+                android:text="Tanggal Acara (Optional)"
+                android:textAllCaps="false"
+                android:textAlignment="textStart"
+                android:paddingHorizontal="@dimen/size_16"
+                android:textSize="@dimen/text_16"
+                android:textStyle="normal"
+                android:textColor="@color/colorGray"
+                android:textFontWeight="400"/>
+            
+            <EditText
+                android:id="@+id/etSchoolAnnouncementNewContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:gravity="top"
+                android:paddingHorizontal="@dimen/size_16"
+                android:layout_marginTop="@dimen/size_28"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                app:layout_constraintTop_toBottomOf="@+id/btnSchoolAnnouncementNewTime"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                android:lines="10"
+                android:hint="Masukkan pengumuman yang ingin dibagikan"
+                android:textFontWeight="400"
+                android:textSize="@dimen/text_14"/>
+
+            <View
+                android:id="@+id/vSchoolAnnouncementNew"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_1"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/size_28"
+                android:background="#EEEEEE"
+                app:layout_constraintTop_toBottomOf="@+id/etSchoolAnnouncementNewContent" />
+
+            <TextView
+                android:id="@+id/tvSchoolAnnouncementNewAttachmentTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/size_20"
+                android:lineHeight="@dimen/text_20"
+                android:text="Lampiran"
+                android:textColor="#222222"
+                android:textSize="@dimen/text_12"
+                app:layout_constraintTop_toBottomOf="@id/vSchoolAnnouncementNew" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvMaterialSubjectAddAttachment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@id/tvSchoolAnnouncementNewAttachmentTitle" />
+
+            <Button
+                android:id="@+id/btnSchoolAnnouncementNewNext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#828282"
+                android:enabled="false"
+                android:lineHeight="@dimen/text_16"
+                android:text="SELANJUTNYA"
+                android:textColor="@color/colorWhite"
+                android:textFontWeight="500"
+                android:textSize="@dimen/text_14"
+                app:layout_constraintBottom_toBottomOf="parent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <include
+        android:id="@+id/loading"
+        layout="@layout/layout_loading"
+        android:visibility="gone" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

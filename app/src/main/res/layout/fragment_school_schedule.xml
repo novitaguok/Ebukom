@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".arch.ui.classdetail.school.schoolschedule.SchoolScheduleFragment">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clSchoolSchedule"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:descendantFocusability="blocksDescendants">
+
+            <Button
+                android:id="@+id/btnSchoolScheduleNew"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_48"
+                android:layout_marginHorizontal="@dimen/size_8"
+                android:layout_marginTop="@dimen/size_12"
+                android:layout_marginBottom="@dimen/size_12"
+                android:background="@drawable/btn_white_rectangle_4dp"
+                android:elevation="@dimen/size_2"
+                android:lineHeight="@dimen/text_24"
+                android:text="Bagikan Jadwal &amp; Kalender"
+                android:textAllCaps="false"
+                android:textColor="@color/colorSuperDarkBlue"
+                android:textSize="@dimen/text_16"
+                android:textStyle="bold"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <ImageView
+                android:id="@+id/ivSchoolScheduleEmpty"
+                android:layout_width="@dimen/size_100"
+                android:layout_height="@dimen/size_100"
+                android:layout_marginTop="@dimen/size_48"
+                android:src="@drawable/ic_calendar_gray"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/btnSchoolScheduleNew" />
+
+            <TextView
+                android:id="@+id/tvSchoolScheduleEmpty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_8"
+                android:lineHeight="@dimen/text_24"
+                android:text="Belum ada jadwal yang dibagikan"
+                android:textColor="#E0E0E0"
+                android:textSize="@dimen/text_14"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/ivSchoolScheduleEmpty" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvSchoolPhoto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                android:paddingTop="@dimen/size_8"
+                android:paddingBottom="@dimen/size_8"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btnSchoolScheduleNew" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+</FrameLayout>

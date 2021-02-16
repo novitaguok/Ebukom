@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    android:fitsSystemWindows="true"
+    tools:context=".arch.ui.forgotpassword.sendcode.SendCodeActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:elevation="@dimen/size_10"
+        app:elevation="@dimen/size_10">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:minHeight="?attr/actionBarSize">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Lupa kata sandi"
+                android:textColor="@color/colorSuperDarkBlue"
+                android:textSize="@dimen/text_16"
+                android:textStyle="bold" />
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+        <TextView
+            android:id="@+id/tvSendCodeText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_32"
+            app:layout_constraintTop_toTopOf="parent"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+            android:text="@string/send_code_text"
+            android:textSize="@dimen/text_14"
+            android:lineHeight="@dimen/size_24"
+            android:textColor="#222222"/>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/tilSendCodePhone"
+            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/tvSendCodeText"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/size_32"
+            app:boxCornerRadiusBottomEnd="@dimen/size_8"
+            app:boxCornerRadiusBottomStart="@dimen/size_8"
+            app:boxCornerRadiusTopEnd="@dimen/size_8"
+            app:boxCornerRadiusTopStart="@dimen/size_8"
+            android:hint="Nomor telepon"
+            android:theme="@style/LoginTextInputLayoutLabel"
+            app:boxStrokeColor="@color/colorBlack"
+            app:boxStrokeWidth="@dimen/size_1">
+
+            <com.google.android.material.textfield.TextInputEditText
+                android:id="@+id/etSendCodePhone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="@dimen/size_16"
+                android:background="@drawable/edit_text_rectangle_selector" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/tvSendCodeErrorMessage"
+            app:layout_constraintTop_toBottomOf="@+id/tilSendCodePhone"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_4"
+            android:layout_marginLeft="@dimen/size_32"
+            android:text="Nomor telepon Anda tidak terdaftar"
+            android:textColor="@color/colorRed"
+            android:visibility="gone"
+            android:textSize="@dimen/text_12"/>
+
+        <Button
+            android:id="@+id/btnSendCodeReset"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/size_18"
+            android:background="@drawable/btn_blue_rectangle_8dp"
+            android:padding="@dimen/size_16"
+            android:text="ATUR ULANG KATA SANDI"
+            android:textColor="@color/colorWhite"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/tvSendCodeErrorMessage" />
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <include
+        android:id="@+id/loading"
+        layout="@layout/layout_loading"
+        android:visibility="gone"/>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

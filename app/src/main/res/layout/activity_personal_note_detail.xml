@@ -1,0 +1,237 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".arch.ui.classdetail.personal.personalnotedetail.PersonalNoteDetailActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:elevation="@dimen/size_10"
+        app:elevation="@dimen/size_10">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:minHeight="?attr/actionBarSize">
+
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@+id/clPersonalNoteDetailComment"
+        android:layout_below="@+id/appbar"
+        android:fillViewport="true">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvPersonalNoteDetailNote"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="5dp"
+                android:layout_marginTop="@dimen/size_8"
+                android:background="@color/colorWhite"
+                app:cardCornerRadius="@dimen/size_4"
+                app:cardUseCompatPadding="true">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <de.hdodenhof.circleimageview.CircleImageView
+                        android:id="@+id/ivPersonalNoteDetailProfilePicture"
+                        android:layout_width="@dimen/size_40"
+                        android:layout_height="@dimen/size_40"
+                        android:layout_marginLeft="@dimen/size_10"
+                        android:layout_marginTop="@dimen/activity_vertical_margin"
+                        android:src="@color/colorGray"
+                        app:civ_border_color="#FF000000"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tvPersonalNoteDetailTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/size_12"
+                        android:lineHeight="@dimen/text_24"
+                        android:text="Eni Trikuswanti"
+                        android:textColor="@color/colorSuperDarkBlue"
+                        android:textSize="@dimen/text_16"
+                        android:textStyle="bold"
+                        app:layout_constraintBottom_toBottomOf="@+id/ivPersonalNoteDetailProfilePicture"
+                        app:layout_constraintLeft_toRightOf="@+id/ivPersonalNoteDetailProfilePicture"
+                        app:layout_constraintTop_toTopOf="@+id/ivPersonalNoteDetailProfilePicture" />
+
+                    <ImageView
+                        android:id="@+id/ivPersonalNoteDetailMoreButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginRight="@dimen/size_10"
+                        android:clickable="true"
+                        android:src="@drawable/ic_more_vertical"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvPersonalNoteDetailTitle"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/tvPersonalNoteDetailTitle" />
+
+                    <TextView
+                        android:id="@+id/tvPersonalNoteDetailContent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/size_16"
+                        android:layout_marginBottom="@dimen/size_32"
+                        android:lineHeight="@dimen/size_20"
+                        android:paddingLeft="@dimen/size_10"
+                        android:paddingRight="@dimen/size_10"
+                        android:text="@string/announcement_content"
+                        android:textColor="#222222"
+                        android:textSize="@dimen/text_14"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/ivPersonalNoteDetailProfilePicture" />
+
+                    <TextView
+                        android:id="@+id/tvPersonalNoteDetailTime"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/size_10"
+                        android:layout_marginRight="@dimen/size_10"
+                        android:layout_marginTop="@dimen/size_32"
+                        android:layout_marginBottom="@dimen/size_24"
+                        android:lineHeight="@dimen/text_20"
+                        android:text="12.00 - Senin, 12 Maret 2020"
+                        android:textColor="#7A7A7A"
+                        android:textSize="@dimen/text_10"
+                        app:layout_constraintTop_toBottomOf="@id/tvPersonalNoteDetailContent"
+                        app:layout_constraintBottom_toBottomOf="parent"
+                        app:layout_constraintRight_toRightOf="parent" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvPersonalNoteDetailAttachment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/cvPersonalNoteDetailNote"
+                android:layout_marginHorizontal="@dimen/size_8"
+                android:layout_marginTop="@dimen/size_8"
+                android:elevation="@dimen/size_2"
+                app:cardCornerRadius="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingTop="@dimen/size_16"
+                    android:paddingBottom="@dimen/size_16">
+
+                    <TextView
+                        android:id="@+id/tvPersonalNoteDetailAttachmentTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/size_10"
+                        android:lineHeight="@dimen/text_20"
+                        android:text="Lampiran"
+                        android:textColor="#222222"
+                        android:textSize="@dimen/text_12" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvPersonalNoteDetailAttachment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:nestedScrollingEnabled="false"/>
+                </LinearLayout>
+
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvPersonalNoteDetailComment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/cvPersonalNoteDetailAttachment"
+                android:layout_marginHorizontal="@dimen/size_8"
+                android:layout_marginTop="@dimen/size_8"
+                android:layout_marginBottom="@dimen/size_8"
+                android:descendantFocusability="blocksDescendants"
+                android:elevation="@dimen/size_2"
+                app:cardCornerRadius="4dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tvPersonalNoteDetailCommentTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/size_10"
+                        android:layout_marginTop="@dimen/size_16"
+                        android:lineHeight="@dimen/text_20"
+                        android:text="Komentar"
+                        android:textColor="#222222"
+                        android:textSize="@dimen/text_12" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvPersonalNoteDetailComment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tvPersonalNoteDetailCommentTitle"
+                        android:layout_marginTop="@dimen/size_8"
+                        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
+
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+        </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clPersonalNoteDetailComment"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_52"
+        android:layout_alignParentBottom="true">
+
+        <EditText
+            android:id="@+id/etPersonalNoteDetailComment"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_52"
+            android:background="@drawable/edit_text_rectangle_white"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:hint="@string/insert_comment"
+            android:padding="@dimen/size_16"
+            android:textSize="@dimen/text_14"
+            android:lineHeight="@dimen/size_20"
+            android:shadowColor="@color/colorGray"
+            android:textColor="@color/colorBlack"
+            android:textCursorDrawable="@null" />
+
+        <ImageView
+            android:id="@+id/ivPersonalNoteDetailComment"
+            android:layout_width="@dimen/size_24"
+            android:layout_height="@dimen/size_24"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:src="@drawable/ic_send_red"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <include
+        android:id="@+id/loading"
+        layout="@layout/layout_loading"
+        android:visibility="gone" />
+
+</RelativeLayout>
+

@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilAdminSchoolFeeInfoAddItem"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:boxCornerRadiusBottomEnd="@dimen/size_8"
+        app:boxCornerRadiusBottomStart="@dimen/size_8"
+        app:boxCornerRadiusTopEnd="@dimen/size_8"
+        app:boxCornerRadiusTopStart="@dimen/size_8"
+        app:boxStrokeColor="@color/colorBlack"
+        app:boxStrokeWidth="@dimen/size_1"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/size_24"
+        android:hint="Nama Item"
+        android:theme="@style/LoginTextInputLayoutLabel">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etAdminSchoolFeeInfoAddItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/edit_text_rectangle_selector"
+            android:padding="@dimen/size_16" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilAdminSchoolFeeInfoAddItemFee"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        app:boxCornerRadiusBottomEnd="@dimen/size_8"
+        app:boxCornerRadiusBottomStart="@dimen/size_8"
+        app:boxCornerRadiusTopEnd="@dimen/size_8"
+        app:boxCornerRadiusTopStart="@dimen/size_8"
+        app:boxStrokeColor="@color/colorBlack"
+        app:boxStrokeWidth="@dimen/size_1"
+        app:layout_constraintTop_toBottomOf="@+id/tilAdminSchoolFeeInfoAddItem"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+        android:layout_marginTop="@dimen/size_24"
+        android:hint="Biaya"
+        android:theme="@style/LoginTextInputLayoutLabel">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etAdminSchoolFeeInfoAddItemFee"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/size_16" />
+    </com.google.android.material.textfield.TextInputLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

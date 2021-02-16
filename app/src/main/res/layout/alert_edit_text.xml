@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:layout_constraintCircleRadius="@dimen/size_4">
+
+    <TextView
+        android:id="@+id/tvAlertEditText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:layout_marginLeft="@dimen/size_20"
+        android:layout_marginTop="@dimen/size_20"
+        android:text="Edit Komentar"
+        android:textSize="@dimen/text_16"
+        android:lineHeight="@dimen/size_24"
+        android:textColor="#212121"/>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tilAlertEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/size_12"
+        android:layout_marginHorizontal="@dimen/size_20"
+        android:hint="Komentar"
+        android:paddingHorizontal="@dimen/size_12"
+        android:paddingTop="@dimen/size_8"
+        android:theme="@style/GeneralTextInputLayoutStyle"
+        app:layout_constraintTop_toBottomOf="@+id/tvAlertEditText"
+        android:background="#FBFBFB">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/etAlertEditText"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textCursorDrawable="@null"/>
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <TextView
+        android:id="@+id/tvAlertEditTextErrorMessage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintTop_toBottomOf="@+id/tilAlertEditText"
+        app:layout_constraintLeft_toLeftOf="@+id/tilAlertEditText"
+        android:layout_marginHorizontal="@dimen/size_16"
+        android:text="Komentar tidak boleh kosong"
+        android:textSize="@dimen/text_12"
+        android:lineHeight="@dimen/size_12"
+        android:textColor="#D93250"
+        android:visibility="gone"/>
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,350 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:elevation="@dimen/size_10"
+        app:elevation="@dimen/size_10">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:minHeight="?attr/actionBarSize">
+
+            <TextView
+                android:id="@+id/tvToolbarTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Daftar"
+                android:textColor="@color/colorSuperDarkBlue"
+                android:textSize="@dimen/text_16"
+                android:textStyle="bold" />
+        </androidx.appcompat.widget.Toolbar>
+
+        <TextView
+            android:id="@+id/tvRegisterParentTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorSuperDarkBlue"
+            android:gravity="center_horizontal"
+            android:padding="@dimen/size_10"
+            android:text="Sebagai wali murid"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_14"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent" />
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingBottom="@dimen/size_20">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/ivRegisterParentProfilePicture"
+                android:layout_width="@dimen/size_100"
+                android:layout_height="@dimen/size_100"
+                android:layout_marginTop="@dimen/size_32"
+                android:src="@color/colorGray"
+                app:civ_border_color="#FF000000"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvRegisterParentAddPhoto"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_14"
+                android:layout_marginBottom="@dimen/size_16"
+                android:text="Tambah foto profil"
+                android:textColor="#3F3B5C"
+                android:textFontWeight="500"
+                android:textSize="@dimen/text_14"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/ivRegisterParentProfilePicture" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilRegisterParentName"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_52"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/size_32"
+                android:hint="Nama lengkap"
+                android:theme="@style/LoginTextInputLayoutLabel"
+                app:boxCornerRadiusBottomEnd="@dimen/size_8"
+                app:boxCornerRadiusBottomStart="@dimen/size_8"
+                app:boxCornerRadiusTopEnd="@dimen/size_8"
+                app:boxCornerRadiusTopStart="@dimen/size_8"
+                app:boxStrokeColor="@color/colorBlack"
+                app:boxStrokeWidth="@dimen/size_1"
+                app:errorEnabled="true"
+                app:layout_constraintTop_toBottomOf="@id/tvRegisterParentAddPhoto">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etRegisterParentName"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingHorizontal="@dimen/size_16" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tvRegisterParentNameErrorMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_32"
+                android:lineHeight="@dimen/size_16"
+                android:text="Nama lengkap tidak boleh kosong"
+                android:textColor="@color/colorRed"
+                android:textSize="@dimen/text_12"
+                android:visibility="gone"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tilRegisterParentName" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilRegisterParentChild"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_52"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/size_24"
+                android:hint="Nama anak"
+                android:theme="@style/LoginTextInputLayoutLabel"
+                app:boxCornerRadiusBottomEnd="@dimen/size_8"
+                app:boxCornerRadiusBottomStart="@dimen/size_8"
+                app:boxCornerRadiusTopEnd="@dimen/size_8"
+                app:boxCornerRadiusTopStart="@dimen/size_8"
+                app:boxStrokeColor="@color/colorBlack"
+                app:boxStrokeWidth="@dimen/size_1"
+                app:layout_constraintTop_toBottomOf="@+id/tvRegisterParentNameErrorMessage">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etRegisterParentChild"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingHorizontal="@dimen/size_16" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tvRegisterParentChildErrorMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_32"
+                android:lineHeight="@dimen/size_16"
+                android:text="Nama anak tidak boleh kosong"
+                android:textColor="@color/colorRed"
+                android:textSize="@dimen/text_12"
+                android:visibility="gone"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tilRegisterParentChild" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilRegisterParentPhone"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_52"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/size_24"
+                android:hint="Nomor telepon"
+                android:theme="@style/LoginTextInputLayoutLabel"
+                app:boxCornerRadiusBottomEnd="@dimen/size_8"
+                app:boxCornerRadiusBottomStart="@dimen/size_8"
+                app:boxCornerRadiusTopEnd="@dimen/size_8"
+                app:boxCornerRadiusTopStart="@dimen/size_8"
+                app:boxStrokeColor="@color/colorBlack"
+                app:boxStrokeWidth="@dimen/size_1"
+                app:layout_constraintTop_toBottomOf="@+id/tvRegisterParentChildErrorMessage">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etRegisterParentPhone"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingHorizontal="@dimen/size_16" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tvRegisterParentPhoneErrorMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_32"
+                android:lineHeight="@dimen/size_16"
+                android:text="Nomor telepon tidak boleh kosong"
+                android:textColor="@color/colorRed"
+                android:textSize="@dimen/text_12"
+                android:visibility="gone"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tilRegisterParentPhone" /><![CDATA[
+
+            >
+
+            ]]>
+
+            <Button
+                android:id="@+id/btnRegisterParentEskul"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_48"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/size_24"
+                android:background="@drawable/btn_transparent_rectangle_8dp"
+                android:drawableRight="@drawable/ic_dropdown"
+                android:drawablePadding="@dimen/size_24"
+                android:minHeight="@dimen/size_52"
+                android:padding="@dimen/size_12"
+                android:text="Eskul"
+                android:textAlignment="textStart"
+                android:textAllCaps="false"
+                android:textColor="@color/colorGray"
+                android:textSize="@dimen/text_16"
+                android:theme="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                app:layout_constraintTop_toBottomOf="@+id/tvRegisterParentPhoneErrorMessage"
+                tools:layout_editor_absoluteX="-83dp" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilRegisterParentPassword"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_52"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/size_18"
+                android:hint="Kata Sandi"
+                android:theme="@style/LoginTextInputLayoutLabel"
+                app:boxCornerRadiusBottomEnd="@dimen/size_8"
+                app:boxCornerRadiusBottomStart="@dimen/size_8"
+                app:boxCornerRadiusTopEnd="@dimen/size_8"
+                app:boxCornerRadiusTopStart="@dimen/size_8"
+                app:boxStrokeColor="@color/colorBlack"
+                app:boxStrokeWidth="@dimen/size_1"
+                app:layout_constraintTop_toBottomOf="@+id/btnRegisterParentEskul"
+                app:passwordToggleEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etRegisterParentPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textPassword"
+                    android:paddingLeft="@dimen/size_16"
+                    android:paddingRight="@dimen/size_16"
+                    android:textSize="@dimen/text_16" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tvRegisterParentPasswordErrorMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_32"
+                android:lineHeight="@dimen/size_16"
+                android:text="Kata sandi tidak boleh kosong"
+                android:textColor="@color/colorRed"
+                android:textSize="@dimen/text_12"
+                android:visibility="gone"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tilRegisterParentPassword" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tilRegisterParentConfirmPassword"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_52"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/size_18"
+                android:hint="Konfirmasi kata Sandi"
+                android:theme="@style/LoginTextInputLayoutLabel"
+                app:boxCornerRadiusBottomEnd="@dimen/size_8"
+                app:boxCornerRadiusBottomStart="@dimen/size_8"
+                app:boxCornerRadiusTopEnd="@dimen/size_8"
+                app:boxCornerRadiusTopStart="@dimen/size_8"
+                app:boxStrokeColor="@color/colorBlack"
+                app:boxStrokeWidth="@dimen/size_1"
+                app:layout_constraintTop_toBottomOf="@+id/tvRegisterParentPasswordErrorMessage"
+                app:passwordToggleEnabled="true">
+
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etRegisterParentConfirmPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:inputType="textPassword"
+                    android:paddingLeft="@dimen/size_16"
+                    android:paddingRight="@dimen/size_16"
+                    android:textSize="@dimen/text_16" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <TextView
+                android:id="@+id/tvRegisterParentConfirmPasswordErrorMessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_32"
+                android:lineHeight="@dimen/size_16"
+                android:text="Kata sandi tidak sesuai"
+                android:textColor="@color/colorRed"
+                android:textSize="@dimen/text_12"
+                android:visibility="gone"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tilRegisterParentConfirmPassword" />
+
+            <Button
+                android:id="@+id/btnRegisterParentRegister"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/size_24"
+                android:layout_marginBottom="@dimen/size_20"
+                android:background="@drawable/btn_blue_rectangle_8dp"
+                android:padding="@dimen/size_16"
+                android:text="DAFTAR"
+                android:textColor="@color/colorWhite"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@id/tvRegisterParentConfirmPasswordErrorMessage" />
+
+            <TextView
+                android:id="@+id/tvRegisterParentHaveAccount"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_64"
+                android:layout_marginBottom="@dimen/size_16"
+                android:text="Sudah punya akun?"
+                android:textColor="@color/colorBlack"
+                android:textFontWeight="500"
+                android:textSize="@dimen/text_16"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/btnRegisterParentRegister" />
+
+            <Button
+                android:id="@+id/btnRegisterParentLogin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/size_16"
+                android:layout_marginBottom="@dimen/size_20"
+                android:background="@drawable/btn_blue_rectangle_8dp"
+                android:padding="@dimen/size_16"
+                android:text="LOGIN"
+                android:textColor="@color/colorWhite"
+                android:textStyle="bold"
+                app:layout_constraintTop_toBottomOf="@id/tvRegisterParentHaveAccount" />
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <!--    <include layout="@layout/bottom_sheet_register_parent"/>-->
+    <include
+        android:id="@+id/loading"
+        layout="@layout/layout_loading"
+        android:visibility="gone" />
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

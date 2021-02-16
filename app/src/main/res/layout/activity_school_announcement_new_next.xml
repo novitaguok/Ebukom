@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    tools:context=".arch.ui.classdetail.school.schoolannouncement.schoolannouncementnewnext.SchoolAnnouncementNewNextActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:elevation="@dimen/size_10"
+        app:elevation="@dimen/size_10">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:minHeight="?attr/actionBarSize">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Bagikan Pengumuman"
+                android:textColor="@color/colorSuperDarkBlue"
+                android:textSize="@dimen/text_16"
+                android:textStyle="bold" />
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tvSchoolAnnouncementNewNextClass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/size_24"
+                android:lineHeight="@dimen/size_20"
+                android:text="Pilih Kelas"
+                android:textColor="@color/colorSuperDarkBlue"
+                android:textSize="@dimen/text_12"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvSchoolAnnouncementNewNextClassAll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:lineHeight="@dimen/size_24"
+                android:paddingVertical="@dimen/size_12"
+                android:text="Semua Kelas"
+                android:textColor="#212121"
+                android:textSize="@dimen/text_16"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvSchoolAnnouncementNewNextClass" />
+
+            <CheckBox
+                android:id="@+id/cbSchoolAnnouncementNewNextClassAll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/size_18"
+                android:theme="@style/colored_checkbox"
+                app:layout_constraintBottom_toBottomOf="@id/tvSchoolAnnouncementNewNextClassAll"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/tvSchoolAnnouncementNewNextClassAll"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tvSchoolAnnouncementNewNextClassAll" />
+
+            <View
+                android:id="@+id/vSchoolAnnouncementNewNextClass"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_1"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:background="#EEEEEE"
+                app:layout_constraintTop_toBottomOf="@+id/tvSchoolAnnouncementNewNextClassAll" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvSchoolAnnouncementNewNext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/tvSchoolAnnouncementNewNextClassAll"/>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="120dp"
+                app:cardUseCompatPadding="true"
+                android:layout_marginTop="@dimen/size_28"
+                android:layout_marginHorizontal="@dimen/size_8"
+                app:cardCornerRadius="@dimen/size_4"
+                app:layout_constraintTop_toBottomOf="@+id/rvSchoolAnnouncementNewNext">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:paddingHorizontal="@dimen/size_10">
+
+                    <TextView
+                        android:id="@+id/tvSchoolAnnouncementNewNextAlarmTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/activity_horizontal_margin"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        android:text="@string/alarm_title"
+                        android:textFontWeight="500"
+                        android:textSize="@dimen/text_14"
+                        android:lineHeight="@dimen/size_20"
+                        android:textColor="@color/colorSuperDarkBlue"/>
+
+                    <Switch
+                        android:id="@+id/sSchoolAnnouncementNewNextAlarm"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintRight_toRightOf="parent"
+                        android:theme="@style/colored_switch"
+                        app:layout_constraintTop_toTopOf="@+id/tvSchoolAnnouncementNewNextAlarmTitle"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvSchoolAnnouncementNewNextAlarmTitle" />
+
+                    <TextView
+                        android:id="@+id/tvSchoolAnnouncementNewNextAlarmContent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvSchoolAnnouncementNewNextAlarmTitle"
+                        android:layout_marginTop="@dimen/size_8"
+                        android:text="@string/alarm_content"
+                        android:textSize="@dimen/text_12"
+                        android:lineHeight="@dimen/size_20"
+                        android:textColor="@color/colorSuperDarkBlue"/>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <Button
+        android:id="@+id/btnSchoolAnnouncementNewNextDone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="#828282"
+        android:lineHeight="@dimen/text_16"
+        android:text="BAGIKAN PENGUMUMAN"
+        android:textColor="@color/colorWhite"
+        android:textFontWeight="500"
+        android:textSize="@dimen/text_14"
+        android:enabled="false"/>
+
+    <include
+        android:id="@+id/loading"
+        layout="@layout/layout_loading"
+        android:visibility="gone" />
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

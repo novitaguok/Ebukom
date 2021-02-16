@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fitsSystemWindows="true"
+    tools:context=".arch.ui.forgotpassword.verification.VerificationActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:elevation="@dimen/size_10"
+        app:elevation="@dimen/size_10">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:minHeight="?attr/actionBarSize">
+
+            <TextView
+                android:id="@+id/tvToolbarTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Lupa kata sandi"
+                android:textColor="@color/colorSuperDarkBlue"
+                android:textSize="@dimen/text_16"
+                android:textStyle="bold" />
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/colorWhite"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+        <TextView
+            android:id="@+id/tvVerificationText"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/size_32"
+            android:lineHeight="@dimen/size_24"
+            android:text="@string/verification_text"
+            android:textColor="#222222"
+            android:textSize="@dimen/text_14"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.alimuzaffar.lib.pin.PinEntryEditText
+            android:id="@+id/txt_pin_entry"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_48"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+            app:layout_constraintTop_toBottomOf="@+id/tvVerificationText"
+            android:cursorVisible="false"
+            android:digits="1234567890"
+            android:inputType="number"
+            android:maxLength="6"
+            android:textIsSelectable="false"
+            android:textSize="@dimen/text_48"
+            app:pinAnimationType="popIn"
+            app:pinTextBottomPadding="@dimen/size_20"
+            app:pinLineStroke="@dimen/size_4"
+            app:pinLineStrokeSelected="@dimen/size_4"
+            app:pinLineColors="@color/colorLightGray"
+            android:textColor="#222222"
+            android:textStyle="bold"
+            app:pinCharacterSpacing="@dimen/size_8"/>
+
+        <TextView
+            android:id="@+id/tvVerificationErrorMessage"
+            app:layout_constraintTop_toBottomOf="@+id/txt_pin_entry"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_12"
+            android:textSize="@dimen/text_12"
+            android:text="Kode yang Anda masukkan salah"
+            android:textColor="@color/colorRed"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/btnVerificationReset"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/size_12"
+            android:background="@drawable/btn_blue_rectangle_8dp"
+            android:padding="@dimen/size_16"
+            android:text="ATUR ULANG KATA SANDI"
+            android:textColor="@color/colorWhite"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@+id/tvVerificationErrorMessage" />
+
+        <TextView
+            android:id="@+id/tvVerificationResendCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_32"
+            android:layout_marginBottom="@dimen/size_16"
+            android:text="Tidak menerima kode?"
+            android:textColor="@color/colorBlack"
+            android:textFontWeight="500"
+            android:textSize="@dimen/text_14"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/btnVerificationReset" />
+
+        <TextView
+            android:id="@+id/tvVerificationNotReceiveCode"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_12"
+            android:clickable="true"
+            android:text="Kirim ulang kode"
+            android:textColor="@color/colorSuperDarkBlue"
+            android:textFontWeight="500"
+            android:textSize="@dimen/text_16"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvVerificationResendCode" />
+
+        <TextView
+            android:id="@+id/tvVerificationCodeReceived"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_16"
+            android:text="Kode sudah dikirim ulang"
+            android:textColor="#BDBDBD"
+            android:textFontWeight="500"
+            android:textSize="@dimen/text_16"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvVerificationNotReceiveCode"
+            android:visibility="gone"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <include
+        android:id="@+id/loading"
+        layout="@layout/layout_loading"
+        android:visibility="gone"/>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

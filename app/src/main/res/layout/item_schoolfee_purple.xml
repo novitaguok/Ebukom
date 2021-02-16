@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/size_10"
+    app:cardCornerRadius="@dimen/size_8"
+    app:cardUseCompatPadding="true">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clItemSchoolfeePurple"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/ivItemSchoolfeePurple"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/bg_schoolfee_purple"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvItemSchoolfeePurpleTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_36"
+            android:layout_marginLeft="@dimen/size_20"
+            android:lineHeight="@dimen/size_16"
+            android:text="Info Pembayaran SPP"
+            android:textColor="#EDF5FF"
+            android:textStyle="bold"
+            android:textSize="@dimen/text_16"
+            android:firstBaselineToTopHeight="@dimen/size_18"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"/>
+
+        <TextView
+            android:id="@+id/tvItemSchoolfeePurpleDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_4"
+            app:layout_constraintTop_toBottomOf="@+id/tvItemSchoolfeePurpleTitle"
+            app:layout_constraintLeft_toLeftOf="@+id/tvItemSchoolfeePurpleTitle"
+            android:text="18 Februari 2020"
+            android:textColor="#EDF5FF"
+            android:textSize="@dimen/text_20"
+            android:lineHeight="@dimen/size_24"
+            android:textStyle="bold" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

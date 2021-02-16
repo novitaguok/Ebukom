@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/size_10"
+    app:cardCornerRadius="@dimen/size_8"
+    app:cardUseCompatPadding="true"
+    android:layout_marginTop="6dp">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clItemSchedule"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/ivItemScheduleSubject"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/bg_schedule_purple"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageButton
+            android:id="@+id/ibItemScheduleSubject"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_more_vertical"
+            android:background="@android:color/transparent"
+            android:layout_marginTop="@dimen/size_12"
+            android:layout_marginRight="@dimen/size_8"
+            app:layout_constraintTop_toTopOf="@+id/ivItemScheduleSubject"
+            app:layout_constraintRight_toRightOf="@+id/ivItemScheduleSubject"/>
+
+        <TextView
+            android:id="@+id/tvItemScheduleSubjectType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_24"
+            android:lineHeight="@dimen/size_20"
+            android:text="Jadwal"
+            android:textColor="#5A4569"
+            android:textFontWeight="500"
+            android:textSize="@dimen/text_16"
+            android:firstBaselineToTopHeight="@dimen/size_18"
+            app:layout_constraintBottom_toTopOf="@+id/tvItemScheduleSubject"
+            app:layout_constraintLeft_toLeftOf="@+id/tvItemScheduleSubject" />
+
+        <TextView
+            android:id="@+id/tvItemScheduleSubject"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/size_20"
+            android:text="Pelajaran"
+            android:textColor="#E4EEF9"
+            android:textSize="@dimen/text_28"
+            android:lineHeight="@dimen/size_32"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/ivItemScheduleSubject"
+            app:layout_constraintLeft_toLeftOf="@+id/ivItemScheduleSubject"
+            app:layout_constraintTop_toTopOf="@id/ivItemScheduleSubject" />
+
+        <TextView
+            android:id="@+id/tvItemScheduleSubjectOpen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_4"
+            android:layout_marginBottom="@dimen/size_24"
+            android:lineHeight="@dimen/size_16"
+            android:text="Lihat Jadwal"
+            android:textColor="#5A4569"
+            android:textFontWeight="500"
+            android:textSize="@dimen/text_14"
+            app:layout_constraintLeft_toLeftOf="@+id/tvItemScheduleSubject"
+            app:layout_constraintTop_toBottomOf="@+id/tvItemScheduleSubject" />
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.cardview.widget.CardView>

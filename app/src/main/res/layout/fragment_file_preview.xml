@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".arch.ui.classdetail.FilePreviewFragment"
+    android:background="#5000">
+    
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/btnFilePreview">
+
+        <ImageView
+            android:id="@+id/ivFilePreviewClose"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/size_8"
+            app:layout_constraintRight_toRightOf="@id/ivFilePreview"
+            app:layout_constraintBottom_toTopOf="@id/ivFilePreview"
+            android:src="@drawable/ic_close"/>
+
+        <ImageView
+            android:id="@+id/ivFilePreview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:src="@drawable/img_dummy_school_academic_calendar_2"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <Button
+        android:id="@+id/btnFilePreview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorSuperDarkBlue"
+        android:lineHeight="@dimen/text_16"
+        android:text="SIMPAN FILE"
+        android:textColor="@color/colorWhite"
+        android:textFontWeight="500"
+        android:textSize="@dimen/text_14"
+        android:enabled="false" />
+
+</RelativeLayout>

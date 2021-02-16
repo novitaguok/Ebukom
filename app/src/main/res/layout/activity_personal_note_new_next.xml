@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    tools:context=".arch.ui.classdetail.personal.personalnotenewnext.PersonalNoteNewNextActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:elevation="@dimen/size_10"
+        app:elevation="@dimen/size_10">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:minHeight="?attr/actionBarSize">
+
+            <TextView
+                android:id="@+id/tvToolbarTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Buat Catatan untuk Wali Murid"
+                android:textColor="@color/colorSuperDarkBlue"
+                android:textSize="@dimen/text_16"
+                android:textStyle="bold" />
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/tvPersonalNoteNewNextClass"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/size_24"
+                android:lineHeight="@dimen/size_20"
+                android:text="Pilih Wali Murid"
+                android:textColor="@color/colorSuperDarkBlue"
+                android:textSize="@dimen/text_12"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvPersonalNoteNewNextAllParent"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="@dimen/activity_horizontal_margin"
+                android:lineHeight="@dimen/size_24"
+                android:paddingVertical="@dimen/size_12"
+                android:text="Semua Wali Murid"
+                android:textColor="#212121"
+                android:textSize="@dimen/text_16"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvPersonalNoteNewNextClass" />
+
+            <CheckBox
+                android:id="@+id/cbPersonalNoteNewNextAllParent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/size_18"
+                android:theme="@style/colored_checkbox"
+                app:layout_constraintBottom_toBottomOf="@id/tvPersonalNoteNewNextAllParent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintLeft_toRightOf="@id/tvPersonalNoteNewNextAllParent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="@id/tvPersonalNoteNewNextAllParent" />
+
+            <View
+                android:id="@+id/vPersonalNoteNewNextAllParent"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/size_1"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:background="#EEEEEE"
+                app:layout_constraintTop_toBottomOf="@+id/tvPersonalNoteNewNextAllParent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvPersonalNoteNewNext"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:layout_constraintTop_toBottomOf="@+id/vPersonalNoteNewNextAllParent" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clPersonalNoteNewNextAlarm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:elevation="@dimen/size_2"
+        android:paddingTop="@dimen/activity_vertical_margin">
+
+        <TextView
+            android:id="@+id/tvPersonalNoteNewNextAlarmTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+            android:lineHeight="@dimen/size_20"
+            android:text="@string/alarm_title"
+            android:textColor="@color/colorSuperDarkBlue"
+            android:textFontWeight="400"
+            android:textSize="@dimen/text_14"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Switch
+            android:id="@+id/sPersonalNoteNewNextAlarm"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+            android:theme="@style/colored_switch"
+            app:layout_constraintBottom_toBottomOf="@+id/tvPersonalNoteNewNextAlarmTitle"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="@+id/tvPersonalNoteNewNextAlarmTitle" />
+
+        <TextView
+            android:id="@+id/tvPersonalNoteNewNextAlarmContent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/size_8"
+            android:lineHeight="@dimen/size_20"
+            android:text="20:00 - Kamis, 9 April 2020"
+            android:textFontWeight="500"
+            android:textColor="@color/colorRed"
+            android:textSize="@dimen/text_12"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvPersonalNoteNewNextAlarmTitle"
+            android:visibility="invisible"/>
+
+        <Button
+            android:id="@+id/btnPersonalNoteNewNextDone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layout_constraintTop_toBottomOf="@+id/tvPersonalNoteNewNextAlarmContent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            android:layout_marginTop="@dimen/activity_vertical_margin"
+            android:background="#828282"
+            android:enabled="false"
+            android:lineHeight="@dimen/text_16"
+            android:text="KIRIM CATATAN"
+            android:textColor="@color/colorWhite"
+            android:textFontWeight="500"
+            android:textSize="@dimen/text_14" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <include
+        android:id="@+id/loading"
+        layout="@layout/layout_loading"
+        android:visibility="gone" />
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

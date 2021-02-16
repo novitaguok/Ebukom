@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:paddingHorizontal="@dimen/size_16"
+    android:background="@color/colorWhite"
+    android:orientation="vertical"
+    app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+    <TextView
+        android:id="@+id/tvRegisSchool"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_56"
+        android:gravity="center_vertical"
+        android:drawableLeft="@drawable/ic_school_blue"
+        android:drawablePadding="@dimen/size_24"
+        android:text="Daftar Sebagai Pihak Sekolah"
+        android:textSize="@dimen/text_16" />
+
+    <TextView
+        android:id="@+id/tvRegisParent"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_56"
+        android:gravity="center_vertical"
+        android:drawableLeft="@drawable/ic_parent"
+        android:drawablePadding="@dimen/size_24"
+        android:text="Daftar Sebagai Wali Murid"
+        android:textSize="@dimen/text_16" />
+
+</LinearLayout>

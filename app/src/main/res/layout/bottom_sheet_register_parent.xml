@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    app:behavior_hideable="false"
+    app:behavior_peekHeight="0dp"
+    app:layout_behavior="@string/bottom_sheet_behavior">
+
+    <TextView
+        android:id="@+id/tvRegisterParentBottomSheetTitle"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginLeft="@dimen/size_32"
+        android:gravity="center_vertical"
+        android:lineHeight="@dimen/size_28"
+        android:text="Pilih Eskul yang diikuti anak Anda"
+        android:textColor="#3F3B5C"
+        android:textSize="@dimen/text_16"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <!--    <TextView-->
+    <!--        android:id="@+id/tvRegisterParentBottomSheetAll"-->
+    <!--        android:layout_width="0dp"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_gravity="center_vertical"-->
+    <!--        android:layout_marginLeft="@dimen/size_32"-->
+    <!--        android:lineHeight="@dimen/size_28"-->
+    <!--        android:paddingVertical="@dimen/size_10"-->
+    <!--        android:text="Semua Eskul"-->
+    <!--        android:textColor="#212121"-->
+    <!--        android:textSize="@dimen/text_16"-->
+    <!--        app:layout_constraintLeft_toLeftOf="parent"-->
+    <!--        app:layout_constraintRight_toLeftOf="@+id/cbRegisterParentBottomSheetAll"-->
+    <!--        app:layout_constraintStart_toStartOf="parent"-->
+    <!--        app:layout_constraintTop_toBottomOf="@id/tvRegisterParentBottomSheetTitle" />-->
+
+    <!--    <CheckBox-->
+    <!--        android:id="@+id/cbRegisterParentBottomSheetAll"-->
+    <!--        android:layout_width="wrap_content"-->
+    <!--        android:layout_height="wrap_content"-->
+    <!--        android:layout_marginRight="@dimen/size_18"-->
+    <!--        android:theme="@style/colored_checkbox"-->
+    <!--        app:layout_constraintBottom_toBottomOf="@id/tvRegisterParentBottomSheetAll"-->
+    <!--        app:layout_constraintEnd_toEndOf="parent"-->
+    <!--        app:layout_constraintLeft_toRightOf="@id/tvRegisterParentBottomSheetAll"-->
+    <!--        app:layout_constraintRight_toRightOf="parent"-->
+    <!--        app:layout_constraintTop_toTopOf="@id/tvRegisterParentBottomSheetAll" />-->
+
+    <TextView
+        android:id="@+id/tvRegisterParentBottomSheetRobotik"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/size_32"
+        android:lineHeight="@dimen/size_28"
+        android:paddingVertical="@dimen/size_10"
+        android:text="Robotik"
+        android:textColor="#212121"
+        android:textSize="@dimen/text_16"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/cbRegisterParentBottomSheetPramuka"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tvRegisterParentBottomSheetTitle"/>
+
+    <CheckBox
+        android:id="@+id/cbRegisterParentBottomSheetRobotik"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/size_18"
+        android:theme="@style/colored_checkbox"
+        app:layout_constraintBottom_toBottomOf="@id/tvRegisterParentBottomSheetRobotik"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/tvRegisterParentBottomSheetRobotik"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tvRegisterParentBottomSheetRobotik" />
+
+    <TextView
+        android:id="@+id/tvRegisterParentBottomSheetDuniaKomik"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/size_32"
+        android:lineHeight="@dimen/size_28"
+        android:text="Dunia Komik"
+        android:textColor="#212121"
+        android:paddingVertical="@dimen/size_10"
+        android:textSize="@dimen/text_16"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/cbRegisterParentBottomSheetFutsal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvRegisterParentBottomSheetRobotik" />
+
+    <CheckBox
+        android:id="@+id/cbRegisterParentBottomSheetDuniaKomik"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/size_18"
+        android:theme="@style/colored_checkbox"
+        app:layout_constraintBottom_toBottomOf="@id/tvRegisterParentBottomSheetDuniaKomik"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/tvRegisterParentBottomSheetDuniaKomik"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tvRegisterParentBottomSheetDuniaKomik" />
+
+    <TextView
+        android:id="@+id/tvRegisterParentBottomSheetLittleDesigner"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/size_32"
+        android:lineHeight="@dimen/size_28"
+        android:text="Little Designer"
+        android:paddingVertical="@dimen/size_10"
+        android:textColor="#212121"
+        android:textSize="@dimen/text_16"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/cbRegisterParentBottomSheetBasket"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvRegisterParentBottomSheetDuniaKomik" />
+
+    <CheckBox
+        android:id="@+id/cbRegisterParentBottomSheetLittleDesigner"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/size_18"
+        android:theme="@style/colored_checkbox"
+        app:layout_constraintBottom_toBottomOf="@id/tvRegisterParentBottomSheetLittleDesigner"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/tvRegisterParentBottomSheetLittleDesigner"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tvRegisterParentBottomSheetLittleDesigner" />
+
+    <TextView
+        android:id="@+id/tvRegisterParentBottomSheetNimsGitar"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/size_32"
+        android:lineHeight="@dimen/size_28"
+        android:paddingVertical="@dimen/size_10"
+        android:text="Nims - Gitar"
+        android:textColor="#212121"
+        android:textSize="@dimen/text_16"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/cbRegisterParentBottomSheetPMR"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvRegisterParentBottomSheetLittleDesigner" />
+
+    <CheckBox
+        android:id="@+id/cbRegisterParentBottomSheetNimsGitar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/size_18"
+        android:theme="@style/colored_checkbox"
+        app:layout_constraintBottom_toBottomOf="@id/tvRegisterParentBottomSheetNimsGitar"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/tvRegisterParentBottomSheetNimsGitar"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tvRegisterParentBottomSheetNimsGitar" />
+
+    <TextView
+        android:id="@+id/tvRegisterParentBottomSheetTahfizh"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/size_32"
+        android:lineHeight="@dimen/size_28"
+        android:paddingVertical="@dimen/size_10"
+        android:text="Tahfizh"
+        android:textColor="#212121"
+        android:textSize="@dimen/text_16"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/cbRegisterParentBottomSheetTahfizh"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvRegisterParentBottomSheetNimsGitar" />
+
+    <CheckBox
+        android:id="@+id/cbRegisterParentBottomSheetTahfizh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/size_18"
+        android:theme="@style/colored_checkbox"
+        app:layout_constraintBottom_toBottomOf="@id/tvRegisterParentBottomSheetTahfizh"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/tvRegisterParentBottomSheetTahfizh"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tvRegisterParentBottomSheetTahfizh" />
+
+    <TextView
+        android:id="@+id/tvRegisterParentBottomSheetMemanah"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/size_32"
+        android:lineHeight="@dimen/size_28"
+        android:paddingVertical="@dimen/size_10"
+        android:text="Memanah"
+        android:textColor="#212121"
+        android:textSize="@dimen/text_16"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/cbRegisterParentBottomSheetMemanah"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvRegisterParentBottomSheetTahfizh" />
+
+    <CheckBox
+        android:id="@+id/cbRegisterParentBottomSheetMemanah"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/size_18"
+        android:theme="@style/colored_checkbox"
+        app:layout_constraintBottom_toBottomOf="@id/tvRegisterParentBottomSheetMemanah"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/tvRegisterParentBottomSheetMemanah"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tvRegisterParentBottomSheetMemanah" />
+
+    <TextView
+        android:id="@+id/tvRegisterParentBottomSheetRenang"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/size_32"
+        android:lineHeight="@dimen/size_28"
+        android:paddingVertical="@dimen/size_10"
+        android:text="Renang"
+        android:textColor="#212121"
+        android:textSize="@dimen/text_16"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/cbRegisterParentBottomSheetRenang"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvRegisterParentBottomSheetMemanah" />
+
+    <CheckBox
+        android:id="@+id/cbRegisterParentBottomSheetRenang"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/size_18"
+        android:theme="@style/colored_checkbox"
+        app:layout_constraintBottom_toBottomOf="@id/tvRegisterParentBottomSheetRenang"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/tvRegisterParentBottomSheetRenang"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tvRegisterParentBottomSheetRenang" />
+
+    <TextView
+        android:id="@+id/tvRegisterParentBottomSheetTaekwondo"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/size_32"
+        android:lineHeight="@dimen/size_28"
+        android:paddingVertical="@dimen/size_10"
+        android:text="Taekwondo"
+        android:textColor="#212121"
+        android:textSize="@dimen/text_16"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/cbRegisterParentBottomSheetTaekwondo"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvRegisterParentBottomSheetRenang" />
+
+    <CheckBox
+        android:id="@+id/cbRegisterParentBottomSheetTaekwondo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/size_18"
+        android:theme="@style/colored_checkbox"
+        app:layout_constraintBottom_toBottomOf="@id/tvRegisterParentBottomSheetTaekwondo"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/tvRegisterParentBottomSheetTaekwondo"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tvRegisterParentBottomSheetTaekwondo" />
+
+    <TextView
+        android:id="@+id/tvRegisterParentBottomSheetFutsal"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/size_32"
+        android:lineHeight="@dimen/size_28"
+        android:paddingVertical="@dimen/size_10"
+        android:text="Futsal"
+        android:textColor="#212121"
+        android:textSize="@dimen/text_16"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/cbRegisterParentBottomSheetFutsal"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvRegisterParentBottomSheetTaekwondo" />
+
+    <CheckBox
+        android:id="@+id/cbRegisterParentBottomSheetFutsal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/size_18"
+        android:theme="@style/colored_checkbox"
+        app:layout_constraintBottom_toBottomOf="@id/tvRegisterParentBottomSheetFutsal"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/tvRegisterParentBottomSheetFutsal"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tvRegisterParentBottomSheetFutsal" />
+
+    <TextView
+        android:id="@+id/tvRegisterParentBottomSheetBuluTangkis"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/size_32"
+        android:lineHeight="@dimen/size_28"
+        android:paddingVertical="@dimen/size_10"
+        android:text="Bulu Tangkis"
+        android:textColor="#212121"
+        android:textSize="@dimen/text_16"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/cbRegisterParentBottomSheetBuluTangkis"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvRegisterParentBottomSheetFutsal" />
+
+    <CheckBox
+        android:id="@+id/cbRegisterParentBottomSheetBuluTangkis"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/size_18"
+        android:theme="@style/colored_checkbox"
+        app:layout_constraintBottom_toBottomOf="@id/tvRegisterParentBottomSheetBuluTangkis"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/tvRegisterParentBottomSheetBuluTangkis"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tvRegisterParentBottomSheetBuluTangkis" />
+
+    <TextView
+        android:id="@+id/tvRegisterParentBottomSheetCookieCookiePastry"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/size_32"
+        android:lineHeight="@dimen/size_28"
+        android:paddingVertical="@dimen/size_10"
+        android:text="Cookie-Cookie Pastry"
+        android:textColor="#212121"
+        android:textSize="@dimen/text_16"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/cbRegisterParentBottomSheetCookieCookiePastry"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvRegisterParentBottomSheetBuluTangkis" />
+
+    <CheckBox
+        android:id="@+id/cbRegisterParentBottomSheetCookieCookiePastry"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/size_18"
+        android:theme="@style/colored_checkbox"
+        app:layout_constraintBottom_toBottomOf="@id/tvRegisterParentBottomSheetCookieCookiePastry"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintLeft_toRightOf="@id/tvRegisterParentBottomSheetCookieCookiePastry"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="@id/tvRegisterParentBottomSheetCookieCookiePastry" />
+
+    <Button
+        android:id="@+id/btnRegisterParentBottomSheetDone"
+        android:layout_width="match_parent"
+        android:layout_height="44dp"
+        android:background="@color/colorSuperDarkBlue"
+        android:lineHeight="@dimen/text_16"
+        android:text="SELESAI"
+        android:layout_marginTop="@dimen/size_10"
+        android:textColor="@color/colorWhite"
+        android:textSize="@dimen/text_14"
+        app:layout_constraintTop_toBottomOf="@id/tvRegisterParentBottomSheetCookieCookiePastry"
+        app:layout_constraintBottom_toBottomOf="parent"/>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

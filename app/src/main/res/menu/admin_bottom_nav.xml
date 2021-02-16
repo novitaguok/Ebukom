@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/adminSchoolFeeInfo"
+        android:icon="@drawable/ic_description_blue"
+        android:title="Info Biaya Pendidikan" />
+
+    <item
+        android:id="@+id/admindClassMember"
+        android:icon="@drawable/ic_member_blue"
+        android:title="Anggota Kelas" />
+</menu>

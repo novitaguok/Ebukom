@@ -1,11 +1,91 @@
 <resources>
-
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
+    <style name="AppTheme" parent="Theme.MaterialComponents.Light.NoActionBar.Bridge">
+        <item name="colorPrimary">@color/colorSuperDarkBlue</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
-        <item name="colorAccent">@color/colorAccent</item>
+        <item name="colorAccent">@color/colorRed</item>
     </style>
 
+    <!-- Customize Text Input Layout Style -->
+    <style name="LoginTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <item name="boxStrokeColor">@color/colorBlack</item>
+        <item name="boxStrokeWidth">@dimen/size_2</item>
+        <item name="android:textColorHint">@color/colorBlack</item>
+    </style>
+
+    <!-- Customize Text Input Layout Label -->
+    <style name="LoginTextInputLayoutLabel" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <!-- Hint color and label color in FALSE state -->
+        <item name="android:textColorHint">@color/colorGray</item>
+        <item name="android:textSize">@dimen/text_14</item>
+        <!-- Label color in TRUE state and bar color FALSE and TRUE State -->
+        <item name="colorAccent">@color/colorBlack</item>
+        <item name="colorControlNormal">@color/colorBlack</item>
+        <item name="colorControlActivated">@color/colorBlack</item>
+    </style>
+
+    <!-- General Text Input Layout Style -->
+    <style name="GeneralTextInputLayoutStyle" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense">
+        <item name="colorAccent">@color/colorGray</item>
+        <item name="colorControlNormal">@color/colorGray</item>
+        <item name="colorControlActivated">@color/colorGray</item>
+    </style>
+
+    <!-- Customize Tab Layout -->
+    <style name="Base.Widget.Design.TabLayout" parent="android:Widget">
+        <item name="tabBackground">@drawable/bg_tab_selector</item>
+        <item name="android:textSize">@dimen/text_12</item>
+        <item name="fontWeight">500</item>
+    </style>
+
+    <!-- Customize Checkbox -->
+    <style name="colored_checkbox" parent="Widget.AppCompat.CompoundButton.CheckBox">
+        <!-- Checked -->
+        <item name="colorAccent">@color/colorRed</item>
+        <!-- Default/unchecked -->
+        <item name="android:textColorSecondary">#BDBDBD</item>
+    </style>
+
+    <!-- Customize Switch Button -->
+    <style name="colored_switch">
+        <item name="colorControlActivated">@color/colorRed</item>
+    </style>
+
+    <!-- Customize Kunzisoft DateTime Picker-->
+    <style name="Theme.SwitchDateTime" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/colorRed</item>
+        <item name="colorPrimaryDark">@color/colorSuperDarkBlue</item>
+        <item name="android:textColorPrimaryInverse">@color/colorSuperDarkBlue</item>
+        <item name="android:textColorSecondaryInverse">@color/colorSuperDarkBlue</item>
+    </style>
+    <style name="Theme.SwitchDateTime.TitleDateTimeLabelText">
+        <item name="android:textSize">@dimen/text_16</item>
+        <item name="android:textColor">@color/colorWhite</item>
+    </style>
+    <style name="Theme.SwitchDateTime.HeaderBackground">
+        <item name="android:background">@color/colorRed</item>
+    </style>
+    <style name="Theme.SwitchDateTime.Time">
+        <item name="timeCircleColor">#e1e1e1</item>
+        <item name="timeCenterColor">?attr/colorPrimary</item>
+        <item name="timeAmPmBackgroundColor">?attr/colorPrimary</item>
+        <item name="timeAmPmSelectBackgroundColor">?attr/colorPrimary</item> <!-- Alpha is apply-->
+        <item name="timeAmPmTextColor">?android:attr/textColorPrimaryInverse</item>
+        <item name="timeSelectorColor">#00D62F42</item>
+        <item name="timeCircularNumbersColor">#494949</item>
+    </style>
+    <style name="Theme.SwitchDateTime.Date" >
+        <item name="mcv_selectionColor">#D62F42</item>
+    </style>
+
+    <!-- Customize Radio Button -->
+    <style name="CustomTheme" parent="android:Theme" >
+        <item name="android:radioButtonStyle">@style/RadioButtonRed</item>
+    </style>
+    <style name="RadioButtonRed" parent="Widget.AppCompat.CompoundButton.RadioButton" >
+        <item name="android:button">@drawable/selector_radio_button_red</item>
+    </style>
+    <style name="RadioButtonBlue" parent="Widget.AppCompat.CompoundButton.RadioButton" >
+        <item name="android:button">@drawable/selector_radio_button_blue</item>
+    </style>
 </resources>

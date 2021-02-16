@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".arch.ui.classdetail.material.materialeducation.materialeducationdetail.MaterialEducationDetailActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:id="@+id/appbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:elevation="@dimen/size_10"
+        app:elevation="@dimen/size_10">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:minHeight="?attr/actionBarSize">
+
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvMaterialEducationDetailMaterial"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/size_8"
+                android:layout_marginTop="@dimen/size_12"
+                android:layout_marginBottom="@dimen/size_4"
+                android:elevation="@dimen/size_2"
+                app:cardCornerRadius="4dp">
+
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingBottom="@dimen/size_18">
+
+                    <TextView
+                        android:id="@+id/tvMaterialEducationDetailTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginHorizontal="@dimen/size_10"
+                        android:layout_marginTop="@dimen/size_16"
+                        android:lineHeight="@dimen/text_24"
+                        android:text="@string/material_title"
+                        android:textColor="@color/colorSuperDarkBlue"
+                        android:textSize="@dimen/text_16"
+                        android:textStyle="bold"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <ImageView
+                        android:id="@+id/ivMaterialEducationDetailMoreButton"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/size_20"
+                        android:layout_marginRight="@dimen/size_10"
+                        android:clickable="true"
+                        android:src="@drawable/ic_more_vertical"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="parent" />
+
+                    <TextView
+                        android:id="@+id/tvMaterialEducationDetailContent"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/size_8"
+                        android:lineHeight="@dimen/text_20"
+                        android:paddingHorizontal="@dimen/size_10"
+                        android:text="@string/material_content"
+                        android:textColor="#222222"
+                        android:textSize="@dimen/text_14"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvMaterialEducationDetailTitle" />
+
+                    <TextView
+                        android:id="@+id/tvMaterialEducationDetailTeacher"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="@dimen/size_24"
+                        android:lineHeight="@dimen/text_20"
+                        android:paddingHorizontal="@dimen/size_10"
+                        android:text="Eni Trikuswanti"
+                        android:textColor="#7A7A7A"
+                        android:textSize="@dimen/text_12"
+                        app:layout_constraintLeft_toLeftOf="parent"
+                        app:layout_constraintTop_toBottomOf="@+id/tvMaterialEducationDetailContent" />
+
+                    <TextView
+                        android:id="@+id/tvMaterialEducationDetailDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:lineHeight="@dimen/text_20"
+                        android:paddingHorizontal="@dimen/size_10"
+                        android:paddingRight="@dimen/size_10"
+                        android:text="12.00 · Senin, 12 Maret 2020"
+                        android:textColor="#7A7A7A"
+                        android:textSize="@dimen/text_12"
+                        app:layout_constraintBottom_toBottomOf="@+id/tvSchoolAnnouncementDetailTeacher"
+                        app:layout_constraintRight_toRightOf="parent"
+                        app:layout_constraintTop_toTopOf="@+id/tvMaterialEducationDetailTeacher" />
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cvMaterialEducationDetailComment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/cvMaterialEducationDetailMaterial"
+                android:layout_marginHorizontal="@dimen/size_8"
+                android:layout_marginTop="@dimen/size_8"
+                android:layout_marginBottom="@dimen/size_8"
+                android:descendantFocusability="blocksDescendants"
+                android:elevation="@dimen/size_2"
+                app:cardCornerRadius="4dp">
+
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+
+                    <TextView
+                        android:id="@+id/tvMaterialEducationDetailCommentTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/size_10"
+                        android:layout_marginTop="@dimen/size_16"
+                        android:lineHeight="@dimen/text_20"
+                        android:text="Komentar"
+                        android:textColor="#222222"
+                        android:textSize="@dimen/text_12" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rvMaterialEducationDetailComment"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/tvMaterialEducationDetailCommentTitle"
+                        android:layout_marginTop="@dimen/size_8"
+                        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior" />
+
+                </RelativeLayout>
+            </androidx.cardview.widget.CardView>
+        </RelativeLayout>
+    </androidx.core.widget.NestedScrollView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/size_52"
+        android:layout_gravity="bottom">
+
+        <EditText
+            android:id="@+id/etMaterialEducationDetailComment"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_52"
+            android:background="@drawable/edit_text_rectangle_white"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:hint="@string/insert_comment"
+            android:padding="@dimen/size_16"
+            android:textSize="@dimen/text_14"
+            android:lineHeight="@dimen/size_20"
+            android:shadowColor="@color/colorGray"
+            android:textColor="@color/colorBlack"
+            android:textCursorDrawable="@null" />
+
+        <ImageView
+            android:id="@+id/ivMaterialEducationDetailComment"
+            android:layout_width="@dimen/size_24"
+            android:layout_height="@dimen/size_24"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintRight_toRightOf="parent"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:src="@drawable/ic_send_red"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

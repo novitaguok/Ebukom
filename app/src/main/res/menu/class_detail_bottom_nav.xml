@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/schoolInfo"
+        android:icon="@drawable/ic_school_blue"
+        android:title="Info Sekolah" />
+
+    <item
+        android:id="@+id/personalInfo"
+        android:icon="@drawable/ic_student_blue"
+        android:title="Info Pribadi" />
+
+    <item
+        android:id="@+id/studyMaterial"
+        android:icon="@drawable/ic_book_blue"
+        android:title="Materi Belajar" />
+
+    <item
+        android:id="@+id/classMember"
+        android:icon="@drawable/ic_member_blue"
+        android:title="Anggota Kelas" />
+</menu>

@@ -1,3 +1,24 @@
 <resources>
     <string name="app_name">ebukom</string>
+    <string name="send_code_text">Masukkan nomor telepon Anda, kami akan mengirimkan kode untuk mengatur ulang kata sandi Anda</string>
+    <string name="verification_text">Kami sudah mengirimkan kode ke nomor telepon Anda melalui SMS. Silakan memasukkan 4 digit kode tersebut.</string>
+    <string name="announcement_content">Besok akan dilaksanakan kegiatan pentas seni. Orang tua dimohon untuk mempersiapkan peralatan di bawah ini. Tolong diperhatikan ya Ibu.</string>
+    <string name="announcement_title">Kegiatan Pentas Seni</string>
+    <string name="announcement_content_complete">Besok akan dilaksanakan kegiatan pentas seni. Orang tua dimohon untuk mempersiapkan peralatan di bawah ini. Tolong diperhatikan ya Ibu. Ada beberapa barang yang harus dibawa, jangan sampai ada yang ketinggalan.
+        \n\nBerikut barang-barang yang harus dibawa.\n1. Baju ganti\n2.Bekal ekstra\n3. Uang sebesar 1 Milyar\n4. Tas\n5. Laptop
+        \n\nKegiatan akan dilaksanakan tanggal 12 Oktober 2090, memang masih lama tapi persiapkan saja ya...
+    </string>
+    <string name="insert_comment">Masukkan komentar</string>
+    <string name="comment_content">Aku pusing banyak euy yang dibawa, udahlah mending skip cuy</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="alarm_content">Orang tua kan diingatkan kembali\npada jadwal yang ditentukan</string>
+    <string name="alarm_title">Atur Pengingat Berulang\nuntuk Orang Tua</string>
+    <string name="material_content">Untuk mendidk anak yang hyperaktif, diperlukan suatu kemampuan aitu kesabaran yang luar biasa. Selain itu perlu diketahui juga cara menghadapi anak dengan cara yang menyenangkan dan baik</string>
+    <string name="material_title">Mendidik Anak Hyperaktif</string>
+    <string name="note_content"><![CDATA[Sehubungan dengan akan dilaksanakan Pekan Fieldtrip pada minggu ke 2 & 3, maka kami mohon agar orangtua siswa dapat menyelesaikan biaya pendidikan putra/putrinya pada bulan Februari 2020.]]></string>
+    <string name="procedure1">Transfer melalui rekening Bank Syariah Mandiri a.n. SD Cendekia Muda, no. rek 712-246-806-7 dan mohon konfirmasi dnegan menyertakan bukti transfer segera setelah melakukan pembayaran.</string>
+    <string name="procedure2">Setor tunai melalui staff administrasi keuangan sekolah setiap hari kerja, Senin sampai dengan Jumat pukul 08.00-15.00 WIB.</string>
+    <string name="welcome_text">Selamat datang di\nEbukom Cendekia Muda</string>
 </resources>

@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorWhite"
+    tools:context=".arch.ui.admin.adminschoolfeeinfo.adminshareschoolfeeinfoaddpaymentitem.AdminSchoolFeeInfoAddPaymentItemActivity">
+
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorWhite"
+        android:elevation="@dimen/size_10"
+        app:elevation="@dimen/size_10">
+
+        <androidx.appcompat.widget.Toolbar
+            android:id="@+id/toolbar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorWhite"
+            android:minHeight="?attr/actionBarSize">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Tambah Item Pembayaran"
+                android:textColor="@color/colorSuperDarkBlue"
+                android:textSize="@dimen/text_16"
+                android:textStyle="bold" />
+        </androidx.appcompat.widget.Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="148dp"
+        app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+<!--            <com.google.android.material.textfield.TextInputLayout-->
+<!--                android:id="@+id/tilAdminSchoolFeeInfoAddItem"-->
+<!--                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"-->
+<!--                android:layout_marginTop="@dimen/size_24"-->
+<!--                android:hint="Nama Item"-->
+<!--                android:theme="@style/LoginTextInputLayoutLabel"-->
+<!--                app:boxCornerRadiusBottomEnd="@dimen/size_8"-->
+<!--                app:boxCornerRadiusBottomStart="@dimen/size_8"-->
+<!--                app:boxCornerRadiusTopEnd="@dimen/size_8"-->
+<!--                app:boxCornerRadiusTopStart="@dimen/size_8"-->
+<!--                app:boxStrokeColor="@color/colorBlack"-->
+<!--                app:boxStrokeWidth="@dimen/size_1"-->
+<!--                app:layout_constraintTop_toTopOf="parent">-->
+
+<!--                <com.google.android.material.textfield.TextInputEditText-->
+<!--                    android:id="@+id/etAdminSchoolFeeInfoAddItem"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:background="@drawable/edit_text_rectangle_selector"-->
+<!--                    android:padding="@dimen/size_16" />-->
+<!--            </com.google.android.material.textfield.TextInputLayout>-->
+
+<!--            <com.google.android.material.textfield.TextInputLayout-->
+<!--                android:id="@+id/tilAdminSchoolFeeInfoAddItemFee"-->
+<!--                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"-->
+<!--                android:layout_marginTop="@dimen/size_24"-->
+<!--                android:hint="Biaya"-->
+<!--                android:theme="@style/LoginTextInputLayoutLabel"-->
+<!--                app:boxCornerRadiusBottomEnd="@dimen/size_8"-->
+<!--                app:boxCornerRadiusBottomStart="@dimen/size_8"-->
+<!--                app:boxCornerRadiusTopEnd="@dimen/size_8"-->
+<!--                app:boxCornerRadiusTopStart="@dimen/size_8"-->
+<!--                app:boxStrokeColor="@color/colorBlack"-->
+<!--                app:boxStrokeWidth="@dimen/size_1"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/tilAdminSchoolFeeInfoAddItem">-->
+
+<!--                <com.google.android.material.textfield.TextInputEditText-->
+<!--                    android:id="@+id/etAdminSchoolFeeInfoAddItemFee"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:background="@drawable/edit_text_rectangle_selector"-->
+<!--                    android:padding="@dimen/size_16" />-->
+<!--            </com.google.android.material.textfield.TextInputLayout>-->
+
+<!--            <View-->
+<!--                android:id="@+id/vAdminSchoolFeeInfoAddItem"-->
+<!--                android:layout_width="wrap_content"-->
+<!--                android:layout_height="@dimen/size_1"-->
+<!--                android:background="#EEEEEE"-->
+<!--                android:layout_marginTop="@dimen/size_24"-->
+<!--                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"-->
+<!--                app:layout_constraintTop_toBottomOf="@+id/tilAdminSchoolFeeInfoAddItemFee"-->
+<!--                app:layout_constraintLeft_toLeftOf="parent"-->
+<!--                app:layout_constraintRight_toRightOf="parent" />-->
+
+            <TextView
+                android:id="@+id/tvAdminSchoolFeeInfoAddItemForm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:elevation="@dimen/size_4"
+                android:text="Tambah Form Baru"
+                android:textColor="@color/colorSuperDarkBlue"
+                android:textSize="@dimen/text_16"
+                android:textStyle="bold"
+                app:layout_constraintBottom_toBottomOf="@+id/btnAdminSchoolFeeInfoAddItemForm"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintLeft_toRightOf="@+id/ivAdminSchoolFeeInfoAddItemForm"
+                app:layout_constraintRight_toRightOf="@+id/btnAdminSchoolFeeInfoAddItemForm"
+                app:layout_constraintTop_toTopOf="@+id/btnAdminSchoolFeeInfoAddItemForm" />
+
+            <ImageView
+                android:id="@+id/ivAdminSchoolFeeInfoAddItemForm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/size_12"
+                android:elevation="@dimen/size_4"
+                android:src="@drawable/ic_plus_blue"
+                app:layout_constraintBottom_toBottomOf="@+id/tvAdminSchoolFeeInfoAddItemForm"
+                app:layout_constraintHorizontal_chainStyle="packed"
+                app:layout_constraintLeft_toLeftOf="@+id/btnAdminSchoolFeeInfoAddItemForm"
+                app:layout_constraintRight_toLeftOf="@+id/tvAdminSchoolFeeInfoAddItemForm"
+                app:layout_constraintTop_toTopOf="@+id/tvAdminSchoolFeeInfoAddItemForm" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/rvAdminSchoolFeeInfoAddItemForm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:nestedScrollingEnabled="false"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+
+            <TextView
+                android:id="@+id/tvAdminSchoolFeeInfoAddItemDeleteForm"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/size_16"
+                android:layout_marginRight="@dimen/activity_horizontal_margin"
+                android:lineHeight="@dimen/text_20"
+                android:text="Hapus form ini"
+                android:textColor="@color/colorRed"
+                android:textSize="@dimen/text_12"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/rvAdminSchoolFeeInfoAddItemForm"
+                android:visibility="gone"/>
+
+            <Button
+                android:id="@+id/btnAdminSchoolFeeInfoAddItemForm"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginHorizontal="@dimen/activity_horizontal_margin"
+                android:layout_marginTop="@dimen/size_4"
+                android:layout_marginBottom="@dimen/size_16"
+                android:height="@dimen/size_48"
+                android:background="@drawable/btn_white_rectangle_4dp"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintRight_toRightOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvAdminSchoolFeeInfoAddItemDeleteForm"
+                app:layout_constraintBottom_toBottomOf="parent"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </androidx.core.widget.NestedScrollView>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clAdminSchoolFeeInfoAddItemNewTemplate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="bottom"
+        android:background="@color/colorWhite"
+        android:elevation="@dimen/size_2">
+
+        <TextView
+            android:id="@+id/tvAdminSchoolFeeInfoAddItemNewTemplateTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/activity_horizontal_margin"
+            android:layout_marginTop="@dimen/size_16"
+            android:lineHeight="@dimen/text_20"
+            android:text="Template Nama Item"
+            android:textColor="#222222"
+            android:textSize="@dimen/text_12"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvAdminSchoolFeeInfoAddItemNewTemplateAdd"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/size_16"
+            android:layout_marginRight="@dimen/activity_horizontal_margin"
+            android:lineHeight="@dimen/text_20"
+            android:text="Tambah template"
+            android:textColor="@color/colorRed"
+            android:textSize="@dimen/text_12"
+            app:layout_constraintRight_toRightOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rvAdminSchoolFeeInfoAddItemNewTemplate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/clPersonalNoteNewTemplate"
+            android:layout_marginTop="@dimen/size_16"
+            android:paddingHorizontal="@dimen/size_14"
+            android:paddingBottom="@dimen/size_24"
+            app:layout_constraintBottom_toTopOf="@+id/btnAdminSchoolFeeInfoAddItemDone"
+            app:layout_constraintTop_toBottomOf="@id/tvAdminSchoolFeeInfoAddItemNewTemplateAdd" />
+
+        <Button
+            android:id="@+id/btnAdminSchoolFeeInfoAddItemDone"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="#BDBDBD"
+            android:lineHeight="@dimen/text_16"
+            android:text="TAMBAH ITEM"
+            android:textColor="@color/colorWhite"
+            android:textFontWeight="500"
+            android:textSize="@dimen/text_14"
+            app:layout_constraintTop_toBottomOf="@id/rvAdminSchoolFeeInfoAddItemNewTemplate"
+            android:enabled="false"/>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

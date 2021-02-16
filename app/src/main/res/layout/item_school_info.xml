@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/size_10"
+    app:cardUseCompatPadding="true"
+    app:cardCornerRadius="@dimen/size_8">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clItemShoolInfo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/ivItemShoolInfo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/bg_school_announcement"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvItemShoolInfoTitle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginLeft="@dimen/size_20"
+            android:text="Pengumuman\nSekolah"
+            android:textColor="@color/colorWhite"
+            android:textSize="@dimen/text_24"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/tvItemShoolInfoMore"
+            app:layout_constraintVertical_chainStyle="packed"/>
+
+        <TextView
+            android:id="@+id/tvItemShoolInfoMore"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvItemShoolInfoTitle"
+            app:layout_constraintLeft_toLeftOf="parent"
+            android:layout_marginTop="@dimen/size_8"
+            android:layout_marginLeft="@dimen/size_20"
+            android:lineHeight="@dimen/size_20"
+            android:text="Lihat pengumuman"
+            android:textColor="#005C39"
+            android:textFontWeight="500"
+            android:textSize="@dimen/text_14"
+            app:layout_constraintVertical_chainStyle="spread_inside"/>
+
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

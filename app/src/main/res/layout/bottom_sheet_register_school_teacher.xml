@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    app:behavior_hideable="false"
+    app:behavior_peekHeight="0dp"
+    app:layout_behavior="@string/bottom_sheet_behavior">
+
+    <TextView
+        android:id="@+id/tvRegisterSchoolTeacherBottomSheetTitle"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:layout_marginLeft="@dimen/size_32"
+        android:gravity="center_vertical"
+        android:lineHeight="@dimen/size_28"
+        android:text="Kelas Mengajar Anda"
+        android:textColor="#3F3B5C"
+        android:textSize="@dimen/text_16"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvRegisterSchoolTeacherBottomSheetKrypton"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/size_32"
+        android:lineHeight="@dimen/size_28"
+        android:text="Kelas 1 Krypton"
+        android:paddingVertical="@dimen/size_10"
+        android:textColor="#212121"
+        android:textSize="@dimen/text_16"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvRegisterSchoolTeacherBottomSheetTitle" />
+
+    <TextView
+        android:id="@+id/tvRegisterSchoolTeacherBottomSheetXenon"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/size_32"
+        android:lineHeight="@dimen/size_28"
+        android:paddingVertical="@dimen/size_10"
+        android:text="Kelas 1 Xenon"
+        android:textColor="#212121"
+        android:textSize="@dimen/text_16"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvRegisterSchoolTeacherBottomSheetKrypton" />
+
+    <TextView
+        android:id="@+id/tvRegisterSchoolTeacherBottomSheetArgon"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/size_32"
+        android:lineHeight="@dimen/size_28"
+        android:paddingVertical="@dimen/size_10"
+        android:text="Kelas 1 Argon"
+        android:textColor="#212121"
+        android:textSize="@dimen/text_16"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvRegisterSchoolTeacherBottomSheetXenon" />
+
+    <TextView
+        android:id="@+id/tvRegisterSchoolTeacherBottomSheetTitanium"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/size_32"
+        android:lineHeight="@dimen/size_28"
+        android:paddingVertical="@dimen/size_10"
+        android:text="Kelas 1 Titanium"
+        android:textColor="#212121"
+        android:textSize="@dimen/text_16"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvRegisterSchoolTeacherBottomSheetArgon" />
+
+    <TextView
+        android:id="@+id/tvRegisterSchoolTeacherBottomSheetNeon"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/size_32"
+        android:lineHeight="@dimen/size_28"
+        android:paddingVertical="@dimen/size_10"
+        android:text="Kelas 1 Neon"
+        android:textColor="#212121"
+        android:textSize="@dimen/text_16"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvRegisterSchoolTeacherBottomSheetTitanium" />
+
+    <TextView
+        android:id="@+id/tvRegisterSchoolTeacherBottomSheetHelium"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/size_32"
+        android:lineHeight="@dimen/size_28"
+        android:paddingVertical="@dimen/size_10"
+        android:text="Kelas 1 Helium"
+        android:textColor="#212121"
+        android:textSize="@dimen/text_16"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvRegisterSchoolTeacherBottomSheetNeon" />
+
+    <TextView
+        android:id="@+id/tvRegisterSchoolTeacherBottomSheetArgentum"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/size_32"
+        android:lineHeight="@dimen/size_28"
+        android:paddingVertical="@dimen/size_10"
+        android:text="Kelas 1 Argentum"
+        android:textColor="#212121"
+        android:textSize="@dimen/text_16"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvRegisterSchoolTeacherBottomSheetHelium" />
+
+    <TextView
+        android:id="@+id/tvRegisterSchoolTeacherBottomSheetAurum"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/size_32"
+        android:lineHeight="@dimen/size_28"
+        android:paddingVertical="@dimen/size_10"
+        android:text="Kelas 1 Aurum"
+        android:textColor="#212121"
+        android:textSize="@dimen/text_16"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvRegisterSchoolTeacherBottomSheetArgentum" />
+
+    <TextView
+        android:id="@+id/tvRegisterSchoolTeacherBottomSheetSelenium"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/size_32"
+        android:lineHeight="@dimen/size_28"
+        android:paddingVertical="@dimen/size_10"
+        android:text="Kelas 1 Selenium"
+        android:textColor="#212121"
+        android:textSize="@dimen/text_16"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvRegisterSchoolTeacherBottomSheetAurum" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

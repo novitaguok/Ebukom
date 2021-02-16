@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginHorizontal="@dimen/size_8"
+    android:layout_marginTop="6dp"
+    app:cardCornerRadius="@dimen/size_8"
+    app:cardUseCompatPadding="true">
+
+<!--    android:layout_marginTop="@dimen/size_8"-->
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/clItemSubject"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center">
+
+        <ImageView
+            android:id="@+id/ivItemSubject"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:scaleType="fitXY"
+            android:src="@drawable/bg_subject_recap"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/tvItemSubjectName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/size_20"
+            android:text="Rekap Pembelajaran\nOnline"
+            android:textColor="@color/colorWhite"
+            android:textFontWeight="700"
+            android:textSize="@dimen/text_20"
+            android:textStyle="bold"
+            app:layout_constraintBottom_toBottomOf="@+id/ivItemSubject"
+            app:layout_constraintLeft_toLeftOf="@+id/ivItemSubject"
+            app:layout_constraintTop_toTopOf="@id/ivItemSubject" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.cardview.widget.CardView>

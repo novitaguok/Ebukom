@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/size_8"
+    android:layout_marginBottom="@dimen/size_8">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/ivAnnouncementDetailCommentProfilePicture"
+        android:layout_width="@dimen/size_40"
+        android:layout_height="@dimen/size_40"
+        android:layout_marginLeft="@dimen/size_10"
+        android:src="@color/colorGray"
+        app:civ_border_color="#FF000000"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvAnnouncementDetailCommentName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/size_16"
+        android:lineHeight="@dimen/text_28"
+        android:text="Ade Andreansyah"
+        android:textColor="#212121"
+        android:textSize="@dimen/text_14"
+        app:layout_constraintLeft_toRightOf="@+id/ivAnnouncementDetailCommentProfilePicture"
+        app:layout_constraintTop_toTopOf="@+id/ivAnnouncementDetailCommentProfilePicture" />
+
+    <ImageView
+        android:id="@+id/ivAnnouncementDetailCommentMoreButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginRight="@dimen/size_10"
+        android:clickable="true"
+        android:src="@drawable/ic_more_vertical"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tvAnnouncementDetailCommentContent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingRight="@dimen/size_10"
+        android:layout_marginLeft="66dp"
+        android:layout_marginBottom="@dimen/activity_vertical_margin"
+        android:lineHeight="@dimen/text_20"
+        android:text="@string/comment_content"
+        android:textColor="#666666"
+        android:textSize="@dimen/text_14"
+        app:layout_constraintTop_toBottomOf="@+id/tvAnnouncementDetailCommentName" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+

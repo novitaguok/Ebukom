@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    app:behavior_hideable="false"
+    app:behavior_peekHeight="0dp"
+    app:layout_behavior="@string/bottom_sheet_behavior">
+
+    <TextView
+        android:id="@+id/tvBottomSheetPersonalNoteTemplateTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginLeft="@dimen/size_16"
+        android:gravity="center_vertical"
+        android:lineHeight="@dimen/size_28"
+        android:text="Pilih template catatan"
+        android:textColor="#222222"
+        android:textSize="@dimen/text_14"
+        android:textFontWeight="500"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"/>
+
+    <TextView
+        android:id="@+id/tvBottomSheetPersonalNoteTemplateAdd"
+        android:layout_width="wrap_content"
+        android:layout_height="48dp"
+        android:layout_marginRight="@dimen/size_16"
+        android:gravity="center_vertical"
+        android:lineHeight="@dimen/size_28"
+        android:text="Buat template baru"
+        android:textColor="@color/colorRed"
+        android:textSize="@dimen/size_12"
+        android:textFontWeight="500"
+        app:layout_constraintTop_toTopOf="@+id/tvBottomSheetPersonalNoteTemplateTitle"
+        app:layout_constraintBottom_toBottomOf="@+id/tvBottomSheetPersonalNoteTemplateTitle"
+        app:layout_constraintRight_toRightOf="parent"/>
+
+    <TextView
+        android:id="@+id/tvBottomSheetPersonalNoteTemplateSick"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/size_16"
+        android:lineHeight="@dimen/size_28"
+        android:text="Anak sakit"
+        android:paddingVertical="@dimen/size_10"
+        android:textColor="#212121"
+        android:textSize="@dimen/text_16"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvBottomSheetPersonalNoteTemplateTitle" />
+
+    <TextView
+        android:id="@+id/tvBottomSheetPersonalNoteTemplateFight"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/size_16"
+        android:lineHeight="@dimen/size_28"
+        android:paddingVertical="@dimen/size_10"
+        android:text="Anak bertengkar"
+        android:textColor="#212121"
+        android:textSize="@dimen/text_16"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/cbRegisterParentBottomSheetPMR"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvBottomSheetPersonalNoteTemplateSick" />
+
+    <TextView
+        android:id="@+id/tvBottomSheetPersonalNoteTemplateDifficulty"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/size_16"
+        android:lineHeight="@dimen/size_28"
+        android:paddingVertical="@dimen/size_10"
+        android:text="Anak kesulitan belajar"
+        android:textColor="#212121"
+        android:textSize="@dimen/text_16"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/cbRegisterParentBottomSheetPMR"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvBottomSheetPersonalNoteTemplateFight" />
+
+    <TextView
+        android:id="@+id/tvBottomSheetPersonalNoteTemplateCancel"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_vertical"
+        android:layout_marginLeft="@dimen/size_16"
+        android:lineHeight="@dimen/size_28"
+        android:paddingVertical="@dimen/size_10"
+        android:text="Batalkan"
+        android:textColor="@color/colorRed"
+        android:textSize="@dimen/text_16"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toLeftOf="@+id/cbRegisterParentBottomSheetPMR"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tvBottomSheetPersonalNoteTemplateDifficulty" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

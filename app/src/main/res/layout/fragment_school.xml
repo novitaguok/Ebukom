@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".arch.ui.classdetail.school.SchoolFragment">
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvSchoolInfoAnnouncement"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size_10"
+        android:layout_marginTop="@dimen/size_12"
+        app:cardUseCompatPadding="true"
+        app:cardCornerRadius="@dimen/size_8">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clShoolInfoAnnouncement"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/ivShoolInfoAnnouncement"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                android:src="@drawable/bg_school_announcement"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvShoolInfoAnnouncementTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_20"
+                android:text="Pengumuman\nSekolah"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_24"
+                android:textStyle="bold"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/tvShoolInfoAnnouncementMore"
+                app:layout_constraintVertical_chainStyle="packed"/>
+
+            <TextView
+                android:id="@+id/tvShoolInfoAnnouncementMore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvShoolInfoAnnouncementTitle"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginTop="@dimen/size_8"
+                android:layout_marginLeft="@dimen/size_20"
+                android:lineHeight="@dimen/size_20"
+                android:text="Lihat pengumuman"
+                android:textColor="#005C39"
+                android:textFontWeight="500"
+                android:textSize="@dimen/text_14"
+                app:layout_constraintVertical_chainStyle="spread_inside"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvSchoolInfoSchedule"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size_10"
+        android:layout_marginTop="6dp"
+        app:cardUseCompatPadding="true"
+        app:cardCornerRadius="@dimen/size_8">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clShoolInfoSchedule"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/ivShoolInfoSchedule"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                android:src="@drawable/bg_school_schedule"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvShoolInfoScheduleTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_20"
+                android:text="Jadwal"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_24"
+                android:textStyle="bold"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/tvShoolInfoScheduleMore"
+                app:layout_constraintVertical_chainStyle="packed"/>
+
+            <TextView
+                android:id="@+id/tvShoolInfoScheduleMore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvShoolInfoScheduleTitle"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginTop="@dimen/size_8"
+                android:layout_marginLeft="@dimen/size_20"
+                android:lineHeight="@dimen/size_20"
+                android:text="Lihat jadwal"
+                android:textColor="#004A61"
+                android:textFontWeight="500"
+                android:textSize="@dimen/text_14"
+                app:layout_constraintVertical_chainStyle="spread_inside"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+
+    <androidx.cardview.widget.CardView
+        android:id="@+id/cvSchoolInfoPhoto"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="@dimen/size_10"
+        android:layout_marginTop="6dp"
+        app:cardUseCompatPadding="true"
+        app:cardCornerRadius="@dimen/size_8">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:id="@+id/clShoolInfoPhoto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center">
+
+            <ImageView
+                android:id="@+id/ivShoolInfoPhoto"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:scaleType="fitXY"
+                android:src="@drawable/bg_school_photo"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:id="@+id/tvShoolInfoPhotoTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/size_20"
+                android:text="Foto Kegiatan"
+                android:textColor="@color/colorWhite"
+                android:textSize="@dimen/text_24"
+                android:textStyle="bold"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintLeft_toLeftOf="parent"
+                app:layout_constraintBottom_toTopOf="@+id/tvShoolInfoPhotoMore"
+                app:layout_constraintVertical_chainStyle="packed"/>
+
+            <TextView
+                android:id="@+id/tvShoolInfoPhotoMore"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/tvShoolInfoPhotoTitle"
+                app:layout_constraintLeft_toLeftOf="parent"
+                android:layout_marginTop="@dimen/size_8"
+                android:layout_marginLeft="@dimen/size_20"
+                android:lineHeight="@dimen/size_20"
+                android:text="Lihat foto"
+                android:textColor="#693535"
+                android:textFontWeight="500"
+                android:textSize="@dimen/text_14"
+                app:layout_constraintVertical_chainStyle="spread_inside"/>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.cardview.widget.CardView>
+</LinearLayout>
